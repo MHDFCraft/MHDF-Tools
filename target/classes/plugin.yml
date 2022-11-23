@@ -1,0 +1,25 @@
+name: Cheng-Tools-Reloaded
+version: '1.0'
+main: cn.ChengZhiYa.ChengToolsReloaded.main
+api-version: 1.18
+authors: [ ChengZhiYa ]
+description: qwq
+permissions:
+  ChengTools.Gamemode:
+    default: op
+  ChengTools.Fly:
+    default: op
+  ChengTools.Fly.Give:
+    default: op
+  ChengTools.Vanish:
+    default: op
+  ChengTools.Vanish.Give:
+    default: op
+  ChengTools.Chat:
+    default: true
+  ChengTools.Chat.DelayBypass:
+    default: op
+  ChengTools.Chat.BlackWorkBypass:
+    default: op
+  ChengTools.Chat.Color:
+    default: op
