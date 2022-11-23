@@ -1,12 +1,9 @@
 package cn.ChengZhiYa.ChengToolsReloaded;
 
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.*;
-import cn.ChengZhiYa.ChengToolsReloaded.Event.*;
+import cn.ChengZhiYa.ChengToolsReloaded.Listener.*;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.IntHashMap;
-import cn.ChengZhiYa.ChengToolsReloaded.Tasks.ChatDelay_Time;
-import cn.ChengZhiYa.ChengToolsReloaded.Tasks.TimeMessage_Task;
-import cn.ChengZhiYa.ChengToolsReloaded.Tasks.Tpa_Detect;
-import cn.ChengZhiYa.ChengToolsReloaded.Tasks.Tpa_Time;
+import cn.ChengZhiYa.ChengToolsReloaded.Tasks.*;
 import cn.ChengZhiYa.ChengToolsReloaded.Ultis.YamlFileUtil;
 import cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi;
 import org.bukkit.Bukkit;
@@ -14,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
+import java.io.IOException;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.ColorLog;
 
@@ -45,6 +43,7 @@ public final class main extends JavaPlugin {
         File PluginHome = new File(String.valueOf(this.getDataFolder()));
 
         File Config_File = new File(this.getDataFolder(), "config.yml");
+        File Login_File = new File(this.getDataFolder(), "LoginData.yml");
 
         if (!PluginHome.exists()) {
             PluginHome.mkdirs();
@@ -57,25 +56,35 @@ public final class main extends JavaPlugin {
             }
         }
 
+        if (getConfig().getBoolean("LoginSystemSettings.Enable")) {
+            if (!Login_File.exists()) {
+                try {
+                    Login_File.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         if (!Config_File.exists()) {
             Yaml.saveYamlFile(this.getDataFolder().getPath(), "config.yml", "config.yml", true);
         } //生成config.yml文件
 
         if (getConfig().getBoolean("CustomJoinServerMessageSettings.Enable")) {
-            Bukkit.getPluginManager().registerEvents(new PlayerJoin_Event(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
         }
 
         if (getConfig().getBoolean("CustomJoinServerMessageSettings.Enable")) {
-            Bukkit.getPluginManager().registerEvents(new PlayerJoin_Event(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
         }
 
         if (getConfig().getBoolean("CustomQuitServerMessageSettings.Enable")) {
-            Bukkit.getPluginManager().registerEvents(new PlayerQuit_Event(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
         }
 
         if (getConfig().getBoolean("EasyGamemodeCommandEnable")) {
-            multi.registerCommand(this, new Gamemode_Command(), new Gamemode_Command(), "切换游戏模式", "Gamemode");
-            multi.registerCommand(this, new Gamemode_Command(), new Gamemode_Command(), "切换游戏模式", "gm");
+            multi.registerCommand(this, new Gamemode(), new Gamemode(), "切换游戏模式", "Gamemode");
+            multi.registerCommand(this, new Gamemode(), new Gamemode(), "切换游戏模式", "gm");
         }
 
         if (getConfig().getBoolean("TimeMessageSettings.Enable")) {
@@ -84,31 +93,31 @@ public final class main extends JavaPlugin {
         }
 
         if (getConfig().getBoolean("FlyEnable")) {
-            multi.registerCommand(this, new Fly_Command(), "飞行系统", "Fly");
-            Bukkit.getPluginManager().registerEvents(new PlayerChangedWorld_Event(), this);
-            Bukkit.getPluginManager().registerEvents(new PlayerRespawn_Event(), this);
+            multi.registerCommand(this, new Fly(), "飞行系统", "Fly");
+            Bukkit.getPluginManager().registerEvents(new PlayerChangedWorld(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerRespawn(), this);
         }
 
         if (getConfig().getBoolean("BackEnable")) {
-            multi.registerCommand(this, new Back_Command(), "Back系统", "Back");
-            multi.registerCommand(this, new UnBack_Command(), "Back系统", "Unback");
+            multi.registerCommand(this, new Back(), "Back系统", "Back");
+            multi.registerCommand(this, new UnBack(), "Back系统", "Unback");
         }
 
         if (getConfig().getBoolean("VanishEnable")) {
-            multi.registerCommand(this, new Vanish_Command(), "Vanish系统", "Vanish");
-            multi.registerCommand(this, new Vanish_Command(), "Vanish系统", "v");
+            multi.registerCommand(this, new Vanish(), "Vanish系统", "Vanish");
+            multi.registerCommand(this, new Vanish(), "Vanish系统", "v");
         }
 
         if (getConfig().getBoolean("CrashPlayerEnable")) {
-            multi.registerCommand(this, new CrashPlayerClient_Command(), "崩端系统", "CrashPlayerClient");
-            multi.registerCommand(this, new CrashPlayerClient_Command(), "崩端系统", "CrashClient");
-            multi.registerCommand(this, new CrashPlayerClient_Command(), "崩端系统", "Crash");
+            multi.registerCommand(this, new CrashPlayerClient(), "崩端系统", "CrashPlayerClient");
+            multi.registerCommand(this, new CrashPlayerClient(), "崩端系统", "CrashClient");
+            multi.registerCommand(this, new CrashPlayerClient(), "崩端系统", "Crash");
         }
 
         if (getConfig().getBoolean("TpaSettings.Enable")) {
-            multi.registerCommand(this, new Tpa_Command(), "Tpa系统", "Tpa");
-            multi.registerCommand(this, new TpaAccept_Command(), "接受TPA", "TpaAccept");
-            multi.registerCommand(this, new TpaDefuse_Command(), "拒绝TPA", "TpaDefuse");
+            multi.registerCommand(this, new Tpa(), "Tpa系统", "Tpa");
+            multi.registerCommand(this, new TpaAccept(), "接受TPA", "TpaAccept");
+            multi.registerCommand(this, new TpaDefuse(), "拒绝TPA", "TpaDefuse");
             BukkitTask TpaTime = new Tpa_Time(this).runTaskTimer(this, 0L, 20);
             IntHashMap.Set("TpaTimeTaskId", TpaTime.getTaskId());
             BukkitTask TpaDetect = new Tpa_Detect(this).runTaskTimer(this, 0L, 60 * 20);
@@ -116,23 +125,23 @@ public final class main extends JavaPlugin {
         }
 
         if (getConfig().getBoolean("HomeSystemSettings.Enable")) {
-            multi.registerCommand(this, new SetHome_Command(), "设置家", "sethome");
-            multi.registerCommand(this, new DelHome_Command(), "删除家", "delhome");
-            multi.registerCommand(this, new Home_Command(), "传送至家", "home");
+            multi.registerCommand(this, new SetHome(), "设置家", "sethome");
+            multi.registerCommand(this, new DelHome(), "删除家", "delhome");
+            multi.registerCommand(this, new Home(), "传送至家", "home");
         }
 
         if (getConfig().getBoolean("PluginManageEnable")) {
-            multi.registerCommand(this, new PluginManage_Command(), "插件管理系统", "PluginManage");
-            multi.registerCommand(this, new PluginManage_Command(), "插件管理系统", "pm");
+            multi.registerCommand(this, new PluginManage(), "插件管理系统", "PluginManage");
+            multi.registerCommand(this, new PluginManage(), "插件管理系统", "pm");
         }
 
         if (getConfig().getBoolean("FastSunCommandEnable")) {
-            multi.registerCommand(this, new Sun_Command(), "快速晴天命令", "Sun");
+            multi.registerCommand(this, new Sun(), "快速晴天命令", "Sun");
         }
 
         if (getConfig().getBoolean("FastSetTimeCommandEnable")) {
-            multi.registerCommand(this, new Day_Command(), "快速天亮命令", "Day");
-            multi.registerCommand(this, new Night_Command(), "快速天黑命令", "Night");
+            multi.registerCommand(this, new Day(), "快速天亮命令", "Day");
+            multi.registerCommand(this, new Night(), "快速天黑命令", "Night");
         }
 
         if (getConfig().getBoolean("ChatDelayEnable")) {
@@ -141,14 +150,40 @@ public final class main extends JavaPlugin {
         }
 
         if (getConfig().getBoolean("SuperListSettings.Enable")) {
-            multi.registerCommand(this, new List_Command(), "高级list命令", "SuperList");
-            multi.registerCommand(this, new List_Command(), "高级list命令", "List");
+            multi.registerCommand(this, new List(), "高级list命令", "SuperList");
+            multi.registerCommand(this, new List(), "高级list命令", "List");
         }
 
-        multi.registerCommand(this, new Reload_Command(), "重载插件", "ChengToolsReload");
-        multi.registerCommand(this, new Reload_Command(), "重载插件", "CTReload");
-        multi.registerCommand(this, new Reload_Command(), "重载插件", "CTR");
-        Bukkit.getPluginManager().registerEvents(new PlayerChat_Event(), this);
+        if (getConfig().getBoolean("LoginSystemSettings.Enable")) {
+            multi.registerCommand(this, new Register(), "注册命令", "register");
+            multi.registerCommand(this, new Register(), "注册命令", "reg");
+            multi.registerCommand(this, new Login(), "登录命令", "l");
+            multi.registerCommand(this, new Login(), "登录命令", "login");
+            BukkitTask LoginMessage = new LoginMessage_Task(this).runTaskTimer(this, 0L, 20L);
+            IntHashMap.Set("LoginMessageTaskId", LoginMessage.getTaskId());
+            Bukkit.getPluginManager().registerEvents(new PlayerMove(), this);
+            Bukkit.getPluginManager().registerEvents(new EntityDamageByBlock(), this);
+            Bukkit.getPluginManager().registerEvents(new EntityDamageByEntity(), this);
+            Bukkit.getPluginManager().registerEvents(new EntityPickupItem(), this);
+            Bukkit.getPluginManager().registerEvents(new InventoryClick(), this);
+            Bukkit.getPluginManager().registerEvents(new InventoryOpen(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerBedEnter(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocess(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerDropItem(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerEditBook(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerFish(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerInteractAtEntity(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerInteractEntity(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerItemConsume(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerPickupArrow(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerShearEntity(), this);
+            Bukkit.getPluginManager().registerEvents(new SignChange(), this);
+        }
+
+        multi.registerCommand(this, new Reload(), "重载插件", "ChengToolsReload");
+        multi.registerCommand(this, new Reload(), "重载插件", "CTReload");
+        multi.registerCommand(this, new Reload(), "重载插件", "CTR");
+        Bukkit.getPluginManager().registerEvents(new PlayerChat(), this);
         ColorLog("&a插件加载完成! 作者:292200693");
         ColorLog("&7=============&e橙式插件-橙工具&7=============");
     }

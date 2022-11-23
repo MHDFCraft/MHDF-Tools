@@ -1,5 +1,5 @@
 name: Cheng-Tools-Reloaded
-version: '1.0'
+version: '1.0.1'
 main: cn.ChengZhiYa.ChengToolsReloaded.main
 api-version: 1.18
 authors: [ ChengZhiYa ]

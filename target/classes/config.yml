@@ -47,7 +47,7 @@ SuperListSettings:
   #命令提示
   Message:
     - "&7-----------&6List系统&7-----------"
-    - "&eTPS: %server_tps%"
+    - "&eTPS: %TPS_1% %TPS_5% %TPS_15%"
     - "&e内存占用: %mem_used%&7/&e%mem_max%"
     - "&e玩家列表:"
     - "&e%PlayerList%"
@@ -76,6 +76,24 @@ TimeMessageSettings:
   #公告内容
   Message:
     - "欢迎使用橙汁插件!"
+
+#登录系统功能
+LoginSystemSettings:
+  #开关
+  Enable: true
+  #密码最短长度限制
+  MinPaswordLength: 6
+  #密码最大长度限制
+  MaxPaswordLength: 18
+  #过于简单的密码
+  EasyPasswords:
+    - "123456"
+  #未登录允许使用的命令
+  AllowUsedComamnds:
+    - "/l"
+    - "/login"
+    - "/reg"
+    - "/register"
 
 #聊天功能设置
 ChatSettings:

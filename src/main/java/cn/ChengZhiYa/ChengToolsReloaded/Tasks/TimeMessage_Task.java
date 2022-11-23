@@ -7,7 +7,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
-public class TimeMessage_Task  extends BukkitRunnable {
+public class TimeMessage_Task extends BukkitRunnable {
     main pluginmain;
 
     private int i = 0;

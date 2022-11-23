@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Ultis;
 
+import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHashMap;
 import cn.ChengZhiYa.ChengToolsReloaded.Plugman.GentleUnload;
 import cn.ChengZhiYa.ChengToolsReloaded.main;
 import org.bukkit.Bukkit;
@@ -17,6 +18,8 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URLClassLoader;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,6 +47,30 @@ public class multi {
 
     public static String ChatColor(String Message) {
         return ChatColor.translateAlternateColorCodes('&', Message);
+    }
+
+    public static String Sha256(String Message) {
+        String encodeStr = "";
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(Message.getBytes(StandardCharsets.UTF_8));
+            StringBuilder stringBuffer = new StringBuilder();
+            for (final byte aByte : messageDigest.digest()) {
+                final String temp = Integer.toHexString(aByte & 0xFF);
+                if (temp.length() == 1) {
+                    stringBuffer.append("0");
+                }
+                stringBuffer.append(temp);
+            }
+            encodeStr = stringBuffer.toString().toUpperCase();
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+        return encodeStr;
+    }
+
+    public static boolean getLogin(Player player) {
+        return StringHashMap.Get(player.getName() + "_Login") != null;
     }
 
     public static void ColorLog(String Message) {
@@ -401,47 +428,47 @@ public class multi {
         return commandMap;
     }
 
-    //public static String getTps(int Time) {
-    //    double TPS1 = BigDecimal.valueOf(getTpsList()[0]).setScale(1, RoundingMode.HALF_UP).doubleValue();
-    //    double TPS5 = BigDecimal.valueOf(getTpsList()[1]).setScale(1, RoundingMode.HALF_UP).doubleValue();
-    //    double TPS15 = BigDecimal.valueOf(getTpsList()[2]).setScale(1, RoundingMode.HALF_UP).doubleValue();
-    //    if (Time == 1) {
-    //        if (TPS1 > 18.0D) {
-    //            return "&a" + TPS1;
-    //        }
-    //        if (TPS1 > 16.0D) {
-    //            return "&6" + TPS1;
-    //        }
-    //       if (TPS1 < 16.0D) {
-    //           return "&c" + TPS1;
-    //        }
-    //    }
-    //    if (Time == 5) {
-    //       if (TPS5 > 18.0D) {
-    //            return "&a" + TPS5;
-    //        }
-    //        if (TPS5 > 16.0D) {
-    //            return "&6" + TPS5;
-    //        }
-    //        if (TPS5 < 16.0D) {
-    //            return "&c" + TPS5;
-    //        }
-    //    }
-    //    if (Time == 15) {
-    //        if (TPS15 > 18.0D) {
-    //            return "&a" + TPS15;
-    //        }
-     //       if (TPS15 > 16.0D) {
-     //           return "&6" + TPS15;
-    //        }
-    //        if (TPS15 < 16.0D) {
-    //            return "&c" + TPS15;
-    //        }
-    //    }
-    //    return "获取失败";
-    //}
+    public static String getTps(int Time) {
+        double TPS1 = BigDecimal.valueOf(getTpsList()[0]).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        double TPS5 = BigDecimal.valueOf(getTpsList()[1]).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        double TPS15 = BigDecimal.valueOf(getTpsList()[2]).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        if (Time == 1) {
+            if (TPS1 > 18.0D) {
+                return "&a" + TPS1;
+            }
+            if (TPS1 > 16.0D) {
+                return "&6" + TPS1;
+            }
+           if (TPS1 < 16.0D) {
+               return "&c" + TPS1;
+            }
+        }
+        if (Time == 5) {
+           if (TPS5 > 18.0D) {
+                return "&a" + TPS5;
+            }
+            if (TPS5 > 16.0D) {
+                return "&6" + TPS5;
+            }
+            if (TPS5 < 16.0D) {
+                return "&c" + TPS5;
+            }
+        }
+        if (Time == 15) {
+            if (TPS15 > 18.0D) {
+                return "&a" + TPS15;
+            }
+            if (TPS15 > 16.0D) {
+                return "&6" + TPS15;
+            }
+            if (TPS15 < 16.0D) {
+                return "&c" + TPS15;
+            }
+        }
+        return "获取失败";
+    }
 
-    //public static double[] getTpsList() {
-    //    return Bukkit.getTPS;
-    //}
+    public static double[] getTpsList() {
+        return Bukkit.getTPS();
+    }
 }
