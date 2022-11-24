@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands;
 
+import cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -11,10 +12,14 @@ import org.jetbrains.annotations.NotNull;
 public class Night implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        for (World world : Bukkit.getWorlds()) {
-            world.setTime(13000);
+        if (sender.hasPermission("ChengTools.Day")) {
+            for (World world : Bukkit.getWorlds()) {
+                world.setTime(13000);
+            }
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a完成!"));
+        } else {
+            sender.sendMessage(multi.ChatColor("&c您没有权限怎么做!"));
         }
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a完成!"));
         return false;
     }
 }

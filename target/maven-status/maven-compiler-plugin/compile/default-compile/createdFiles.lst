@@ -1,4 +1,5 @@
 cn\ChengZhiYa\ChengToolsReloaded\Tests\addFile.class
+cn\ChengZhiYa\ChengToolsReloaded\Listener\PlayerCommandSend.class
 cn\ChengZhiYa\ChengToolsReloaded\Listener\SignChange.class
 cn\ChengZhiYa\ChengToolsReloaded\Tasks\Tpa_Detect.class
 cn\ChengZhiYa\ChengToolsReloaded\HashMap\StringHashMap.class
@@ -48,6 +49,7 @@ cn\ChengZhiYa\ChengToolsReloaded\Tasks\Tpa_Time.class
 cn\ChengZhiYa\ChengToolsReloaded\Commands\List.class
 cn\ChengZhiYa\ChengToolsReloaded\HashMap\IntHashMap.class
 cn\ChengZhiYa\ChengToolsReloaded\Tasks\LoginMessage_Task.class
+cn\ChengZhiYa\ChengToolsReloaded\Commands\Stop.class
 cn\ChengZhiYa\ChengToolsReloaded\Listener\PlayerPickupArrow.class
 cn\ChengZhiYa\ChengToolsReloaded\Commands\PluginManage.class
 cn\ChengZhiYa\ChengToolsReloaded\Listener\EntityDamageByEntity.class

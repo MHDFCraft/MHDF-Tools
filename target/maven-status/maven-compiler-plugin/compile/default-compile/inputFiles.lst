@@ -2,6 +2,7 @@ C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Listener\PlayerInteractAtEntity.java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Tasks\Tpa_Detect.java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Commands\Back.java
+C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Listener\PlayerCommandSend.java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\HashMap\IntHashMap.java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Listener\PlayerDeath.java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Listener\PlayerEditBook.java
@@ -44,6 +45,7 @@ C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Listener\PlayerChat.java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Commands\Day.java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Ultis\YamlFileUtil.java
+C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Commands\Stop.java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Listener\EntityPickupItem.java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Tasks\Tpa_Time.java
 C:\Users\ChengZhi\Desktop\文件\插件项目\Cheng-Tools-Reloaded\src\main\java\cn\ChengZhiYa\ChengToolsReloaded\Listener\PlayerFish.java

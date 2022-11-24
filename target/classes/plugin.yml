@@ -1,5 +1,5 @@
 name: Cheng-Tools-Reloaded
-version: '1.0.1'
+version: '1.0.2'
 main: cn.ChengZhiYa.ChengToolsReloaded.main
 api-version: 1.18
 authors: [ ChengZhiYa ]
@@ -22,4 +22,22 @@ permissions:
   ChengTools.Chat.BlackWorkBypass:
     default: op
   ChengTools.Chat.Color:
+    default: op
+  ChengTools.BanCommand:
+    default: op
+  ChengTools.BanCommand.Bypass:
+    default: op
+  ChengTools.Day:
+    default: op
+  ChengTools.Night:
+    default: op
+  ChengTools.Sun:
+    default: op
+  ChengTools.Reload:
+    default: op
+  ChengTools.PluginManage:
+    default: op
+  ChengTools.Stop:
+    default: op
+  ChengTools.Crash:
     default: op

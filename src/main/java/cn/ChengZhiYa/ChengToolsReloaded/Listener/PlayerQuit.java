@@ -14,8 +14,8 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.ChatColor;
 public class PlayerQuit implements Listener {
     @EventHandler
     public void On_Event(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
         if (main.main.getConfig().getBoolean("CustomQuitServerMessageSettings.Enable")) {
-            Player player = event.getPlayer();
             if (player.isOp()) {
                 String QuitMessage = Objects.requireNonNull(main.main.getConfig().getString("CustomQuitServerMessageSettings.AdminQuitMessage")).replaceAll("%PlayerName%", player.getName());
                 event.setQuitMessage(ChatColor(QuitMessage));
@@ -23,7 +23,7 @@ public class PlayerQuit implements Listener {
                 String QuitMessage = Objects.requireNonNull(main.main.getConfig().getString("CustomQuitServerMessageSettings.PlayerQuitMessage")).replaceAll("%PlayerName%", player.getName());
                 event.setQuitMessage(ChatColor(QuitMessage));
             }
-            StringHashMap.Set(player.getName() + "_Login", null);
         }
+        StringHashMap.Set(player.getName() + "_Login", null);
     }
 }

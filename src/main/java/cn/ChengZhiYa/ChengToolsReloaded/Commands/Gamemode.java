@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands;
 
+import cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -76,7 +77,7 @@ public class Gamemode implements TabExecutor {
                 }
                 sender.sendMessage(ChatColor("&c&l用法错误,正确用法:/" + label + " <模式> [玩家ID]\n&a&l<>是必填,[]是选填"));
             } else {
-                sender.sendMessage(ChatColor("&c&l您没有权限怎么做!"));
+                sender.sendMessage(multi.ChatColor("&c您没有权限怎么做!"));
             }
         } else {
             if (args.length == 2) {

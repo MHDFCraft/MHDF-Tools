@@ -3,9 +3,9 @@ CustomJoinServerMessageSettings:
   #开关
   Enable: true
   #玩家进入服务器的提示
-  PlayerJoinMessage: "&7[&8&l玩家&7]&a&l%PlayerName%&e&l加入了游戏"
+  PlayerJoinMessage: "&7[&8玩家&7]&a&l%PlayerName%&e&l加入了游戏"
   #管理员进入服务器的提示
-  AdminJoinMessage: "&7[&c&l管理员&7]&a&l%PlayerName%&e&l加入了游戏"
+  AdminJoinMessage: "&7[&c管理员&7]&a&l%PlayerName%&e&l加入了游戏"
 
 #自定义玩家退出服务器提示
 CustomQuitServerMessageSettings:
@@ -49,6 +49,7 @@ SuperListSettings:
     - "&7-----------&6List系统&7-----------"
     - "&eTPS: %TPS_1% %TPS_5% %TPS_15%"
     - "&e内存占用: %mem_used%&7/&e%mem_max%"
+    - "&e在线玩家: %Online%/%Max_Online%"
     - "&e玩家列表:"
     - "&e%PlayerList%"
     - "&7-----------&6List系统&7-----------"
@@ -94,6 +95,35 @@ LoginSystemSettings:
     - "/login"
     - "/reg"
     - "/register"
+
+#禁用命令设置
+BanCommandSettings:
+  #开关
+  Enable: true
+  #OP免疫
+  OpBypass: false
+  #禁用命令列表
+  BanCommandList:
+    - plugins
+    - bukkit:plugins
+    - pl
+    - bukkit:pl
+    - ver
+    - version
+    - bukkit:ver
+    - bukkit:version
+  #使用被禁用的命令提示
+  UsedBanCommandMessage:
+  - "&c这个命令不存在,请重试!"
+
+#超级Stop命令
+SuperStopSettings:
+  #开关
+  Enable: true
+  #服务器名称
+  ServerName: "&6&l橙式插件-橙工具"
+  #默认关服提示
+  DefaultStopMessage: "%ServerName%\n&c&l服务器已关闭"
 
 #聊天功能设置
 ChatSettings:

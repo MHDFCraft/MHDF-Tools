@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands;
 
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHashMap;
+import cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi;
 import cn.ChengZhiYa.ChengToolsReloaded.main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -85,7 +86,7 @@ public class Vanish implements CommandExecutor {
                     }
                 }
             } else {
-                sender.sendMessage(ChatColor("&c&l您没有权限怎么做!"));
+                sender.sendMessage(multi.ChatColor("&c您没有权限怎么做!"));
             }
         } else {
             if (args.length == 1) {

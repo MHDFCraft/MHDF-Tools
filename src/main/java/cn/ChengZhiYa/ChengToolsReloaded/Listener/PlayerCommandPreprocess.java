@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Listener;
 
 import cn.ChengZhiYa.ChengToolsReloaded.main;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -22,6 +23,33 @@ public class PlayerCommandPreprocess implements Listener {
                 }
                 event.getPlayer().sendMessage(ChatColor("&c登录后才能使用命令!"));
                 event.setCancelled(true);
+            }
+        }
+        if (main.main.getConfig().getBoolean("BanCommandSettings.Enable")) {
+            if (event.getPlayer().hasPermission("ChengTools.BanCommand.Bypass")) {
+                if (!main.main.getConfig().getBoolean("BanCommandSettings.OpBypass")) {
+                    String Command = event.getMessage().split(" ")[0].toLowerCase(Locale.ROOT);
+                    for (String BanCommand : main.main.getConfig().getStringList("BanCommandSettings.BanCommandList")) {
+                        if (Command.equals("/" + BanCommand.toLowerCase(Locale.ROOT))) {
+                            event.setCancelled(true);
+                            for (String Message : main.main.getConfig().getStringList("BanCommandSettings.UsedBanCommandMessage")) {
+                                event.getPlayer().sendMessage(ChatColor(PlaceholderAPI.setPlaceholders(event.getPlayer(), Message)));
+                            }
+                            return;
+                        }
+                    }
+                }
+            } else {
+                String Command = event.getMessage().split(" ")[0].toLowerCase(Locale.ROOT);
+                for (String BanCommand : main.main.getConfig().getStringList("BanCommandSettings.BanCommandList")) {
+                    if (Command.equals("/" + BanCommand.toLowerCase(Locale.ROOT))) {
+                        event.setCancelled(true);
+                        for (String Message : main.main.getConfig().getStringList("BanCommandSettings.UsedBanCommandMessage")) {
+                            event.getPlayer().sendMessage(ChatColor(PlaceholderAPI.setPlaceholders(event.getPlayer(), Message)));
+                        }
+                        return;
+                    }
+                }
             }
         }
     }

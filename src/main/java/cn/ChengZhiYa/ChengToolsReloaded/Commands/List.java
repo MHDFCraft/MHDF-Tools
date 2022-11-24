@@ -27,9 +27,11 @@ public class List implements CommandExecutor {
                     replaceAll("%mem_used%", String.valueOf((runtime.totalMemory() - runtime.freeMemory()) / 1048576L)).
                     replaceAll("%mem_max%", String.valueOf(runtime.maxMemory() / 1048576L)).
                     replaceAll("%PlayerList%", String.valueOf(PlayerList)).
-                    replaceAll("%Tps_1%", getTps(1)).
-                    replaceAll("%Tps_5%", getTps(5)).
-                    replaceAll("%Tps_15%", getTps(15)))));
+                    replaceAll("%Online%", String.valueOf(Bukkit.getOnlinePlayers().size())).
+                    replaceAll("%Max_Online%", String.valueOf(Bukkit.getMaxPlayers())).
+                    replaceAll("%TPS_1%", getTps(1)).
+                    replaceAll("%TPS_5%", getTps(5)).
+                    replaceAll("%TPS_15%", getTps(15)))));
         }
         return false;
     }

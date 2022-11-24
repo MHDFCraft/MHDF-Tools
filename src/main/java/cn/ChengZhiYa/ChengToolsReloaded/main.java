@@ -78,10 +78,6 @@ public final class main extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
         }
 
-        if (getConfig().getBoolean("CustomQuitServerMessageSettings.Enable")) {
-            Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
-        }
-
         if (getConfig().getBoolean("EasyGamemodeCommandEnable")) {
             multi.registerCommand(this, new Gamemode(), new Gamemode(), "切换游戏模式", "Gamemode");
             multi.registerCommand(this, new Gamemode(), new Gamemode(), "切换游戏模式", "gm");
@@ -168,7 +164,6 @@ public final class main extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new InventoryClick(), this);
             Bukkit.getPluginManager().registerEvents(new InventoryOpen(), this);
             Bukkit.getPluginManager().registerEvents(new PlayerBedEnter(), this);
-            Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocess(), this);
             Bukkit.getPluginManager().registerEvents(new PlayerDropItem(), this);
             Bukkit.getPluginManager().registerEvents(new PlayerEditBook(), this);
             Bukkit.getPluginManager().registerEvents(new PlayerFish(), this);
@@ -180,10 +175,20 @@ public final class main extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new SignChange(), this);
         }
 
+        if (getConfig().getBoolean("BanCommandSettings.Enable")) {
+            Bukkit.getPluginManager().registerEvents(new PlayerCommandSend(), this);
+        }
+
+        if (getConfig().getBoolean("SuperStopSettings.Enable")) {
+            multi.registerCommand(this, new Stop(), "关闭服务器", "Stop");
+        }
+
         multi.registerCommand(this, new Reload(), "重载插件", "ChengToolsReload");
         multi.registerCommand(this, new Reload(), "重载插件", "CTReload");
         multi.registerCommand(this, new Reload(), "重载插件", "CTR");
         Bukkit.getPluginManager().registerEvents(new PlayerChat(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocess(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
         ColorLog("&a插件加载完成! 作者:292200693");
         ColorLog("&7=============&e橙式插件-橙工具&7=============");
     }

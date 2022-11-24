@@ -23,3 +23,21 @@ permissions:
     default: op
   ChengTools.Chat.Color:
     default: op
+  ChengTools.BanCommand:
+    default: op
+  ChengTools.BanCommand.Bypass:
+    default: op
+  ChengTools.Day:
+    default: op
+  ChengTools.Night:
+    default: op
+  ChengTools.Sun:
+    default: op
+  ChengTools.Reload:
+    default: op
+  ChengTools.PluginManage:
+    default: op
+  ChengTools.Stop:
+    default: op
+  ChengTools.Crash:
+    default: op
