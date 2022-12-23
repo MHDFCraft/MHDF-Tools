@@ -14,8 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.*;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -28,6 +27,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class multi {
     protected static final HashMap<Object, GentleUnload> gentleUnloads = new HashMap<>();
@@ -36,6 +37,7 @@ public class multi {
     private static Field commandMapField;
     private static Field knownCommandsField;
     private static String nmsVersion = null;
+    public static String Version = "1.0.4";
 
     static {
         try {
@@ -47,13 +49,41 @@ public class multi {
         }
     }
 
-    private multi() {}
+    private multi() {
+    }
 
     public static void ClearAllHashMap() {
         StringHashMap.Clear();
         IntHashMap.Clear();
         BooleanHashMap.Clear();
         LocationHashMap.Clear();
+    }
+
+    public static boolean CheckVersion() {
+        try {
+            URL url1 = new URL("https://chengzhinb.github.io/Cheng-Tools-Reloaded-CheckVersion");
+            URLConnection urlConnection = url1.openConnection();
+            urlConnection.addRequestProperty("User-Agent", "Mozilla");
+            urlConnection.setReadTimeout(30000);
+            urlConnection.setConnectTimeout(30000);
+            InputStream in = url1.openStream();
+            InputStreamReader isr = new InputStreamReader(in);
+            BufferedReader bufr = new BufferedReader(isr);
+            String str;
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((str = bufr.readLine()) != null) {
+                stringBuilder.append(str);
+            }
+            String NewVersion = stringBuilder.toString().replace("<!--", "").replace("-->", "");
+            in.close();
+            isr.close();
+            bufr.close();
+            return Version.equals(NewVersion);
+        } catch (Exception i) {
+            i.printStackTrace();
+            ColorLog("[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
+            return false;
+        }
     }
 
     public static boolean isPaper() {
@@ -461,12 +491,12 @@ public class multi {
             if (TPS1 > 16.0D) {
                 return "&6" + TPS1;
             }
-           if (TPS1 < 16.0D) {
-               return "&c" + TPS1;
+            if (TPS1 < 16.0D) {
+                return "&c" + TPS1;
             }
         }
         if (Time == 5) {
-           if (TPS5 > 18.0D) {
+            if (TPS5 > 18.0D) {
                 return "&a" + TPS5;
             }
             if (TPS5 > 16.0D) {

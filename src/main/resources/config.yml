@@ -1,3 +1,6 @@
+#检查更新
+CheckVersion: true
+
 #自定义玩家进入服务器提示
 CustomJoinServerMessageSettings:
   #开关

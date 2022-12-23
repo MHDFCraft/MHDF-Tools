@@ -13,11 +13,21 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.ChatColor;
+import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.ColorLog;
 
 public class PlayerJoin implements Listener {
     @EventHandler
     public void On_Event(PlayerJoinEvent event) {
+        if (main.main.getConfig().getBoolean("CheckVersion")) {
+            Player player = event.getPlayer();
+            if (player.isOnline()) {
+                if (!CheckVersion()) {
+                    player.sendMessage(ChatColor("&cCheng-Tools不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/"));
+                }
+            }
+        }
+
         if (main.main.getConfig().getBoolean("HomeSystemSettings.Enable")) {
             File HomeData = new File(main.main.getDataFolder() + "/HomeData");
             File HomeData_File = new File(HomeData, event.getPlayer().getName() + ".yml");

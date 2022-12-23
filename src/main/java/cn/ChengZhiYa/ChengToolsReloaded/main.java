@@ -50,6 +50,15 @@ public final class main extends JavaPlugin {
         if (!isPaper()) {
             ColorLog("&e服务端不是Paper，已关闭TPS变量!");
         }
+
+        if (getConfig().getBoolean("CheckVersion")) {
+            if (!CheckVersion()) {
+                ColorLog("&c当前插件版本不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/");
+            }else {
+                ColorLog("&a当前插件版本是最新版!");
+            }
+        }
+
         File PluginHome = new File(String.valueOf(this.getDataFolder()));
 
         File Config_File = new File(this.getDataFolder(), "config.yml");
@@ -86,14 +95,6 @@ public final class main extends JavaPlugin {
 
         if (getConfig().getBoolean("CustomJoinServerMessageSettings.Enable")) {
             Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
-        }
-
-        if (getConfig().getBoolean("MOTDSettings.Enable")) {
-            if (isPaper()) {
-                Bukkit.getPluginManager().registerEvents(new PaperServerListPing(), this);
-            }else {
-                Bukkit.getPluginManager().registerEvents(new ServerListPing(), this);
-            }
         }
 
         if (getConfig().getBoolean("ScoreboardSettings.Enable")) {
@@ -208,6 +209,14 @@ public final class main extends JavaPlugin {
 
         if (getConfig().getBoolean("SuperStopSettings.Enable")) {
             multi.registerCommand(this, new Stop(), "关闭服务器", "Stop");
+        }
+
+        if (getConfig().getBoolean("MOTDSettings.Enable")) {
+            if (isPaper()) {
+                Bukkit.getPluginManager().registerEvents(new PaperServerListPing(), this);
+            }else {
+                Bukkit.getPluginManager().registerEvents(new ServerListPing(), this);
+            }
         }
 
         multi.registerCommand(this, new Reload(), "重载插件", "ChengToolsReload");
