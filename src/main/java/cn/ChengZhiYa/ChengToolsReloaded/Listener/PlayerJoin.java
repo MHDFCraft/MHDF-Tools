@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Listener;
 
+import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHashMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHashMap;
 import cn.ChengZhiYa.ChengToolsReloaded.main;
 import org.bukkit.Bukkit;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.ColorLog;
 
 public class PlayerJoin implements Listener {
     @EventHandler
@@ -22,7 +22,7 @@ public class PlayerJoin implements Listener {
         if (main.main.getConfig().getBoolean("CheckVersion")) {
             Player player = event.getPlayer();
             if (player.isOnline()) {
-                if (!CheckVersion()) {
+                if (!BooleanHashMap.Get("IsLast")) {
                     player.sendMessage(ChatColor("&cCheng-Tools不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/"));
                 }
             }

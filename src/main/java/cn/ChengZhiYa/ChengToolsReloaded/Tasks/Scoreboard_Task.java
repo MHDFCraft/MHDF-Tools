@@ -39,7 +39,7 @@ public class Scoreboard_Task extends BukkitRunnable {
                         }
                         ScoreMessage = main.objective.getScore(NullMessage.toString());
                     }else {
-                        ScoreMessage = main.objective.getScore(ChatColor(PlaceholderAPI.setPlaceholders(player,main.main.getConfig().getStringList("q.Lines").get(i))));
+                        ScoreMessage = main.objective.getScore(ChatColor(PlaceholderAPI.setPlaceholders(player,main.main.getConfig().getStringList("ScoreboardSettings.Lines").get(i))));
                     }
                     ScoreMessage.setScore(main.main.getConfig().getStringList("ScoreboardSettings.Lines").size()-i);
                 }

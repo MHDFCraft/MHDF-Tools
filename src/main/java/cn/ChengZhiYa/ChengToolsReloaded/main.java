@@ -1,34 +1,52 @@
 package cn.ChengZhiYa.ChengToolsReloaded;
 
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.*;
+import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHashMap;
 import cn.ChengZhiYa.ChengToolsReloaded.Listener.*;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.IntHashMap;
+import cn.ChengZhiYa.ChengToolsReloaded.Metrics.Metrics;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.*;
 import cn.ChengZhiYa.ChengToolsReloaded.Ultis.YamlFileUtil;
 import cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
 
 import java.io.File;
 import java.io.IOException;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
-public final class main extends JavaPlugin {
+public final class main extends JavaPlugin implements Listener {
     public static YamlFileUtil Yaml;
     public static main main;
     public static Scoreboard scoreboard;
     public static Objective objective;
+    private static PluginDescriptionFile descriptionFile;
+    private static Plugin plugin;
+
+    public static PluginDescriptionFile getDescriptionFile() {
+        return descriptionFile;
+    }
+
+    public static main getInstance() {
+        return main;
+    }
+
+    public static Plugin getPlugin() {
+        return plugin;
+    }
 
     @Override
     public void onLoad() {
         main = this;
-
+        plugin = this;
+        descriptionFile = this.getDescription();
         Yaml = new YamlFileUtil();
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
@@ -47,12 +65,15 @@ public final class main extends JavaPlugin {
         // Plugin startup logic
         ColorLog("&7=============&e橙式插件-橙工具&7=============");
 
+        Metrics metrics = new Metrics(this, 17154);
+
         if (!isPaper()) {
             ColorLog("&e服务端不是Paper，已关闭TPS变量!");
         }
 
         if (getConfig().getBoolean("CheckVersion")) {
-            if (!CheckVersion()) {
+            BooleanHashMap.Set("IsLast",CheckVersion());
+            if (!BooleanHashMap.Get("IsLast")) {
                 ColorLog("&c当前插件版本不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/");
             }else {
                 ColorLog("&a当前插件版本是最新版!");
@@ -63,6 +84,7 @@ public final class main extends JavaPlugin {
 
         File Config_File = new File(this.getDataFolder(), "config.yml");
         File Login_File = new File(this.getDataFolder(), "LoginData.yml");
+        File Title_File = new File(this.getDataFolder(), "TitleData.yml");
 
         if (!PluginHome.exists()) {
             PluginHome.mkdirs();
@@ -79,6 +101,16 @@ public final class main extends JavaPlugin {
             if (!Login_File.exists()) {
                 try {
                     Login_File.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if (getConfig().getBoolean("PlayerTitleSettings.Enable")) {
+            if (!Title_File.exists()) {
+                try {
+                    Title_File.createNewFile();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -108,6 +140,12 @@ public final class main extends JavaPlugin {
             multi.registerCommand(this, new Gamemode(), new Gamemode(), "切换游戏模式", "gm");
         }
 
+        if (getConfig().getBoolean("PlayerTitleSettings.Enable")) {
+            multi.registerCommand(this, new PlayerTitle(), "称号系统", "PlayerTitle");
+            multi.registerCommand(this, new PlayerTitle(), "称号系统", "plt");
+            multi.registerCommand(this, new PlayerTitle(), "称号系统", "pt");
+        }
+
         if (getConfig().getBoolean("TimeMessageSettings.Enable")) {
             BukkitTask TimeMessage = new TimeMessage_Task(this).runTaskTimer(this, 0L, getConfig().getInt("TimeMessageSettings.Delay") * 20L);
             IntHashMap.Set("TimeMessageTaskId", TimeMessage.getTaskId());
@@ -116,12 +154,12 @@ public final class main extends JavaPlugin {
         if (getConfig().getBoolean("FlyEnable")) {
             multi.registerCommand(this, new Fly(), "飞行系统", "Fly");
             Bukkit.getPluginManager().registerEvents(new PlayerChangedWorld(), this);
-            Bukkit.getPluginManager().registerEvents(new PlayerRespawn(), this);
         }
 
         if (getConfig().getBoolean("BackEnable")) {
             multi.registerCommand(this, new Back(), "Back系统", "Back");
             multi.registerCommand(this, new UnBack(), "Back系统", "Unback");
+            Bukkit.getPluginManager().registerEvents(new PlayerDeath(), this);
         }
 
         if (getConfig().getBoolean("VanishEnable")) {
@@ -203,8 +241,6 @@ public final class main extends JavaPlugin {
         if (getConfig().getBoolean("BanCommandSettings.Enable")) {
             Bukkit.getPluginManager().registerEvents(new PlayerCommandSend(), this);
             Bukkit.getPluginManager().registerEvents(new PlayerChatTabComplete(), this);
-            TabCompletePacket tabCompletePacket = new TabCompletePacket();
-            tabCompletePacket.reister();
         }
 
         if (getConfig().getBoolean("SuperStopSettings.Enable")) {
@@ -225,6 +261,9 @@ public final class main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerChat(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocess(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerRespawn(), this);
+        Bukkit.getPluginManager().registerEvents(this, this);
+        new PlaceholderAPI(this).register();
         ColorLog("&a插件加载完成! 作者:292200693");
         ColorLog("&7=============&e橙式插件-橙工具&7=============");
     }

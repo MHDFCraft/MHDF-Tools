@@ -16,7 +16,7 @@ public class UnBack implements CommandExecutor {
             Player player = (Player) sender;
             if (LocationHashMap.Get(player.getName() + "_UnBack") != null) {
                 player.teleport(LocationHashMap.Get(player.getName() + "_UnBack"));
-                player.sendMessage("&a&l已返回传送前的位置");
+                player.sendMessage(ChatColor("&a&l已返回传送前的位置"));
             } else {
                 sender.sendMessage(ChatColor("&c&l找不到你前往死亡点的记录!"));
             }

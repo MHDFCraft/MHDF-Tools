@@ -17,7 +17,7 @@ public class Back implements CommandExecutor {
             if (LocationHashMap.Get(player.getName() + "_DeathLocation") != null) {
                 LocationHashMap.Set(player.getName() + "_UnBack", player.getLocation());
                 player.teleport(LocationHashMap.Get(player.getName() + "_DeathLocation"));
-                player.sendMessage("&a&l已返回死亡点，如果想回到传送前的位置请使用/unback");
+                player.sendMessage(ChatColor("&a&l已返回死亡点，如果想回到传送前的位置请使用/unback"));
             } else {
                 sender.sendMessage(ChatColor("&c&l找不到你的死亡记录!"));
             }

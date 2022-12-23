@@ -3,6 +3,7 @@ package cn.ChengZhiYa.ChengToolsReloaded.Tasks;
 import cn.ChengZhiYa.ChengToolsReloaded.main;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
@@ -24,11 +25,23 @@ public class TimeMessage_Task extends BukkitRunnable {
     public void run() {
         if (main.main.getConfig().getBoolean("TimeMessageSettings.Enable"))
             if (this.i < main.main.getConfig().getStringList("TimeMessageSettings.Message").size()) {
-                Bukkit.broadcastMessage(ChatColor(PlaceholderAPI.setPlaceholders(null,main.main.getConfig().getStringList("TimeMessageSettings.Message").get(this.i))));
+                if (main.main.getConfig().getBoolean("TimeMessageSettings.ConsoleDisplayed")) {
+                    Bukkit.broadcastMessage(ChatColor(PlaceholderAPI.setPlaceholders(null,main.main.getConfig().getStringList("TimeMessageSettings.Message").get(this.i))));
+                }else {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        player.sendMessage(ChatColor(PlaceholderAPI.setPlaceholders(null,main.main.getConfig().getStringList("TimeMessageSettings.Message").get(this.i))));
+                    }
+                }
                 this.i = order(this.i);
             } else {
                 this.i = 0;
-                Bukkit.broadcastMessage(ChatColor(PlaceholderAPI.setPlaceholders(null,main.main.getConfig().getStringList("TimeMessageSettings.Message").get(this.i))));
+                if (main.main.getConfig().getBoolean("TimeMessageSettings.ConsoleDisplayed")) {
+                    Bukkit.broadcastMessage(ChatColor(PlaceholderAPI.setPlaceholders(null,main.main.getConfig().getStringList("TimeMessageSettings.Message").get(this.i))));
+                }else {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        player.sendMessage(ChatColor(PlaceholderAPI.setPlaceholders(null,main.main.getConfig().getStringList("TimeMessageSettings.Message").get(this.i))));
+                    }
+                }
                 this.i = order(this.i);
             }
     }

@@ -37,7 +37,7 @@ public class multi {
     private static Field commandMapField;
     private static Field knownCommandsField;
     private static String nmsVersion = null;
-    public static String Version = "1.0.4";
+    public static String Version = "1.0.5";
 
     static {
         try {

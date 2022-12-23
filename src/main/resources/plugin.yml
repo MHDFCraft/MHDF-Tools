@@ -37,6 +37,8 @@ permissions:
     default: op
   ChengTools.PluginManage:
     default: op
+  ChengTools.PlayerTitle:
+    default: op
   ChengTools.Stop:
     default: op
   ChengTools.Crash:
