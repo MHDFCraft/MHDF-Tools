@@ -16,11 +16,16 @@ public class ChatDelay_Time extends BukkitRunnable {
     public void run() {
         if (main.main.getConfig().getBoolean("ChatSettings.ChatDelayEnable")) {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                if (IntHashMap.Get(player.getName() + "_ChatDelayTime") > 0 || IntHashMap.Get(player.getName() + "_ChatDelayTime") != null) {
-                    IntHashMap.Set(player.getName() + "_ChatDelayTime", IntHashMap.Get(player.getName() + "_ChatDelayTime") - 1);
+                if (IntHashMap.Get(player.getName() + "_ChatDelayTime") == null) {
+                    return;
                 }
-                if (IntHashMap.Get(player.getName() + "_ChatDelayTime") <= 0 || IntHashMap.Get(player.getName() + "_ChatDelayTime") != null) {
-                    IntHashMap.Set(player.getName() + "_ChatDelayTime", null);
+                if (IntHashMap.Get(player.getName() + "_ChatDelayTime") <= 0) {
+                    IntHashMap.Remove(player.getName() + "_ChatDelayTime");
+                    return;
+                }
+                if (IntHashMap.Get(player.getName() + "_ChatDelayTime") > 0) {
+                    IntHashMap.Set(player.getName() + "_ChatDelayTime", IntHashMap.Get(player.getName() + "_ChatDelayTime") - 1);
+                    return;
                 }
             }
         } else {

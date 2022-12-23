@@ -37,14 +37,18 @@ public class Reload implements CommandExecutor {
                 Bukkit.getScheduler().cancelTask(IntHashMap.Get("LoginMessageTaskId"));
                 IntHashMap.Set("LoginMessageTaskId", null);
             }
+            if (IntHashMap.Get("ScoreboardTaskID") != null) {
+                Bukkit.getScheduler().cancelTask(IntHashMap.Get("ScoreboardTaskID"));
+                IntHashMap.Set("ScoreboardTaskID", null);
+            }
 
-            if (main.main.getConfig().getBoolean("TpaSettings.Enable")) {
+            if (main.main.getConfig().getBoolean("TpaEnable")) {
                 BukkitTask TpaTime = new Tpa_Time(main.main).runTaskTimer(main.main, 0L, 20);
                 IntHashMap.Set("TpaTimeTaskId", TpaTime.getTaskId());
                 BukkitTask TpaDetect = new Tpa_Detect(main.main).runTaskTimer(main.main, 0L, 60 * 20);
                 IntHashMap.Set("TpaDetectTaskId", TpaDetect.getTaskId());
             }
-            if (main.main.getConfig().getBoolean("ChatDelayEnable")) {
+            if (main.main.getConfig().getBoolean("ChatSettings.ChatDelayEnable")) {
                 BukkitTask ChatDelayTime = new ChatDelay_Time(main.main).runTaskTimer(main.main, 0L, 20);
                 IntHashMap.Set("ChatDelayTaskId", ChatDelayTime.getTaskId());
             }
@@ -55,6 +59,10 @@ public class Reload implements CommandExecutor {
             if (main.main.getConfig().getBoolean("LoginSystemSettings.Enable")) {
                 BukkitTask LoginMessage = new LoginMessage_Task(main.main).runTaskTimer(main.main, 0L, 20L);
                 IntHashMap.Set("LoginMessageTaskId", LoginMessage.getTaskId());
+            }
+            if (main.main.getConfig().getBoolean("ScoreboardSettings.Enable")) {
+                BukkitTask Scoreboard = new Scoreboard_Task(main.main).runTaskTimer(main.main, 0L, 20L);
+                IntHashMap.Set("ScoreboardTaskID", Scoreboard.getTaskId());
             }
             main.main.reloadConfig();
             sender.sendMessage(ChatColor("&a&l重载完成!"));

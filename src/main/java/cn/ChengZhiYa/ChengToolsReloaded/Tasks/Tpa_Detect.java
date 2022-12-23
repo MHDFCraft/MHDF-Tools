@@ -20,7 +20,7 @@ public class Tpa_Detect extends BukkitRunnable {
     }
 
     public void run() {
-        if (main.main.getConfig().getBoolean("TpaSettings.Enable")) {
+        if (main.main.getConfig().getBoolean("TpaEnable")) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 String PlayerName = player.getName();
                 if (StringHashMap.Get(PlayerName + "_Temp_TpaPlayerName") != null) {

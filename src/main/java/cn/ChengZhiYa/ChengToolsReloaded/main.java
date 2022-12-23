@@ -7,17 +7,23 @@ import cn.ChengZhiYa.ChengToolsReloaded.Tasks.*;
 import cn.ChengZhiYa.ChengToolsReloaded.Ultis.YamlFileUtil;
 import cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.io.File;
 import java.io.IOException;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.ColorLog;
+import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class main extends JavaPlugin {
     public static YamlFileUtil Yaml;
     public static main main;
+    public static Scoreboard scoreboard;
+    public static Objective objective;
 
     @Override
     public void onLoad() {
@@ -40,6 +46,10 @@ public final class main extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         ColorLog("&7=============&e橙式插件-橙工具&7=============");
+
+        if (!isPaper()) {
+            ColorLog("&e服务端不是Paper，已关闭TPS变量!");
+        }
         File PluginHome = new File(String.valueOf(this.getDataFolder()));
 
         File Config_File = new File(this.getDataFolder(), "config.yml");
@@ -78,6 +88,20 @@ public final class main extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
         }
 
+        if (getConfig().getBoolean("MOTDSettings.Enable")) {
+            if (isPaper()) {
+                Bukkit.getPluginManager().registerEvents(new PaperServerListPing(), this);
+            }else {
+                Bukkit.getPluginManager().registerEvents(new ServerListPing(), this);
+            }
+        }
+
+        if (getConfig().getBoolean("ScoreboardSettings.Enable")) {
+            scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+            BukkitTask Scoreboard = new Scoreboard_Task(this).runTaskTimer(this, 0L, 20L);
+            IntHashMap.Set("ScoreboardTaskID", Scoreboard.getTaskId());
+        }
+
         if (getConfig().getBoolean("EasyGamemodeCommandEnable")) {
             multi.registerCommand(this, new Gamemode(), new Gamemode(), "切换游戏模式", "Gamemode");
             multi.registerCommand(this, new Gamemode(), new Gamemode(), "切换游戏模式", "gm");
@@ -110,7 +134,7 @@ public final class main extends JavaPlugin {
             multi.registerCommand(this, new CrashPlayerClient(), "崩端系统", "Crash");
         }
 
-        if (getConfig().getBoolean("TpaSettings.Enable")) {
+        if (getConfig().getBoolean("TpaEnable")) {
             multi.registerCommand(this, new Tpa(), "Tpa系统", "Tpa");
             multi.registerCommand(this, new TpaAccept(), "接受TPA", "TpaAccept");
             multi.registerCommand(this, new TpaDefuse(), "拒绝TPA", "TpaDefuse");
@@ -140,7 +164,7 @@ public final class main extends JavaPlugin {
             multi.registerCommand(this, new Night(), "快速天黑命令", "Night");
         }
 
-        if (getConfig().getBoolean("ChatDelayEnable")) {
+        if (getConfig().getBoolean("ChatSettings.ChatDelayEnable")) {
             BukkitTask ChatDelayTime = new ChatDelay_Time(this).runTaskTimer(this, 0L, 20);
             IntHashMap.Set("ChatDelayTaskId", ChatDelayTime.getTaskId());
         }
@@ -177,6 +201,9 @@ public final class main extends JavaPlugin {
 
         if (getConfig().getBoolean("BanCommandSettings.Enable")) {
             Bukkit.getPluginManager().registerEvents(new PlayerCommandSend(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerChatTabComplete(), this);
+            TabCompletePacket tabCompletePacket = new TabCompletePacket();
+            tabCompletePacket.reister();
         }
 
         if (getConfig().getBoolean("SuperStopSettings.Enable")) {
@@ -198,6 +225,10 @@ public final class main extends JavaPlugin {
         // Plugin shutdown logic
         main = null;
         ColorLog("&7=============&e橙式插件-橙工具&7=============");
+        ClearAllHashMap();
+        if (objective != null) {
+            objective.unregister();
+        }
         ColorLog("&c插件卸载完成! 作者:292200693");
         ColorLog("&7=============&e橙式插件-橙工具&7=============");
     }

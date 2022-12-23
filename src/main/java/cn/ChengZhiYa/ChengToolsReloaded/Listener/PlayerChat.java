@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Listener;
 
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.IntHashMap;
+import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHashMap;
 import cn.ChengZhiYa.ChengToolsReloaded.main;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,11 +22,6 @@ public class PlayerChat implements Listener {
                 event.getPlayer().sendMessage(ChatColor("&c登录后才能聊天!"));
                 event.setCancelled(true);
             }
-        }
-        if (IntHashMap.Get(player.getName() + "_ChatDelayTime") != null) {
-            player.sendMessage(ChatColor("&e聊天冷却中!请等待" + IntHashMap.Get(player.getName() + "_ChatDelayTime" + "秒后重试")));
-            event.setCancelled(true);
-            return;
         }
         String Format = main.main.getConfig().getString("ChatSettings.ChatFormat");
         Format = Objects.requireNonNull(Format).replaceAll("%Player%", player.getName());
@@ -48,10 +44,29 @@ public class PlayerChat implements Listener {
                 }
             }
         }
+
+        if (main.main.getConfig().getBoolean("ChatSettings.AntiRepeatChat")) {
+            if (StringHashMap.Get(player + "_ChatMessage") != null) {
+                if (Message.equals(StringHashMap.Get(player + "_ChatMessage"))) {
+                    event.setCancelled(true);
+                    player.sendMessage(ChatColor("&c&l请不要刷屏!"));
+                    return;
+                }
+            }
+            StringHashMap.Set(player + "_ChatMessage", Message.toLowerCase());
+        }
+
+        if (IntHashMap.Get(player.getName() + "_ChatDelayTime") != null) {
+            player.sendMessage(ChatColor("&e聊天冷却中!请等待" + IntHashMap.Get(player.getName() + "_ChatDelayTime") + "秒后重试"));
+            event.setCancelled(true);
+            return;
+        }
+
         if (main.main.getConfig().getBoolean("ChatSettings.ChatDelayEnable")) {
             if (!player.hasPermission("ChengTools.Chat.DelayBypass")) {
                 IntHashMap.Set(player.getName() + "_ChatDelayTime", main.main.getConfig().getInt("ChatSettings.ChatDelay"));
             }
         }
+
     }
 }

@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerCommandSendEvent;
 
 public class PlayerCommandSend implements Listener {
     @EventHandler
+
     public void On_Event(PlayerCommandSendEvent event) {
         if (main.main.getConfig().getBoolean("BanCommandSettings.Enable")) {
             if (event.getPlayer().hasPermission("ChengTools.BanCommand.Bypass")) {

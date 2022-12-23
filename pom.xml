@@ -6,7 +6,7 @@
 
     <groupId>Cheng-Tools-Reloaded</groupId>
     <artifactId>Cheng-Tools-Reloaded</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <name>Cheng-Tools-Reloaded</name>
@@ -90,7 +90,8 @@
             <artifactId>ProtocolLib</artifactId>
             <version>4.8.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/com/comphenix/ProtocolLib/ProtocolLib.jar</systemPath>
+            <systemPath>${project.basedir}/libs/ProtocolLib.jar</systemPath>
         </dependency>
+
     </dependencies>
 </project>

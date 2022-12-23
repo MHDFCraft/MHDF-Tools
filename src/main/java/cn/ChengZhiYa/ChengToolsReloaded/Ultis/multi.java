@@ -1,5 +1,8 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Ultis;
 
+import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHashMap;
+import cn.ChengZhiYa.ChengToolsReloaded.HashMap.IntHashMap;
+import cn.ChengZhiYa.ChengToolsReloaded.HashMap.LocationHashMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHashMap;
 import cn.ChengZhiYa.ChengToolsReloaded.Plugman.GentleUnload;
 import cn.ChengZhiYa.ChengToolsReloaded.main;
@@ -21,6 +24,7 @@ import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -45,8 +49,26 @@ public class multi {
 
     private multi() {}
 
+    public static void ClearAllHashMap() {
+        StringHashMap.Clear();
+        IntHashMap.Clear();
+        BooleanHashMap.Clear();
+        LocationHashMap.Clear();
+    }
+
+    public static boolean isPaper() {
+        boolean IsPaper = true;
+        try {
+            Bukkit.class.getMethod("getTPS");
+        } catch (NoSuchMethodException e) {
+            IsPaper = false;
+        }
+        return IsPaper;
+    }
+
     public static String ChatColor(String Message) {
-        return ChatColor.translateAlternateColorCodes('&', Message);
+        Message = ChatColor.translateAlternateColorCodes('&', Message);
+        return Message;
     }
 
     public static String Sha256(String Message) {

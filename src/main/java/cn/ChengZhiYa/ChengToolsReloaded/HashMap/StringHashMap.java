@@ -12,4 +12,12 @@ public class StringHashMap {
     public static String Get(String HashMapName) {
         return Temp.get(HashMapName);
     }
+
+    public static void Remove(String HashMapName) {
+        Temp.remove(HashMapName);
+    }
+
+    public static void Clear() {
+        Temp.clear();
+    }
 }

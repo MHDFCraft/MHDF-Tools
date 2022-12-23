@@ -23,15 +23,17 @@ public class List implements CommandExecutor {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 PlayerList.add(player.getName());
             }
-            sender.sendMessage(ChatColor(PlaceholderAPI.setPlaceholders(null,Message.
-                    replaceAll("%mem_used%", String.valueOf((runtime.totalMemory() - runtime.freeMemory()) / 1048576L)).
+            Message = Message.replaceAll("%mem_used%", String.valueOf((runtime.totalMemory() - runtime.freeMemory()) / 1048576L)).
                     replaceAll("%mem_max%", String.valueOf(runtime.maxMemory() / 1048576L)).
                     replaceAll("%PlayerList%", String.valueOf(PlayerList)).
                     replaceAll("%Online%", String.valueOf(Bukkit.getOnlinePlayers().size())).
-                    replaceAll("%Max_Online%", String.valueOf(Bukkit.getMaxPlayers())).
-                    replaceAll("%TPS_1%", getTps(1)).
-                    replaceAll("%TPS_5%", getTps(5)).
-                    replaceAll("%TPS_15%", getTps(15)))));
+                    replaceAll("%Max_Online%", String.valueOf(Bukkit.getMaxPlayers()));
+            if (isPaper()) {
+                Message = Message.replaceAll("%TPS_1%", getTps(1)).
+                        replaceAll("%TPS_5%", getTps(5)).
+                        replaceAll("%TPS_15%", getTps(15));
+            }
+            sender.sendMessage(ChatColor(PlaceholderAPI.setPlaceholders(null,Message)));
         }
         return false;
     }
