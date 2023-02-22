@@ -1,0 +1,233 @@
+#检查更新
+CheckVersion: true
+
+#自定义玩家进入服务器提示
+CustomJoinServerMessageSettings:
+  #开关
+  Enable: true
+  #玩家进入服务器的提示
+  PlayerJoinMessage: "&7[&8玩家&7]&a&l%PlayerName%&e&l加入了游戏"
+  #管理员进入服务器的提示
+  AdminJoinMessage: "&7[&c管理员&7]&a&l%PlayerName%&e&l加入了游戏"
+
+#自定义玩家退出服务器提示
+CustomQuitServerMessageSettings:
+  #开关
+  Enable: true
+  #玩家退出服务器的提示
+  PlayerQuitMessage: "&7[&8&l玩家&7]&a&l%PlayerName%&e&l离开了游戏"
+  #管理员退出服务器的提示
+  AdminQuitMessage: "&7[&c&l管理员&7]&a&l%PlayerName%&e&l离开了游戏"
+
+#更简单的Gamemode
+EasyGamemodeCommandEnable: true
+
+#Fly系统
+FlyEnable: true
+
+#Vanish系统
+VanishEnable: true
+
+#Back系统
+BackEnable: true
+
+#Invsee系统
+InvseeEnable: true
+
+#Back系统
+HatEnable: true
+
+#崩端系统
+CrashPlayerEnable: true
+
+#插件管理系统
+PluginManageEnable: true
+
+#快速晴天命令
+FastSunCommandEnable: true
+
+#点券系统
+PointEnable: true
+
+#快速调时间命令
+FastSetTimeCommandEnable: true
+
+#查询玩家IP与IP归属地命令
+IpCommandEnable: true
+
+#Tpa系统
+TpaEnable: true
+
+#Tpahere系统
+TpahereEnable: true
+
+#原版op白名单系统设置
+VanillaOpWhitelist:
+  #开关
+  Enable: false
+  #白名单列表
+  Whitelist:
+    - "ChengZhiYa"
+
+#冻结玩家命令设置
+FreezeCommandSettings:
+  #开关
+  Enable: true
+  #冻结提示设置
+  FreezeMessageSettins:
+    #冻结提示开关
+    Enable: true
+    #冻结提示
+    Message: "&c你被冻结了，清联系管理员!"
+
+#超级List命令设置
+SuperListSettings:
+  #开关
+  Enable: true
+  #命令提示
+  Message:
+    - "&7-----------&6List系统&7-----------"
+    - "&eTPS: %TPS_1% %TPS_5% %TPS_15%"
+    - "&e内存占用: %mem_used%&7/&e%mem_max%"
+    - "&e在线玩家: %Online%/%Max_Online%"
+    - "&e玩家列表:"
+    - "&e%PlayerList%"
+    - "&7-----------&6List系统&7-----------"
+
+#家系统设置
+HomeSystemSettings:
+  #开关
+  Enable: true
+  #一个玩家最多能创建多少个家
+  MaxHomeTime: 5
+
+#公告系统设置
+TimeMessageSettings:
+  #开关
+  Enable: true
+  #公告延时(单位:秒)
+  Delay: 60
+  #后台显示公告
+  ConsoleDisplayed: true
+  #公告内容
+  Message:
+    - "欢迎使用橙汁插件!"
+
+#玩家称号设置
+PlayerTitleSettings:
+  #开关
+  Enable: true
+  #默认前缀
+  DefaultPrefix: "&8玩家"
+  #默认后缀
+  DefaultSuffix: ""
+  #称号或后缀的前缀
+  Prefix: "&7[&f"
+  #称号或后缀的后缀
+  Suffix: "&7]&f"
+  #显示称号和后缀
+  ShowPrefixAndSuffix: true
+
+#登录系统设置
+LoginSystemSettings:
+  #开关
+  Enable: true
+  #密码最短长度限制
+  MinPaswordLength: 6
+  #密码最大长度限制
+  MaxPaswordLength: 18
+  #相同IP自动登录
+  AutoLogin: true
+  #过于简单的密码
+  EasyPasswords:
+    - "123456"
+  #未登录允许使用的命令
+  AllowUsedComamnds:
+    - "/l"
+    - "/login"
+    - "/reg"
+    - "/register"
+
+#禁用命令设置
+BanCommandSettings:
+  #开关
+  Enable: true
+  #OP免疫
+  OpBypass: false
+  #禁用命令列表
+  BanCommandList:
+    - plugins
+    - bukkit:plugins
+    - pl
+    - bukkit:pl
+    - ver
+    - version
+    - bukkit:ver
+    - bukkit:version
+  #使用被禁用的命令提示
+  UsedBanCommandMessage:
+    - "&c这个命令不存在,请重试!"
+
+#超级Stop命令设置
+SuperStopSettings:
+  #开关
+  Enable: true
+  #服务器名称
+  ServerName: "&6&l橙式插件-橙工具"
+  #默认关服提示
+  DefaultStopMessage: "&c&l服务器已关闭"
+
+#MOTD系统设置
+MOTDSettings:
+  #开关
+  Enable: true
+  #最大玩家数
+  MaxPlayers: 5835
+  #最大玩家数
+  Line1: "&6ChengTools"
+  Line2: "&6HelloWorld!"
+
+#计分板系统设置
+ScoreboardSettings:
+  #开关
+  Enable: true
+  #标题
+  Title: "&6橙式插件-橙工具"
+  #内容
+  Lines:
+    - "&e&l欢迎%player_name%"
+    - "&e&lqwq"
+    - "&e&lawa"
+
+#Spawn系统设置
+SpawnSettings:
+  #开关
+  Enable: true
+  #进服传送至Spawn位置
+  JoinTeleport: false
+  #位置信息配置
+  World: "world"
+  X: 0.0
+  Y: 3.0
+  Z: 0.0
+  Yaw: 90.0
+  Pitch: 0.0
+
+#聊天功能设置
+ChatSettings:
+  #防止重复聊天
+  AntiRepeatChat: true
+  #聊天间隔限制开关
+  ChatDelayEnable: false
+  #聊天间隔限制
+  ChatDelay: 3
+  #聊天自定义格式开关
+  ChatFormatEnable: true
+  #聊天自定义格式
+  ChatFormat: "&a%Player% &7>&f"
+  #聊天屏蔽词开关
+  ChatBlackWorkEnable: true
+  #聊天屏蔽词
+  ChatBlackWork:
+    - SB
+    - 傻逼
