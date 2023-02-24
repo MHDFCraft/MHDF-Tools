@@ -127,11 +127,11 @@ public class multi {
     }
 
     public static String ChatColor(OfflinePlayer Player, String Message) {
-        Message = ChatColor.translateAlternateColorCodes('&', Message);
+        Message = Message;
         if (main.PAPI) {
             Message = PlaceholderAPI.setPlaceholders(Player, Message);
         }
-        return Message;
+        return ChatColor(Message);
     }
 
     public static String Sha256(String Message) {
