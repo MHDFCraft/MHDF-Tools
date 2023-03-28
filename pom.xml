@@ -6,7 +6,7 @@
 
     <groupId>Cheng-Tools-Reloaded</groupId>
     <artifactId>Cheng-Tools-Reloaded</artifactId>
-    <version>1.0.10</version>
+    <version>1.0.11</version>
     <packaging>jar</packaging>
 
     <name>Cheng-Tools-Reloaded</name>
@@ -86,10 +86,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20190722</version>
-            <scope>provided</scope>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
         </dependency>
         <dependency>
             <groupId>com.comphenix</groupId>
