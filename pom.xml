@@ -6,7 +6,7 @@
 
     <groupId>Cheng-Tools-Reloaded</groupId>
     <artifactId>Cheng-Tools-Reloaded</artifactId>
-    <version>1.0.11</version>
+    <version>1.0.12</version>
     <packaging>jar</packaging>
 
     <name>Cheng-Tools-Reloaded</name>
@@ -70,6 +70,10 @@
             <id>localrepository</id>
             <url>file://${basedir}/libs</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -88,7 +92,13 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.47</version>
+            <version>1.2.83</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.comphenix</groupId>
