@@ -18,12 +18,12 @@ on:
     # The branches below must be a subset of the branches above
     branches: [ "main" ]
   schedule:
-    - cron: '40 17 * * 2'
+    - cron: '19 14 * * 2'
 
 jobs:
   analyze:
     name: Analyze
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     permissions:
       actions: read
       contents: read
@@ -37,10 +37,16 @@ jobs:
         # Use only 'java' to analyze code written in Java, Kotlin or both
         # Use only 'javascript' to analyze code written in JavaScript, TypeScript or both
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
-               
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+
+    - name: Setup Java JDK
+      uses: actions/setup-java@v3.9.0
+      with:
+        # The Java version to set up. Takes a whole or semver Java version. See examples of supported syntax in README file
+        java-version: 18
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -57,24 +63,18 @@ jobs:
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
+
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
 
     #   If the Autobuild fails above, remove it and uncomment the following three lines.
     #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.
-    - name: Setup Java JDK
-      uses: actions/setup-java@v1.4.4
-      with:
-    # The Java version to make available on the path. Takes a whole or semver Java version, or 1.x syntax (e.g. 1.8 => Java 8.x). Early access versions can be specified in the form of e.g. 14-ea, 14.0.0-ea, or 14.0.0-ea.28
-        java-version: 18
-    # The package type (jre, jdk, jdk+fx)
-        java-package: jdk
-    # The architecture (x86, x64) of the package.
-        architecture: x64
-        
-    - run: |
-        echo "Run, Build Application using script"
-        maven packgae
+
+    # - run: |
+    #     echo "Run, Build Application using script"
+    #     ./location_of_script_within_repo/buildscript.sh
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
