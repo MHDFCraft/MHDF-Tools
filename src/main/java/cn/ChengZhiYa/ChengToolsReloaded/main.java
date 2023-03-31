@@ -14,6 +14,7 @@ import cn.ChengZhiYa.ChengToolsReloaded.Listener.*;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.*;
 import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import cn.ChengZhiYa.ChengToolsReloaded.Metrics.Metrics;
+import com.alibaba.fastjson.parser.ParserConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -47,6 +48,7 @@ public final class main extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         // Plugin startup logic
+        ParserConfig.getGlobalInstance().setSafeMode(true);
         ColorLog("&7=============&e橙式插件-橙工具&7=============");
 
         if (getConfig().getBoolean("bStats")) {
