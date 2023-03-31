@@ -32,12 +32,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'java18' ]
+        language: [ 'java' ]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Use only 'java' to analyze code written in Java, Kotlin or both
         # Use only 'javascript' to analyze code written in JavaScript, TypeScript or both
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
-
+               
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -62,7 +62,16 @@ jobs:
 
     #   If the Autobuild fails above, remove it and uncomment the following three lines.
     #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.
-
+    - name: Setup Java JDK
+      uses: actions/setup-java@v1.4.4
+      with:
+    # The Java version to make available on the path. Takes a whole or semver Java version, or 1.x syntax (e.g. 1.8 => Java 8.x). Early access versions can be specified in the form of e.g. 14-ea, 14.0.0-ea, or 14.0.0-ea.28
+        java-version: 18
+    # The package type (jre, jdk, jdk+fx)
+        java-package: jdk
+    # The architecture (x86, x64) of the package.
+        architecture: x64
+        
     - run: |
         echo "Run, Build Application using script"
         maven packgae
