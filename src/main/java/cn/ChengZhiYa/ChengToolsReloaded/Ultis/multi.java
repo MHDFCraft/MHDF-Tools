@@ -1,6 +1,9 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Ultis;
 
-import cn.ChengZhiYa.ChengToolsReloaded.HashMap.*;
+import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHashMap;
+import cn.ChengZhiYa.ChengToolsReloaded.HashMap.IntHashMap;
+import cn.ChengZhiYa.ChengToolsReloaded.HashMap.LocationHashMap;
+import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHashMap;
 import cn.ChengZhiYa.ChengToolsReloaded.main;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -29,10 +32,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class multi {
+    public static final String Version = "1.0.13";
     protected static final HashMap<Object, GentleUnload> gentleUnloads = new HashMap<>();
     private static final Class<?> pluginClassLoader;
     private static final Field pluginClassLoaderPlugin;
-    public static final String Version = "1.0.12";
     private static Field commandMapField;
     private static Field knownCommandsField;
     private static String nmsVersion = null;
@@ -182,56 +185,56 @@ public class multi {
     }
 
     public static String load(String name) {
-            Plugin target;
+        Plugin target;
 
-            File pluginDir = new File("plugins");
+        File pluginDir = new File("plugins");
 
-            if (!pluginDir.isDirectory())
-                return name;
+        if (!pluginDir.isDirectory())
+            return name;
 
-            File pluginFile = new File(pluginDir, name + ".jar");
+        File pluginFile = new File(pluginDir, name + ".jar");
 
-            if (!pluginFile.isFile()) for (File f : Objects.requireNonNull(pluginDir.listFiles()))
-                if (f.getName().endsWith(".jar")) try {
-                    PluginDescriptionFile desc = main.main.getPluginLoader().getPluginDescription(f);
-                    if (desc.getName().equalsIgnoreCase(name)) {
-                        pluginFile = f;
-                        break;
-                    }
-                } catch (InvalidDescriptionException e) {
-                    return name;
+        if (!pluginFile.isFile()) for (File f : Objects.requireNonNull(pluginDir.listFiles()))
+            if (f.getName().endsWith(".jar")) try {
+                PluginDescriptionFile desc = main.main.getPluginLoader().getPluginDescription(f);
+                if (desc.getName().equalsIgnoreCase(name)) {
+                    pluginFile = f;
+                    break;
                 }
-
-            try {
-                target = Bukkit.getPluginManager().loadPlugin(pluginFile);
             } catch (InvalidDescriptionException e) {
-                return "这个插件的描述文件无效!";
-            } catch (InvalidPluginException e) {
-                return "这个插件不存在!";
+                return name;
             }
+
+        try {
+            target = Bukkit.getPluginManager().loadPlugin(pluginFile);
+        } catch (InvalidDescriptionException e) {
+            return "这个插件的描述文件无效!";
+        } catch (InvalidPluginException e) {
+            return "这个插件不存在!";
+        }
 
         Bukkit.getScheduler().runTaskAsynchronously(main.main, () -> {
             Objects.requireNonNull(target).onLoad();
-            Bukkit.getPluginManager().enablePlugin(target);
 
-                Map<String, Command> knownCommands = getKnownCommands();
-                List<Map.Entry<String, Command>> commands = Objects.requireNonNull(knownCommands).entrySet().stream().filter(s -> {
-                            if (s.getKey().contains(":")) {
-                                return s.getKey().split(":")[0].equalsIgnoreCase(target.getName());
-                            } else {
-                                ClassLoader cl = s.getValue().getClass().getClassLoader();
-                                try {
-                                    return cl.getClass() == pluginClassLoader && pluginClassLoaderPlugin.get(cl) == target;
-                                } catch (IllegalAccessException e) {
-                                    return false;
-                                }
+            Map<String, Command> knownCommands = getKnownCommands();
+            List<Map.Entry<String, Command>> commands = Objects.requireNonNull(knownCommands).entrySet().stream().filter(s -> {
+                        if (s.getKey().contains(":")) {
+                            return s.getKey().split(":")[0].equalsIgnoreCase(target.getName());
+                        } else {
+                            ClassLoader cl = s.getValue().getClass().getClassLoader();
+                            try {
+                                return cl.getClass() == pluginClassLoader && pluginClassLoaderPlugin.get(cl) == target;
+                            } catch (IllegalAccessException e) {
+                                return false;
                             }
-                        })
-                        .collect(Collectors.toList());
+                        }
+                    })
+                    .collect(Collectors.toList());
 
-                if (Bukkit.getOnlinePlayers().size() >= 1)
-                    for (Player player : Bukkit.getOnlinePlayers()) player.updateCommands();
+            if (Bukkit.getOnlinePlayers().size() >= 1)
+                for (Player player : Bukkit.getOnlinePlayers()) player.updateCommands();
         });
+        Bukkit.getPluginManager().enablePlugin(Objects.requireNonNull(target));
         return null;
     }
 
@@ -319,7 +322,8 @@ public class multi {
                     listenersField.setAccessible(true);
                     //noinspection unchecked
                     listeners = (Map<Event, SortedSet<RegisteredListener>>) listenersField.get(pluginManager);
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
 
                 Field commandMapField = Bukkit.getPluginManager().getClass().getDeclaredField("commandMap");
                 commandMapField.setAccessible(true);
@@ -365,7 +369,8 @@ public class multi {
                                 e.printStackTrace();
                             }
                         }
-                    } catch (IllegalStateException ignored) {}
+                    } catch (IllegalStateException ignored) {
+                    }
                 }
 
             if (plugins != null)
@@ -389,11 +394,14 @@ public class multi {
                 Field pluginInitField = cl.getClass().getDeclaredField("pluginInit");
                 pluginInitField.setAccessible(true);
                 pluginInitField.set(cl, null);
-            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ignored) {}
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException |
+                     IllegalAccessException ignored) {
+            }
             try {
 
                 ((URLClassLoader) cl).close();
-            } catch (IOException ignored) {}
+            } catch (IOException ignored) {
+            }
         }
         System.gc();
     }
@@ -563,7 +571,7 @@ public class multi {
         if (TitleFileData.getString(player.getName() + "_Prefix") == null) {
             if (!Objects.equals(DefaultPrefix, "")) {
                 PlayerPrefix = Prefix + DefaultPrefix + Suffix;
-            }else {
+            } else {
                 PlayerPrefix = "";
             }
         } else {
@@ -572,7 +580,7 @@ public class multi {
         if (TitleFileData.getString(player.getName() + "_Suffix") == null) {
             if (!Objects.equals(DefaultSuffix, "")) {
                 PlayerSuffix = Prefix + DefaultSuffix + Suffix;
-            }else {
+            } else {
                 PlayerSuffix = "";
             }
         } else {
@@ -584,56 +592,40 @@ public class multi {
     public static String getLang(String LangVaule) {
         File LangData = new File(main.main.getDataFolder() + "/lang.yml");
         YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
-        return ChatColor(LangFileData.getString(LangVaule));
+        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule)));
     }
 
     public static String getLang(String LangVaule, String Vaule1) {
-        final String[] Message = {""};
-        Bukkit.getScheduler().runTaskAsynchronously(main.main, () -> {
-            File LangData = new File(main.main.getDataFolder() + "/lang.yml");
-            YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
-            Message[0] = ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
-                    .replaceAll("%1",Vaule1));
-        });
-        return Message[0];
+        File LangData = new File(main.main.getDataFolder() + "/lang.yml");
+        YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
+        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
+                .replaceAll("%1", Vaule1));
     }
 
     public static String getLang(String LangVaule, String Vaule1, String Vaule2) {
-        final String[] Message = {""};
-        Bukkit.getScheduler().runTaskAsynchronously(main.main, () -> {
-            File LangData = new File(main.main.getDataFolder() + "/lang.yml");
-            YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
-            Message[0] = ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
-                    .replaceAll("%1",Vaule1)
-                    .replaceAll("%2",Vaule2));
-        });
-        return Message[0];
+        File LangData = new File(main.main.getDataFolder() + "/lang.yml");
+        YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
+        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
+                .replaceAll("%1", Vaule1)
+                .replaceAll("%2", Vaule2));
     }
 
     public static String getLang(String LangVaule, String Vaule1, String Vaule2, String Vaule3) {
-        final String[] Message = {""};
-        Bukkit.getScheduler().runTaskAsynchronously(main.main, () -> {
-            File LangData = new File(main.main.getDataFolder() + "/lang.yml");
-            YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
-            Message[0] = ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
-                    .replaceAll("%1",Vaule1)
-                    .replaceAll("%2",Vaule2)
-                    .replaceAll("%3",Vaule3));
-        });
-        return Message[0];
+        File LangData = new File(main.main.getDataFolder() + "/lang.yml");
+        YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
+        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
+                .replaceAll("%1", Vaule1)
+                .replaceAll("%2", Vaule2)
+                .replaceAll("%3", Vaule3));
     }
 
     public static String getLang(String LangVaule, String Vaule1, String Vaule2, String Vaule3, String Vaule4) {
-        final String[] Message = {""};
-        Bukkit.getScheduler().runTaskAsynchronously(main.main, () -> {
-            File LangData = new File(main.main.getDataFolder() + "/lang.yml");
-            YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
-            Message[0] = ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
-                    .replaceAll("%1",Vaule1)
-                    .replaceAll("%2",Vaule2)
-                    .replaceAll("%3",Vaule3)
-                    .replaceAll("%4",Vaule4));
-        });
-        return Message[0];
+        File LangData = new File(main.main.getDataFolder() + "/lang.yml");
+        YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
+        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
+                .replaceAll("%1", Vaule1)
+                .replaceAll("%2", Vaule2)
+                .replaceAll("%3", Vaule3)
+                .replaceAll("%4", Vaule4));
     }
 }

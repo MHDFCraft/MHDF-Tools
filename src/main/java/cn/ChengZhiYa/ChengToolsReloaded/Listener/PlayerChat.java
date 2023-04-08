@@ -25,9 +25,9 @@ public class PlayerChat implements Listener {
         String Format = Objects.requireNonNull(main.main.getConfig().getString("ChatSettings.ChatFormat")).replaceAll("%Player%", player.getName());
         if (main.main.getConfig().getBoolean("ChatSettings.ChatFormatEnable")) {
             if (player.hasPermission("ChengTools.Chat.Color")) {
-                event.setFormat(ChatColor(player, Format) + ChatColor(Message));
+                event.setFormat(ChatColor(player, Format) + ChatColor(Message.replaceAll("%","%%")));
             } else {
-                event.setFormat(ChatColor(player, Format) + Message);
+                event.setFormat(ChatColor(player, Format) + Message.replaceAll("%","%%"));
             }
         }
         if (main.main.getConfig().getBoolean("ChatSettings.ChatBlackWorkEnable")) {
