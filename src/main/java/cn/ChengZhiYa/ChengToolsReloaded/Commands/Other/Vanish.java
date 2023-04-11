@@ -25,14 +25,14 @@ public class Vanish implements CommandExecutor {
                     }
                     PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);
                     player.addPotionEffect(INVISIBILITY);
-                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.True")));
+                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.Enable")));
                     StringHashMap.Set(player.getName() + "_Vanish", "已启用");
                 } else {
                     for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
                         OnlinePlayer.showPlayer(main.main, player);
                     }
                     player.removePotionEffect(PotionEffectType.INVISIBILITY);
-                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.False")));
+                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.Disabled")));
                     StringHashMap.Set(player.getName() + "_Vanish", null);
                 }
             } else {
@@ -54,16 +54,16 @@ public class Vanish implements CommandExecutor {
                     }
                     PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);
                     player.addPotionEffect(INVISIBILITY);
-                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.True")));
-                    sender.sendMessage(getLang("Vanish.SetDone", player.getName(), getLang("Vanish.True")));
+                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.Enable")));
+                    sender.sendMessage(getLang("Vanish.SetDone", player.getName(), getLang("Vanish.Enable")));
                     StringHashMap.Set(player.getName() + "_Vanish", "已启用");
                 } else {
                     for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
                         OnlinePlayer.showPlayer(main.main, player);
                     }
                     player.removePotionEffect(PotionEffectType.INVISIBILITY);
-                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.False")));
-                    sender.sendMessage(getLang("Vanish.SetDone", player.getName(), getLang("Vanish.False")));
+                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.Disabled")));
+                    sender.sendMessage(getLang("Vanish.SetDone", player.getName(), getLang("Vanish.Disabled")));
                     StringHashMap.Set(player.getName() + "_Vanish", null);
                 }
             } else {

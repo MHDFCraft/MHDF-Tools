@@ -18,11 +18,11 @@ public class Fly implements CommandExecutor {
                     Player player = (Player) sender;
                     if (StringHashMap.Get(player.getName() + "_Fly") == null) {
                         player.setAllowFlight(true);
-                        player.sendMessage(getLang("Fly.Done", getLang("Fly.True")));
+                        player.sendMessage(getLang("Fly.Done", getLang("Fly.Enable")));
                         StringHashMap.Set(player.getName() + "_Fly", "已启用");
                     } else {
                         player.setAllowFlight(false);
-                        player.sendMessage(getLang("Fly.Done", getLang("Fly.False")));
+                        player.sendMessage(getLang("Fly.Done", getLang("Fly.Disabled")));
                         StringHashMap.Set(player.getName() + "_Fly", null);
                     }
             } else {
@@ -40,13 +40,13 @@ public class Fly implements CommandExecutor {
                 assert player != null;
                 if (StringHashMap.Get(player.getName() + "_Fly") == null) {
                     player.setAllowFlight(true);
-                    player.sendMessage(getLang("Fly.Done", getLang("Fly.True")));
-                    sender.sendMessage(getLang("Fly.SetDone", player.getName(), getLang("Fly.True")));
+                    player.sendMessage(getLang("Fly.Done", getLang("Fly.Enable")));
+                    sender.sendMessage(getLang("Fly.SetDone", player.getName(), getLang("Fly.Enable")));
                     StringHashMap.Set(player.getName() + "_Fly", "已启用");
                 } else {
                     player.setAllowFlight(false);
-                    player.sendMessage(getLang("Fly.Done", getLang("Fly.False")));
-                    sender.sendMessage(getLang("Fly.SetDone", player.getName(), getLang("Fly.False")));
+                    player.sendMessage(getLang("Fly.Done", getLang("Fly.Disabled")));
+                    sender.sendMessage(getLang("Fly.SetDone", player.getName(), getLang("Fly.Disabled")));
                     StringHashMap.Set(player.getName() + "_Fly", null);
                 }
             } else {

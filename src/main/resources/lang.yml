@@ -73,13 +73,13 @@ Home:
   TeleportDone: "&a传送成功!"
   RemoveDone: "&a删除成功!"
 Fly:
-  True: "开启"
-  False: "关闭"
+  Enable: "开启"
+  Disabled: "关闭"
   Done: "&6你的飞行模式已%1"
   SetDone: "&6已将%1的飞行模式%2"
 Vanish:
-  True: "开启"
-  False: "关闭"
+  Enable: "开启"
+  Disabled: "关闭"
   Done: "&6你的隐身模式已%1"
   SetDone: "&6已将%1的隐身模式%2"
 Freeze:

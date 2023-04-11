@@ -32,7 +32,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class multi {
-    public static final String Version = "1.0.13";
+    public static final String Version = "1.0.14";
     protected static final HashMap<Object, GentleUnload> gentleUnloads = new HashMap<>();
     private static final Class<?> pluginClassLoader;
     private static final Field pluginClassLoaderPlugin;
