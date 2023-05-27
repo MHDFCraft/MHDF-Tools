@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Cheng-Tools-Reloaded:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Cheng_Tools_Reloaded_jar</output-path>
+    <root id="archive" name="Cheng-Tools-Reloaded.jar">
+      <element id="module-output" name="Cheng-Tools-Reloaded" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/ProtocolLib.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
