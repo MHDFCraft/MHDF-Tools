@@ -4,6 +4,7 @@ PlayerNotOnline: "&c这个玩家不存在或不在线"
 RelaodDone: "&a重载成功!"
 FastSetDone: "&a完成!"
 HatNoItem: "&c你需要拿着一个物品才能使用这个命令!"
+AntiTiaoLue: "&b[反跳略系统] &6玩家%1尝试在,X:%2 Y:%3 Z:%4 建造跳略,已阻止!"
 OpWhiteList:
   Message: "&c%1非法获取了op权限,已踢出!"
   KickMessage: "连接中止"

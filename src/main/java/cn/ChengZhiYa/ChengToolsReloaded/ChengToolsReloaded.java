@@ -28,6 +28,7 @@ import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Inventory.InventoryOpen;
 import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Player.*;
 import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Server.PaperServerListPing;
 import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Server.ServerListPing;
+import cn.ChengZhiYa.ChengToolsReloaded.Listeners.World.BlockPlace;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.*;
 import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import com.alibaba.fastjson.parser.ParserConfig;
@@ -293,7 +294,9 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             registerCommand(this, new Day(), "快速天亮命令", "day");
             registerCommand(this, new Night(), "快速天黑命令", "night");
         }
-
+        if (getConfig().getBoolean("AntiTiaoLue")) {
+            Bukkit.getPluginManager().registerEvents(new BlockPlace(), this);
+        }
         if (PLIB) {
             if (getConfig().getBoolean("CrashPlayerEnable")) {
                 registerCommand(this, new CrashPlayerClient(), "崩端系统", "crashplayerclient");
