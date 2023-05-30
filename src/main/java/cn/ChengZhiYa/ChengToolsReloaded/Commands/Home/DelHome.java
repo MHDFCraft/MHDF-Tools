@@ -67,11 +67,7 @@ public final class DelHome implements TabExecutor {
                 File HomeData = new File(ChengToolsReloaded.instance.getDataFolder() + "/HomeData");
                 File HomeData_File = new File(HomeData, player.getName() + ".yml");
                 YamlConfiguration PlayerHomeData = YamlConfiguration.loadConfiguration(HomeData_File);
-                List<String> HomeList = PlayerHomeData.getStringList(player.getName() + "_HomeList");
-                if (HomeList.get(0) != null) {
-                    return HomeList;
-                }
-                return null;
+                return PlayerHomeData.getStringList(player.getName() + "_HomeList");
             }
         }
         return null;

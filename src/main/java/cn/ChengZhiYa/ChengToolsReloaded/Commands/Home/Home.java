@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,17 +61,10 @@ public final class Home implements TabExecutor {
         if (sender instanceof Player) {
             if (args.length == 1) {
                 Player player = (Player) sender;
-                List<String> TabList = new ArrayList<>();
                 File HomeData = new File(ChengToolsReloaded.instance.getDataFolder() + "/HomeData");
                 File HomeData_File = new File(HomeData, player.getName() + ".yml");
                 YamlConfiguration PlayerHomeData = YamlConfiguration.loadConfiguration(HomeData_File);
-                List<String> HomeList = PlayerHomeData.getStringList(player.getName() + "_HomeList");
-                if (HomeList.get(0) != null) {
-                    TabList.addAll(HomeList);
-                } else {
-                    TabList.add("你还没有家呢!请先设置一个家!");
-                }
-                return TabList;
+                return PlayerHomeData.getStringList(player.getName() + "_HomeList");
             }
         }
         return null;
