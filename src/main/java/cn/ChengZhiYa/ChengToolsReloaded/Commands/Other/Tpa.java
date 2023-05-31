@@ -71,8 +71,8 @@ public final class Tpa implements CommandExecutor {
                                 return false;
                             }
                             Objects.requireNonNull(Bukkit.getPlayer(args[1])).teleport(((Player) sender).getLocation());
-                            Objects.requireNonNull(Bukkit.getPlayer(args[1])).sendMessage(getLang("Tpa.TeleportDone", sender.getName()));
-                            sender.sendMessage(getLang("Tpa.AcceptDone", args[1]));
+                            Objects.requireNonNull(Bukkit.getPlayer(args[1])).sendMessage(getLang("Tpa.TeleportDone", args[1]));
+                            sender.sendMessage(getLang("Tpa.AcceptDone", sender.getName()));
 
                         } else {
                             IntHasMap.getHasMap().remove(args[1] + "_TPATime");

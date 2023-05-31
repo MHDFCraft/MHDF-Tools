@@ -71,8 +71,8 @@ public final class TpaHere implements CommandExecutor {
                                 return false;
                             }
                             ((Player) sender).teleport(Objects.requireNonNull(Bukkit.getPlayer(args[1])).getLocation());
-                            Objects.requireNonNull(Bukkit.getPlayer(args[1])).sendMessage(getLang("TpaHere.TeleportDone", sender.getName()));
-                            sender.sendMessage(getLang("TpaHere.AcceptDone", args[1]));
+                            Objects.requireNonNull(Bukkit.getPlayer(args[1])).sendMessage(getLang("TpaHere.TeleportDone", args[1]));
+                            sender.sendMessage(getLang("TpaHere.AcceptDone", sender.getName()));
 
                         } else {
                             IntHasMap.getHasMap().remove(args[1] + "_TPAHereTime");
