@@ -13,10 +13,9 @@ Vault:
   PayFail: "&c转账失败!"
   PayDone: "&e你给%1转了%2金钱!"
   Pay: "&e%1给你转了%2金钱"
-  TakeFail: "&c扣除失败!"
   TakeDone: "&e你扣除了%1的%2金钱!"
-  Take: "&e你被扣除了%1金钱!"
   SetDone: "&e你将%1的金钱设置为了%2!"
+  AddDone: "&e你将%1的金钱增加了%2!"
   Money: "&e你当前的余额为 %1%2"
   GetMoney: "&e%1当前的余额为 %2%3"
   BalTopUp: |-

@@ -100,9 +100,7 @@ public final class Point implements TabExecutor {
                 return TabList;
             }
         }
-        List<String> TabList = new ArrayList<>();
-        TabList.add(null);
-        return TabList;
+        return null;
     }
 
     public void helpCommand(CommandSender sender, String Command) {

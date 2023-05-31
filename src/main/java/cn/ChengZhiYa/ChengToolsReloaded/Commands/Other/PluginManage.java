@@ -102,67 +102,69 @@ public final class PluginManage implements TabExecutor {
     @SuppressWarnings("resource")
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 1) {
-            List<String> TabList = new ArrayList<>();
-            TabList.add("load");
-            TabList.add("unload");
-            TabList.add("reload");
-            return TabList;
-        }
-        if (args.length == 2) {
-            if (args[0].equals("load")) {
+        if (sender.hasPermission("ChengTools.PLuginManage")) {
+            if (args.length == 1) {
                 List<String> TabList = new ArrayList<>();
-                for (File pluginFile : Objects.requireNonNull(new File("plugins").listFiles())) {
-                    try {
-                        if (pluginFile.isDirectory()) continue;
-
-                        if (!pluginFile.getName().toLowerCase().endsWith(".jar"))
-                            if (!new File("plugins", pluginFile.getName() + ".jar").exists()) continue;
-
-                        JarFile jarFile;
-                        try {
-                            jarFile = new JarFile(pluginFile);
-                        } catch (Exception ignored) {
-                            continue;
-                        }
-
-                        if (jarFile.getEntry("plugin.yml") == null) continue;
-
-                        InputStream stream;
-                        try {
-                            stream = jarFile.getInputStream(jarFile.getEntry("plugin.yml"));
-                        } catch (Exception ignored) {
-                            continue;
-                        }
-
-                        if (stream == null) {
-                            continue;
-                        }
-
-                        PluginDescriptionFile descriptionFile;
-                        try {
-                            descriptionFile = new PluginDescriptionFile(stream);
-                        } catch (Exception ignored) {
-                            continue;
-                        }
-
-                        TabList.add(pluginFile.getName().substring(0, pluginFile.getName().length() - ".jar".length()));
-
-                        for (Plugin plugin : Bukkit.getPluginManager().getPlugins())
-                            if (plugin.getName().equalsIgnoreCase(descriptionFile.getName()))
-                                TabList.remove(pluginFile.getName().substring(0, pluginFile.getName().length() - ".jar".length()));
-                    } catch (Exception ignored) {
-                    }
-                }
+                TabList.add("load");
+                TabList.add("unload");
+                TabList.add("reload");
                 return TabList;
             }
-            List<String> TabList = new ArrayList<>();
-            String partialPlugin = args[1];
-            List<String> plugins = getPluginNames(false);
-            StringUtil.copyPartialMatches(partialPlugin, plugins, TabList);
+            if (args.length == 2) {
+                if (args[0].equals("load")) {
+                    List<String> TabList = new ArrayList<>();
+                    for (File pluginFile : Objects.requireNonNull(new File("plugins").listFiles())) {
+                        try {
+                            if (pluginFile.isDirectory()) continue;
 
-            Collections.sort(TabList);
-            return TabList;
+                            if (!pluginFile.getName().toLowerCase().endsWith(".jar"))
+                                if (!new File("plugins", pluginFile.getName() + ".jar").exists()) continue;
+
+                            JarFile jarFile;
+                            try {
+                                jarFile = new JarFile(pluginFile);
+                            } catch (Exception ignored) {
+                                continue;
+                            }
+
+                            if (jarFile.getEntry("plugin.yml") == null) continue;
+
+                            InputStream stream;
+                            try {
+                                stream = jarFile.getInputStream(jarFile.getEntry("plugin.yml"));
+                            } catch (Exception ignored) {
+                                continue;
+                            }
+
+                            if (stream == null) {
+                                continue;
+                            }
+
+                            PluginDescriptionFile descriptionFile;
+                            try {
+                                descriptionFile = new PluginDescriptionFile(stream);
+                            } catch (Exception ignored) {
+                                continue;
+                            }
+
+                            TabList.add(pluginFile.getName().substring(0, pluginFile.getName().length() - ".jar".length()));
+
+                            for (Plugin plugin : Bukkit.getPluginManager().getPlugins())
+                                if (plugin.getName().equalsIgnoreCase(descriptionFile.getName()))
+                                    TabList.remove(pluginFile.getName().substring(0, pluginFile.getName().length() - ".jar".length()));
+                        } catch (Exception ignored) {
+                        }
+                    }
+                    return TabList;
+                }
+                List<String> TabList = new ArrayList<>();
+                String partialPlugin = args[1];
+                List<String> plugins = getPluginNames(false);
+                StringUtil.copyPartialMatches(partialPlugin, plugins, TabList);
+
+                Collections.sort(TabList);
+                return TabList;
+            }
         }
         return null;
     }

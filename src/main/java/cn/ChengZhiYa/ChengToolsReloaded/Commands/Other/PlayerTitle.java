@@ -20,16 +20,16 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 public final class PlayerTitle implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        File TitleData = new File(ChengToolsReloaded.instance.getDataFolder() + "/TitleData.yml");
-        if (!TitleData.exists()) {
-            try {
-                TitleData.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        YamlConfiguration TitleFileData = YamlConfiguration.loadConfiguration(TitleData);
         if (sender.hasPermission("ChengTools.PlayerTitle")) {
+            File TitleData = new File(ChengToolsReloaded.instance.getDataFolder() + "/TitleData.yml");
+            if (!TitleData.exists()) {
+                try {
+                    TitleData.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            YamlConfiguration TitleFileData = YamlConfiguration.loadConfiguration(TitleData);
             if (args.length == 1) {
                 if (args[0].equals("help")) {
                     HelpCommand(sender, label);
@@ -124,35 +124,36 @@ public final class PlayerTitle implements TabExecutor {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 1) {
-            List<String> TabList = new ArrayList<>();
-            TabList.add("help");
-            TabList.add("setPrefix");
-            TabList.add("setSuffix");
-            TabList.add("delPrefix");
-            TabList.add("delSuffix");
-            return TabList;
-        }
-
-        if (args.length == 2) {
-            List<String> TabList = new ArrayList<>();
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                TabList.add(player.getName());
+        if (sender.hasPermission("ChengTools.PlayerTitle")) {
+            if (args.length == 1) {
+                List<String> TabList = new ArrayList<>();
+                TabList.add("help");
+                TabList.add("setPrefix");
+                TabList.add("setSuffix");
+                TabList.add("delPrefix");
+                TabList.add("delSuffix");
+                return TabList;
             }
-            return TabList;
-        }
 
-        if (args.length == 3) {
-            List<String> TabList = new ArrayList<>();
-            if (args[0].equals("setPrefix")) {
-                TabList.add("前缀变量:%ChengTools_Prefix%");
+            if (args.length == 2) {
+                List<String> TabList = new ArrayList<>();
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    TabList.add(player.getName());
+                }
+                return TabList;
             }
-            if (args[0].equals("setSuffix")) {
-                TabList.add("后缀变量:%ChengTools_Suffix%");
-            }
-            return TabList;
-        }
 
+            if (args.length == 3) {
+                List<String> TabList = new ArrayList<>();
+                if (args[0].equals("setPrefix")) {
+                    TabList.add("前缀变量:%ChengTools_Prefix%");
+                }
+                if (args[0].equals("setSuffix")) {
+                    TabList.add("后缀变量:%ChengTools_Suffix%");
+                }
+                return TabList;
+            }
+        }
         return null;
     }
 

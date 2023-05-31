@@ -15,30 +15,38 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 public final class MoneyAdmin implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        if (args.length == 3) {
-            if (args[0].equals("add")) {
-                if (Bukkit.getPlayer(args[1]) == null) {
-                    sender.sendMessage(getLang("PlayerNotOnline"));
+        if (sender.hasPermission("ChengTools.MoneyAdmin")) {
+            if (args.length == 3) {
+                if (args[0].equals("add")) {
+                    if (Bukkit.getPlayer(args[1]) == null) {
+                        sender.sendMessage(getLang("PlayerNotOnline"));
+                        return false;
+                    }
+                    new EconomyAPI().addTo(args[1], Double.valueOf(args[2]));
+                    sender.sendMessage(getLang("Vault.AddDone", args[1], args[2]));
                     return false;
                 }
-                new EconomyAPI().addTo(args[1], Double.valueOf(args[2]));
-            }
-            if (args[0].equals("take")) {
-                if (Bukkit.getPlayer(args[1]) == null) {
-                    sender.sendMessage(getLang("PlayerNotOnline"));
+                if (args[0].equals("take")) {
+                    if (Bukkit.getPlayer(args[1]) == null) {
+                        sender.sendMessage(getLang("PlayerNotOnline"));
+                        return false;
+                    }
+                    new EconomyAPI().takeFrom(args[1], Double.valueOf(args[2]));
+                    sender.sendMessage(getLang("Vault.TakeDone", args[1], args[2]));
                     return false;
                 }
-                new EconomyAPI().takeFrom(args[1], Double.valueOf(args[2]));
-            }
-            if (args[0].equals("set")) {
-                if (Bukkit.getPlayer(args[1]) == null) {
-                    sender.sendMessage(getLang("PlayerNotOnline"));
+                if (args[0].equals("set")) {
+                    if (Bukkit.getPlayer(args[1]) == null) {
+                        sender.sendMessage(getLang("PlayerNotOnline"));
+                        return false;
+                    }
+                    new EconomyAPI().setMoney(args[1], Double.valueOf(args[2]));
+                    sender.sendMessage(getLang("Vault.SetDone", args[1], args[2]));
                     return false;
                 }
-                new EconomyAPI().setMoney(args[1], Double.valueOf(args[2]));
             }
+            Help(sender, s);
         }
-        Help(sender, s);
         return false;
     }
 
@@ -47,14 +55,16 @@ public final class MoneyAdmin implements TabExecutor {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        List<String> TabList = new ArrayList<>();
-        if (args.length == 1) {
-            TabList.add("help");
-            TabList.add("add");
-            TabList.add("take");
-            TabList.add("set");
-            return TabList;
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (sender.hasPermission("ChengTools.MoneyAdmin")) {
+            List<String> TabList = new ArrayList<>();
+            if (args.length == 1) {
+                TabList.add("help");
+                TabList.add("add");
+                TabList.add("take");
+                TabList.add("set");
+                return TabList;
+            }
         }
         return null;
     }

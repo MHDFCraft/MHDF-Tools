@@ -31,7 +31,7 @@ import java.security.MessageDigest;
 import java.util.*;
 
 public final class multi {
-    public static final String Version = "1.0.18";
+    public static final String Version = "1.0.19";
     public static final HashMap<Object, GentleUnload> gentleUnloads = new HashMap<>();
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
