@@ -18,7 +18,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.*;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -31,11 +34,11 @@ import java.security.MessageDigest;
 import java.util.*;
 
 public final class multi {
-    public static final String Version = "1.0.20";
+    public static final String Version = "1.1.0";
     public static final HashMap<Object, GentleUnload> gentleUnloads = new HashMap<>();
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
-    public static boolean NewVersion = true;
+    public static YamlConfiguration LangFileData;
 
     static {
         try {
@@ -58,37 +61,6 @@ public final class multi {
             LocationHasMap.getHasMap().clear();
         } catch (Exception ignored) {
         }
-    }
-
-    public static boolean CheckVersion() {
-        Bukkit.getScheduler().runTaskAsynchronously(ChengToolsReloaded.instance, () -> {
-            try {
-                URL url1 = new URL("https://cz.jushaokeji.top/Cheng-Tools-Reloaded-CheckVersion.html");
-                URLConnection urlConnection = url1.openConnection();
-                urlConnection.addRequestProperty("User-Agent", "Mozilla");
-                urlConnection.setReadTimeout(30000);
-                urlConnection.setConnectTimeout(30000);
-                InputStream in = url1.openStream();
-                InputStreamReader isr = new InputStreamReader(in);
-                BufferedReader bufr = new BufferedReader(isr);
-                String str;
-                StringBuilder stringBuilder = new StringBuilder();
-                while ((str = bufr.readLine()) != null) {
-                    stringBuilder.append(str);
-                }
-                String NewVersionString = stringBuilder.toString().replace("<!--", "").replace("-->", "");
-                if (!NewVersionString.equals(Version)) {
-                    NewVersion = false;
-                }
-                in.close();
-                isr.close();
-                bufr.close();
-            } catch (Exception e) {
-                ColorLog("[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
-                NewVersion = false;
-            }
-        });
-        return NewVersion;
     }
 
     public static String getIpLocation(String Ip) {
@@ -155,23 +127,8 @@ public final class multi {
         sender.sendMessage(ChatColor(Message));
     }
 
-    public static String consolidateStrings(String[] args, int StartInt) {
-        StringBuilder ret = new StringBuilder(args[StartInt]);
-        if (args.length > (StartInt + 1)) {
-            for (int i = (StartInt + 1); i < args.length; i++)
-                ret.append(" ").append(args[i]);
-        }
-        return ret.toString();
-    }
-
-    public static Plugin getPluginName(String[] args, int StartInt) {
-        return getPluginName(consolidateStrings(args, StartInt));
-    }
-
     public static Plugin getPluginName(String name) {
-        for (Plugin plugin : Bukkit.getPluginManager().getPlugins())
-            if (name.equalsIgnoreCase(plugin.getName())) return plugin;
-        return null;
+        return Bukkit.getPluginManager().getPlugin(name);
     }
 
     public static void reload(Plugin plugin) {
@@ -196,14 +153,16 @@ public final class multi {
         File pluginFile = new File(pluginDir, name + ".jar");
 
         if (!pluginFile.isFile()) for (File f : Objects.requireNonNull(pluginDir.listFiles()))
-            if (f.getName().endsWith(".jar")) try {
-                PluginDescriptionFile desc = ChengToolsReloaded.instance.getPluginLoader().getPluginDescription(f);
-                if (desc.getName().equalsIgnoreCase(name)) {
-                    pluginFile = f;
-                    break;
+            if (f.getName().endsWith(".jar")) {
+                try {
+                    PluginDescriptionFile desc = ChengToolsReloaded.instance.getPluginLoader().getPluginDescription(f);
+                    if (desc.getName().equalsIgnoreCase(name)) {
+                        pluginFile = f;
+                        break;
+                    }
+                } catch (InvalidDescriptionException e) {
+                    return name;
                 }
-            } catch (InvalidDescriptionException e) {
-                return name;
             }
 
         try {
@@ -524,29 +483,21 @@ public final class multi {
     }
 
     public static String getLang(String LangVaule) {
-        File LangData = new File(ChengToolsReloaded.instance.getDataFolder() + "/lang.yml");
-        YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
         return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule)));
     }
 
     public static String getLang(String LangVaule, String Vaule1) {
-        File LangData = new File(ChengToolsReloaded.instance.getDataFolder() + "/lang.yml");
-        YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
         return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
                 .replaceAll("%1", Vaule1));
     }
 
     public static String getLang(String LangVaule, String Vaule1, String Vaule2) {
-        File LangData = new File(ChengToolsReloaded.instance.getDataFolder() + "/lang.yml");
-        YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
         return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
                 .replaceAll("%1", Vaule1)
                 .replaceAll("%2", Vaule2));
     }
 
     public static String getLang(String LangVaule, String Vaule1, String Vaule2, String Vaule3) {
-        File LangData = new File(ChengToolsReloaded.instance.getDataFolder() + "/lang.yml");
-        YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
         return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
                 .replaceAll("%1", Vaule1)
                 .replaceAll("%2", Vaule2)
@@ -554,8 +505,6 @@ public final class multi {
     }
 
     public static String getLang(String LangVaule, String Vaule1, String Vaule2, String Vaule3, String Vaule4) {
-        File LangData = new File(ChengToolsReloaded.instance.getDataFolder() + "/lang.yml");
-        YamlConfiguration LangFileData = YamlConfiguration.loadConfiguration(LangData);
         return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
                 .replaceAll("%1", Vaule1)
                 .replaceAll("%2", Vaule2)

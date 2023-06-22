@@ -1,11 +1,11 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Other;
 
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class Gamemode implements TabExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission(" ChengTools.Gamemode")) {
             String RunSender = getLang("Gamemode.Server");
             if (sender instanceof Player) {
@@ -77,7 +77,7 @@ public final class Gamemode implements TabExecutor {
                 }
                 return false;
             }
-            sender.sendMessage(getLang("Usage.Gamemode"));
+            sender.sendMessage(getLang("Usage.Gamemode"), label);
         } else {
             sender.sendMessage(getLang("NoPermission"));
         }
@@ -85,7 +85,7 @@ public final class Gamemode implements TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 1) {
             ArrayList<String> tablist = new ArrayList<>();
             tablist.add("冒险");

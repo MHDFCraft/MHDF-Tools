@@ -34,23 +34,25 @@ import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import com.alibaba.fastjson.parser.ParserConfig;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class ChengToolsReloaded extends JavaPlugin implements Listener {
     public static YamlFileUtil Yaml;
     public static ChengToolsReloaded instance;
-    public static java.lang.Boolean PAPI = true;
-    public static java.lang.Boolean PLIB = true;
-    public static java.lang.Boolean Vault = true;
+    public static boolean PAPI = true;
+    public static boolean PLIB = true;
+    public static boolean Vault = true;
     public static PluginDescriptionFile descriptionFile;
 
     public static PluginDescriptionFile getDescriptionFile() {
@@ -92,20 +94,37 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             Vault = false;
         }
 
-        try {
-            if (getConfig().getBoolean("CheckVersion")) {
-                BooleanHasMap.getHasMap().put("IsLast", CheckVersion());
-                BooleanHasMap.getHasMap().put("CheckVersionError", false);
-                if (!BooleanHasMap.getHasMap().get("IsLast")) {
+        if (getConfig().getBoolean("CheckVersion")) {
+            try {
+                URL url1 = new URL("https://cz.jushaokeji.top/Cheng-Tools-Reloaded-CheckVersion.html");
+                URLConnection urlConnection = url1.openConnection();
+                urlConnection.addRequestProperty("User-Agent", "Mozilla");
+                urlConnection.setReadTimeout(5000);
+                urlConnection.setConnectTimeout(5000);
+                InputStream in = url1.openStream();
+                InputStreamReader isr = new InputStreamReader(in);
+                BufferedReader bufr = new BufferedReader(isr);
+                String str;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((str = bufr.readLine()) != null) {
+                    stringBuilder.append(str);
+                }
+                String NewVersionString = stringBuilder.toString().replace("<!--", "").replace("-->", "");
+                if (!NewVersionString.equals(Version)) {
                     ColorLog("&c当前插件版本不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/");
+                    BooleanHasMap.getHasMap().put("IsLast", true);
                 } else {
                     ColorLog("&a当前插件版本是最新版!");
                 }
+                BooleanHasMap.getHasMap().put("CheckVersionError", false);
+                in.close();
+                isr.close();
+                bufr.close();
+            } catch (Exception e) {
+                ColorLog("[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
+                BooleanHasMap.getHasMap().put("IsLast", false);
+                BooleanHasMap.getHasMap().put("CheckVersionError", true);
             }
-        } catch (Exception exception) {
-            ColorLog("&c检测更新时出错!\n" + exception.getCause().toString());
-            BooleanHasMap.getHasMap().put("IsLast", false);
-            BooleanHasMap.getHasMap().put("CheckVersionError", true);
         }
 
         File PluginHome = new File(String.valueOf(this.getDataFolder()));
@@ -168,6 +187,9 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
         if (!Lang_File.exists()) {
             Yaml.saveYamlFile(this.getDataFolder().getPath(), "lang.yml", "lang.yml", true);
         }
+
+        File LangData = new File(ChengToolsReloaded.instance.getDataFolder() + "/lang.yml");
+        LangFileData = YamlConfiguration.loadConfiguration(LangData);
 
         if (getConfig().getBoolean("ScoreboardSettings.Enable")) {
             BukkitTask Scoreboard = new Scoreboard().runTaskTimerAsynchronously(this, 0L, 20L);
@@ -243,7 +265,6 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                 Bukkit.getPluginManager().registerEvents(new ServerListPing(), this);
             }
         }
-
 
         if (getConfig().getBoolean("FlyEnable")) {
             registerCommand(this, new Fly(), "飞行系统", "fly");

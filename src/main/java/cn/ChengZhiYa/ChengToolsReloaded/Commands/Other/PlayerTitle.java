@@ -1,13 +1,13 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Other;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -19,7 +19,7 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class PlayerTitle implements TabExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission("ChengTools.PlayerTitle")) {
             File TitleData = new File(ChengToolsReloaded.instance.getDataFolder() + "/TitleData.yml");
             if (!TitleData.exists()) {
@@ -123,7 +123,7 @@ public final class PlayerTitle implements TabExecutor {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission("ChengTools.PlayerTitle")) {
             if (args.length == 1) {
                 List<String> TabList = new ArrayList<>();

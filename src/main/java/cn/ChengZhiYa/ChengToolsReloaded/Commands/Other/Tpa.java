@@ -20,7 +20,7 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class Tpa implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             if (args.length == 1) {
                 String PlayerName = args[0];

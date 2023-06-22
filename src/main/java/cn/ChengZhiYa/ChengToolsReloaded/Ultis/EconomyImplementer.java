@@ -95,7 +95,7 @@ public final class EconomyImplementer extends AbstractEconomy {
 
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
         if (!this.hasAccount(playerName)) {
-            return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, (String) null);
+            return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, null);
         } else {
             try {
                 assert amount >= 0.0D;
@@ -111,7 +111,7 @@ public final class EconomyImplementer extends AbstractEconomy {
 
                 try {
                     config.save(this.getPlayerFile(playerName));
-                    return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, (String) null);
+                    return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, null);
                 } catch (IOException var6) {
                     return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, "保存数据异常！");
                 }
@@ -124,16 +124,16 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
-        return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.NOT_IMPLEMENTED, (String) null);
+        return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.NOT_IMPLEMENTED, null);
     }
 
     public EconomyResponse withdrawPlayer(OfflinePlayer player, String worldName, double amount) {
-        return new EconomyResponse(amount, this.getBalance(player.getName()), ResponseType.NOT_IMPLEMENTED, (String) null);
+        return new EconomyResponse(amount, this.getBalance(player.getName()), ResponseType.NOT_IMPLEMENTED, null);
     }
 
     public EconomyResponse depositPlayer(String playerName, double amount) {
         if (!this.hasAccount(playerName)) {
-            return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, (String) null);
+            return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, null);
         } else {
             try {
                 assert amount >= 0.0D;
@@ -146,7 +146,7 @@ public final class EconomyImplementer extends AbstractEconomy {
 
             try {
                 config.save(this.getPlayerFile(playerName));
-                return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, (String) null);
+                return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, null);
             } catch (IOException var6) {
                 return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, "保存数据异常！");
             }
@@ -158,11 +158,11 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
-        return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.NOT_IMPLEMENTED, (String) null);
+        return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.NOT_IMPLEMENTED, null);
     }
 
     public EconomyResponse depositPlayer(OfflinePlayer player, String worldName, double amount) {
-        return new EconomyResponse(amount, this.getBalance(player.getName()), ResponseType.NOT_IMPLEMENTED, (String) null);
+        return new EconomyResponse(amount, this.getBalance(player.getName()), ResponseType.NOT_IMPLEMENTED, null);
     }
 
     public EconomyResponse createBank(String name, String player) {
@@ -175,11 +175,11 @@ public final class EconomyImplementer extends AbstractEconomy {
             try {
                 config.save(file);
             } catch (IOException var8) {
-                return new EconomyResponse(0.0D, 0.0D, ResponseType.FAILURE, (String) null);
+                return new EconomyResponse(0.0D, 0.0D, ResponseType.FAILURE, null);
             }
         }
 
-        return new EconomyResponse(0.0D, this.getBalance(player), ResponseType.SUCCESS, (String) null);
+        return new EconomyResponse(0.0D, this.getBalance(player), ResponseType.SUCCESS, null);
     }
 
     public EconomyResponse createBank(String name, OfflinePlayer player) {
@@ -187,15 +187,15 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public EconomyResponse deleteBank(String name) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, (String) null);
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, null);
     }
 
     public EconomyResponse bankBalance(String name) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.FAILURE, (String) null);
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.FAILURE, null);
     }
 
     public EconomyResponse bankHas(String name, double amount) {
-        return new EconomyResponse(amount, this.bankBalance(name).balance, ResponseType.FAILURE, (String) null);
+        return new EconomyResponse(amount, this.bankBalance(name).balance, ResponseType.FAILURE, null);
     }
 
     public EconomyResponse bankWithdraw(String name, double amount) {
@@ -203,23 +203,23 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public EconomyResponse bankDeposit(String name, double amount) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.FAILURE, (String) null);
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.FAILURE, null);
     }
 
     public EconomyResponse isBankOwner(String name, String playerName) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, (String) null);
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, null);
     }
 
     public EconomyResponse isBankOwner(String name, OfflinePlayer player) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, (String) null);
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, null);
     }
 
     public EconomyResponse isBankMember(String name, String playerName) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, (String) null);
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, null);
     }
 
     public EconomyResponse isBankMember(String name, OfflinePlayer player) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, (String) null);
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, null);
     }
 
     public List<String> getBanks() {

@@ -6,18 +6,21 @@ import cn.ChengZhiYa.ChengToolsReloaded.Tasks.ChatDelay;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.Scoreboard;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.TimeMessage;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.VanillaOpWhitelist;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class Reload implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission("ChengTools.Reload")) {
             if (IntHasMap.getHasMap().get("ChatDelayTaskId") != null) {
                 Bukkit.getScheduler().cancelTask(IntHasMap.getHasMap().get("ChatDelayTaskId"));
@@ -36,7 +39,6 @@ public final class Reload implements CommandExecutor {
                 IntHasMap.getHasMap().put("OpWhiteListTaskID", null);
             }
 
-
             if (ChengToolsReloaded.instance.getConfig().getBoolean("ChatSettings.ChatDelayEnable")) {
                 BukkitTask ChatDelayTime = new ChatDelay().runTaskTimer(ChengToolsReloaded.instance, 0L, 20);
                 IntHasMap.getHasMap().put("ChatDelayTaskId", ChatDelayTime.getTaskId());
@@ -54,6 +56,8 @@ public final class Reload implements CommandExecutor {
                 IntHasMap.getHasMap().put("OpWhiteListTaskID", WhiteListTask.getTaskId());
             }
             ChengToolsReloaded.instance.reloadConfig();
+            File LangData = new File(ChengToolsReloaded.instance.getDataFolder() + "/lang.yml");
+            LangFileData = YamlConfiguration.loadConfiguration(LangData);
             sender.sendMessage(getLang("RelaodDone"));
         } else {
             sender.sendMessage(getLang("NoPermission"));

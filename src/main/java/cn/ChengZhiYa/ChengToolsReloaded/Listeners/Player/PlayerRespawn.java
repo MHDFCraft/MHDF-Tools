@@ -22,7 +22,7 @@ public final class PlayerRespawn implements Listener {
             int X = DiedLocation.getBlockX();
             int Y = DiedLocation.getBlockY();
             int Z = DiedLocation.getBlockZ();
-            player.sendMessage(getLang("Back.ReSpawn", java.lang.String.valueOf(X), java.lang.String.valueOf(Y), java.lang.String.valueOf(Z)));
+            player.sendMessage(getLang("Back.ReSpawn", String.valueOf(X), String.valueOf(Y), String.valueOf(Z)));
         }
     }
 }

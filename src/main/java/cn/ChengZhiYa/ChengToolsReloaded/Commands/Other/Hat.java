@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Other;
 
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,12 +7,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.jetbrains.annotations.NotNull;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class Hat implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             PlayerInventory PlayerInventory = player.getInventory();

@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class MoneyAdmin implements TabExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String s, String[] args) {
         if (sender.hasPermission("ChengTools.MoneyAdmin")) {
             if (args.length == 3) {
                 if (args[0].equals("add")) {
@@ -55,7 +56,7 @@ public final class MoneyAdmin implements TabExecutor {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission("ChengTools.MoneyAdmin")) {
             List<String> TabList = new ArrayList<>();
             if (args.length == 1) {

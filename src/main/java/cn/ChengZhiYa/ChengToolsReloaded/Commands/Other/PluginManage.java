@@ -1,14 +1,13 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Other;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.InputStream;
@@ -22,14 +21,48 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class PluginManage implements TabExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission("ChengTools.PLuginManage")) {
+            if (args.length > 2) {
+                if (args[0].equals("load")) {
+                    StringBuilder PluginName = new StringBuilder();
+                    for (String arg : args) {
+                        if (!arg.equals("load")) {
+                            if (arg.equals(args[args.length - 1])) {
+                                PluginName.append(arg);
+                            } else {
+                                PluginName.append(arg).append(" ");
+                            }
+                        }
+                    }
+                    Plugin potential = getPluginName(args[1]);
+
+                    if (ChengToolsReloaded.instance.getConfig().getStringList("PluginManageSettings.WhiteListPluginList").contains(args[1])) {
+                        sender.sendMessage(getLang("PluginManage.WhiteListPlugin"));
+                        return false;
+                    }
+
+                    if (potential != null) {
+                        sender.sendMessage(getLang("PluginManage.AlreadyLoad", PluginName.toString()));
+                        return false;
+                    }
+
+                    String Message = load(PluginName.toString());
+                    if (Message != null) {
+                        sender.sendMessage(ChatColor("&c" + Message));
+                        return false;
+                    }
+
+                    sender.sendMessage(getLang("PluginManage.LoadDone", args[1]));
+                    return false;
+                }
+            }
             if (args.length == 2) {
                 if (args[0].equals("help")) {
                     Help(sender, label);
                 }
                 if (args[0].equals("load")) {
-                    Plugin potential = getPluginName(args, 1);
+                    Plugin potential = getPluginName(args[1]);
 
                     if (ChengToolsReloaded.instance.getConfig().getStringList("PluginManageSettings.WhiteListPluginList").contains(args[1])) {
                         sender.sendMessage(getLang("PluginManage.WhiteListPlugin"));
@@ -41,9 +74,7 @@ public final class PluginManage implements TabExecutor {
                         return false;
                     }
 
-                    String name = consolidateStrings(args, 1);
-
-                    String Message = load(name);
+                    String Message = load(args[1]);
                     if (Message != null) {
                         sender.sendMessage(ChatColor("&c" + Message));
                         return false;
@@ -52,7 +83,7 @@ public final class PluginManage implements TabExecutor {
                     sender.sendMessage(getLang("PluginManage.LoadDone", args[1]));
                 }
                 if (args[0].equals("unload")) {
-                    Plugin target = getPluginName(args, 1);
+                    Plugin target = getPluginName(args[1]);
 
                     if (ChengToolsReloaded.instance.getConfig().getStringList("PluginManageSettings.WhiteListPluginList").contains(args[1])) {
                         sender.sendMessage(getLang("PluginManage.WhiteListPlugin"));
@@ -69,7 +100,7 @@ public final class PluginManage implements TabExecutor {
                     sender.sendMessage(getLang("PluginManage.UnLoadDone", args[1]));
                 }
                 if (args[0].equals("reload")) {
-                    Plugin target = getPluginName(args, 1);
+                    Plugin target = getPluginName(args[1]);
 
                     if (ChengToolsReloaded.instance.getConfig().getStringList("PluginManageSettings.WhiteListPluginList").contains(args[1])) {
                         sender.sendMessage(getLang("PluginManage.WhiteListPlugin"));
@@ -101,7 +132,7 @@ public final class PluginManage implements TabExecutor {
 
     @SuppressWarnings("resource")
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public List<String> onTabComplete(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission("ChengTools.PLuginManage")) {
             if (args.length == 1) {
                 List<String> TabList = new ArrayList<>();
@@ -157,10 +188,8 @@ public final class PluginManage implements TabExecutor {
                     }
                     return TabList;
                 }
-                List<String> TabList = new ArrayList<>();
-                String partialPlugin = args[1];
-                List<String> plugins = getPluginNames(false);
-                StringUtil.copyPartialMatches(partialPlugin, plugins, TabList);
+                List<String> TabList = getPluginNames(false);
+                TabList.add(args[1]);
 
                 Collections.sort(TabList);
                 return TabList;

@@ -17,10 +17,10 @@ public final class PlayerQuit implements Listener {
         if (ChengToolsReloaded.instance.getConfig().getBoolean("CustomQuitServerMessageSettings.Enable")) {
             Player player = event.getPlayer();
             if (player.hasPermission("ChengTools.Op")) {
-                java.lang.String QuitMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomQuitServerMessageSettings.AdminQuitMessage")).replaceAll("%PlayerName%", player.getName());
+                String QuitMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomQuitServerMessageSettings.AdminQuitMessage")).replaceAll("%PlayerName%", player.getName());
                 event.setQuitMessage(ChatColor(player, QuitMessage));
             } else {
-                java.lang.String QuitMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomQuitServerMessageSettings.PlayerQuitMessage")).replaceAll("%PlayerName%", player.getName());
+                String QuitMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomQuitServerMessageSettings.PlayerQuitMessage")).replaceAll("%PlayerName%", player.getName());
                 event.setQuitMessage(ChatColor(player, QuitMessage));
             }
         }

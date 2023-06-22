@@ -1,18 +1,18 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Other;
 
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHasMap;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class Fly implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull java.lang.String label, @NotNull java.lang.String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             if (sender.hasPermission("ChengTools.Fly")) {
                 Player player = (Player) sender;
@@ -31,7 +31,7 @@ public final class Fly implements CommandExecutor {
         }
         if (args.length == 1) {
             if (sender.hasPermission("ChengTools.Fly.Give")) {
-                java.lang.String PlayerName = args[0];
+                String PlayerName = args[0];
                 if (Bukkit.getPlayer(PlayerName) == null) {
                     sender.sendMessage(getLang("PlayerNotOnline"));
                     return false;

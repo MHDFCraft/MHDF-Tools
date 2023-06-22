@@ -1,7 +1,6 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Other;
 
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHasMap;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
@@ -10,6 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -20,10 +20,10 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class CrashPlayerClient implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull java.lang.String label, @NotNull java.lang.String[] args) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission("ChengTools.Crash")) {
             if (args.length == 1) {
-                java.lang.String PlayerName = args[0];
+                String PlayerName = args[0];
                 if (Bukkit.getPlayer(PlayerName) == null) {
                     sender.sendMessage(getLang("PlayerNotOnline"));
                     return false;

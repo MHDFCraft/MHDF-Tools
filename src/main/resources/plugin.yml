@@ -3,6 +3,7 @@ version: '${project.version}'
 main: cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded
 api-version: 1.16
 authors: [ ChengZhiYa ]
+softdepend: [ Vault, PlaceholderAPI, ProtocolLib ]
 description: qwq
 permissions:
   ChengTools.Op:

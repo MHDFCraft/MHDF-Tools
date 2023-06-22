@@ -2,10 +2,10 @@ package cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.Money;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -13,7 +13,7 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 
 public final class BalTop implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, String[] args) {
         StringBuilder BalTop = new StringBuilder(getLang("Vault.BalTopUp"));
         for (int i = 1; i < (ChengToolsReloaded.instance.getConfig().getInt("EconomySettings.BalTopInt") + 1); i++) {
             BalTop.append("\n").append(ChatColor(getLang("Vault.BalTop", String.valueOf(i), TopName(i), getNull(i), TopMoney(i))));

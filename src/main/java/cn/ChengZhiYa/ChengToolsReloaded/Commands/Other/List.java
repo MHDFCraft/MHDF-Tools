@@ -1,12 +1,12 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Other;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public final class List implements CommandExecutor {
     private final Runtime runtime = Runtime.getRuntime();
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         for (String Message : ChengToolsReloaded.instance.getConfig().getStringList("SuperListSettings.Message")) {
             java.util.List<String> PlayerList = new ArrayList<>();
             for (Player player : Bukkit.getOnlinePlayers()) {

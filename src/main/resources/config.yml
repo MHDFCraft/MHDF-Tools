@@ -269,5 +269,5 @@ ChatSettings:
   ChatBlackWorkEnable: true
   #聊天屏蔽词
   ChatBlackWork:
-    - SB
-    - 傻逼
+    - "SB"
+    - "傻逼"

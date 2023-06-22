@@ -15,14 +15,14 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 public final class PlayerChat implements Listener {
     @EventHandler
     public void On_Event(AsyncPlayerChatEvent event) {
-        java.lang.String Message = event.getMessage();
+        String Message = event.getMessage();
         Player player = event.getPlayer();
         if (ChengToolsReloaded.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
             if (!getLogin(event.getPlayer())) {
                 event.setCancelled(true);
             }
         }
-        java.lang.String Format = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("ChatSettings.ChatFormat")).replaceAll("%Player%", player.getName());
+        String Format = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("ChatSettings.ChatFormat")).replaceAll("%Player%", player.getName());
         if (ChengToolsReloaded.instance.getConfig().getBoolean("ChatSettings.ChatFormatEnable")) {
             if (player.hasPermission("ChengTools.Chat.Color")) {
                 event.setFormat(ChatColor(player, Format) + ChatColor(Message.replaceAll("%", "%%")));
@@ -32,7 +32,7 @@ public final class PlayerChat implements Listener {
         }
         if (ChengToolsReloaded.instance.getConfig().getBoolean("ChatSettings.ChatBlackWorkEnable")) {
             if (!player.hasPermission("ChengTools.Chat.BlackWorkBypass")) {
-                for (java.lang.String BlackWork : ChengToolsReloaded.instance.getConfig().getStringList("ChatSettings.ChatBlackWork")) {
+                for (String BlackWork : ChengToolsReloaded.instance.getConfig().getStringList("ChatSettings.ChatBlackWork")) {
                     if (Message.contains(BlackWork)) {
                         event.setCancelled(true);
                         player.sendMessage(getLang("Chat.SendBlackWord"));
@@ -44,7 +44,7 @@ public final class PlayerChat implements Listener {
         }
 
         if (IntHasMap.getHasMap().get(player.getName() + "_ChatDelayTime") != null) {
-            player.sendMessage(ChatColor((getLang("Chat.SendBlackWordOpMessage", java.lang.String.valueOf(IntHasMap.getHasMap().get(player.getName() + "_ChatDelayTime"))))));
+            player.sendMessage(ChatColor((getLang("Chat.SendBlackWordOpMessage", String.valueOf(IntHasMap.getHasMap().get(player.getName() + "_ChatDelayTime"))))));
             event.setCancelled(true);
             return;
         }
@@ -56,7 +56,7 @@ public final class PlayerChat implements Listener {
         }
 
         if (ChengToolsReloaded.instance.getConfig().getBoolean("ChatSettings.AntiRepeatChat")) {
-            java.lang.String NoColorMessage = Message.toLowerCase()
+            String NoColorMessage = Message.toLowerCase()
                     .replaceAll("&1", "")
                     .replaceAll("&2", "")
                     .replaceAll("&3", "")

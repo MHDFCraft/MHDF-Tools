@@ -101,10 +101,10 @@ public final class PlayerJoin implements Listener {
         if (ChengToolsReloaded.instance.getConfig().getBoolean("CustomJoinServerMessageSettings.Enable")) {
             Player player = event.getPlayer();
             if (player.hasPermission("ChengTools.Op")) {
-                java.lang.String JoinMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomJoinServerMessageSettings.AdminJoinMessage")).replaceAll("%PlayerName%", player.getName());
+                String JoinMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomJoinServerMessageSettings.AdminJoinMessage")).replaceAll("%PlayerName%", player.getName());
                 event.setJoinMessage(ChatColor(player, JoinMessage));
             } else {
-                java.lang.String JoinMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomJoinServerMessageSettings.PlayerJoinMessage")).replaceAll("%PlayerName%", player.getName());
+                String JoinMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomJoinServerMessageSettings.PlayerJoinMessage")).replaceAll("%PlayerName%", player.getName());
                 event.setJoinMessage(ChatColor(player, JoinMessage));
             }
         }
@@ -120,7 +120,7 @@ public final class PlayerJoin implements Listener {
             }
         }
         if (ChengToolsReloaded.instance.getConfig().getBoolean("WhiteList.Enable")) {
-            for (java.lang.String WhiteList : ChengToolsReloaded.instance.getConfig().getStringList("WhiteList.List")) {
+            for (String WhiteList : ChengToolsReloaded.instance.getConfig().getStringList("WhiteList.List")) {
                 if (event.getPlayer().getName().equals(WhiteList)) {
                     break;
                 }

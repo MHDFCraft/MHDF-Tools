@@ -8,7 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public final class YamlFileUtil {
-    private InputStream getResource(@NotNull String filename) {
+    private InputStream getResource(String filename) {
         try {
             URL URL2 = this.getClass().getClassLoader().getResource(filename);
             if (URL2 == null) {
@@ -30,7 +30,7 @@ public final class YamlFileUtil {
         this.saveResource(FilePath, ResourcePath, FileName, Replace);
     }
 
-    public void saveResource(String FilePath, @NotNull String ResourcePath, String OutFileName, boolean Replace) {
+    public void saveResource(String FilePath, String ResourcePath, String OutFileName, boolean Replace) {
         if (ResourcePath.equals("")) {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
