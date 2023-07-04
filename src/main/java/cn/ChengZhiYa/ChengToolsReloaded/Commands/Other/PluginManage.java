@@ -23,6 +23,11 @@ public final class PluginManage implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission("ChengTools.PLuginManage")) {
+            if (args.length == 1) {
+                if (args[0].equals("help")) {
+                    Help(sender, label);
+                }
+            }
             if (args.length > 2) {
                 if (args[0].equals("load")) {
                     StringBuilder PluginName = new StringBuilder();
@@ -58,9 +63,6 @@ public final class PluginManage implements TabExecutor {
                 }
             }
             if (args.length == 2) {
-                if (args[0].equals("help")) {
-                    Help(sender, label);
-                }
                 if (args[0].equals("load")) {
                     Plugin potential = getPluginName(args[1]);
 

@@ -57,7 +57,7 @@ public final class TpaHere implements CommandExecutor {
                 Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).spigot().sendMessage(Message);
                 sender.sendMessage(ChatColor(getLang("TpaHere.SendDone")));
                 IntHasMap.getHasMap().put(sender.getName() + "_TPAHereTime", ChengToolsReloaded.instance.getConfig().getInt("Tpahere.OutTime"));
-                StringHasMap.getHasMap().put(sender.getName() + "_TPAHerePlayerName", PlayerName);
+                StringHasMap.getHasMap().put(sender.getName() + "_TPAHerePlayerName", Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).getName());
                 return false;
             }
             if (args.length == 2) {

@@ -96,7 +96,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
 
         if (getConfig().getBoolean("CheckVersion")) {
             try {
-                URL url1 = new URL("https://cz.jushaokeji.top/Cheng-Tools-Reloaded-CheckVersion.html");
+                URL url1 = new URL("https://cz.xn--0tr63uj88a06f.com/Cheng-Tools-Reloaded-CheckVersion.html");
                 URLConnection urlConnection = url1.openConnection();
                 urlConnection.addRequestProperty("User-Agent", "Mozilla");
                 urlConnection.setReadTimeout(5000);
@@ -141,8 +141,11 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
 
         if (getConfig().getBoolean("HomeSystemSettings.Enable")) {
             File HomeFile = new File(this.getDataFolder() + "/HomeData");
-            HomeFile.mkdirs();
+            if (!HomeFile.exists()) {
+                HomeFile.mkdirs();
+            }
         }
+
         if (getConfig().getBoolean("EconomySettings.Enable")) {
             File VaultData = new File(this.getDataFolder() + "/VaultData");
             if (!VaultData.exists()) {

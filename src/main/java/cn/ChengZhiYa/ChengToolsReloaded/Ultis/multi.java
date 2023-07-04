@@ -15,7 +15,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.*;
 
 import java.io.BufferedReader;
@@ -24,21 +23,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class multi {
-    public static final String Version = "1.1.0";
+    public static final String Version = "1.1.1";
     public static final HashMap<Object, GentleUnload> gentleUnloads = new HashMap<>();
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static YamlConfiguration LangFileData;
+    public static Field commandMapField;
+    public static Field OldCommands;
 
     static {
         try {
@@ -143,39 +147,129 @@ public final class multi {
     }
 
     public static String load(String name) {
-        Plugin target;
+        Plugin target = null;
+        boolean paperLoaded = false;
 
         File pluginDir = new File("plugins");
 
-        if (!pluginDir.isDirectory())
+        if (!pluginDir.isDirectory()) {
             return name;
+        }
 
-        File pluginFile = new File(pluginDir, name + ".jar");
+        File PluginFile = new File(pluginDir, name + ".jar");
 
-        if (!pluginFile.isFile()) for (File f : Objects.requireNonNull(pluginDir.listFiles()))
-            if (f.getName().endsWith(".jar")) {
-                try {
-                    PluginDescriptionFile desc = ChengToolsReloaded.instance.getPluginLoader().getPluginDescription(f);
+        if (!PluginFile.isFile())
+            for (File Files : Objects.requireNonNull(pluginDir.listFiles()))
+                if (Files.getName().endsWith(".jar")) try {
+                    PluginDescriptionFile desc = ChengToolsReloaded.instance.getPluginLoader().getPluginDescription(Files);
                     if (desc.getName().equalsIgnoreCase(name)) {
-                        pluginFile = f;
+                        PluginFile = Files;
                         break;
                     }
                 } catch (InvalidDescriptionException e) {
                     return name;
                 }
-            }
 
         try {
-            target = Bukkit.getPluginManager().loadPlugin(pluginFile);
-        } catch (InvalidDescriptionException e) {
-            return "这个插件的描述文件无效!";
-        } catch (InvalidPluginException e) {
-            return "这个插件不存在!";
+            Object paperPluginManagerImpl = Class.forName("io.papermc.paper.plugin.manager.PaperPluginManagerImpl").getMethod("getInstance").invoke(null);
+
+            Field instanceManagerF = paperPluginManagerImpl.getClass().getDeclaredField("instanceManager");
+            instanceManagerF.setAccessible(true);
+            Object instanceManager = instanceManagerF.get(paperPluginManagerImpl);
+
+            Method loadMethod = instanceManager.getClass().getMethod("loadPlugin", Path.class);
+            loadMethod.setAccessible(true);
+            target = (Plugin) loadMethod.invoke(instanceManager, PluginFile.toPath());
+
+            Method enableMethod = instanceManager.getClass().getMethod("enablePlugin", Plugin.class);
+            enableMethod.setAccessible(true);
+            enableMethod.invoke(instanceManager, target);
+
+            paperLoaded = true;
+        } catch (Exception ignore) {
         }
 
-        Bukkit.getScheduler().runTaskAsynchronously(ChengToolsReloaded.instance, () -> Objects.requireNonNull(target).onLoad());
-        Bukkit.getPluginManager().enablePlugin(Objects.requireNonNull(target));
+        if (!paperLoaded) {
+            try {
+                target = Bukkit.getPluginManager().loadPlugin(PluginFile);
+            } catch (InvalidDescriptionException e) {
+                return "这个插件的描述文件无效!";
+            } catch (InvalidPluginException e) {
+                return "这个插件不存在!";
+            }
+
+            Objects.requireNonNull(target).onLoad();
+            Bukkit.getPluginManager().enablePlugin(Objects.requireNonNull(target));
+        }
+
+        Plugin finalTarget = target;
+        Bukkit.getScheduler().runTaskLater(ChengToolsReloaded.instance, () -> {
+            loadCommands(finalTarget);
+        }, 10L);
         return null;
+    }
+
+    public static void loadCommands(Plugin plugin) {
+        Map<String, Command> knownCommands = getOldCommands();
+        List<Map.Entry<String, Command>> commands = Objects.requireNonNull(knownCommands).entrySet().stream()
+                .filter(s -> {
+                    if (s.getKey().contains(":"))
+                        return s.getKey().split(":")[0].equalsIgnoreCase(plugin.getName());
+                    else {
+                        ClassLoader cl = s.getValue().getClass().getClassLoader();
+                        try {
+                            return cl.getClass() == pluginClassLoader && pluginClassLoaderPlugin.get(cl) == plugin;
+                        } catch (IllegalAccessException e) {
+                            return false;
+                        }
+                    }
+                }).collect(Collectors.toList());
+
+        for (Map.Entry<String, Command> entry : commands) {
+            String alias = entry.getKey();
+            Command command = entry.getValue();
+            new BukkitCommandWrap().wrap(command, alias);
+        }
+
+        new BukkitCommandWrap().sync();
+
+        if (Bukkit.getOnlinePlayers().size() >= 1)
+            for (Player player : Bukkit.getOnlinePlayers())
+                player.updateCommands();
+    }
+
+    public static Map<String, Command> getOldCommands() {
+        if (commandMapField == null) try {
+            commandMapField = Class.forName("org.bukkit.craftbukkit." + getNMSVersion() + ".CraftServer").getDeclaredField("commandMap");
+            commandMapField.setAccessible(true);
+        } catch (NoSuchFieldException | ClassNotFoundException e) {
+            return null;
+        }
+        SimpleCommandMap commandMap;
+        try {
+            commandMap = (SimpleCommandMap) commandMapField.get(Bukkit.getServer());
+        } catch (Exception e) {
+            return null;
+        }
+        if (OldCommands == null) try {
+            OldCommands = SimpleCommandMap.class.getDeclaredField("knownCommands");
+            OldCommands.setAccessible(true);
+        } catch (NoSuchFieldException e) {
+            return null;
+        }
+        try {
+            return (Map<String, Command>) OldCommands.get(commandMap);
+        } catch (IllegalAccessException e) {
+            return null;
+        }
+    }
+
+    public static String getNMSVersion() {
+        try {
+            return Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     public static HashMap<Object, GentleUnload> getGentleUnloads() {
@@ -184,97 +278,16 @@ public final class multi {
 
     public static void unload(Plugin plugin) {
         String name = plugin.getName();
-
         if (!getGentleUnloads().containsKey(plugin)) {
+            loadCommands(plugin);
             PluginManager pluginManager = Bukkit.getPluginManager();
-
-            SimpleCommandMap commandMap;
-
-            List<Plugin> plugins;
-
-            Map<String, Plugin> names;
-            Map<String, Command> commands;
-            Map<org.bukkit.event.Event, SortedSet<RegisteredListener>> listeners = null;
-
             pluginManager.disablePlugin(plugin);
-
-            try {
-
-                Field pluginsField = Bukkit.getPluginManager().getClass().getDeclaredField("plugins");
-                pluginsField.setAccessible(true);
-                //noinspection unchecked
-                plugins = (List<Plugin>) pluginsField.get(pluginManager);
-
-                Field lookupNamesField = Bukkit.getPluginManager().getClass().getDeclaredField("lookupNames");
-                lookupNamesField.setAccessible(true);
-                //noinspection unchecked
-                names = (Map<String, Plugin>) lookupNamesField.get(pluginManager);
-
-                try {
-                    Field listenersField = Bukkit.getPluginManager().getClass().getDeclaredField("listeners");
-                    listenersField.setAccessible(true);
-                    //noinspection unchecked
-                    listeners = (Map<Event, SortedSet<RegisteredListener>>) listenersField.get(pluginManager);
-                } catch (Exception ignored) {
-                }
-
-                Field commandMapField = Bukkit.getPluginManager().getClass().getDeclaredField("commandMap");
-                commandMapField.setAccessible(true);
-                commandMap = (SimpleCommandMap) commandMapField.get(pluginManager);
-
-                Field knownCommandsField = SimpleCommandMap.class.getDeclaredField("knownCommands");
-                knownCommandsField.setAccessible(true);
-                //noinspection unchecked
-                commands = (Map<String, Command>) knownCommandsField.get(commandMap);
-
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                e.printStackTrace();
-                return;
-            }
-
             pluginManager.disablePlugin(plugin);
-
-            if (listeners != null)
-                for (SortedSet<RegisteredListener> set : listeners.values())
-                    set.removeIf(value -> value.getPlugin() == plugin);
-
-            if (commandMap != null)
-                for (Iterator<Map.Entry<String, Command>> it = commands.entrySet().iterator(); it.hasNext(); ) {
-                    Map.Entry<String, Command> entry = it.next();
-                    if (entry.getValue() instanceof PluginCommand) {
-                        PluginCommand c = (PluginCommand) entry.getValue();
-                        if (c.getPlugin() == plugin) {
-                            c.unregister(commandMap);
-                            it.remove();
-                        }
-                    } else try {
-                        Field pluginField = Arrays.stream(entry.getValue().getClass().getDeclaredFields()).filter(field -> Plugin.class.isAssignableFrom(field.getType())).findFirst().orElse(null);
-                        if (pluginField != null) {
-                            Plugin owningPlugin;
-                            try {
-                                pluginField.setAccessible(true);
-                                owningPlugin = (Plugin) pluginField.get(entry.getValue());
-                                if (owningPlugin.getName().equalsIgnoreCase(plugin.getName())) {
-                                    entry.getValue().unregister(commandMap);
-                                    it.remove();
-                                }
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    } catch (IllegalStateException ignored) {
-                    }
-                }
-
-            if (plugins != null)
-                plugins.remove(plugin);
-
-            if (names != null)
-                names.remove(name);
         } else {
             GentleUnload gentleUnload = getGentleUnloads().get(plugin);
-            if (!gentleUnload.askingForGentleUnload())
+            if (!gentleUnload.askingForGentleUnload()) {
                 return;
+            }
         }
 
         ClassLoader cl = plugin.getClass().getClassLoader();
@@ -283,22 +296,39 @@ public final class multi {
                 Field pluginField = cl.getClass().getDeclaredField("plugin");
                 pluginField.setAccessible(true);
                 pluginField.set(cl, null);
-
                 Field pluginInitField = cl.getClass().getDeclaredField("pluginInit");
                 pluginInitField.setAccessible(true);
                 pluginInitField.set(cl, null);
-            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException |
-                     IllegalAccessException ignored) {
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+                e.printStackTrace();
             }
             try {
-
                 ((URLClassLoader) cl).close();
-            } catch (IOException ignored) {
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
+        try {
+            Object paperPluginManagerImpl = Class.forName("io.papermc.paper.plugin.manager.PaperPluginManagerImpl").getMethod("getInstance").invoke(null);
+            Field instanceManagerField = paperPluginManagerImpl.getClass().getDeclaredField("instanceManager");
+            instanceManagerField.setAccessible(true);
+            Object instanceManager = instanceManagerField.get(paperPluginManagerImpl);
+            Field lookupNamesField = instanceManager.getClass().getDeclaredField("lookupNames");
+            lookupNamesField.setAccessible(true);
+            Map<String, Object> lookupNames = (Map<String, Object>) lookupNamesField.get(instanceManager);
+            Method disableMethod = instanceManager.getClass().getMethod("disablePlugin", Plugin.class);
+            disableMethod.setAccessible(true);
+            disableMethod.invoke(instanceManager, plugin);
+            lookupNames.remove(plugin.getName().toLowerCase());
+            Field pluginListField = instanceManager.getClass().getDeclaredField("plugins");
+            pluginListField.setAccessible(true);
+            List<Plugin> pluginList = (List<Plugin>) pluginListField.get(instanceManager);
+            pluginList.remove(plugin);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         System.gc();
     }
-
     public static void OpSendMessage(String Message) {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.isOp()) {

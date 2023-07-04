@@ -57,7 +57,7 @@ public final class Tpa implements CommandExecutor {
                 Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).spigot().sendMessage(Message);
                 sender.sendMessage(ChatColor(getLang("Tpa.SendDone")));
                 IntHasMap.getHasMap().put(sender.getName() + "_TPATime", ChengToolsReloaded.instance.getConfig().getInt("Tpa.OutTime"));
-                StringHasMap.getHasMap().put(sender.getName() + "_TPAPlayerName", PlayerName);
+                StringHasMap.getHasMap().put(sender.getName() + "_TPAPlayerName", Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).getName());
                 return false;
             }
             if (args.length == 2) {

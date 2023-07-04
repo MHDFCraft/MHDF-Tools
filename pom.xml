@@ -6,7 +6,7 @@
 
     <groupId>Cheng-Tools-Reloaded</groupId>
     <artifactId>Cheng-Tools-Reloaded</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
 
     <name>Cheng-Tools-Reloaded</name>
@@ -67,12 +67,13 @@
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
         <repository>
-            <id>localrepository</id>
-            <url>file://${basedir}/libs</url>
-        </repository>
-        <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>minecraft-libraries</id>
+            <name>Minecraft Libraries</name>
+            <url>https://libraries.minecraft.net</url>
         </repository>
     </repositories>
 
@@ -107,6 +108,11 @@
             <version>4.8.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/ProtocolLib.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.mojang</groupId>
+            <artifactId>brigadier</artifactId>
+            <version>1.0.18</version>
         </dependency>
     </dependencies>
 </project>
