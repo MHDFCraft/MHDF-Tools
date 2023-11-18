@@ -278,6 +278,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             registerCommand(this, new Back(), "Back系统", "back");
             registerCommand(this, new UnBack(), "Back系统", "unback");
             Bukkit.getPluginManager().registerEvents(new PlayerDeath(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerTeleport(), this);
         }
         if (getConfig().getBoolean("VanishEnable")) {
             registerCommand(this, new Vanish(), "Vanish系统", "vanish");
