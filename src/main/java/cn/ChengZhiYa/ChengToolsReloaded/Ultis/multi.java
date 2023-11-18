@@ -33,6 +33,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public final class multi {
@@ -90,8 +92,25 @@ public final class multi {
         return IsPaper;
     }
 
+    public static String translateHexCodes(String message) {
+        Pattern hexPattern = Pattern.compile("&#" + "([A-Fa-f0-9]{6})");
+        return translate(hexPattern, message);
+    }
+
+    private static String translate(Pattern hex, String message) {
+        Matcher matcher = hex.matcher(message);
+        StringBuffer buffer = new StringBuffer(message.length() + 32);
+        while (matcher.find()) {
+            String group = matcher.group(1);
+            matcher.appendReplacement(buffer,
+                    "§x§" + group.charAt(0) + "§" + group.charAt(1) + "§" + group.charAt(2)
+                            + "§" + group.charAt(3) + "§" + group.charAt(4) + "§" + group.charAt(5));
+        }
+        return ChatColor.translateAlternateColorCodes('&', matcher.appendTail(buffer).toString());
+    }
+
     public static String ChatColor(String Message) {
-        Message = ChatColor.translateAlternateColorCodes('&', Message);
+        Message = ChatColor.translateAlternateColorCodes('&', translateHexCodes(Message));
         return Message;
     }
 
