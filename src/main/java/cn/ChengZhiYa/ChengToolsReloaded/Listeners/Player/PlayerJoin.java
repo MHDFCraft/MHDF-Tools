@@ -4,7 +4,7 @@ import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.ScoreboardHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHasMap;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
+import cn.ChengZhiYa.ChengToolsReloaded.Ultis.EconomyAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -100,13 +100,8 @@ public final class PlayerJoin implements Listener {
         }
         if (ChengToolsReloaded.instance.getConfig().getBoolean("CustomJoinServerMessageSettings.Enable")) {
             Player player = event.getPlayer();
-            if (player.hasPermission("ChengTools.Op")) {
-                String JoinMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomJoinServerMessageSettings.AdminJoinMessage")).replaceAll("%PlayerName%", player.getName());
-                event.setJoinMessage(ChatColor(player, JoinMessage));
-            } else {
-                String JoinMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomJoinServerMessageSettings.PlayerJoinMessage")).replaceAll("%PlayerName%", player.getName());
-                event.setJoinMessage(ChatColor(player, JoinMessage));
-            }
+            String JoinMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomJoinServerMessageSettings.JoinMessage")).replaceAll("%PlayerName%", player.getName());
+            event.setJoinMessage(ChatColor(player, JoinMessage));
         }
         if (ChengToolsReloaded.instance.getConfig().getBoolean("ScoreboardSettings.Enable")) {
             Player player = event.getPlayer();

@@ -9,20 +9,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.ChatColor;
 
 public final class PlayerQuit implements Listener {
     @EventHandler
     public void On_Event(PlayerQuitEvent event) {
         if (ChengToolsReloaded.instance.getConfig().getBoolean("CustomQuitServerMessageSettings.Enable")) {
             Player player = event.getPlayer();
-            if (player.hasPermission("ChengTools.Op")) {
-                String QuitMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomQuitServerMessageSettings.AdminQuitMessage")).replaceAll("%PlayerName%", player.getName());
-                event.setQuitMessage(ChatColor(player, QuitMessage));
-            } else {
-                String QuitMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomQuitServerMessageSettings.PlayerQuitMessage")).replaceAll("%PlayerName%", player.getName());
-                event.setQuitMessage(ChatColor(player, QuitMessage));
-            }
+            String QuitMessage = Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("CustomQuitServerMessageSettings.QuitMessage")).replaceAll("%PlayerName%", player.getName());
+            event.setQuitMessage(ChatColor(player, QuitMessage));
         }
         if (ChengToolsReloaded.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
             Player player = event.getPlayer();
