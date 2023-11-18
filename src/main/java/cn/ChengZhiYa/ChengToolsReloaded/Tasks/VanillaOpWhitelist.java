@@ -5,7 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.OpSendMessage;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class VanillaOpWhitelist extends BukkitRunnable {
     public void run() {

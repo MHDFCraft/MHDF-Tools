@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.ChengToolsReloaded.Ultis;
+package cn.ChengZhiYa.ChengToolsReloaded.Utils;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHasMap;
@@ -37,7 +37,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public final class multi {
+public final class Util {
     public static final String Version = "1.1.1";
     public static final HashMap<Object, GentleUnload> gentleUnloads = new HashMap<>();
     public static final Class<?> pluginClassLoader;
@@ -56,7 +56,7 @@ public final class multi {
         }
     }
 
-    private multi() {
+    private Util() {
     }
 
     public static void ClearAllHashMap() {

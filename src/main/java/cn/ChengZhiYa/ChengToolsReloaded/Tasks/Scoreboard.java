@@ -11,7 +11,7 @@ import org.bukkit.scoreboard.Score;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.ChatColor;
 
 public final class Scoreboard extends BukkitRunnable {
 

@@ -7,7 +7,7 @@ import org.bukkit.event.server.ServerListPingEvent;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.ChatColor;
 
 
 public final class ServerListPing implements Listener {

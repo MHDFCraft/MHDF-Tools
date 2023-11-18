@@ -9,7 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.ChatColor;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class BlockPlace implements Listener {
     @EventHandler

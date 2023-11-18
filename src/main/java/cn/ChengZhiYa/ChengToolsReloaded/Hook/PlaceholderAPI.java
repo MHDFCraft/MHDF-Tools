@@ -1,12 +1,12 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Hook;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
+import cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.GetPlt;
 
 public final class PlaceholderAPI extends PlaceholderExpansion {
 

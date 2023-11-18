@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault;
 
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
+import cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class Pay implements CommandExecutor {
     @Override

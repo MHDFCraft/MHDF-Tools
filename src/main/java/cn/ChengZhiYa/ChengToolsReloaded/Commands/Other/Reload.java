@@ -16,7 +16,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.LangFileData;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class Reload implements CommandExecutor {
     @Override

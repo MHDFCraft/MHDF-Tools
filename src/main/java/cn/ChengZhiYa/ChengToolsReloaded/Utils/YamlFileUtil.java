@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.ChengToolsReloaded.Ultis;
+package cn.ChengZhiYa.ChengToolsReloaded.Utils;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.ChatColor;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.ChatColor;
 
 public final class PlayerQuit implements Listener {
     @EventHandler

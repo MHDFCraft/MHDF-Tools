@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.ChengToolsReloaded.Ultis;
+package cn.ChengZhiYa.ChengToolsReloaded.Utils;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
 import org.bukkit.configuration.file.YamlConfiguration;

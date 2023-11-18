@@ -14,7 +14,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.*;
 
 public final class Login implements CommandExecutor {
     @Override

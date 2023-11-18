@@ -8,7 +8,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLogin;
 
 public final class LoginMessage extends BukkitRunnable {
 

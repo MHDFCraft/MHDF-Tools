@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault;
 
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.*;
+import cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class MoneyAdmin implements TabExecutor {
     @Override

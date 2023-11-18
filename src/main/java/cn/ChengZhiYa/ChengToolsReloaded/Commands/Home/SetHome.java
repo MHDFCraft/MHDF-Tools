@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class SetHome implements CommandExecutor {
     @Override

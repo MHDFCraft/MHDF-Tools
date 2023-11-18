@@ -9,7 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.ChatColor;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class BalTop implements CommandExecutor {
     @Override

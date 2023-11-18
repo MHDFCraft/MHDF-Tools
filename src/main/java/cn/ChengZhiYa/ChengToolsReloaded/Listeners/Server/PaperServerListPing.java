@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.ChatColor;
 
 public final class PaperServerListPing implements Listener {
     @EventHandler

@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.ChengToolsReloaded.Ultis;
+package cn.ChengZhiYa.ChengToolsReloaded.Utils;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
 import net.milkbowl.vault.economy.AbstractEconomy;
@@ -37,7 +37,7 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public String currencyNameSingular() {
-        return multi.ChatColor(ChengToolsReloaded.instance.getConfig().getString("EconomySettings.MoneyName"));
+        return Util.ChatColor(ChengToolsReloaded.instance.getConfig().getString("EconomySettings.MoneyName"));
     }
 
     public boolean hasAccount(String playerName) {

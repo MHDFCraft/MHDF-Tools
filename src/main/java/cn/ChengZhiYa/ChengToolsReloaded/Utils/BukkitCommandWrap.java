@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.ChengToolsReloaded.Ultis;
+package cn.ChengZhiYa.ChengToolsReloaded.Utils;
 
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;

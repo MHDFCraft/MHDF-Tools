@@ -4,7 +4,7 @@ import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.ScoreboardHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHasMap;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.EconomyAPI;
+import cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.*;
 
 public final class PlayerJoin implements Listener {
     @EventHandler

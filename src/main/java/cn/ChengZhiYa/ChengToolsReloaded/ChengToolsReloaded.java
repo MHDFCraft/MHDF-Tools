@@ -30,8 +30,8 @@ import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Server.PaperServerListPing;
 import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Server.ServerListPing;
 import cn.ChengZhiYa.ChengToolsReloaded.Listeners.World.BlockPlace;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.*;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.EconomyImplementer;
-import cn.ChengZhiYa.ChengToolsReloaded.Ultis.YamlFileUtil;
+import cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyImplementer;
+import cn.ChengZhiYa.ChengToolsReloaded.Utils.YamlFileUtil;
 import com.alibaba.fastjson.parser.ParserConfig;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -46,7 +46,7 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.*;
 
 public final class ChengToolsReloaded extends JavaPlugin implements Listener {
     public static YamlFileUtil Yaml;
