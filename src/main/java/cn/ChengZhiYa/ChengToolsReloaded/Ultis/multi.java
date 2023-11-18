@@ -203,9 +203,9 @@ public final class multi {
         }
 
         Plugin finalTarget = target;
-        Bukkit.getScheduler().runTaskLater(ChengToolsReloaded.instance, () -> {
-            loadCommands(finalTarget);
-        }, 10L);
+        //Bukkit.getScheduler().runTaskLater(ChengToolsReloaded.instance, () -> {
+        //loadCommands(finalTarget);
+        //}, 10L);
         return null;
     }
 
@@ -279,7 +279,7 @@ public final class multi {
     public static void unload(Plugin plugin) {
         String name = plugin.getName();
         if (!getGentleUnloads().containsKey(plugin)) {
-            loadCommands(plugin);
+            //loadCommands(plugin);
             PluginManager pluginManager = Bukkit.getPluginManager();
             pluginManager.disablePlugin(plugin);
             pluginManager.disablePlugin(plugin);

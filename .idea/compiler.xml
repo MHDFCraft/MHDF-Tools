@@ -9,8 +9,5 @@
         <module name="Cheng-Tools-Reloaded" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Cheng-Tools-Reloaded" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

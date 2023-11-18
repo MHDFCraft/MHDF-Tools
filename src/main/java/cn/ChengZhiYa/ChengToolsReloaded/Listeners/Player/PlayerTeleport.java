@@ -4,12 +4,12 @@ import cn.ChengZhiYa.ChengToolsReloaded.HashMap.LocationHasMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
-public final class PlayerDeath implements Listener {
+public class PlayerTeleport implements Listener {
     @EventHandler
-    public void On_Event(PlayerDeathEvent event) {
-        Player player = event.getEntity();
+    public void onEvent(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
         LocationHasMap.getHasMap().put(player.getName() + "_BackLocation", player.getLocation());
     }
 }

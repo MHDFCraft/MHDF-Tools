@@ -16,7 +16,7 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
 public final class Gamemode implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (sender.hasPermission(" ChengTools.Gamemode")) {
+        if (sender.hasPermission("ChengTools.Gamemode")) {
             String RunSender = getLang("Gamemode.Server");
             if (sender instanceof Player) {
                 RunSender = sender.getName();

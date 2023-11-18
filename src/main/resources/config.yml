@@ -9,18 +9,14 @@ CustomJoinServerMessageSettings:
   #开关
   Enable: true
   #玩家进入服务器的提示
-  PlayerJoinMessage: "&7[&8玩家&7]&a&l%PlayerName%&e&l加入了游戏"
-  #管理员进入服务器的提示
-  AdminJoinMessage: "&7[&c管理员&7]&a&l%PlayerName%&e&l加入了游戏"
+  JoinMessage: "&a&l%PlayerName%&e&l加入了游戏"
 
 #自定义玩家退出服务器提示
 CustomQuitServerMessageSettings:
   #开关
   Enable: true
   #玩家退出服务器的提示
-  PlayerQuitMessage: "&7[&8&l玩家&7]&a&l%PlayerName%&e&l离开了游戏"
-  #管理员退出服务器的提示
-  AdminQuitMessage: "&7[&c&l管理员&7]&a&l%PlayerName%&e&l离开了游戏"
+  QuitMessage: "&a&l%PlayerName%&e&l离开了游戏"
 
 #反挑落系统
 AntiTiaoLue: true

@@ -7,16 +7,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.getLang;
 
 public final class Back implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (LocationHasMap.getHasMap().get(player.getName() + "_DeathLocation") != null) {
+            if (LocationHasMap.getHasMap().get(player.getName() + "_BackLocation") != null) {
                 LocationHasMap.getHasMap().put(player.getName() + "_UnBack", player.getLocation());
-                player.teleport(LocationHasMap.getHasMap().get(player.getName() + "_DeathLocation"));
+                player.teleport(LocationHasMap.getHasMap().get(player.getName() + "_BackLocation"));
                 player.sendMessage(getLang("Back.Done"));
             } else {
                 sender.sendMessage(getLang("Back.NotFound"));

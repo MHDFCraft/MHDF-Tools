@@ -9,13 +9,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Ultis.multi.getLang;
 
 public final class Invsee implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
-            if (sender.hasPermission(" ChengTools.Gamemode")) {
+            if (sender.hasPermission("ChengTools.Invsee")) {
                 if (args.length == 1) {
                     Player player = (Player) sender;
                     if (Bukkit.getPlayer(args[0]) == null) {
