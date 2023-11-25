@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public final class Util {
-    public static final String Version = "1.1.3";
+    public static final String Version = "1.1.4";
     public static final HashMap<Object, GentleUnload> gentleUnloads = new HashMap<>();
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
@@ -252,7 +252,7 @@ public final class Util {
 
         new BukkitCommandWrap().sync();
 
-        if (Bukkit.getOnlinePlayers().size() >= 1)
+        if (!Bukkit.getOnlinePlayers().isEmpty())
             for (Player player : Bukkit.getOnlinePlayers())
                 player.updateCommands();
     }

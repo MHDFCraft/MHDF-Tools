@@ -74,7 +74,11 @@ public final class PlayerJoin implements Listener {
             Player player = event.getPlayer();
             for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (StringHasMap.getHasMap().get(player.getName() + "_Vanish") != null) {
-                    OnlinePlayer.hidePlayer(player);
+                    if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
+                        OnlinePlayer.hidePlayer(player);
+                    } else {
+                        OnlinePlayer.hidePlayer(ChengToolsReloaded.instance, player);
+                    }
                 }
             }
         }

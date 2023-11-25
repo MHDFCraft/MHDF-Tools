@@ -11,7 +11,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getNMSVersion;
 
 public final class Vanish implements CommandExecutor {
     @Override
@@ -21,7 +24,11 @@ public final class Vanish implements CommandExecutor {
                 Player player = (Player) sender;
                 if (StringHasMap.getHasMap().get(player.getName() + "_Vanish") == null) {
                     for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                        OnlinePlayer.hidePlayer(ChengToolsReloaded.instance, player);
+                        if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
+                            OnlinePlayer.hidePlayer(player);
+                        } else {
+                            OnlinePlayer.hidePlayer(ChengToolsReloaded.instance, player);
+                        }
                     }
                     PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);
                     player.addPotionEffect(INVISIBILITY);
@@ -29,7 +36,11 @@ public final class Vanish implements CommandExecutor {
                     StringHasMap.getHasMap().put(player.getName() + "_Vanish", "已启用");
                 } else {
                     for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                        OnlinePlayer.showPlayer(ChengToolsReloaded.instance, player);
+                        if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
+                            OnlinePlayer.showPlayer(player);
+                        } else {
+                            OnlinePlayer.showPlayer(ChengToolsReloaded.instance, player);
+                        }
                     }
                     player.removePotionEffect(PotionEffectType.INVISIBILITY);
                     player.sendMessage(getLang("Vanish.Done", getLang("Vanish.Disabled")));
@@ -50,7 +61,11 @@ public final class Vanish implements CommandExecutor {
                 assert player != null;
                 if (StringHasMap.getHasMap().get(player.getName() + "_Vanish") == null) {
                     for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                        OnlinePlayer.hidePlayer(ChengToolsReloaded.instance, player);
+                        if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
+                            OnlinePlayer.hidePlayer(player);
+                        } else {
+                            OnlinePlayer.hidePlayer(ChengToolsReloaded.instance, player);
+                        }
                     }
                     PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);
                     player.addPotionEffect(INVISIBILITY);
@@ -59,7 +74,11 @@ public final class Vanish implements CommandExecutor {
                     StringHasMap.getHasMap().put(player.getName() + "_Vanish", "已启用");
                 } else {
                     for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                        OnlinePlayer.showPlayer(ChengToolsReloaded.instance, player);
+                        if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
+                            OnlinePlayer.showPlayer(player);
+                        } else {
+                            OnlinePlayer.showPlayer(ChengToolsReloaded.instance, player);
+                        }
                     }
                     player.removePotionEffect(PotionEffectType.INVISIBILITY);
                     player.sendMessage(getLang("Vanish.Done", getLang("Vanish.Disabled")));
