@@ -58,9 +58,6 @@ CrashPlayerEnable: true
 #快速晴天命令
 FastSunCommandEnable: true
 
-#点券系统
-PointEnable: true
-
 #快速调时间命令
 FastSetTimeCommandEnable: true
 

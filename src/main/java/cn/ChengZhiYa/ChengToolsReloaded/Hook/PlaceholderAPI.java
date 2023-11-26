@@ -5,7 +5,7 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyUtil.getMoney;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.EconomyUtil.getMoney;
 
 public final class PlaceholderAPI extends PlaceholderExpansion {
 

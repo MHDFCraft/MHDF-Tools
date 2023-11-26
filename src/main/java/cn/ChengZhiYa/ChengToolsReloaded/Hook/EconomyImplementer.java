@@ -10,7 +10,7 @@ import org.bukkit.OfflinePlayer;
 import java.io.File;
 import java.util.List;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyUtil.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.EconomyUtil.*;
 
 public final class EconomyImplementer extends AbstractEconomy {
     public boolean isEnabled() {

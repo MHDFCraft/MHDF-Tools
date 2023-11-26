@@ -6,14 +6,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.LoginUtil.CheckPassword;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.LoginUtil.LoginExists;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.*;
 
 public final class Login implements CommandExecutor {
@@ -22,8 +22,6 @@ public final class Login implements CommandExecutor {
         if (sender instanceof Player) {
             Bukkit.getScheduler().runTaskAsynchronously(ChengToolsReloaded.instance, () -> {
                 if (args.length == 1) {
-                    File Login_File = new File(ChengToolsReloaded.instance.getDataFolder(), "LoginData.yml");
-                    YamlConfiguration PasswordData = YamlConfiguration.loadConfiguration(Login_File);
                     String Password = args[0];
                     Player player = (Player) sender;
                     if (getLogin(player)) {
@@ -45,11 +43,11 @@ public final class Login implements CommandExecutor {
                         sender.sendMessage(getLang("Login.EasyPassword"));
                         return;
                     }
-                    if (PasswordData.getString(player.getName() + "_Password") == null) {
+                    if (!LoginExists(player.getName())) {
                         sender.sendMessage(getLang("Login.NoRegister"));
                         return;
                     }
-                    if (Sha256(Password).equals(PasswordData.getString(player.getName() + "_Password"))) {
+                    if (CheckPassword(player.getName(), Sha256(Password))) {
                         StringHasMap.getHasMap().put(player.getName() + "_Login", "t");
                         if (ChengToolsReloaded.instance.getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {
                             StringHasMap.getHasMap().put(player.getName() + "_LoginIP", Objects.requireNonNull(player.getAddress()).getHostName());

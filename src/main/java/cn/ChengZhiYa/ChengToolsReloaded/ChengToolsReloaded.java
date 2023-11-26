@@ -17,6 +17,7 @@ import cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault.MoneyAdmin;
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault.Pay;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.IntHasMap;
+import cn.ChengZhiYa.ChengToolsReloaded.Hook.EconomyImplementer;
 import cn.ChengZhiYa.ChengToolsReloaded.Hook.Metrics;
 import cn.ChengZhiYa.ChengToolsReloaded.Hook.PlaceholderAPI;
 import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Entity.EntityDamageByBlock;
@@ -29,7 +30,6 @@ import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Server.PaperServerListPing;
 import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Server.ServerListPing;
 import cn.ChengZhiYa.ChengToolsReloaded.Listeners.World.BlockPlace;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.*;
-import cn.ChengZhiYa.ChengToolsReloaded.Hook.EconomyImplementer;
 import cn.ChengZhiYa.ChengToolsReloaded.Utils.YamlFileUtil;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.zaxxer.hikari.HikariConfig;
@@ -262,10 +262,6 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                 registerCommand(this, new Tpa(), "Tpa系统", "tpa");
                 new TpaTime().runTaskTimerAsynchronously(this, 0L, 20L);
             }
-            if (getConfig().getBoolean("PointEnable")) {
-                registerCommand(this, new Point(), "点券系统", "point");
-                registerCommand(this, new Point(), "点券系统", "p");
-            }
             if (getConfig().getBoolean("InvseeEnable")) {
                 registerCommand(this, new Invsee(), "Invsee系统", "invsee");
             }
@@ -338,7 +334,6 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
 
     public void initializationYamlData() {
         File Login_File = new File(this.getDataFolder(), "LoginData.yml");
-        File Point_File = new File(this.getDataFolder(), "PointData.yml");
         if (getConfig().getBoolean("HomeSystemSettings.Enable")) {
             File HomeFile = new File(this.getDataFolder() + "/HomeData");
             if (!HomeFile.exists()) {
@@ -355,13 +350,6 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             if (!Login_File.exists()) {
                 try {
                     Login_File.createNewFile();
-                } catch (IOException ignored) {}
-            }
-        }
-        if (getConfig().getBoolean("PointEnable")) {
-            if (!Point_File.exists()) {
-                try {
-                    Point_File.createNewFile();
                 } catch (IOException ignored) {}
             }
         }
@@ -382,36 +370,29 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             ColorLog("&c无法连接数据库");
         }
         try {
-            Connection connection = statement.getConnection();
-            PreparedStatement ps = connection.prepareStatement("CREATE TABLE `ChengTools_Economy` (`PlayerName` VARCHAR(50) NOT NULL DEFAULT '',`Money` DECIMAL(20,4) NOT NULL DEFAULT 0,PRIMARY KEY (`PlayerName`))");
-            ps.executeUpdate();
-            ps.close();
-            connection.close();
-        } catch (SQLException ignored) {
-        }
-        try {
-            Connection connection = statement.getConnection();
-            PreparedStatement ps = connection.prepareStatement("CREATE TABLE `ChengTools_Home` (`PlayerHome` VARCHAR(100) NOT NULL DEFAULT '',`Owner` VARCHAR(50) NOT NULL DEFAULT '',`World` VARCHAR(50) NOT NULL DEFAULT '',`X` DOUBLE NOT NULL DEFAULT 0,`Y` DOUBLE NOT NULL DEFAULT 0,`Z` DOUBLE NOT NULL DEFAULT 0,`Yaw` DOUBLE NOT NULL DEFAULT 0,`Pitch` DOUBLE NOT NULL DEFAULT 0,PRIMARY KEY (`PlayerHome`),KEY `Owner` (`Owner`))");
-            ps.executeUpdate();
-            ps.close();
-            connection.close();
-        } catch (SQLException ignored) {
-        }
-        try {
-            Connection connection = statement.getConnection();
-            PreparedStatement ps = connection.prepareStatement("CREATE TABLE `ChengTools_Point` (`PlayerName` VARCHAR(50) NOT NULL DEFAULT '',`Point` DECIMAL(20,4) NOT NULL DEFAULT 0,PRIMARY KEY (`PlayerName`))");
-            ps.executeUpdate();
-            ps.close();
-            connection.close();
-        } catch (SQLException ignored) {
-        }
-        try {
-            Connection connection = statement.getConnection();
-            PreparedStatement ps = connection.prepareStatement("CREATE TABLE `ChengTools_Login` (`PlayerName` VARCHAR(50) NOT NULL DEFAULT '',`Password` VARCHAR(200) NOT NULL DEFAULT '',PRIMARY KEY (`PlayerName`))");
-            ps.executeUpdate();
-            ps.close();
-            connection.close();
-        } catch (SQLException ignored) {
+            {
+                Connection connection = dataSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ChengTools_Economy` (`PlayerName` VARCHAR(50) NOT NULL DEFAULT '',`Money` DECIMAL(20,4) NOT NULL DEFAULT 0,PRIMARY KEY (`PlayerName`))");
+                ps.executeUpdate();
+                ps.close();
+                connection.close();
+            }
+            {
+                Connection connection = dataSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ChengTools_Home` (`PlayerHome` VARCHAR(100) NOT NULL DEFAULT '',`Owner` VARCHAR(50) NOT NULL DEFAULT '',`World` VARCHAR(50) NOT NULL DEFAULT '',`X` DOUBLE NOT NULL DEFAULT 0,`Y` DOUBLE NOT NULL DEFAULT 0,`Z` DOUBLE NOT NULL DEFAULT 0,`Yaw` DOUBLE NOT NULL DEFAULT 0,`Pitch` DOUBLE NOT NULL DEFAULT 0,PRIMARY KEY (`PlayerHome`),KEY `Owner` (`Owner`))");
+                ps.executeUpdate();
+                ps.close();
+                connection.close();
+            }
+            {
+                Connection connection = dataSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ChengTools_Login` (`PlayerName` VARCHAR(50) NOT NULL DEFAULT '',`Password` VARCHAR(200) NOT NULL DEFAULT '',PRIMARY KEY (`PlayerName`))");
+                ps.executeUpdate();
+                ps.close();
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

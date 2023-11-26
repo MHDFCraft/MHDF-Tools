@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.ChengToolsReloaded.Utils;
+package cn.ChengZhiYa.ChengToolsReloaded.Utils.Database;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
 import org.bukkit.Bukkit;
@@ -14,10 +14,8 @@ public final class DatabaseUtil {
     public static boolean DataExists(String Table, String Field, String Value) {
         try {
             Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ? WHERE ? = ? LIMIT 1");
-            ps.setString(1, Table);
-            ps.setString(2, Field);
-            ps.setString(3, Value);
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + Table + " WHERE " + Field + " = ? LIMIT 1");
+            ps.setString(1, Value);
             ResultSet rs = ps.executeQuery();
             boolean 结果 = rs.next();
             rs.close();
@@ -25,6 +23,7 @@ public final class DatabaseUtil {
             connection.close();
             return 结果;
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -32,10 +31,8 @@ public final class DatabaseUtil {
     public static Object GetData(String Table, String WhereField, String WhereValue, String GetField) {
         try {
             Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ? WHERE ? = ? LIMIT 1");
-            ps.setString(1, Table);
-            ps.setString(2, WhereField);
-            ps.setString(3, WhereValue);
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + Table + " WHERE " + WhereField + " = ? LIMIT 1");
+            ps.setString(1, WhereValue);
             ResultSet rs = ps.executeQuery();
             Object Data = "";
             if (rs.next()) {
@@ -46,6 +43,7 @@ public final class DatabaseUtil {
             connection.close();
             return Data;
         } catch (SQLException e) {
+            e.printStackTrace();
             return "";
         }
     }
@@ -55,16 +53,15 @@ public final class DatabaseUtil {
             if (DataExists(Table, WhereField, WhereValue)) {
                 try {
                     Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("UPDATE ? SET ? = ? WHERE ? = ?");
-                    ps.setString(1, Table);
-                    ps.setString(2, SetField);
-                    ps.setObject(3, SetValue);
-                    ps.setString(4, WhereField);
-                    ps.setString(5, WhereValue);
+                    PreparedStatement ps = connection.prepareStatement("UPDATE " + Table + " SET " + SetField + " = ? WHERE " + WhereField + " = ?");
+                    ps.setObject(1, SetValue);
+                    ps.setString(2, WhereValue);
                     ps.executeUpdate();
                     ps.close();
                     connection.close();
-                } catch (SQLException ignored) {}
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -74,17 +71,14 @@ public final class DatabaseUtil {
             if (DataExists(Table, WhereField, WhereValue)) {
                 try {
                     Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("UPDATE ? SET ? = ?+? WHERE ? = ?");
-                    ps.setString(1, Table);
-                    ps.setString(2, AddField);
-                    ps.setString(3, AddField);
-                    ps.setObject(4, AddValue);
-                    ps.setString(5, WhereField);
-                    ps.setString(6, WhereValue);
+                    PreparedStatement ps = connection.prepareStatement("UPDATE " + Table + " SET " + AddField + " = " + AddField + "+? WHERE " + WhereField + " = ?");
+                    ps.setObject(1, AddValue);
+                    ps.setString(2, WhereValue);
                     ps.executeUpdate();
                     ps.close();
                     connection.close();
-                } catch (SQLException ignored) {
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -95,17 +89,14 @@ public final class DatabaseUtil {
             if (DataExists(Table, WhereField, WhereValue)) {
                 try {
                     Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("UPDATE ? SET ? = ?-? WHERE ? = ?");
-                    ps.setString(1, Table);
-                    ps.setString(2, TakeField);
-                    ps.setString(3, TakeField);
-                    ps.setObject(4, TakeValue);
-                    ps.setString(5, WhereField);
-                    ps.setString(6, WhereValue);
+                    PreparedStatement ps = connection.prepareStatement("UPDATE " + Table + " SET " + TakeField + " = " + TakeField + "-? WHERE " + WhereField + " = ?");
+                    ps.setObject(1, TakeValue);
+                    ps.setString(2, WhereValue);
                     ps.executeUpdate();
                     ps.close();
                     connection.close();
-                } catch (SQLException ignored) {
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         });

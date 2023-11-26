@@ -7,8 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.HomeUtil.AddHome;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.HomeUtil.getPlayerHomeTime;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.HomeUtil.AddHome;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.HomeUtil.getPlayerHomeTime;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class SetHome implements CommandExecutor {
@@ -19,7 +19,7 @@ public final class SetHome implements CommandExecutor {
                 Player player = (Player) sender;
                 String HomeName = args[0];
                 if (ChengToolsReloaded.instance.getConfig().getInt("HomeSystemSettings.MaxHomeTime") <= getPlayerHomeTime(player.getName())) {
-                    sender.sendMessage(getLang("Home.HomeListFull", label));
+                    sender.sendMessage(getLang("Home.HomeListFull", String.valueOf(ChengToolsReloaded.instance.getConfig().getInt("HomeSystemSettings.MaxHomeTime"))));
                     return false;
                 }
                 AddHome(player.getName(),HomeName,player.getLocation());

@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyUtil.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.EconomyUtil.*;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class Pay implements CommandExecutor {

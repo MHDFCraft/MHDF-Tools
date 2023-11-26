@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.ChengToolsReloaded.Utils;
+package cn.ChengZhiYa.ChengToolsReloaded.Utils.Database;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
 import org.bukkit.Bukkit;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded.dataSource;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.DatabaseUtil.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.DatabaseUtil.*;
 
 public final class EconomyUtil {
 
@@ -39,7 +39,9 @@ public final class EconomyUtil {
                         ps.executeUpdate();
                         ps.close();
                         connection.close();
-                    } catch (SQLException ignored) {}
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 });
             }else {
                 File VaultFile = getPlayerFile(PlayerName);

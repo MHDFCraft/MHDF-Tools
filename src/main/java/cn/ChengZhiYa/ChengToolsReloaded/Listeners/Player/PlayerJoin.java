@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyUtil.initializationPlayerData;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.EconomyUtil.initializationPlayerData;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.*;
 
 public final class PlayerJoin implements Listener {
