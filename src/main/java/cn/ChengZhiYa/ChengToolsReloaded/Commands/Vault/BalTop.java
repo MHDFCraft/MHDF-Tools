@@ -1,7 +1,6 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
-import cn.ChengZhiYa.ChengToolsReloaded.Tasks.Money;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

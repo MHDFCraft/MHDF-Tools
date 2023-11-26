@@ -4,7 +4,6 @@ import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.ScoreboardHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHasMap;
-import cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -18,13 +17,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI.getPlayerFile;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.*;
 
 public final class PlayerJoin implements Listener {
     @EventHandler
     public void On_Event(PlayerJoinEvent event) {
         if (ChengToolsReloaded.instance.getConfig().getBoolean("EconomySettings.Enable")) {
-            File VaultFile = new EconomyAPI().getPlayerFile(event.getPlayer().getName());
+            File VaultFile = getPlayerFile(event.getPlayer().getName());
             if (!VaultFile.exists()) {
                 YamlConfiguration VaultData = YamlConfiguration.loadConfiguration(VaultFile);
                 VaultData.set("money", ChengToolsReloaded.instance.getConfig().getDouble("EconomySettings.InitialMoney"));
@@ -110,13 +110,6 @@ public final class PlayerJoin implements Listener {
         if (ChengToolsReloaded.instance.getConfig().getBoolean("ScoreboardSettings.Enable")) {
             Player player = event.getPlayer();
             ScoreboardHasMap.getHasMap().put(player.getName() + "_Scoreboard", Bukkit.getScoreboardManager().getNewScoreboard());
-        }
-        if (ChengToolsReloaded.instance.getConfig().getBoolean("PlayerTitleSettings.Enable")) {
-            if (ChengToolsReloaded.instance.getConfig().getBoolean("PlayerTitleSettings.ShowPrefixAndSuffix")) {
-                Player player = event.getPlayer();
-                player.setDisplayName(ChatColor(GetPlt(player)[0] + player.getName() + GetPlt(player)[1]));
-                player.setPlayerListName(ChatColor(GetPlt(player)[0] + player.getName() + GetPlt(player)[1]));
-            }
         }
         if (ChengToolsReloaded.instance.getConfig().getBoolean("WhiteList.Enable")) {
             for (String WhiteList : ChengToolsReloaded.instance.getConfig().getStringList("WhiteList.List")) {

@@ -501,36 +501,6 @@ public final class Util {
         return Bukkit.getTPS();
     }
 
-    public static String[] GetPlt(OfflinePlayer player) {
-        File TitleData = new File(ChengToolsReloaded.instance.getDataFolder() + "/TitleData.yml");
-        YamlConfiguration TitleFileData = YamlConfiguration.loadConfiguration(TitleData);
-        String DefaultPrefix = ChengToolsReloaded.instance.getConfig().getString("PlayerTitleSettings.DefaultPrefix");
-        String DefaultSuffix = ChengToolsReloaded.instance.getConfig().getString("PlayerTitleSettings.DefaultSuffix");
-        String Prefix = ChengToolsReloaded.instance.getConfig().getString("PlayerTitleSettings.Prefix");
-        String Suffix = ChengToolsReloaded.instance.getConfig().getString("PlayerTitleSettings.Suffix");
-        String PlayerPrefix;
-        String PlayerSuffix;
-        if (TitleFileData.getString(player.getName() + "_Prefix") == null) {
-            if (!Objects.equals(DefaultPrefix, "")) {
-                PlayerPrefix = Prefix + DefaultPrefix + Suffix;
-            } else {
-                PlayerPrefix = "";
-            }
-        } else {
-            PlayerPrefix = Prefix + TitleFileData.getString(player.getName() + "_Prefix") + Suffix;
-        }
-        if (TitleFileData.getString(player.getName() + "_Suffix") == null) {
-            if (!Objects.equals(DefaultSuffix, "")) {
-                PlayerSuffix = Prefix + DefaultSuffix + Suffix;
-            } else {
-                PlayerSuffix = "";
-            }
-        } else {
-            PlayerSuffix = Prefix + TitleFileData.getString(player.getName() + "_Suffix") + Suffix;
-        }
-        return new String[]{PlayerPrefix, PlayerSuffix};
-    }
-
     public static String getLang(String LangVaule) {
         return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule)));
     }

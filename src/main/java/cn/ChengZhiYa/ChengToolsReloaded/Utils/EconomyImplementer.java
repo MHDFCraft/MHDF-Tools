@@ -5,11 +5,11 @@ import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
+
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI.*;
 
 public final class EconomyImplementer extends AbstractEconomy {
     public boolean isEnabled() {
@@ -57,12 +57,10 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public double getBalance(String playerName) {
-        if (!this.hasAccount(playerName)) {
-            return 0.0D;
-        } else {
-            YamlConfiguration config = this.loadConfig(this.getPlayerFile(playerName));
-            return config.getDouble("money");
+        if (playerFileExists(playerName)) {
+            return getMoney(playerName);
         }
+        return 0.0D;
     }
 
     public double getBalance(OfflinePlayer player) {
@@ -94,29 +92,12 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
-        if (!this.hasAccount(playerName)) {
-            return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, null);
-        } else {
-            try {
-                assert amount >= 0.0D;
-            } catch (AssertionError var7) {
-                return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, "数额异常");
-            }
-
-            if (this.getBalance(playerName) < amount) {
-                return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, "金钱不足！");
-            } else {
-                YamlConfiguration config = this.loadConfig(this.getPlayerFile(playerName));
-                config.set("money", this.getBalance(playerName) - amount);
-
-                try {
-                    config.save(this.getPlayerFile(playerName));
-                    return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, null);
-                } catch (IOException var6) {
-                    return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, "保存数据异常！");
-                }
+        if (playerFileExists(playerName)) {
+            if (takeFrom(playerName, amount)) {
+                return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, null);
             }
         }
+        return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, null);
     }
 
     public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
@@ -132,25 +113,12 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public EconomyResponse depositPlayer(String playerName, double amount) {
-        if (!this.hasAccount(playerName)) {
-            return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, null);
-        } else {
-            try {
-                assert amount >= 0.0D;
-            } catch (AssertionError var7) {
-                return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, "数额异常");
-            }
-
-            YamlConfiguration config = this.loadConfig(this.getPlayerFile(playerName));
-            config.set("money", this.getBalance(playerName) + amount);
-
-            try {
-                config.save(this.getPlayerFile(playerName));
+        if (playerFileExists(playerName)) {
+            if (addTo(playerName, amount)) {
                 return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, null);
-            } catch (IOException var6) {
-                return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, "保存数据异常！");
             }
         }
+        return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, null);
     }
 
     public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
@@ -166,19 +134,6 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public EconomyResponse createBank(String name, String player) {
-        double money = ChengToolsReloaded.instance.getConfig().getDouble("EconomySettings.InitialMoney");
-        File file = this.getPlayerFile(player);
-        if (!file.exists()) {
-            YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-            config.set("money", money);
-
-            try {
-                config.save(file);
-            } catch (IOException var8) {
-                return new EconomyResponse(0.0D, 0.0D, ResponseType.FAILURE, null);
-            }
-        }
-
         return new EconomyResponse(0.0D, this.getBalance(player), ResponseType.SUCCESS, null);
     }
 
@@ -227,19 +182,6 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public boolean createPlayerAccount(String playerName) {
-        double money = ChengToolsReloaded.instance.getConfig().getDouble("EconomySettings.InitialMoney");
-        File file = this.getPlayerFile(playerName);
-        if (!file.exists()) {
-            YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-            config.set("money", money);
-
-            try {
-                config.save(file);
-            } catch (IOException var7) {
-                return false;
-            }
-        }
-
         return true;
     }
 
@@ -253,14 +195,6 @@ public final class EconomyImplementer extends AbstractEconomy {
 
     public boolean createPlayerAccount(OfflinePlayer player, String worldName) {
         return false;
-    }
-
-    private YamlConfiguration loadConfig(File file) {
-        return YamlConfiguration.loadConfiguration(file);
-    }
-
-    private File getPlayerFile(String player_name) {
-        return new File(ChengToolsReloaded.instance.getDataFolder() + "/VaultData", player_name + ".yml");
     }
 }
     

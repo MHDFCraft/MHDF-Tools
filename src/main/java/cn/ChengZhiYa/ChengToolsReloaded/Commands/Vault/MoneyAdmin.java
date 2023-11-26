@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault;
 
-import cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI.*;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class MoneyAdmin implements TabExecutor {
@@ -23,7 +23,7 @@ public final class MoneyAdmin implements TabExecutor {
                         sender.sendMessage(getLang("PlayerNotOnline"));
                         return false;
                     }
-                    new EconomyAPI().addTo(args[1], Double.valueOf(args[2]));
+                    addTo(args[1], Double.valueOf(args[2]));
                     sender.sendMessage(getLang("Vault.AddDone", args[1], args[2]));
                     return false;
                 }
@@ -32,7 +32,7 @@ public final class MoneyAdmin implements TabExecutor {
                         sender.sendMessage(getLang("PlayerNotOnline"));
                         return false;
                     }
-                    new EconomyAPI().takeFrom(args[1], Double.valueOf(args[2]));
+                    takeFrom(args[1], Double.valueOf(args[2]));
                     sender.sendMessage(getLang("Vault.TakeDone", args[1], args[2]));
                     return false;
                 }
@@ -41,7 +41,7 @@ public final class MoneyAdmin implements TabExecutor {
                         sender.sendMessage(getLang("PlayerNotOnline"));
                         return false;
                     }
-                    new EconomyAPI().setMoney(args[1], Double.valueOf(args[2]));
+                    setMoney(args[1], Double.valueOf(args[2]));
                     sender.sendMessage(getLang("Vault.SetDone", args[1], args[2]));
                     return false;
                 }

@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault;
 
-import cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI.*;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class Pay implements CommandExecutor {
@@ -22,10 +22,12 @@ public final class Pay implements CommandExecutor {
                     sender.sendMessage(getLang("Vault.MoneyLessThan0"));
                     return false;
                 }
-                if (!new EconomyAPI().transferMoney(sender.getName(), args[0], amount)) {
+                if (getMoney(sender.getName()) < amount) {
                     sender.sendMessage(getLang("Vault.PayFail"));
                     return false;
                 }
+                takeFrom(sender.getName(), amount);
+                addTo(args[0], amount);
                 Player receiver = Bukkit.getPlayer(args[0]);
                 if (receiver == null) {
                     sender.sendMessage(getLang("PlayerNotOnline"));

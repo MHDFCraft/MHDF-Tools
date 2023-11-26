@@ -5,93 +5,85 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
+
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.DatabaseUtil.*;
 
 public final class EconomyAPI {
 
-    public File getPlayerFile(String PlayerName) {
+    public static File getPlayerFile(String PlayerName) {
         return new File(ChengToolsReloaded.instance.getDataFolder() + "/VaultData", PlayerName + ".yml");
     }
 
-    private YamlConfiguration loadConfig(File file) {
-        return YamlConfiguration.loadConfiguration(file);
-    }
-
-    private Boolean playerFileExists(String PlayerName) {
+    public static Boolean playerFileExists(String PlayerName) {
+        if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+            return DataExists("ChengTools_Economy", "PlayerName", PlayerName);
+        }
         return getPlayerFile(PlayerName).exists();
     }
 
-    public Double checkMoney(String PlayerName) {
+    public static Double getMoney(String PlayerName) {
         if (playerFileExists(PlayerName)) {
-            YamlConfiguration config = loadConfig(getPlayerFile(PlayerName));
+            if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                GetData("ChengTools_Economy", "PlayerName", PlayerName, "Money");
+            }
+            YamlConfiguration config = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
             return config.getDouble("money");
         }
         return -1.0;
     }
 
-    public void setMoney(String PlayerName, Double amount) {
-        try {
-            assert amount >= 0;
-        } catch (AssertionError e) {
-            return;
-        }
-        if (!playerFileExists(PlayerName)) {
-            return;
-        }
-        YamlConfiguration config = loadConfig(getPlayerFile(PlayerName));
-        config.set("money", amount);
-        try {
-            config.save(getPlayerFile(PlayerName));
-        } catch (IOException ignored) {
-        }
-    }
-
-    public Boolean addTo(String PlayerName, Double amount) {
-        try {
-            assert amount >= 0;
-        } catch (AssertionError e) {
-            return false;
-        }
-        if (!playerFileExists(PlayerName)) {
-            return false;
-        }
-        YamlConfiguration config = loadConfig(getPlayerFile(PlayerName));
-        config.set("money", checkMoney(PlayerName) + amount);
-        try {
-            config.save(getPlayerFile(PlayerName));
-            return true;
-        } catch (IOException e) {
-            return false;
+    public static void setMoney(String PlayerName, Double amount) {
+        if (amount >= 0) {
+            if (playerFileExists(PlayerName)) {
+                if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                    SetData("ChengTools_Economy", "PlayerName", PlayerName, "Money", amount);
+                }
+                YamlConfiguration config = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
+                config.set("money", amount);
+                try {
+                    config.save(getPlayerFile(PlayerName));
+                } catch (IOException ignored) {
+                }
+            }
         }
     }
 
-    public Boolean takeFrom(String PlayerName, Double amount) {
-        try {
-            assert amount >= 0;
-        } catch (AssertionError e) {
-            return false;
+    public static Boolean addTo(String PlayerName, Double amount) {
+        if (amount >= 0) {
+            if (playerFileExists(PlayerName)) {
+                if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                    Add("ChengTools_Economy", "PlayerName", PlayerName, "Money", amount);
+                    return true;
+                }
+                YamlConfiguration config = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
+                config.set("money", getMoney(PlayerName) + amount);
+                try {
+                    config.save(getPlayerFile(PlayerName));
+                    return true;
+                } catch (IOException ignored) {
+                }
+            }
         }
-        if (checkMoney(PlayerName) < amount) {
-            return false;
-        }
-        YamlConfiguration config = loadConfig(getPlayerFile(PlayerName));
-        config.set("money", checkMoney(PlayerName) - amount);
-        try {
-            config.save(getPlayerFile(PlayerName));
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
+        return false;
     }
 
-    public Boolean transferMoney(String payer, String payee, Double amount) {
-        try {
-            assert amount >= 0;
-        } catch (AssertionError e) {
-            return false;
+    public static Boolean takeFrom(String PlayerName, Double amount) {
+        if (amount >= 0) {
+            if (playerFileExists(PlayerName)) {
+                if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                    Take("ChengTools_Economy", "PlayerName", PlayerName, "Money", amount);
+                    return true;
+                }
+                YamlConfiguration config = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
+                config.set("money", getMoney(PlayerName) - amount);
+                try {
+                    config.save(getPlayerFile(PlayerName));
+                    return true;
+                } catch (IOException ignored) {
+                }
+            }
         }
-        if (!(playerFileExists(payer) && playerFileExists(payee) && checkMoney(payer) >= amount)) {
-            return false;
-        }
-        return takeFrom(payer, amount) && addTo(payee, amount);
+        return false;
     }
 }
