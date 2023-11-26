@@ -56,9 +56,7 @@ public final class Register implements CommandExecutor {
                     PasswordData.set(player.getName() + "_Password", Sha256(Password));
                     try {
                         PasswordData.save(Login_File);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    } catch (IOException ignored) {}
                     if (ChengToolsReloaded.instance.getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {
                         StringHasMap.getHasMap().put(player.getName() + "_LoginIP", Objects.requireNonNull(player.getAddress()).getHostName());
                     }

@@ -31,7 +31,7 @@ public final class YamlFileUtil {
     }
 
     public void saveResource(String FilePath, String ResourcePath, String OutFileName, boolean Replace) {
-        if (ResourcePath.equals("")) {
+        if (ResourcePath.isEmpty()) {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
         InputStream in = this.getResource(ResourcePath = ResourcePath.replace('\\', '/'));

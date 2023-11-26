@@ -1,6 +1,7 @@
-package cn.ChengZhiYa.ChengToolsReloaded.Utils;
+package cn.ChengZhiYa.ChengToolsReloaded.Hook;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
+import cn.ChengZhiYa.ChengToolsReloaded.Utils.Util;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
@@ -9,7 +10,7 @@ import org.bukkit.OfflinePlayer;
 import java.io.File;
 import java.util.List;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyUtil.*;
 
 public final class EconomyImplementer extends AbstractEconomy {
     public boolean isEnabled() {
@@ -93,7 +94,7 @@ public final class EconomyImplementer extends AbstractEconomy {
 
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
         if (playerFileExists(playerName)) {
-            if (takeFrom(playerName, amount)) {
+            if (takeMoney(playerName, amount)) {
                 return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, null);
             }
         }
@@ -114,7 +115,7 @@ public final class EconomyImplementer extends AbstractEconomy {
 
     public EconomyResponse depositPlayer(String playerName, double amount) {
         if (playerFileExists(playerName)) {
-            if (addTo(playerName, amount)) {
+            if (addMoney(playerName, amount)) {
                 return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, null);
             }
         }

@@ -13,7 +13,6 @@ import cn.ChengZhiYa.ChengToolsReloaded.Commands.Login.Register;
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.Other.*;
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.Spawn.SetSpawn;
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.Spawn.Spawn;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault.BalTop;
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault.MoneyAdmin;
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault.Pay;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHasMap;
@@ -30,7 +29,7 @@ import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Server.PaperServerListPing;
 import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Server.ServerListPing;
 import cn.ChengZhiYa.ChengToolsReloaded.Listeners.World.BlockPlace;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.*;
-import cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyImplementer;
+import cn.ChengZhiYa.ChengToolsReloaded.Hook.EconomyImplementer;
 import cn.ChengZhiYa.ChengToolsReloaded.Utils.YamlFileUtil;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.zaxxer.hikari.HikariConfig;
@@ -314,7 +313,6 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             if (Vault) {
                 if (getConfig().getBoolean("EconomySettings.Enable")) {
                     Bukkit.getServicesManager().register(Economy.class, new EconomyImplementer(), ChengToolsReloaded.instance, ServicePriority.Normal);
-                    registerCommand(this, new BalTop(), "经济排行榜", "baltop");
                     registerCommand(this, new cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault.Money(), "查询", "money");
                     registerCommand(this, new Pay(), "转账", "pay");
                     registerCommand(this, new MoneyAdmin(), "管理员管理", "moneyadmin");
@@ -340,7 +338,6 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
 
     public void initializationYamlData() {
         File Login_File = new File(this.getDataFolder(), "LoginData.yml");
-        File Title_File = new File(this.getDataFolder(), "TitleData.yml");
         File Point_File = new File(this.getDataFolder(), "PointData.yml");
         if (getConfig().getBoolean("HomeSystemSettings.Enable")) {
             File HomeFile = new File(this.getDataFolder() + "/HomeData");
@@ -358,18 +355,14 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             if (!Login_File.exists()) {
                 try {
                     Login_File.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                } catch (IOException ignored) {}
             }
         }
         if (getConfig().getBoolean("PointEnable")) {
             if (!Point_File.exists()) {
                 try {
                     Point_File.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                } catch (IOException ignored) {}
             }
         }
     }
@@ -398,7 +391,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
         }
         try {
             Connection connection = statement.getConnection();
-            PreparedStatement ps = connection.prepareStatement("CREATE TABLE `ChengTools_Home` (`PlayerHome` VARCHAR(100) NOT NULL DEFAULT '',`World` VARCHAR(50) NOT NULL DEFAULT '',`X` DOUBLE NOT NULL DEFAULT 0,`Y` DOUBLE NOT NULL DEFAULT 0,`Z` DOUBLE NOT NULL DEFAULT 0,`Yaw` DOUBLE NOT NULL DEFAULT 0,`Pitch` DOUBLE NOT NULL DEFAULT 0,PRIMARY KEY (`PlayerHome`))");
+            PreparedStatement ps = connection.prepareStatement("CREATE TABLE `ChengTools_Home` (`PlayerHome` VARCHAR(100) NOT NULL DEFAULT '',`Owner` VARCHAR(50) NOT NULL DEFAULT '',`World` VARCHAR(50) NOT NULL DEFAULT '',`X` DOUBLE NOT NULL DEFAULT 0,`Y` DOUBLE NOT NULL DEFAULT 0,`Z` DOUBLE NOT NULL DEFAULT 0,`Yaw` DOUBLE NOT NULL DEFAULT 0,`Pitch` DOUBLE NOT NULL DEFAULT 0,PRIMARY KEY (`PlayerHome`),KEY `Owner` (`Owner`))");
             ps.executeUpdate();
             ps.close();
             connection.close();

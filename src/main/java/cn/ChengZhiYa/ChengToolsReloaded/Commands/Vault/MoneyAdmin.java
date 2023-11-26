@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyUtil.*;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class MoneyAdmin implements TabExecutor {
@@ -23,7 +23,7 @@ public final class MoneyAdmin implements TabExecutor {
                         sender.sendMessage(getLang("PlayerNotOnline"));
                         return false;
                     }
-                    addTo(args[1], Double.valueOf(args[2]));
+                    addMoney(args[1], Double.valueOf(args[2]));
                     sender.sendMessage(getLang("Vault.AddDone", args[1], args[2]));
                     return false;
                 }
@@ -32,7 +32,7 @@ public final class MoneyAdmin implements TabExecutor {
                         sender.sendMessage(getLang("PlayerNotOnline"));
                         return false;
                     }
-                    takeFrom(args[1], Double.valueOf(args[2]));
+                    takeMoney(args[1], Double.valueOf(args[2]));
                     sender.sendMessage(getLang("Vault.TakeDone", args[1], args[2]));
                     return false;
                 }

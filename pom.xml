@@ -6,7 +6,7 @@
 
     <groupId>Cheng-Tools-Reloaded</groupId>
     <artifactId>Cheng-Tools-Reloaded</artifactId>
-    <version>1.1.4</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
 
     <name>Cheng-Tools-Reloaded</name>
@@ -54,6 +54,10 @@
     </build>
 
     <repositories>
+        <repository>
+            <id>alimaven</id>
+            <url>https://central.maven.org/maven2</url>
+        </repository>
         <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>

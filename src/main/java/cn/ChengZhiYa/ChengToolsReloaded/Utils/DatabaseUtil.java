@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded.dataSource;
 
-public class DatabaseUtil {
+public final class DatabaseUtil {
     public static boolean DataExists(String Table, String Field, String Value) {
         try {
             Connection connection = dataSource.getConnection();
@@ -41,11 +41,10 @@ public class DatabaseUtil {
             if (rs.next()) {
                 Data = rs.getDouble(GetField);
             }
-            boolean 结果 = rs.next();
             rs.close();
             ps.close();
             connection.close();
-            return 结果;
+            return Data;
         } catch (SQLException e) {
             return "";
         }
@@ -65,8 +64,7 @@ public class DatabaseUtil {
                     ps.executeUpdate();
                     ps.close();
                     connection.close();
-                } catch (SQLException ignored) {
-                }
+                } catch (SQLException ignored) {}
             }
         });
     }

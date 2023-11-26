@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public final class Util {
-    public static final String Version = "1.1.4";
+    public static final String Version = "1.2.0";
     public static final HashMap<Object, GentleUnload> gentleUnloads = new HashMap<>();
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
@@ -135,9 +135,7 @@ public final class Util {
                 stringBuffer.append(temp);
             }
             encodeStr = stringBuffer.toString().toUpperCase();
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
+        } catch (final Exception ignored) {}
         return encodeStr;
     }
 
@@ -318,14 +316,10 @@ public final class Util {
                 Field pluginInitField = cl.getClass().getDeclaredField("pluginInit");
                 pluginInitField.setAccessible(true);
                 pluginInitField.set(cl, null);
-            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ignored) {}
             try {
                 ((URLClassLoader) cl).close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            } catch (IOException ignored) {}
         }
         try {
             Object paperPluginManagerImpl = Class.forName("io.papermc.paper.plugin.manager.PaperPluginManagerImpl").getMethod("getInstance").invoke(null);
@@ -343,9 +337,7 @@ public final class Util {
             pluginListField.setAccessible(true);
             List<Plugin> pluginList = (List<Plugin>) pluginListField.get(instanceManager);
             pluginList.remove(plugin);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {}
         System.gc();
     }
     public static void OpSendMessage(String Message) {
@@ -428,9 +420,7 @@ public final class Util {
             Constructor<PluginCommand> c = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
             c.setAccessible(true);
             command = c.newInstance(name, plugin);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {}
         return command;
     }
 
@@ -442,9 +432,7 @@ public final class Util {
                 f.setAccessible(true);
                 commandMap = (CommandMap) f.get(Bukkit.getPluginManager());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {}
         return commandMap;
     }
 

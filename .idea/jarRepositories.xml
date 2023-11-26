@@ -42,9 +42,19 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="alimaven" />
+      <option name="name" value="alimaven" />
+      <option name="url" value="http://central.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="dmulloy2-repo" />
       <option name="name" value="dmulloy2-repo" />
       <option name="url" value="https://repo.dmulloy2.net/service/rest/repository/browse/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="alimaven" />
+      <option name="name" value="alimaven" />
+      <option name="url" value="https://central.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="localrepository" />

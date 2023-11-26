@@ -17,7 +17,7 @@ public final class Stop implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission("ChengTools.Stop")) {
-            if (Bukkit.getOnlinePlayers().size() == 0) {
+            if (Bukkit.getOnlinePlayers().isEmpty()) {
                 Bukkit.shutdown();
                 return false;
             }

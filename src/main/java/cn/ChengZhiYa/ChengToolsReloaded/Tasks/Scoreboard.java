@@ -17,7 +17,7 @@ public final class Scoreboard extends BukkitRunnable {
 
     public void run() {
         if (ChengToolsReloaded.instance.getConfig().getBoolean("ScoreboardSettings.Enable")) {
-            if (Bukkit.getOnlinePlayers().size() != 0) {
+            if (!Bukkit.getOnlinePlayers().isEmpty()) {
                 try {
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         if (ObjectiveHasMap.getHasMap().get(player.getName() + "_Objective") != null) {
@@ -30,7 +30,7 @@ public final class Scoreboard extends BukkitRunnable {
                         ObjectiveHasMap.getHasMap().get(player.getName() + "_Objective").setDisplaySlot(DisplaySlot.SIDEBAR);
                         for (int i = 0; i < ChengToolsReloaded.instance.getConfig().getStringList("ScoreboardSettings.Lines").size(); i++) {
                             Score ScoreMessage;
-                            if (ChengToolsReloaded.instance.getConfig().getStringList("ScoreboardSettings.Lines").get(i) == null || ChengToolsReloaded.instance.getConfig().getStringList("ScoreboardSettings.Lines").get(i).equals("")) {
+                            if (ChengToolsReloaded.instance.getConfig().getStringList("ScoreboardSettings.Lines").get(i) == null || ChengToolsReloaded.instance.getConfig().getStringList("ScoreboardSettings.Lines").get(i).isEmpty()) {
                                 StringBuilder NullMessage = new StringBuilder(" ");
                                 for (int i1 = 0; i1 < i; i1++) {
                                     NullMessage.append(" ");

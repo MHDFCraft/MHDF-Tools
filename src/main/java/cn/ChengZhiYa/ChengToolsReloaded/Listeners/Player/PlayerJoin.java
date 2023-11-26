@@ -17,22 +17,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI.getPlayerFile;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyUtil.initializationPlayerData;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.*;
 
 public final class PlayerJoin implements Listener {
     @EventHandler
     public void On_Event(PlayerJoinEvent event) {
         if (ChengToolsReloaded.instance.getConfig().getBoolean("EconomySettings.Enable")) {
-            File VaultFile = getPlayerFile(event.getPlayer().getName());
-            if (!VaultFile.exists()) {
-                YamlConfiguration VaultData = YamlConfiguration.loadConfiguration(VaultFile);
-                VaultData.set("money", ChengToolsReloaded.instance.getConfig().getDouble("EconomySettings.InitialMoney"));
-                try {
-                    VaultData.save(VaultFile);
-                } catch (IOException ignored) {
-                }
-            }
+            initializationPlayerData(event.getPlayer().getName());
         }
         if (ChengToolsReloaded.instance.getConfig().getBoolean("CheckVersion")) {
             Player player = event.getPlayer();
@@ -65,9 +57,7 @@ public final class PlayerJoin implements Listener {
             if (!HomeData_File.exists()) {
                 try {
                     HomeData_File.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                } catch (IOException ignored) {}
             }
         }
         if (ChengToolsReloaded.instance.getConfig().getBoolean("VanishEnable")) {
@@ -89,8 +79,7 @@ public final class PlayerJoin implements Listener {
             Tpa_Data.set(player.getName() + "_TpaPromptMode", ChengToolsReloaded.instance.getConfig().getBoolean("TpaSetting.DefaultMode"));
             try {
                 Tpa_Data.save(TpaData);
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ignored) {
             }
         }
         if (ChengToolsReloaded.instance.getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {

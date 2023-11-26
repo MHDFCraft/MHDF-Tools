@@ -9,9 +9,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.HomeUtil.*;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class DelHome implements TabExecutor {
@@ -21,35 +21,13 @@ public final class DelHome implements TabExecutor {
             if (args.length == 1) {
                 Player player = (Player) sender;
                 String HomeName = args[0];
-                File HomeData = new File(ChengToolsReloaded.instance.getDataFolder() + "/HomeData");
-                File HomeData_File = new File(HomeData, player.getName() + ".yml");
-                if (!HomeData_File.exists()) {
-                    try {
-                        HomeData_File.createNewFile();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                YamlConfiguration PlayerHomeData = YamlConfiguration.loadConfiguration(HomeData_File);
-                List<String> HomeList = PlayerHomeData.getStringList(player.getName() + "_HomeList");
-                if (!HomeList.contains(HomeName)) {
+                if (HomeExists(player.getName(),HomeName)) {
+                    RemoveHome(player.getName(),HomeName);
+                    sender.sendMessage(getLang("Home.SetDone", label));
+                    player.sendMessage(getLang("Home.RemoveDone"));
+                }else {
                     player.sendMessage(getLang("Home.NotFound", HomeName));
-                    return false;
                 }
-                HomeList.remove(HomeName);
-                PlayerHomeData.set(player.getName() + "_HomeList", HomeList);
-                PlayerHomeData.set(HomeName + ".World", null);
-                PlayerHomeData.set(HomeName + ".X", null);
-                PlayerHomeData.set(HomeName + ".Y", null);
-                PlayerHomeData.set(HomeName + ".Z", null);
-                PlayerHomeData.set(HomeName, null);
-                try {
-                    PlayerHomeData.save(HomeData_File);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-                player.sendMessage(getLang("Home.RemoveDone"));
             } else {
                 sender.sendMessage(getLang("Usage.Home", label));
             }

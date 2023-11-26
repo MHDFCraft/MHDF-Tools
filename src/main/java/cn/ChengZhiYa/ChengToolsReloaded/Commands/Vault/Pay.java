@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyAPI.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.EconomyUtil.*;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 
 public final class Pay implements CommandExecutor {
@@ -26,8 +26,8 @@ public final class Pay implements CommandExecutor {
                     sender.sendMessage(getLang("Vault.PayFail"));
                     return false;
                 }
-                takeFrom(sender.getName(), amount);
-                addTo(args[0], amount);
+                takeMoney(sender.getName(), amount);
+                addMoney(args[0], amount);
                 Player receiver = Bukkit.getPlayer(args[0]);
                 if (receiver == null) {
                     sender.sendMessage(getLang("PlayerNotOnline"));
