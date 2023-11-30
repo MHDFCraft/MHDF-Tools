@@ -35,6 +35,12 @@ import com.alibaba.fastjson.parser.ParserConfig;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import net.milkbowl.vault.economy.Economy;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
@@ -42,6 +48,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.net.URL;
@@ -56,6 +63,7 @@ import java.util.TimeZone;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.*;
 
 public final class ChengToolsReloaded extends JavaPlugin implements Listener {
+    public static final String Version = "1.2.1";
     public static YamlFileUtil Yaml;
     public static ChengToolsReloaded instance;
     public static boolean PAPI = true;
@@ -74,15 +82,30 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
         instance = this;
         descriptionFile = this.getDescription();
         Yaml = new YamlFileUtil();
+
+        ParserConfig.getGlobalInstance().setSafeMode(true);
     }
 
     @Override
     public void onEnable() {
-        ParserConfig.getGlobalInstance().setSafeMode(true);
         ColorLog("&7=============&e橙式插件-橙工具&7=============");
 
+        //bstats
         if (getConfig().getBoolean("bStats")) {
             new Metrics(this, 17154);
+        }
+
+        {
+            if (getDataFolder().getParentFile().isDirectory()) {
+                for (File PluginFile : Objects.requireNonNull(getDataFolder().getParentFile().listFiles())) {
+                    if (PluginFile.isFile() && PluginFile.getName().contains("Cheng-Tools-Reloaded") && PluginFile.getName().endsWith(".jar")) {
+                        String[] PluginName = PluginFile.getName().split("Cheng-Tools-Reloaded");
+                        if (!PluginName[1].equals("-" + Version + ".jar")) {
+                            PluginFile.delete();
+                        }
+                    }
+                }
+            }
         }
 
         //功能可用检查
@@ -107,6 +130,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             }
         }
 
+        //更新检测
         if (getConfig().getBoolean("CheckVersion")) {
             try {
                 URL url1 = new URL("http://gb95351e.dll.z-j.wang/Cheng-Tools-Reloaded-CheckVersion.html");
@@ -125,6 +149,29 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                 String NewVersionString = stringBuilder.toString().replace("<!--", "").replace("-->", "");
                 if (!NewVersionString.equals(Version)) {
                     ColorLog("&c当前插件版本不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/");
+                    if (getConfig().getBoolean("AutoUpdate")) {
+                        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+                            try {
+                                int cache = 10 * 1024;
+                                CloseableHttpClient httpClient = HttpClients.createDefault();
+                                RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000).
+                                        setConnectionRequestTimeout(5000)
+                                        .setSocketTimeout(5000)
+                                        .setRedirectsEnabled(true)
+                                        .build();
+                                HttpGet httpGet = new HttpGet("https://github.moeyy.xyz/https://github.com/BaiShenYaoDog/Cheng-Tools-Reloaded/releases/download/" +  NewVersionString + "/Cheng-Tools-Reloaded-" +  NewVersionString + ".jar");
+                                httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54");
+                                httpGet.setConfig(requestConfig);
+                                CloseableHttpResponse response = httpClient.execute(httpGet);
+                                FileOutputStream fileOutputStream = getOutputStream(response, NewVersionString, cache);
+                                fileOutputStream.close();
+                                ChatColor("&c自动更新完成,下次重启时生效!");
+                                ChatColor("&a请手动删除旧版本插件,谢谢!");
+                            }catch (Exception ignored) {
+                                ChatColor("&c自动更新失败!");
+                            }
+                        });
+                    }
                     BooleanHasMap.getHasMap().put("IsLast", true);
                 } else {
                     ColorLog("&a当前插件版本是最新版!");
@@ -134,7 +181,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                 isr.close();
                 bufr.close();
             } catch (Exception e) {
-                ColorLog("[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
+                ColorLog("&c[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
                 BooleanHasMap.getHasMap().put("IsLast", false);
                 BooleanHasMap.getHasMap().put("CheckVersionError", true);
             }
@@ -157,12 +204,12 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                 Yaml.saveYamlFile(this.getDataFolder().getPath(), "lang.yml", "lang.yml", true);
             }
             LangFileData = YamlConfiguration.loadConfiguration(Lang_File);
-        }
 
-        if (Objects.equals(getConfig().getString("DataSettings.Type"), "MySQL")) {
-            initializationDatabaseData();
-        } else {
-            initializationYamlData();
+            if (Objects.equals(getConfig().getString("DataSettings.Type"), "MySQL")) {
+                initializationDatabaseData();
+            } else {
+                initializationYamlData();
+            }
         }
 
         //初始化功能
@@ -236,7 +283,6 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                     Bukkit.getPluginManager().registerEvents(new ServerListPing(), this);
                 }
             }
-
             if (getConfig().getBoolean("FlyEnable")) {
                 registerCommand(this, new Fly(), "飞行系统", "fly");
                 Bukkit.getPluginManager().registerEvents(new PlayerChangedWorld(), this);
@@ -293,19 +339,6 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                     registerCommand(this, new CrashPlayerClient(), "崩端系统", "crash");
                 }
             }
-
-            registerCommand(this, new Reload(), "重载插件", "chengtoolsreload");
-            registerCommand(this, new Reload(), "重载插件", "ctreload");
-            registerCommand(this, new Reload(), "重载插件", "ctr");
-            Bukkit.getPluginManager().registerEvents(new PlayerChat(), this);
-            Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocess(), this);
-            Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
-            Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
-            Bukkit.getPluginManager().registerEvents(new PlayerRespawn(), this);
-            if (PAPI) {
-                Bukkit.getPluginManager().registerEvents(this, this);
-                new PlaceholderAPI().register();
-            }
             if (Vault) {
                 if (getConfig().getBoolean("EconomySettings.Enable")) {
                     Bukkit.getServicesManager().register(Economy.class, new EconomyImplementer(), ChengToolsReloaded.instance, ServicePriority.Normal);
@@ -315,7 +348,22 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                     registerCommand(this, new MoneyAdmin(), "管理员管理", "ma");
                 }
             }
+
+            registerCommand(this, new Reload(), "重载插件", "chengtoolsreload");
+            registerCommand(this, new Reload(), "重载插件", "ctreload");
+            registerCommand(this, new Reload(), "重载插件", "ctr");
+            Bukkit.getPluginManager().registerEvents(new PlayerChat(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocess(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerRespawn(), this);
         }
+
+        if (PAPI) {
+            Bukkit.getPluginManager().registerEvents(this, this);
+            new PlaceholderAPI().register();
+        }
+
         ColorLog("&a插件加载完成! 作者:292200693");
         ColorLog("&7=============&e橙式插件-橙工具&7=============");
     }
@@ -323,13 +371,35 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         instance = null;
+        ColorLog("&7=============&e橙式插件-橙工具&7=============");
+
+        //取消注册经济
         if (Vault) {
             Bukkit.getServicesManager().unregister(Economy.class, new EconomyImplementer());
         }
-        ColorLog("&7=============&e橙式插件-橙工具&7=============");
-        ClearAllHashMap();
+
+        //取消注册PAPI
+        if (PAPI) {
+            new PlaceholderAPI().unregister();
+        }
+
         ColorLog("&c插件卸载完成! 作者:292200693");
         ColorLog("&7=============&e橙式插件-橙工具&7=============");
+    }
+
+    @NotNull
+    public FileOutputStream getOutputStream(CloseableHttpResponse response, String NewVersionString, int cache) throws IOException {
+        HttpEntity entity = response.getEntity();
+        InputStream is = entity.getContent();
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(getDataFolder().getParentFile(),"Cheng-Tools-Reloaded-" + NewVersionString + ".jar"));
+        byte[] buffer = new byte[cache];
+        int ch;
+        while ((ch = is.read(buffer)) != -1) {
+            fileOutputStream.write(buffer, 0, ch);
+        }
+        is.close();
+        fileOutputStream.flush();
+        return fileOutputStream;
     }
 
     public void initializationYamlData() {

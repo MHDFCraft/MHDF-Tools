@@ -6,7 +6,7 @@
 
     <groupId>Cheng-Tools-Reloaded</groupId>
     <artifactId>Cheng-Tools-Reloaded</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <packaging>jar</packaging>
 
     <name>Cheng-Tools-Reloaded</name>
@@ -122,6 +122,11 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>5.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
         </dependency>
     </dependencies>
 </project>

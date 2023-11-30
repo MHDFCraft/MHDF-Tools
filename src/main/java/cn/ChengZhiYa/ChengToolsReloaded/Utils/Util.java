@@ -38,7 +38,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public final class Util {
-    public static final String Version = "1.2.0";
     public static final HashMap<Object, GentleUnload> gentleUnloads = new HashMap<>();
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
@@ -53,19 +52,6 @@ public final class Util {
             pluginClassLoaderPlugin.setAccessible(true);
         } catch (ClassNotFoundException | NoSuchFieldException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private Util() {
-    }
-
-    public static void ClearAllHashMap() {
-        try {
-            StringHasMap.getHasMap().clear();
-            IntHasMap.getHasMap().clear();
-            BooleanHasMap.getHasMap().clear();
-            LocationHasMap.getHasMap().clear();
-        } catch (Exception ignored) {
         }
     }
 
