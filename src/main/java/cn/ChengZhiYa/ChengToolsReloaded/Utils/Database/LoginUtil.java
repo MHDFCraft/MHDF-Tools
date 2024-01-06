@@ -15,7 +15,7 @@ import static cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded.dataSource;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.DatabaseUtil.DataExists;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.DatabaseUtil.GetData;
 
-public class LoginUtil {
+public final class LoginUtil {
     public static Boolean LoginExists(String PlayerName) {
         if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
             return DataExists("ChengTools_Login", "PlayerName", PlayerName);

@@ -148,20 +148,6 @@ TpaHere:
     &a玩家%1邀请你去他那里看看
     ?Accent?  ?Defuse?
     &7--------------&9Tpahere系统&7--------------
-PlayerTitle:
-  NotHavePrefix: "&c这个玩家没有前缀!"
-  NotHaveSuffix: "&c这个玩家没有后缀!"
-  RemoveDone: "&a删除成功!"
-  SetDone: "&a设置成功!"
-  HelpMessage: |-
-    &f
-    &7-------&6称号系统&7-------
-    &6/%1 help &7 &e帮助界面
-    &6/%1 setPrefix <玩家ID> <称号> &7- &e设置前缀
-    &6/%1 setSuffix <玩家ID> <称号> &7- &e设置后缀
-    &6/%1 delPrefix <玩家ID> &7- &e删除前缀
-    &6/%1 delSuffix <玩家ID> &7- &e删除后缀
-    &7-------&6称号系统&7-------
 PluginManage:
   WhiteListPlugin: "&a不允许管理此插件!"
   AlreadyLoad: "&a%1已经被加载了!"
