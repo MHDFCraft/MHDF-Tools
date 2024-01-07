@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class CrashPlayerClient implements CommandExecutor {
     @Override
@@ -25,16 +25,16 @@ public final class CrashPlayerClient implements CommandExecutor {
             if (args.length == 1) {
                 String PlayerName = args[0];
                 if (Bukkit.getPlayer(PlayerName) == null) {
-                    sender.sendMessage(getLang("PlayerNotOnline"));
+                    sender.sendMessage(i18n("PlayerNotOnline"));
                     return false;
                 }
 
                 if (StringHasMap.getHasMap().get(PlayerName + "_Crash") != null) {
-                    sender.sendMessage(getLang("Crash.RepeatExecution"));
+                    sender.sendMessage(i18n("Crash.RepeatExecution"));
                     return false;
                 }
                 Player player = Bukkit.getPlayer(PlayerName);
-                sender.sendMessage(getLang("Crash.Execution"));
+                sender.sendMessage(i18n("Crash.Execution"));
                 StringHasMap.getHasMap().put(Objects.requireNonNull(player).getName() + "_Crash", "崩端ing");
 
                 PacketContainer packetContainer = new PacketContainer(PacketType.Play.Server.EXPLOSION);
@@ -58,10 +58,10 @@ public final class CrashPlayerClient implements CommandExecutor {
                 }
                 StringHasMap.getHasMap().put(Objects.requireNonNull(player).getName() + "_Crash", null);
             } else {
-                sender.sendMessage(getLang("Usage.Crash", label));
+                sender.sendMessage(i18n("Usage.Crash", label));
             }
         } else {
-            sender.sendMessage(getLang("NoPermission"));
+            sender.sendMessage(i18n("NoPermission"));
         }
         return false;
     }

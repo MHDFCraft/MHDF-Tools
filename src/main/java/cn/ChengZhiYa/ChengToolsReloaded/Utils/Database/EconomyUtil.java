@@ -15,7 +15,6 @@ import static cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded.dataSource;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.DatabaseUtil.*;
 
 public final class EconomyUtil {
-
     public static File getPlayerFile(String PlayerName) {
         return new File(ChengToolsReloaded.instance.getDataFolder() + "/VaultData", PlayerName + ".yml");
     }
@@ -34,8 +33,8 @@ public final class EconomyUtil {
                     try {
                         Connection connection = dataSource.getConnection();
                         PreparedStatement ps = connection.prepareStatement("INSERT INTO ChengTools_Economy (PlayerName, Money) VALUES (?,?)");
-                        ps.setString(1,PlayerName);
-                        ps.setDouble(2,ChengToolsReloaded.instance.getConfig().getDouble("EconomySettings.InitialMoney"));
+                        ps.setString(1, PlayerName);
+                        ps.setDouble(2, ChengToolsReloaded.instance.getConfig().getDouble("EconomySettings.InitialMoney"));
                         ps.executeUpdate();
                         ps.close();
                         connection.close();
@@ -43,13 +42,14 @@ public final class EconomyUtil {
                         e.printStackTrace();
                     }
                 });
-            }else {
+            } else {
                 File VaultFile = getPlayerFile(PlayerName);
                 YamlConfiguration VaultData = YamlConfiguration.loadConfiguration(VaultFile);
                 VaultData.set("money", ChengToolsReloaded.instance.getConfig().getDouble("EconomySettings.InitialMoney"));
                 try {
                     VaultData.save(VaultFile);
-                } catch (IOException ignored) {}
+                } catch (IOException ignored) {
+                }
             }
         }
     }

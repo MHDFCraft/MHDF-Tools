@@ -43,12 +43,12 @@ public final class PluginManage implements TabExecutor {
                     Plugin potential = getPluginName(args[1]);
 
                     if (ChengToolsReloaded.instance.getConfig().getStringList("PluginManageSettings.WhiteListPluginList").contains(args[1])) {
-                        sender.sendMessage(getLang("PluginManage.WhiteListPlugin"));
+                        sender.sendMessage(i18n("PluginManage.WhiteListPlugin"));
                         return false;
                     }
 
                     if (potential != null) {
-                        sender.sendMessage(getLang("PluginManage.AlreadyLoad", PluginName.toString()));
+                        sender.sendMessage(i18n("PluginManage.AlreadyLoad", PluginName.toString()));
                         return false;
                     }
 
@@ -58,7 +58,7 @@ public final class PluginManage implements TabExecutor {
                         return false;
                     }
 
-                    sender.sendMessage(getLang("PluginManage.LoadDone", args[1]));
+                    sender.sendMessage(i18n("PluginManage.LoadDone", args[1]));
                     return false;
                 }
             }
@@ -67,12 +67,12 @@ public final class PluginManage implements TabExecutor {
                     Plugin potential = getPluginName(args[1]);
 
                     if (ChengToolsReloaded.instance.getConfig().getStringList("PluginManageSettings.WhiteListPluginList").contains(args[1])) {
-                        sender.sendMessage(getLang("PluginManage.WhiteListPlugin"));
+                        sender.sendMessage(i18n("PluginManage.WhiteListPlugin"));
                         return false;
                     }
 
                     if (potential != null) {
-                        sender.sendMessage(getLang("PluginManage.AlreadyLoad", args[1]));
+                        sender.sendMessage(i18n("PluginManage.AlreadyLoad", args[1]));
                         return false;
                     }
 
@@ -82,52 +82,52 @@ public final class PluginManage implements TabExecutor {
                         return false;
                     }
 
-                    sender.sendMessage(getLang("PluginManage.LoadDone", args[1]));
+                    sender.sendMessage(i18n("PluginManage.LoadDone", args[1]));
                 }
                 if (args[0].equals("unload")) {
                     Plugin target = getPluginName(args[1]);
 
                     if (ChengToolsReloaded.instance.getConfig().getStringList("PluginManageSettings.WhiteListPluginList").contains(args[1])) {
-                        sender.sendMessage(getLang("PluginManage.WhiteListPlugin"));
+                        sender.sendMessage(i18n("PluginManage.WhiteListPlugin"));
                         return false;
                     }
 
                     if (target == null) {
-                        sender.sendMessage(getLang("PluginManage.AlreadyUnLoad", args[1]));
+                        sender.sendMessage(i18n("PluginManage.AlreadyUnLoad", args[1]));
                         return false;
                     }
 
                     unload(target);
 
-                    sender.sendMessage(getLang("PluginManage.UnLoadDone", args[1]));
+                    sender.sendMessage(i18n("PluginManage.UnLoadDone", args[1]));
                 }
                 if (args[0].equals("reload")) {
                     Plugin target = getPluginName(args[1]);
 
                     if (ChengToolsReloaded.instance.getConfig().getStringList("PluginManageSettings.WhiteListPluginList").contains(args[1])) {
-                        sender.sendMessage(getLang("PluginManage.WhiteListPlugin"));
+                        sender.sendMessage(i18n("PluginManage.WhiteListPlugin"));
                         return false;
                     }
 
                     if (target == null) {
-                        sender.sendMessage(getLang("PluginManage.NotLoad"));
+                        sender.sendMessage(i18n("PluginManage.NotLoad"));
                         return false;
                     }
 
                     if (Bukkit.getPluginManager().getPlugin(args[1]) == null) {
-                        sender.sendMessage(getLang("PluginManage.NotLoad"));
+                        sender.sendMessage(i18n("PluginManage.NotLoad"));
                         return false;
                     }
 
                     reload(target);
 
-                    sender.sendMessage(getLang("PluginManage.ReLoadDone", args[1]));
+                    sender.sendMessage(i18n("PluginManage.ReLoadDone", args[1]));
                 }
             } else {
                 Help(sender, label);
             }
         } else {
-            sender.sendMessage(getLang("NoPermission"));
+            sender.sendMessage(i18n("NoPermission"));
         }
         return false;
     }
@@ -201,6 +201,6 @@ public final class PluginManage implements TabExecutor {
     }
 
     public void Help(CommandSender sender, String Command) {
-        sender.sendMessage(getLang("PluginManage.HelpMessage", Command));
+        sender.sendMessage(i18n("PluginManage.HelpMessage", Command));
     }
 }

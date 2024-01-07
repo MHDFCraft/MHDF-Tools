@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Freeze implements CommandExecutor {
     @Override
@@ -16,21 +16,21 @@ public final class Freeze implements CommandExecutor {
             if (args.length == 1) {
                 String PlayerName = args[0];
                 if (Bukkit.getPlayer(PlayerName) == null) {
-                    sender.sendMessage(getLang("PlayerNotOnline"));
+                    sender.sendMessage(i18n("PlayerNotOnline"));
                     return false;
                 }
                 if (StringHasMap.getHasMap().get(PlayerName + "_Freeze") == null) {
                     StringHasMap.getHasMap().put(PlayerName + "_Freeze", "t");
-                    sender.sendMessage(getLang("Freeze.Done"));
+                    sender.sendMessage(i18n("Freeze.Done"));
                 } else {
                     StringHasMap.getHasMap().remove(PlayerName + "_Freeze");
-                    sender.sendMessage(getLang("Freeze.UnDone"));
+                    sender.sendMessage(i18n("Freeze.UnDone"));
                 }
             } else {
-                sender.sendMessage(getLang("Usage.Freeze"));
+                sender.sendMessage(i18n("Usage.Freeze"));
             }
         } else {
-            sender.sendMessage(getLang("NoPermission"));
+            sender.sendMessage(i18n("NoPermission"));
         }
         return false;
     }

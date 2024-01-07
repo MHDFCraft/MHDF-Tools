@@ -9,16 +9,17 @@ import org.jetbrains.annotations.NotNull;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
-public final class UnBack implements CommandExecutor {
+public final class TpBack implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (LocationHasMap.getHasMap().get(player.getName() + "_UnBack") != null) {
-                player.teleport(LocationHasMap.getHasMap().get(player.getName() + "_UnBack"));
-                player.sendMessage(i18n("UnBack.Done"));
+            if (LocationHasMap.getHasMap().get(player.getName() + "_TpBackLocation") != null) {
+                LocationHasMap.getHasMap().put(player.getName() + "_UnBack", player.getLocation());
+                player.teleport(LocationHasMap.getHasMap().get(player.getName() + "_TpBackLocation"));
+                player.sendMessage(i18n("Back.Done"));
             } else {
-                sender.sendMessage(i18n("UnBack.NotFound"));
+                sender.sendMessage(i18n("Back.NotFound"));
             }
         } else {
             sender.sendMessage(i18n("OnlyPlayer"));

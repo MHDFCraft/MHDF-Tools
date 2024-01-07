@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Night implements CommandExecutor {
     @Override
@@ -16,9 +16,9 @@ public final class Night implements CommandExecutor {
             for (World world : Bukkit.getWorlds()) {
                 world.setTime(13000);
             }
-            sender.sendMessage(getLang("FastSetDone"));
+            sender.sendMessage(i18n("FastSetDone"));
         } else {
-            sender.sendMessage(getLang("NoPermission"));
+            sender.sendMessage(i18n("NoPermission"));
         }
         return false;
     }

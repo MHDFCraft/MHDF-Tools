@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Back implements CommandExecutor {
     @Override
@@ -17,12 +17,12 @@ public final class Back implements CommandExecutor {
             if (LocationHasMap.getHasMap().get(player.getName() + "_BackLocation") != null) {
                 LocationHasMap.getHasMap().put(player.getName() + "_UnBack", player.getLocation());
                 player.teleport(LocationHasMap.getHasMap().get(player.getName() + "_BackLocation"));
-                player.sendMessage(getLang("Back.Done"));
+                player.sendMessage(i18n("Back.Done"));
             } else {
-                sender.sendMessage(getLang("Back.NotFound"));
+                sender.sendMessage(i18n("Back.NotFound"));
             }
         } else {
-            sender.sendMessage(getLang("OnlyPlayer"));
+            sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
     }

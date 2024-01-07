@@ -11,14 +11,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded.dataSource;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.DatabaseUtil.DataExists;
 
 public final class HomeUtil {
+    static Map<Object, List<String>> HomeListHashMap = new HashMap<>();
+    static Map<Object, Location> HomeLocationHashMap = new HashMap<>();
+
+    public static Map<Object, List<String>> getHomeListHashMap() {
+        return HomeListHashMap;
+    }
+
+    public static Map<Object, Location> getHomeLocationHashMap() {
+        return HomeLocationHashMap;
+    }
 
     public static File getPlayerFile(String PlayerName) {
         return new File(ChengToolsReloaded.instance.getDataFolder() + "/HomeData", PlayerName + ".yml");
@@ -26,7 +33,21 @@ public final class HomeUtil {
 
     public static Boolean HomeExists(String PlayerName, String HomeName) {
         if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-            return DataExists("ChengTools_Home", "PlayerHome", PlayerName + "|" + HomeName);
+            try {
+                Connection connection = dataSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM ChengTools_Home WHERE Home = ? AND Owner = ? LIMIT 1");
+                ps.setString(1, HomeName);
+                ps.setString(2, PlayerName);
+                ResultSet rs = ps.executeQuery();
+                boolean 结果 = rs.next();
+                rs.close();
+                ps.close();
+                connection.close();
+                return 结果;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
         YamlConfiguration HomeData = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
         return HomeData.getStringList(PlayerName + "_HomeList").contains(HomeName);
@@ -68,21 +89,26 @@ public final class HomeUtil {
 
     public static List<String> getPlayerHomeList(String PlayerName) {
         if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-            try {
-                Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM ChengTools_Home WHERE Owner = ?");
-                ps.setString(1, PlayerName);
-                ResultSet rs = ps.executeQuery();
-                List<String> HomeList = new ArrayList<>();
-                while (rs.next()) {
-                    HomeList.add(rs.getString("PlayerHome").split("\\|")[1]);
+            if (getHomeListHashMap().get(PlayerName) == null) {
+                try {
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM ChengTools_Home WHERE Owner = ?");
+                    ps.setString(1, PlayerName);
+                    ResultSet rs = ps.executeQuery();
+                    List<String> HomeList = new ArrayList<>();
+                    while (rs.next()) {
+                        HomeList.add(rs.getString("Home"));
+                    }
+                    rs.close();
+                    ps.close();
+                    connection.close();
+                    getHomeListHashMap().put(PlayerName, HomeList);
+                    return HomeList;
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-                rs.close();
-                ps.close();
-                connection.close();
-                return HomeList;
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } else {
+                return getHomeListHashMap().get(PlayerName);
             }
         } else {
             File HomeData = new File(ChengToolsReloaded.instance.getDataFolder() + "/HomeData");
@@ -101,24 +127,32 @@ public final class HomeUtil {
 
     public static Location getHome(String PlayerName, String HomeName) {
         if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-            try {
-                Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM ChengTools_Home WHERE PlayerHome = ?");
-                ps.setString(1, PlayerName + "|" + HomeName);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    return new Location(Bukkit.getWorld(Objects.requireNonNull(rs.getString("World"))),
-                            rs.getDouble("X"),
-                            rs.getDouble("Y"),
-                            rs.getDouble("Z"),
-                            (float) rs.getDouble("Yaw"),
-                            (float) rs.getDouble("Pitch"));
+            if (getHomeLocationHashMap().get(PlayerName + "|" + HomeName) == null) {
+                try {
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM ChengTools_Home WHERE Home = ? AND Owner = ? LIMIT 1");
+                    ps.setString(1, HomeName);
+                    ps.setString(2, PlayerName);
+                    ResultSet rs = ps.executeQuery();
+                    Location HomeLocation = null;
+                    if (rs.next()) {
+                        HomeLocation = new Location(Bukkit.getWorld(Objects.requireNonNull(rs.getString("World"))),
+                                rs.getDouble("X"),
+                                rs.getDouble("Y"),
+                                rs.getDouble("Z"),
+                                (float) rs.getDouble("Yaw"),
+                                (float) rs.getDouble("Pitch"));
+                    }
+                    getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
+                    rs.close();
+                    ps.close();
+                    connection.close();
+                    return HomeLocation;
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-                rs.close();
-                ps.close();
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } else {
+                return getHomeLocationHashMap().get(PlayerName + "|" + HomeName);
             }
         } else {
             try {
@@ -148,9 +182,13 @@ public final class HomeUtil {
             if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 Bukkit.getScheduler().runTaskAsynchronously(ChengToolsReloaded.instance, () -> {
                     try {
+                        List<String> HomeList = getHomeListHashMap().get(PlayerName);
+                        HomeList.add(HomeName);
+                        getHomeListHashMap().put(PlayerName, HomeList);
+                        getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("INSERT INTO ChengTools_Home (PlayerHome, Owner, World, X, Y, Z, Yaw, Pitch) VALUES (?,?,?,?,?,?,?,?)");
-                        ps.setString(1, PlayerName + "|" + HomeName);
+                        PreparedStatement ps = connection.prepareStatement("INSERT INTO ChengTools_Home (Home, Owner, World, X, Y, Z, Yaw, Pitch) VALUES (?,?,?,?,?,?,?,?)");
+                        ps.setString(1, HomeName);
                         ps.setString(2, PlayerName);
                         ps.setString(3, HomeLocation.getWorld().getName());
                         ps.setDouble(4, HomeLocation.getX());
@@ -186,7 +224,8 @@ public final class HomeUtil {
                 PlayerHomeData.set(HomeName + ".Pitch", HomeLocation.getPitch());
                 try {
                     PlayerHomeData.save(HomeData_File);
-                } catch (IOException ignored) {}
+                } catch (IOException ignored) {
+                }
             }
         } else {
             SetHome(PlayerName, HomeName, HomeLocation);
@@ -198,15 +237,17 @@ public final class HomeUtil {
             if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 Bukkit.getScheduler().runTaskAsynchronously(ChengToolsReloaded.instance, () -> {
                     try {
+                        getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("UPDATE ChengTools_Home SET World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE PlayerHome = ?");
+                        PreparedStatement ps = connection.prepareStatement("UPDATE ChengTools_Home SET World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?");
                         ps.setString(1, HomeLocation.getWorld().getName());
                         ps.setDouble(2, HomeLocation.getX());
                         ps.setDouble(3, HomeLocation.getY());
                         ps.setDouble(4, HomeLocation.getZ());
                         ps.setDouble(5, HomeLocation.getYaw());
                         ps.setDouble(6, HomeLocation.getPitch());
-                        ps.setString(7, PlayerName + "|" + HomeName);
+                        ps.setString(7, HomeName);
+                        ps.setString(8, PlayerName);
                         ps.executeUpdate();
                         ps.close();
                         connection.close();
@@ -242,10 +283,15 @@ public final class HomeUtil {
         if (HomeExists(PlayerName, HomeName)) {
             if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 Bukkit.getScheduler().runTaskAsynchronously(ChengToolsReloaded.instance, () -> {
+                    List<String> HomeList = getHomeListHashMap().get(PlayerName);
+                    HomeList.remove(HomeName);
+                    getHomeListHashMap().put(PlayerName, HomeList);
+                    getHomeLocationHashMap().remove(PlayerName + "|" + HomeName);
                     try {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("DELETE FROM ChengTools_Home WHERE PlayerHome = ?");
-                        ps.setString(1, PlayerName + "|" + HomeName);
+                        PreparedStatement ps = connection.prepareStatement("DELETE FROM ChengTools_Home WHERE Home = ? AND Owner = ?");
+                        ps.setString(1, HomeName);
+                        ps.setString(2, PlayerName);
                         ps.executeUpdate();
                         ps.close();
                         connection.close();

@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Hat implements CommandExecutor {
     @Override
@@ -20,14 +20,14 @@ public final class Hat implements CommandExecutor {
             ItemStack OldHelmet = PlayerInventory.getHelmet();
             ItemStack NewHelmet = player.getItemInHand();
             if (NewHelmet.getType() == Material.AIR) {
-                sender.sendMessage(getLang("HatNoItem"));
+                sender.sendMessage(i18n("HatNoItem"));
                 return false;
             }
             PlayerInventory.setHelmet(NewHelmet);
             player.setItemInHand(OldHelmet);
             player.updateInventory();
         } else {
-            sender.sendMessage(getLang("OnlyPlayer"));
+            sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
     }

@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.EconomyUtil.*;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Pay implements CommandExecutor {
     @Override
@@ -19,30 +19,30 @@ public final class Pay implements CommandExecutor {
             if (Bukkit.getPlayer(args[0]) != null) {
                 double amount = Double.parseDouble(args[1]);
                 if (amount < 0) {
-                    sender.sendMessage(getLang("Vault.MoneyLessThan0"));
+                    sender.sendMessage(i18n("Vault.MoneyLessThan0"));
                     return false;
                 }
                 if (getMoney(sender.getName()) < amount) {
-                    sender.sendMessage(getLang("Vault.PayFail"));
+                    sender.sendMessage(i18n("Vault.PayFail"));
                     return false;
                 }
                 takeMoney(sender.getName(), amount);
                 addMoney(args[0], amount);
                 Player receiver = Bukkit.getPlayer(args[0]);
                 if (receiver == null) {
-                    sender.sendMessage(getLang("PlayerNotOnline"));
+                    sender.sendMessage(i18n("PlayerNotOnline"));
                     return false;
                 }
                 if (Objects.requireNonNull(receiver.getAddress()).getHostString().equals(Objects.requireNonNull(((Player) sender).getAddress()).getHostString())) {
-                    sender.sendMessage(getLang("Vault.PayFail"));
+                    sender.sendMessage(i18n("Vault.PayFail"));
                     return false;
                 }
-                sender.sendMessage(getLang("Vault.PayDone", args[1], args[0]));
-                receiver.sendMessage(getLang("Vault.Pay", sender.getName(), args[1]));
+                sender.sendMessage(i18n("Vault.PayDone", args[1], args[0]));
+                receiver.sendMessage(i18n("Vault.Pay", sender.getName(), args[1]));
             }
             return false;
         }
-        sender.sendMessage(getLang("Usage.Pay"));
+        sender.sendMessage(i18n("Usage.Pay"));
         return false;
     }
 }

@@ -35,8 +35,8 @@ public final class PlayerChat implements Listener {
                 for (String BlackWork : ChengToolsReloaded.instance.getConfig().getStringList("ChatSettings.ChatBlackWork")) {
                     if (Message.contains(BlackWork)) {
                         event.setCancelled(true);
-                        player.sendMessage(getLang("Chat.SendBlackWord"));
-                        OpSendMessage(getLang("Chat.SendBlackWordOpMessage", player.getName(), BlackWork));
+                        player.sendMessage(i18n("Chat.SendBlackWord"));
+                        OpSendMessage(i18n("Chat.SendBlackWordOpMessage", player.getName(), BlackWork));
                         break;
                     }
                 }
@@ -44,7 +44,7 @@ public final class PlayerChat implements Listener {
         }
 
         if (IntHasMap.getHasMap().get(player.getName() + "_ChatDelayTime") != null) {
-            player.sendMessage(ChatColor((getLang("Chat.SendBlackWordOpMessage", String.valueOf(IntHasMap.getHasMap().get(player.getName() + "_ChatDelayTime"))))));
+            player.sendMessage(ChatColor((i18n("Chat.SendBlackWordOpMessage", String.valueOf(IntHasMap.getHasMap().get(player.getName() + "_ChatDelayTime"))))));
             event.setCancelled(true);
             return;
         }
@@ -77,7 +77,7 @@ public final class PlayerChat implements Listener {
             if (StringHasMap.getHasMap().get(player + "_ChatMessage") != null) {
                 if (NoColorMessage.equals(StringHasMap.getHasMap().get(player + "_ChatMessage"))) {
                     event.setCancelled(true);
-                    player.sendMessage(getLang("Chat.RepectDelay"));
+                    player.sendMessage(i18n("Chat.RepectDelay"));
                     return;
                 }
             }

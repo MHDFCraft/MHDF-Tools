@@ -25,26 +25,26 @@ public final class Login implements CommandExecutor {
                     String Password = args[0];
                     Player player = (Player) sender;
                     if (getLogin(player)) {
-                        sender.sendMessage(getLang("Login.AlreadyLogin"));
+                        sender.sendMessage(i18n("Login.AlreadyLogin"));
                         return;
                     }
                     int MinPasswordLength = ChengToolsReloaded.instance.getConfig().getInt("LoginSystemSettings.MinPaswordLength");
                     int MaxPasswordLength = ChengToolsReloaded.instance.getConfig().getInt("LoginSystemSettings.MaxPaswordLength");
                     List<String> EasyPasswords = ChengToolsReloaded.instance.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
                     if (Password.length() < MinPasswordLength) {
-                        sender.sendMessage(getLang("Login.LengthShort", String.valueOf(MinPasswordLength)));
+                        sender.sendMessage(i18n("Login.LengthShort", String.valueOf(MinPasswordLength)));
                         return;
                     }
                     if (Password.length() > MaxPasswordLength) {
-                        sender.sendMessage(getLang("Login.LengthLong", String.valueOf(MaxPasswordLength)));
+                        sender.sendMessage(i18n("Login.LengthLong", String.valueOf(MaxPasswordLength)));
                         return;
                     }
                     if (EasyPasswords.contains(Password)) {
-                        sender.sendMessage(getLang("Login.EasyPassword"));
+                        sender.sendMessage(i18n("Login.EasyPassword"));
                         return;
                     }
                     if (!LoginExists(player.getName())) {
-                        sender.sendMessage(getLang("Login.NoRegister"));
+                        sender.sendMessage(i18n("Login.NoRegister"));
                         return;
                     }
                     if (CheckPassword(player.getName(), Sha256(Password))) {
@@ -52,16 +52,16 @@ public final class Login implements CommandExecutor {
                         if (ChengToolsReloaded.instance.getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {
                             StringHasMap.getHasMap().put(player.getName() + "_LoginIP", Objects.requireNonNull(player.getAddress()).getHostName());
                         }
-                        sender.sendMessage(getLang("Login.PasswordRight"));
+                        sender.sendMessage(i18n("Login.PasswordRight"));
                     } else {
-                        sender.sendMessage(getLang("Login.PasswordError"));
+                        sender.sendMessage(i18n("Login.PasswordError"));
                     }
                 } else {
-                    sender.sendMessage(getLang("Usage.Login", label));
+                    sender.sendMessage(i18n("Usage.Login", label));
                 }
             });
         } else {
-            sender.sendMessage(getLang("OnlyPlayer"));
+            sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
     }

@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class PlayerRespawn implements Listener {
     @EventHandler
@@ -22,7 +22,7 @@ public final class PlayerRespawn implements Listener {
             int X = DiedLocation.getBlockX();
             int Y = DiedLocation.getBlockY();
             int Z = DiedLocation.getBlockZ();
-            player.sendMessage(getLang("Back.ReSpawn", String.valueOf(X), String.valueOf(Y), String.valueOf(Z)));
+            player.sendMessage(i18n("Back.ReSpawn", String.valueOf(X), String.valueOf(Y), String.valueOf(Z)));
         }
     }
 }

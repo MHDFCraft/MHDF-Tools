@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.ChatColor;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class TpaHere implements CommandExecutor {
     @Override
@@ -26,27 +26,27 @@ public final class TpaHere implements CommandExecutor {
             if (args.length == 1) {
                 String PlayerName = args[0];
                 if (PlayerName.equals(sender.getName())) {
-                    sender.sendMessage(getLang("TpaHere.SendMe"));
+                    sender.sendMessage(i18n("TpaHere.SendMe"));
                     return false;
                 }
                 if (Bukkit.getPlayer(PlayerName) == null) {
-                    sender.sendMessage(getLang("PlayerNotOnline"));
+                    sender.sendMessage(i18n("PlayerNotOnline"));
                     return false;
                 }
                 if (IntHasMap.getHasMap().get(sender.getName() + "_TPAHereTime") != null && IntHasMap.getHasMap().get(sender.getName() + "_TPAHereTime") >= 0) {
-                    sender.sendMessage(getLang("TpaHere.RepectSend"));
+                    sender.sendMessage(i18n("TpaHere.RepectSend"));
                     return false;
                 }
                 TextComponent Message = new TextComponent();
-                for (String Messages : getLang("TpaHere.Message").split("\\?")) {
+                for (String Messages : i18n("TpaHere.Message").split("\\?")) {
                     if (Messages.equals("Accent")) {
-                        TextComponent MessageButton = new TextComponent(ChatColor(getLang("TpaHere.AccentMessage")));
+                        TextComponent MessageButton = new TextComponent(ChatColor(i18n("TpaHere.AccentMessage")));
                         MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpahere accent " + sender.getName()));
                         MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&a接受" + sender.getName() + "的传送请求"))));
                         Message.addExtra(MessageButton);
                     } else {
                         if (Messages.equals("Defuse")) {
-                            TextComponent MessageButton = new TextComponent(ChatColor(getLang("TpaHere.DefuseMessage")));
+                            TextComponent MessageButton = new TextComponent(ChatColor(i18n("TpaHere.DefuseMessage")));
                             MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpahere defuse " + sender.getName()));
                             MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&c拒绝" + sender.getName() + "的传送请求"))));
                             Message.addExtra(MessageButton);
@@ -56,7 +56,7 @@ public final class TpaHere implements CommandExecutor {
                     }
                 }
                 Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).spigot().sendMessage(Message);
-                sender.sendMessage(ChatColor(getLang("TpaHere.SendDone")));
+                sender.sendMessage(ChatColor(i18n("TpaHere.SendDone")));
                 IntHasMap.getHasMap().put(sender.getName() + "_TPAHereTime", ChengToolsReloaded.instance.getConfig().getInt("Tpahere.OutTime"));
                 StringHasMap.getHasMap().put(sender.getName() + "_TPAHerePlayerName", Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).getName());
                 return false;
@@ -68,20 +68,20 @@ public final class TpaHere implements CommandExecutor {
                             IntHasMap.getHasMap().remove(args[1] + "_TPAHereTime");
                             StringHasMap.getHasMap().remove(args[1] + "_TPAHerePlayerName");
                             if (Bukkit.getPlayer(args[1]) == null) {
-                                sender.sendMessage(getLang("TpaHere.Offline", args[1]));
+                                sender.sendMessage(i18n("TpaHere.Offline", args[1]));
                                 return false;
                             }
                             ((Player) sender).teleport(Objects.requireNonNull(Bukkit.getPlayer(args[1])).getLocation());
-                            Objects.requireNonNull(Bukkit.getPlayer(args[1])).sendMessage(getLang("TpaHere.TeleportDone", sender.getName()));
-                            sender.sendMessage(getLang("TpaHere.AcceptDone", args[1]));
+                            Objects.requireNonNull(Bukkit.getPlayer(args[1])).sendMessage(i18n("TpaHere.TeleportDone", sender.getName()));
+                            sender.sendMessage(i18n("TpaHere.AcceptDone", args[1]));
 
                         } else {
                             IntHasMap.getHasMap().remove(args[1] + "_TPAHereTime");
                             StringHasMap.getHasMap().remove(args[1] + "_TPAHerePlayerName");
-                            sender.sendMessage(getLang("TpaHere.NotSendTeleport"));
+                            sender.sendMessage(i18n("TpaHere.NotSendTeleport"));
                         }
                     } else {
-                        sender.sendMessage(getLang("TpaHere.NotSendTeleport"));
+                        sender.sendMessage(i18n("TpaHere.NotSendTeleport"));
                     }
                     return false;
                 }
@@ -91,25 +91,25 @@ public final class TpaHere implements CommandExecutor {
                             IntHasMap.getHasMap().remove(args[1] + "_TPAHereTime");
                             StringHasMap.getHasMap().remove(args[1] + "_TPAHerePlayerName");
                             if (Bukkit.getPlayer(args[1]) == null) {
-                                sender.sendMessage(getLang("TpaHere.Offline", args[1]));
+                                sender.sendMessage(i18n("TpaHere.Offline", args[1]));
                                 return false;
                             }
-                            Objects.requireNonNull(Bukkit.getPlayer(args[1])).sendMessage(getLang("TpaHere.Defuse", sender.getName()));
-                            sender.sendMessage(getLang("TpaHere.DefuseDone", args[1]));
+                            Objects.requireNonNull(Bukkit.getPlayer(args[1])).sendMessage(i18n("TpaHere.Defuse", sender.getName()));
+                            sender.sendMessage(i18n("TpaHere.DefuseDone", args[1]));
                         } else {
                             IntHasMap.getHasMap().remove(args[1] + "_TPAHereTime");
                             StringHasMap.getHasMap().remove(args[1] + "_TPAHerePlayerName");
-                            sender.sendMessage(getLang("TpaHere.NotSendTeleport"));
+                            sender.sendMessage(i18n("TpaHere.NotSendTeleport"));
                         }
                     } else {
-                        sender.sendMessage(getLang("TpaHere.NotSendTeleport"));
+                        sender.sendMessage(i18n("TpaHere.NotSendTeleport"));
                     }
                     return false;
                 }
             }
-            sender.sendMessage(getLang("Usage.TpaHere"));
+            sender.sendMessage(i18n("Usage.TpaHere"));
         } else {
-            sender.sendMessage(getLang("OnlyPlayer"));
+            sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
     }

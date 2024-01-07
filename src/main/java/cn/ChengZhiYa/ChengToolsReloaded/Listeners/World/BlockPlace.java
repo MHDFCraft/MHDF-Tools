@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.ChatColor;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class BlockPlace implements Listener {
     @EventHandler
@@ -21,7 +21,7 @@ public final class BlockPlace implements Listener {
                     event.setCancelled(true);
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         if (player.isOp()) {
-                            player.sendMessage(ChatColor(getLang("AntiTiaoLue", event.getPlayer().getName(), String.valueOf(event.getBlock().getX()), String.valueOf(event.getBlock().getY()), String.valueOf(event.getBlock().getZ()))));
+                            player.sendMessage(ChatColor(i18n("AntiTiaoLue", event.getPlayer().getName(), String.valueOf(event.getBlock().getX()), String.valueOf(event.getBlock().getY()), String.valueOf(event.getBlock().getZ()))));
                         }
                     }
                 }

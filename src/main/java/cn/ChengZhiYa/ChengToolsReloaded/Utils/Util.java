@@ -1,9 +1,6 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Utils;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
-import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHasMap;
-import cn.ChengZhiYa.ChengToolsReloaded.HashMap.IntHasMap;
-import cn.ChengZhiYa.ChengToolsReloaded.HashMap.LocationHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHasMap;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -121,7 +118,8 @@ public final class Util {
                 stringBuffer.append(temp);
             }
             encodeStr = stringBuffer.toString().toUpperCase();
-        } catch (final Exception ignored) {}
+        } catch (final Exception ignored) {
+        }
         return encodeStr;
     }
 
@@ -302,10 +300,13 @@ public final class Util {
                 Field pluginInitField = cl.getClass().getDeclaredField("pluginInit");
                 pluginInitField.setAccessible(true);
                 pluginInitField.set(cl, null);
-            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ignored) {}
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException |
+                     IllegalAccessException ignored) {
+            }
             try {
                 ((URLClassLoader) cl).close();
-            } catch (IOException ignored) {}
+            } catch (IOException ignored) {
+            }
         }
         try {
             Object paperPluginManagerImpl = Class.forName("io.papermc.paper.plugin.manager.PaperPluginManagerImpl").getMethod("getInstance").invoke(null);
@@ -323,9 +324,11 @@ public final class Util {
             pluginListField.setAccessible(true);
             List<Plugin> pluginList = (List<Plugin>) pluginListField.get(instanceManager);
             pluginList.remove(plugin);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         System.gc();
     }
+
     public static void OpSendMessage(String Message) {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.isOp()) {
@@ -369,16 +372,16 @@ public final class Util {
 
     public static String GetGamemodeString(int GameModeID) {
         if (GameModeID == 0) {
-            return getLang("Gamemode.Survival");
+            return i18n("Gamemode.Survival");
         }
         if (GameModeID == 1) {
-            return getLang("Gamemode.Creative");
+            return i18n("Gamemode.Creative");
         }
         if (GameModeID == 2) {
-            return getLang("Gamemode.Adventure");
+            return i18n("Gamemode.Adventure");
         }
         if (GameModeID == 3) {
-            return getLang("Gamemode.Spectator");
+            return i18n("Gamemode.Spectator");
         }
         return null;
     }
@@ -406,7 +409,8 @@ public final class Util {
             Constructor<PluginCommand> c = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
             c.setAccessible(true);
             command = c.newInstance(name, plugin);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return command;
     }
 
@@ -418,7 +422,8 @@ public final class Util {
                 f.setAccessible(true);
                 commandMap = (CommandMap) f.get(Bukkit.getPluginManager());
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return commandMap;
     }
 
@@ -475,29 +480,29 @@ public final class Util {
         return Bukkit.getTPS();
     }
 
-    public static String getLang(String LangVaule) {
+    public static String i18n(String LangVaule) {
         return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule)));
     }
 
-    public static String getLang(String LangVaule, String Vaule1) {
+    public static String i18n(String LangVaule, String Vaule1) {
         return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
                 .replaceAll("%1", Vaule1));
     }
 
-    public static String getLang(String LangVaule, String Vaule1, String Vaule2) {
+    public static String i18n(String LangVaule, String Vaule1, String Vaule2) {
         return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
                 .replaceAll("%1", Vaule1)
                 .replaceAll("%2", Vaule2));
     }
 
-    public static String getLang(String LangVaule, String Vaule1, String Vaule2, String Vaule3) {
+    public static String i18n(String LangVaule, String Vaule1, String Vaule2, String Vaule3) {
         return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
                 .replaceAll("%1", Vaule1)
                 .replaceAll("%2", Vaule2)
                 .replaceAll("%3", Vaule3));
     }
 
-    public static String getLang(String LangVaule, String Vaule1, String Vaule2, String Vaule3, String Vaule4) {
+    public static String i18n(String LangVaule, String Vaule1, String Vaule2, String Vaule3, String Vaule4) {
         return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
                 .replaceAll("%1", Vaule1)
                 .replaceAll("%2", Vaule2)

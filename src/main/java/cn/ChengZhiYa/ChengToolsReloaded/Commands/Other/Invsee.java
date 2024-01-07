@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Invsee implements CommandExecutor {
     @Override
@@ -19,19 +19,19 @@ public final class Invsee implements CommandExecutor {
                 if (args.length == 1) {
                     Player player = (Player) sender;
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(getLang("PlayerNotOnline"));
+                        sender.sendMessage(i18n("PlayerNotOnline"));
                         return false;
                     }
                     Player Player = Bukkit.getPlayer(args[0]);
                     player.openInventory(Objects.requireNonNull(Player).getInventory());
                 } else {
-                    sender.sendMessage(getLang("Usage.Invsee"));
+                    sender.sendMessage(i18n("Usage.Invsee"));
                 }
             } else {
-                sender.sendMessage(getLang("NoPermission"));
+                sender.sendMessage(i18n("NoPermission"));
             }
         } else {
-            sender.sendMessage(getLang("OnlyPlayer"));
+            sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
     }

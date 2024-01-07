@@ -25,28 +25,28 @@ public final class Register implements CommandExecutor {
                     String Password = args[0];
                     Player player = (Player) sender;
                     if (getLogin(player)) {
-                        sender.sendMessage(getLang("Login.AlreadyLogin"));
+                        sender.sendMessage(i18n("Login.AlreadyLogin"));
                         return;
                     }
                     int MinPasswordLength = ChengToolsReloaded.instance.getConfig().getInt("LoginSystemSettings.MinPaswordLength");
                     int MaxPasswordLength = ChengToolsReloaded.instance.getConfig().getInt("LoginSystemSettings.MaxPaswordLength");
                     List<String> EasyPasswords = ChengToolsReloaded.instance.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
                     if (Password.length() < MinPasswordLength) {
-                        sender.sendMessage(getLang("Login.LengthShort", String.valueOf(MinPasswordLength)));
+                        sender.sendMessage(i18n("Login.LengthShort", String.valueOf(MinPasswordLength)));
                         return;
                     }
                     if (Password.length() > MaxPasswordLength) {
-                        sender.sendMessage(getLang("Login.LengthLong", String.valueOf(MaxPasswordLength)));
+                        sender.sendMessage(i18n("Login.LengthLong", String.valueOf(MaxPasswordLength)));
                         return;
                     }
                     for (String EasyPassword : EasyPasswords) {
                         if (Password.equals(EasyPassword)) {
-                            sender.sendMessage(getLang("Login.EasyPassword"));
+                            sender.sendMessage(i18n("Login.EasyPassword"));
                             return;
                         }
                     }
                     if (LoginExists(player.getName())) {
-                        sender.sendMessage(getLang("Login.AlreadyRegister"));
+                        sender.sendMessage(i18n("Login.AlreadyRegister"));
                         return;
                     }
                     StringHasMap.getHasMap().put(player.getName() + "_Login", "t");
@@ -54,13 +54,13 @@ public final class Register implements CommandExecutor {
                     if (ChengToolsReloaded.instance.getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {
                         StringHasMap.getHasMap().put(player.getName() + "_LoginIP", Objects.requireNonNull(player.getAddress()).getHostName());
                     }
-                    sender.sendMessage(getLang("Login.RegisterDone"));
+                    sender.sendMessage(i18n("Login.RegisterDone"));
                 } else {
-                    sender.sendMessage(getLang("Usage.Register", label));
+                    sender.sendMessage(i18n("Usage.Register", label));
                 }
             });
         } else {
-            sender.sendMessage(getLang("OnlyPlayer"));
+            sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
     }

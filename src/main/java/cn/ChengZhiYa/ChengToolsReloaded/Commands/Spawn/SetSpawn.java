@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class SetSpawn implements CommandExecutor {
     @Override
@@ -29,12 +29,12 @@ public final class SetSpawn implements CommandExecutor {
                 ChengToolsReloaded.instance.getConfig().set("SpawnSettings.Pitch", Pitch);
                 ChengToolsReloaded.instance.saveConfig();
                 ChengToolsReloaded.instance.reloadConfig();
-                sender.sendMessage(getLang("Spawn.SetDone"));
+                sender.sendMessage(i18n("Spawn.SetDone"));
             } else {
-                sender.sendMessage(getLang("OnlyPlayer"));
+                sender.sendMessage(i18n("OnlyPlayer"));
             }
         } else {
-            sender.sendMessage(getLang("NoPermission"));
+            sender.sendMessage(i18n("NoPermission"));
         }
         return false;
     }

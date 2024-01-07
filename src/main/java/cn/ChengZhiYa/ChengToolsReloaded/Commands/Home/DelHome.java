@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.HomeUtil.*;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class DelHome implements TabExecutor {
     @Override
@@ -18,17 +18,17 @@ public final class DelHome implements TabExecutor {
             if (args.length == 1) {
                 Player player = (Player) sender;
                 String HomeName = args[0];
-                if (HomeExists(player.getName(),HomeName)) {
-                    RemoveHome(player.getName(),HomeName);
-                    player.sendMessage(getLang("Home.RemoveDone"));
-                }else {
-                    player.sendMessage(getLang("Home.NotFound", HomeName));
+                if (HomeExists(player.getName(), HomeName)) {
+                    RemoveHome(player.getName(), HomeName);
+                    player.sendMessage(i18n("Home.RemoveDone"));
+                } else {
+                    player.sendMessage(i18n("Home.NotFound", HomeName));
                 }
             } else {
-                sender.sendMessage(getLang("Usage.Home", label));
+                sender.sendMessage(i18n("Usage.Home", label));
             }
         } else {
-            sender.sendMessage(getLang("OnlyPlayer"));
+            sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
     }

@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getIpLocation;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Ip implements CommandExecutor {
     @Override
@@ -19,18 +19,18 @@ public final class Ip implements CommandExecutor {
             if (args.length == 1) {
                 String PlayerName = args[0];
                 if (Bukkit.getPlayer(PlayerName) == null) {
-                    sender.sendMessage(getLang("PlayerNotOnline"));
+                    sender.sendMessage(i18n("PlayerNotOnline"));
                     return false;
                 }
                 Player player = Bukkit.getPlayer(PlayerName);
                 String PlayerIp = Objects.requireNonNull(Objects.requireNonNull(player).getAddress()).getHostString();
                 String PlayerLocation = getIpLocation(PlayerIp);
-                sender.sendMessage(getLang("IPMessage", player.getName(), PlayerIp, PlayerLocation));
+                sender.sendMessage(i18n("IPMessage", player.getName(), PlayerIp, PlayerLocation));
             } else {
-                sender.sendMessage(getLang("Usage.Ip"));
+                sender.sendMessage(i18n("Usage.Ip"));
             }
         } else {
-            sender.sendMessage(getLang("NoPermission"));
+            sender.sendMessage(i18n("NoPermission"));
         }
         return false;
     }

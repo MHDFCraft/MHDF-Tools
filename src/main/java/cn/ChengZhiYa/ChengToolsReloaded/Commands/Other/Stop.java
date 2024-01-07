@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.ChatColor;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Stop implements CommandExecutor {
     @Override
@@ -37,7 +37,7 @@ public final class Stop implements CommandExecutor {
                 Bukkit.shutdown();
             }
         } else {
-            sender.sendMessage(getLang("NoPermission"));
+            sender.sendMessage(i18n("NoPermission"));
         }
         return false;
     }

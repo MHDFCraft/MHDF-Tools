@@ -8,7 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class TpaTime extends BukkitRunnable {
     @Override
@@ -21,13 +21,13 @@ public final class TpaTime extends BukkitRunnable {
                     if (Time >= 0) {
                         IntHasMap.getHasMap().put(player.getName() + "_TPATime", Time - 1);
                     } else {
-                        player.sendMessage(getLang("Tpa.TimeOutDone", PlayerName));
-                        Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).sendMessage(getLang("Tpa.TimeOut", player.getName()));
+                        player.sendMessage(i18n("Tpa.TimeOutDone", PlayerName));
+                        Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).sendMessage(i18n("Tpa.TimeOut", player.getName()));
                         IntHasMap.getHasMap().remove(player.getName() + "_TPATime");
                         StringHasMap.getHasMap().remove(player.getName() + "_TPAPlayerName");
                     }
                 } else {
-                    player.sendMessage(getLang("Tpa.Offline", PlayerName));
+                    player.sendMessage(i18n("Tpa.Offline", PlayerName));
                     IntHasMap.getHasMap().remove(player.getName() + "_TPATime");
                     StringHasMap.getHasMap().remove(player.getName() + "_TPAPlayerName");
                 }

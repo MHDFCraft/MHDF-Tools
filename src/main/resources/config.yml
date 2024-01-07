@@ -49,6 +49,9 @@ VanishEnable: true
 #Back系统
 BackEnable: true
 
+#TpBack系统
+TpBackEnable: true
+
 #Invsee系统
 InvseeEnable: true
 

@@ -159,7 +159,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                                         .setSocketTimeout(5000)
                                         .setRedirectsEnabled(true)
                                         .build();
-                                HttpGet httpGet = new HttpGet("https://github.moeyy.xyz/https://github.com/BaiShenYaoDog/Cheng-Tools-Reloaded/releases/download/" +  NewVersionString + "/Cheng-Tools-Reloaded-" +  NewVersionString + ".jar");
+                                HttpGet httpGet = new HttpGet("https://github.moeyy.xyz/https://github.com/BaiShenYaoDog/Cheng-Tools-Reloaded/releases/download/" + NewVersionString + "/Cheng-Tools-Reloaded-" + NewVersionString + ".jar");
                                 httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54");
                                 httpGet.setConfig(requestConfig);
                                 CloseableHttpResponse response = httpClient.execute(httpGet);
@@ -167,7 +167,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                                 fileOutputStream.close();
                                 ChatColor("&c自动更新完成,下次重启时生效!");
                                 ChatColor("&a请手动删除旧版本插件,谢谢!");
-                            }catch (Exception ignored) {
+                            } catch (Exception ignored) {
                                 ChatColor("&c自动更新失败!");
                             }
                         });
@@ -289,9 +289,14 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             }
             if (getConfig().getBoolean("BackEnable")) {
                 registerCommand(this, new Back(), "Back系统", "back");
-                registerCommand(this, new UnBack(), "Back系统", "unback");
                 Bukkit.getPluginManager().registerEvents(new PlayerDeath(), this);
+            }
+            if (getConfig().getBoolean("TpBackEnable")) {
+                registerCommand(this, new Back(), "TpBack系统", "tpback");
                 Bukkit.getPluginManager().registerEvents(new PlayerTeleport(), this);
+            }
+            if (getConfig().getBoolean("TpBackEnable") || getConfig().getBoolean("BackEnable")) {
+                registerCommand(this, new UnBack(), "Back系统", "unback");
             }
             if (getConfig().getBoolean("VanishEnable")) {
                 registerCommand(this, new Vanish(), "Vanish系统", "vanish");
@@ -391,7 +396,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
     public FileOutputStream getOutputStream(CloseableHttpResponse response, String NewVersionString, int cache) throws IOException {
         HttpEntity entity = response.getEntity();
         InputStream is = entity.getContent();
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(getDataFolder().getParentFile(),"Cheng-Tools-Reloaded-" + NewVersionString + ".jar"));
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(getDataFolder().getParentFile(), "Cheng-Tools-Reloaded-" + NewVersionString + ".jar"));
         byte[] buffer = new byte[cache];
         int ch;
         while ((ch = is.read(buffer)) != -1) {
@@ -420,7 +425,8 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             if (!Login_File.exists()) {
                 try {
                     Login_File.createNewFile();
-                } catch (IOException ignored) {}
+                } catch (IOException ignored) {
+                }
             }
         }
     }
@@ -449,7 +455,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             }
             {
                 Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ChengTools_Home` (`PlayerHome` VARCHAR(100) NOT NULL DEFAULT '',`Owner` VARCHAR(50) NOT NULL DEFAULT '',`World` VARCHAR(50) NOT NULL DEFAULT '',`X` DOUBLE NOT NULL DEFAULT 0,`Y` DOUBLE NOT NULL DEFAULT 0,`Z` DOUBLE NOT NULL DEFAULT 0,`Yaw` DOUBLE NOT NULL DEFAULT 0,`Pitch` DOUBLE NOT NULL DEFAULT 0,PRIMARY KEY (`PlayerHome`),KEY `Owner` (`Owner`))");
+                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ChengTools_Home` (`ID` BIGINT NOT NULL AUTO_INCREMENT,`Home` VARCHAR(100) NOT NULL DEFAULT '',`Owner` VARCHAR(50) NOT NULL DEFAULT '',`World` VARCHAR(50) NOT NULL DEFAULT '',`X` DOUBLE NOT NULL DEFAULT 0,`Y` DOUBLE NOT NULL DEFAULT 0,`Z` DOUBLE NOT NULL DEFAULT 0,`Yaw` DOUBLE NOT NULL DEFAULT 0,`Pitch` DOUBLE NOT NULL DEFAULT 0,PRIMARY KEY (`ID`),INDEX `Home` (`Home`),INDEX `Owner` (`Owner`))");
                 ps.executeUpdate();
                 ps.close();
                 connection.close();

@@ -6,10 +6,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-public class PlayerTeleport implements Listener {
+public final class PlayerTeleport implements Listener {
     @EventHandler
     public void onEvent(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
-        LocationHasMap.getHasMap().put(player.getName() + "_BackLocation", player.getLocation());
+        LocationHasMap.getHasMap().put(player.getName() + "_TpBackLocation", player.getLocation());
     }
 }

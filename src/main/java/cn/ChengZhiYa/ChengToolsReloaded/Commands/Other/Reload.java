@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.LangFileData;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Reload implements CommandExecutor {
     @Override
@@ -59,9 +59,9 @@ public final class Reload implements CommandExecutor {
             ChengToolsReloaded.instance.reloadConfig();
             File LangData = new File(ChengToolsReloaded.instance.getDataFolder() + "/lang.yml");
             LangFileData = YamlConfiguration.loadConfiguration(LangData);
-            sender.sendMessage(getLang("RelaodDone"));
+            sender.sendMessage(i18n("RelaodDone"));
         } else {
-            sender.sendMessage(getLang("NoPermission"));
+            sender.sendMessage(i18n("NoPermission"));
         }
         return false;
     }

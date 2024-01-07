@@ -13,8 +13,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getNMSVersion;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Vanish implements CommandExecutor {
     @Override
@@ -32,7 +32,7 @@ public final class Vanish implements CommandExecutor {
                     }
                     PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);
                     player.addPotionEffect(INVISIBILITY);
-                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.Enable")));
+                    player.sendMessage(i18n("Vanish.Done", i18n("Vanish.Enable")));
                     StringHasMap.getHasMap().put(player.getName() + "_Vanish", "已启用");
                 } else {
                     for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -43,18 +43,18 @@ public final class Vanish implements CommandExecutor {
                         }
                     }
                     player.removePotionEffect(PotionEffectType.INVISIBILITY);
-                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.Disabled")));
+                    player.sendMessage(i18n("Vanish.Done", i18n("Vanish.Disabled")));
                     StringHasMap.getHasMap().put(player.getName() + "_Vanish", null);
                 }
             } else {
-                sender.sendMessage(getLang("NoPermission"));
+                sender.sendMessage(i18n("NoPermission"));
             }
         }
         if (args.length == 1) {
             if (sender.hasPermission("ChengTools.Vanish.Give")) {
                 String PlayerName = args[0];
                 if (Bukkit.getPlayer(PlayerName) == null) {
-                    sender.sendMessage(getLang("PlayerNotOnline"));
+                    sender.sendMessage(i18n("PlayerNotOnline"));
                     return false;
                 }
                 Player player = Bukkit.getPlayer(PlayerName);
@@ -69,8 +69,8 @@ public final class Vanish implements CommandExecutor {
                     }
                     PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);
                     player.addPotionEffect(INVISIBILITY);
-                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.Enable")));
-                    sender.sendMessage(getLang("Vanish.SetDone", player.getName(), getLang("Vanish.Enable")));
+                    player.sendMessage(i18n("Vanish.Done", i18n("Vanish.Enable")));
+                    sender.sendMessage(i18n("Vanish.SetDone", player.getName(), i18n("Vanish.Enable")));
                     StringHasMap.getHasMap().put(player.getName() + "_Vanish", "已启用");
                 } else {
                     for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -81,16 +81,16 @@ public final class Vanish implements CommandExecutor {
                         }
                     }
                     player.removePotionEffect(PotionEffectType.INVISIBILITY);
-                    player.sendMessage(getLang("Vanish.Done", getLang("Vanish.Disabled")));
-                    sender.sendMessage(getLang("Vanish.SetDone", player.getName(), getLang("Vanish.Disabled")));
+                    player.sendMessage(i18n("Vanish.Done", i18n("Vanish.Disabled")));
+                    sender.sendMessage(i18n("Vanish.SetDone", player.getName(), i18n("Vanish.Disabled")));
                     StringHasMap.getHasMap().put(player.getName() + "_Vanish", null);
                 }
             } else {
-                sender.sendMessage(getLang("NoPermission"));
+                sender.sendMessage(i18n("NoPermission"));
             }
         } else {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(getLang("Usage.Vanish"));
+                sender.sendMessage(i18n("Usage.Vanish"));
             }
         }
         return false;

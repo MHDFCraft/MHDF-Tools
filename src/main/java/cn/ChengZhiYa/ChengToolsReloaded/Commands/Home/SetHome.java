@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.HomeUtil.AddHome;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.HomeUtil.getPlayerHomeTime;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class SetHome implements CommandExecutor {
     @Override
@@ -19,16 +19,16 @@ public final class SetHome implements CommandExecutor {
                 Player player = (Player) sender;
                 String HomeName = args[0];
                 if (ChengToolsReloaded.instance.getConfig().getInt("HomeSystemSettings.MaxHomeTime") <= getPlayerHomeTime(player.getName())) {
-                    sender.sendMessage(getLang("Home.HomeListFull", String.valueOf(ChengToolsReloaded.instance.getConfig().getInt("HomeSystemSettings.MaxHomeTime"))));
+                    sender.sendMessage(i18n("Home.HomeListFull", String.valueOf(ChengToolsReloaded.instance.getConfig().getInt("HomeSystemSettings.MaxHomeTime"))));
                     return false;
                 }
-                AddHome(player.getName(),HomeName,player.getLocation());
-                sender.sendMessage(getLang("Home.SetDone", label));
+                AddHome(player.getName(), HomeName, player.getLocation());
+                sender.sendMessage(i18n("Home.SetDone", label));
             } else {
-                sender.sendMessage(getLang("Usage.Home", label));
+                sender.sendMessage(i18n("Usage.Home", label));
             }
         } else {
-            sender.sendMessage(getLang("OnlyPlayer"));
+            sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
     }

@@ -55,6 +55,9 @@ Back:
   ReSpawn: |-
     &a您的死亡位置如下，返回死亡地点请输入/back
     &eX:%1 Y:%2 Z:%3
+  Done: "&a已返回死亡位置的位置,如果想回到传送前的位置请使用/unback!"
+  NotFound: "&c找不到死亡位置的位置!"
+TpBack:
   Done: "&a已返回上一次的位置,如果想回到传送前的位置请使用/unback!"
   NotFound: "&c找不到上一次的位置!"
 UnBack:

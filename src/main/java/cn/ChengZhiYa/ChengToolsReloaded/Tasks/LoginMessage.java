@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.LoginUtil.LoginExists;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLogin;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class LoginMessage extends BukkitRunnable {
 
@@ -14,9 +14,9 @@ public final class LoginMessage extends BukkitRunnable {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (!getLogin(player)) {
                 if (LoginExists(player.getName())) {
-                    player.sendMessage(getLang("Login.LoginMessage"));
+                    player.sendMessage(i18n("Login.LoginMessage"));
                 } else {
-                    player.sendMessage(getLang("Login.RegisterMessage"));
+                    player.sendMessage(i18n("Login.RegisterMessage"));
                 }
             }
         }

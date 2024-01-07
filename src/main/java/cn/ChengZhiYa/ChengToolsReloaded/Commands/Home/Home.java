@@ -11,7 +11,7 @@ import java.util.List;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.HomeUtil.getHome;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.HomeUtil.getPlayerHomeList;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Home implements TabExecutor {
     @Override
@@ -20,18 +20,18 @@ public final class Home implements TabExecutor {
             if (args.length == 1) {
                 Player player = (Player) sender;
                 String HomeName = args[0];
-                Location HomeLocation = getHome(player.getName(),HomeName);
+                Location HomeLocation = getHome(player.getName(), HomeName);
                 if (HomeLocation != null) {
                     player.teleport(HomeLocation);
-                    player.sendMessage(getLang("Home.TeleportDone"));
-                }else {
-                    player.sendMessage(getLang("Home.NotFound", HomeName));
+                    player.sendMessage(i18n("Home.TeleportDone"));
+                } else {
+                    player.sendMessage(i18n("Home.NotFound", HomeName));
                 }
             } else {
-                sender.sendMessage(getLang("Usage.Home", label));
+                sender.sendMessage(i18n("Usage.Home", label));
             }
         } else {
-            sender.sendMessage(getLang("OnlyPlayer"));
+            sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
     }

@@ -11,23 +11,23 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Database.EconomyUtil.getMoney;
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Money implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, String[] args) {
         if (sender instanceof Player) {
             if (args.length == 0) {
-                sender.sendMessage(getLang("Vault.Money", String.valueOf(getMoney(sender.getName())), ChengToolsReloaded.instance.getConfig().getString("EconomySettings.MoneyName")));
+                sender.sendMessage(i18n("Vault.Money", String.valueOf(getMoney(sender.getName())), ChengToolsReloaded.instance.getConfig().getString("EconomySettings.MoneyName")));
                 return false;
             }
         }
 
         if (args.length == 1) {
-            sender.sendMessage(getLang("Vault.GetMoney", Objects.requireNonNull(Bukkit.getPlayer(args[0])).getName(), String.valueOf(getMoney(sender.getName())), ChengToolsReloaded.instance.getConfig().getString("EconomySettings.MoneyName")));
+            sender.sendMessage(i18n("Vault.GetMoney", Objects.requireNonNull(Bukkit.getPlayer(args[0])).getName(), String.valueOf(getMoney(sender.getName())), ChengToolsReloaded.instance.getConfig().getString("EconomySettings.MoneyName")));
             return false;
         }
-        sender.sendMessage(getLang("Usage.Money"));
+        sender.sendMessage(i18n("Usage.Money"));
         return false;
     }
 }

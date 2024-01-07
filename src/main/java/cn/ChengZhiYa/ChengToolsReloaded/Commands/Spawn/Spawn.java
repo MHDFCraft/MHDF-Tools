@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getLang;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
 
 public final class Spawn implements CommandExecutor {
     @Override
@@ -27,9 +27,9 @@ public final class Spawn implements CommandExecutor {
             float Pitch = (float) ChengToolsReloaded.instance.getConfig().getDouble("SpawnSettings.Pitch");
             Location SpawnLcation = new Location(world, X, Y, Z, Yaw, Pitch);
             player.teleport(SpawnLcation);
-            sender.sendMessage(getLang("Spawn.TeleportDone"));
+            sender.sendMessage(i18n("Spawn.TeleportDone"));
         } else {
-            sender.sendMessage(getLang("OnlyPlayer"));
+            sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
     }

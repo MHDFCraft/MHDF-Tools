@@ -57,7 +57,8 @@ public final class PlayerJoin implements Listener {
             if (!HomeData_File.exists()) {
                 try {
                     HomeData_File.createNewFile();
-                } catch (IOException ignored) {}
+                } catch (IOException ignored) {
+                }
             }
         }
         if (ChengToolsReloaded.instance.getConfig().getBoolean("VanishEnable")) {
@@ -87,7 +88,7 @@ public final class PlayerJoin implements Listener {
             if (StringHasMap.getHasMap().get(player.getName() + "_LoginIP") != null) {
                 if (StringHasMap.getHasMap().get(player.getName() + "_LoginIP").equals(Objects.requireNonNull(player.getAddress()).getHostName())) {
                     StringHasMap.getHasMap().put(player.getName() + "_Login", "t");
-                    player.sendMessage(getLang("Login.AutoLogin"));
+                    player.sendMessage(i18n("Login.AutoLogin"));
                 }
             }
         }
