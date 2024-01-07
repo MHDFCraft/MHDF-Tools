@@ -7,7 +7,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.ChatColor;
 
-public final class  TimeMessage extends BukkitRunnable {
+public final class TimeMessage extends BukkitRunnable {
 
     private int i = 0;
 
