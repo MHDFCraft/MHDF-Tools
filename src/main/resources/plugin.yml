@@ -6,18 +6,48 @@ authors: [ ChengZhiYa ]
 softdepend: [ Vault, PlaceholderAPI, ProtocolLib ]
 description: qwq
 permissions:
-  ChengTools.Op:
+  ChengTools.Command.Gamemode:
     default: op
-  ChengTools.Gamemode:
+  ChengTools.Command.Fly:
     default: op
-  ChengTools.Fly:
+  ChengTools.Command.Fly.Give:
     default: op
-  ChengTools.Fly.Give:
+  ChengTools.Command.Vanish:
     default: op
-  ChengTools.Vanish:
+  ChengTools.Command.Vanish.Give:
     default: op
-  ChengTools.Vanish.Give:
+  ChengTools.Command.Day:
     default: op
+  ChengTools.Command.Night:
+    default: op
+  ChengTools.Command.Sun:
+    default: op
+  ChengTools.Command.Invsee:
+    default: op
+  ChengTools.Command.Reload:
+    default: op
+  ChengTools.Command.PluginManage:
+    default: op
+  ChengTools.Command.PlayerTitle:
+    default: op
+  ChengTools.Command.Stop:
+    default: op
+  ChengTools.Command.Crash:
+    default: op
+  ChengTools.Command.Freeze:
+    default: op
+  ChengTools.Command.Ip:
+    default: op
+  ChengTools.Command.SetSpawn:
+    default: op
+  ChengTools.Command.Point:
+    default: op
+  ChengTools.Command.MoneyAdmin:
+    default: op
+  ChengTools.SendUpdateMessage:
+    default: op
+  ChengTools.Home:
+    default: true
   ChengTools.Chat:
     default: true
   ChengTools.Chat.DelayBypass:
@@ -25,32 +55,4 @@ permissions:
   ChengTools.Chat.BlackWorkBypass:
     default: op
   ChengTools.Chat.Color:
-    default: op
-  ChengTools.Day:
-    default: op
-  ChengTools.Night:
-    default: op
-  ChengTools.Sun:
-    default: op
-  ChengTools.Invsee:
-    default: op
-  ChengTools.Reload:
-    default: op
-  ChengTools.PluginManage:
-    default: op
-  ChengTools.PlayerTitle:
-    default: op
-  ChengTools.Stop:
-    default: op
-  ChengTools.Crash:
-    default: op
-  ChengTools.Freeze:
-    default: op
-  ChengTools.Ip:
-    default: op
-  ChengTools.SetSpawn:
-    default: op
-  ChengTools.Point:
-    default: op
-  ChengTools.MoneyAdmin:
     default: op

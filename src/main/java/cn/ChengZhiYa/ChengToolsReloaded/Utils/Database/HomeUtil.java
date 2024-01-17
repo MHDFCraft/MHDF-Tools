@@ -4,6 +4,8 @@ import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +33,7 @@ public final class HomeUtil {
         return new File(ChengToolsReloaded.instance.getDataFolder() + "/HomeData", PlayerName + ".yml");
     }
 
-    public static Boolean HomeExists(String PlayerName, String HomeName) {
+    public static Boolean ifHomeExists(String PlayerName, String HomeName) {
         if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
             try {
                 Connection connection = dataSource.getConnection();
@@ -178,11 +180,11 @@ public final class HomeUtil {
     }
 
     public static void AddHome(String PlayerName, String HomeName, Location HomeLocation) {
-        if (!HomeExists(PlayerName, HomeName)) {
+        if (!ifHomeExists(PlayerName, HomeName)) {
             if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 Bukkit.getScheduler().runTaskAsynchronously(ChengToolsReloaded.instance, () -> {
                     try {
-                        List<String> HomeList = getHomeListHashMap().get(PlayerName);
+                        List<String> HomeList = getPlayerHomeList(PlayerName);
                         HomeList.add(HomeName);
                         getHomeListHashMap().put(PlayerName, HomeList);
                         getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
@@ -233,7 +235,7 @@ public final class HomeUtil {
     }
 
     public static void SetHome(String PlayerName, String HomeName, Location HomeLocation) {
-        if (HomeExists(PlayerName, HomeName)) {
+        if (ifHomeExists(PlayerName, HomeName)) {
             if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 Bukkit.getScheduler().runTaskAsynchronously(ChengToolsReloaded.instance, () -> {
                     try {
@@ -280,10 +282,10 @@ public final class HomeUtil {
     }
 
     public static void RemoveHome(String PlayerName, String HomeName) {
-        if (HomeExists(PlayerName, HomeName)) {
+        if (ifHomeExists(PlayerName, HomeName)) {
             if (Objects.equals(ChengToolsReloaded.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 Bukkit.getScheduler().runTaskAsynchronously(ChengToolsReloaded.instance, () -> {
-                    List<String> HomeList = getHomeListHashMap().get(PlayerName);
+                    List<String> HomeList = getPlayerHomeList(PlayerName);
                     HomeList.remove(HomeName);
                     getHomeListHashMap().put(PlayerName, HomeList);
                     getHomeLocationHashMap().remove(PlayerName + "|" + HomeName);
@@ -325,5 +327,15 @@ public final class HomeUtil {
                 }
             }
         }
+    }
+
+    public static int getMaxHome(Player player) {
+        for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
+            String perm = permInfo.getPermission();
+            if (perm.startsWith("chengtools.home.")) {
+                return Integer.parseInt(perm.substring("chengtools.home.".length()));
+            }
+        }
+        return ChengToolsReloaded.instance.getConfig().getInt("HomeSystemSettings.MaxHomeTime");
     }
 }

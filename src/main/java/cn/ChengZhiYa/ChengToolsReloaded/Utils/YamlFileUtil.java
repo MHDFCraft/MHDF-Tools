@@ -8,9 +8,9 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public final class YamlFileUtil {
-    private InputStream getResource(String filename) {
+    public static InputStream getResource(String filename) {
         try {
-            URL URL2 = this.getClass().getClassLoader().getResource(filename);
+            URL URL2 = YamlFileUtil.class.getClassLoader().getResource(filename);
             if (URL2 == null) {
                 return null;
             }
@@ -22,19 +22,11 @@ public final class YamlFileUtil {
         }
     }
 
-    public void saveYamlFile(String FilePath, String FileName, String ResourcePath, boolean Replace) {
-        File Folder = new File(FilePath);
-        if (!Folder.exists()) {
-            Folder.mkdirs();
-        }
-        this.saveResource(FilePath, ResourcePath, FileName, Replace);
-    }
-
-    public void saveResource(String FilePath, String ResourcePath, String OutFileName, boolean Replace) {
+    public static  void SaveResource(String FilePath, String ResourcePath, String OutFileName, boolean Replace) {
         if (ResourcePath.isEmpty()) {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
-        InputStream in = this.getResource(ResourcePath = ResourcePath.replace('\\', '/'));
+        InputStream in = getResource(ResourcePath = ResourcePath.replace('\\', '/'));
         if (in == null) {
             throw new IllegalArgumentException("The embedded resource '" + ResourcePath + "' cannot be found in " + ResourcePath);
         }

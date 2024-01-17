@@ -1,36 +1,18 @@
 package cn.ChengZhiYa.ChengToolsReloaded;
 
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Back.Back;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Back.UnBack;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.FastSet.Day;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.FastSet.Night;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.FastSet.Sun;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Home.DelHome;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Home.Home;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Home.SetHome;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Login.Login;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Login.Register;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Other.*;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Spawn.SetSpawn;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Spawn.Spawn;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault.MoneyAdmin;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault.Pay;
+import cn.ChengZhiYa.ChengToolsReloaded.Commands.*;
+import cn.ChengZhiYa.ChengToolsReloaded.Commands.Back;
+import cn.ChengZhiYa.ChengToolsReloaded.Commands.Freeze;
+import cn.ChengZhiYa.ChengToolsReloaded.Commands.TpBack;
+import cn.ChengZhiYa.ChengToolsReloaded.Commands.MoneyAdmin;
+import cn.ChengZhiYa.ChengToolsReloaded.Commands.Pay;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.IntHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.Hook.EconomyImplementer;
 import cn.ChengZhiYa.ChengToolsReloaded.Hook.Metrics;
 import cn.ChengZhiYa.ChengToolsReloaded.Hook.PlaceholderAPI;
-import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Entity.EntityDamageByBlock;
-import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Entity.EntityDamageByEntity;
-import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Entity.EntityPickupItem;
-import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Inventory.InventoryClick;
-import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Inventory.InventoryOpen;
-import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Player.*;
-import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Server.PaperServerListPing;
-import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Server.ServerListPing;
-import cn.ChengZhiYa.ChengToolsReloaded.Listeners.World.BlockPlace;
+import cn.ChengZhiYa.ChengToolsReloaded.Listeners.*;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.*;
-import cn.ChengZhiYa.ChengToolsReloaded.Utils.YamlFileUtil;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -61,10 +43,10 @@ import java.util.Objects;
 import java.util.TimeZone;
 
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.*;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.YamlFileUtil.SaveResource;
 
 public final class ChengToolsReloaded extends JavaPlugin implements Listener {
-    public static final String Version = "1.2.1";
-    public static YamlFileUtil Yaml;
+    public static final String Version = "1.2.2";
     public static ChengToolsReloaded instance;
     public static boolean PAPI = true;
     public static boolean PLIB = true;
@@ -81,7 +63,6 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
     public void onLoad() {
         instance = this;
         descriptionFile = this.getDescription();
-        Yaml = new YamlFileUtil();
 
         ParserConfig.getGlobalInstance().setSafeMode(true);
     }
@@ -110,7 +91,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
 
         //功能可用检查
         {
-            if (!isNewPaper()) {
+            if (!ifSupportGetTps()) {
                 ColorLog("&e服务端不是Paper或是服务器版本较旧，已关闭自带TPS变量!");
             }
 
@@ -196,12 +177,12 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
 
             File Config_File = new File(this.getDataFolder(), "config.yml");
             if (!Config_File.exists()) {
-                Yaml.saveYamlFile(this.getDataFolder().getPath(), "config.yml", "config.yml", true);
+                SaveResource(this.getDataFolder().getPath(), "config.yml", "config.yml", true);
             }
 
             File Lang_File = new File(this.getDataFolder(), "lang.yml");
             if (!Lang_File.exists()) {
-                Yaml.saveYamlFile(this.getDataFolder().getPath(), "lang.yml", "lang.yml", true);
+                SaveResource(this.getDataFolder().getPath(), "lang.yml", "lang.yml", true);
             }
             LangFileData = YamlConfiguration.loadConfiguration(Lang_File);
 
@@ -245,26 +226,10 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                 registerCommand(this, new Login(), "登录命令", "l");
                 registerCommand(this, new Login(), "登录命令", "login");
                 new LoginMessage().runTaskTimerAsynchronously(this, 0L, 20L);
-                Bukkit.getPluginManager().registerEvents(new PlayerMove(), this);
-                Bukkit.getPluginManager().registerEvents(new EntityDamageByBlock(), this);
-                Bukkit.getPluginManager().registerEvents(new EntityDamageByEntity(), this);
-                Bukkit.getPluginManager().registerEvents(new EntityPickupItem(), this);
-                Bukkit.getPluginManager().registerEvents(new InventoryClick(), this);
-                Bukkit.getPluginManager().registerEvents(new InventoryOpen(), this);
-                Bukkit.getPluginManager().registerEvents(new PlayerBedEnter(), this);
-                Bukkit.getPluginManager().registerEvents(new PlayerDropItem(), this);
-                Bukkit.getPluginManager().registerEvents(new PlayerEditBook(), this);
-                Bukkit.getPluginManager().registerEvents(new PlayerFish(), this);
-                Bukkit.getPluginManager().registerEvents(new PlayerInteractAtEntity(), this);
-                Bukkit.getPluginManager().registerEvents(new PlayerInteractEntity(), this);
-                Bukkit.getPluginManager().registerEvents(new PlayerItemConsume(), this);
-                Bukkit.getPluginManager().registerEvents(new PlayerPickupArrow(), this);
-                Bukkit.getPluginManager().registerEvents(new PlayerShearEntity(), this);
-                Bukkit.getPluginManager().registerEvents(new SignChange(), this);
+                Bukkit.getPluginManager().registerEvents(new LoginSystem(), this);
             }
             if (getConfig().getBoolean("BanCommandSettings.Enable")) {
-                Bukkit.getPluginManager().registerEvents(new PlayerCommandSend(), this);
-                Bukkit.getPluginManager().registerEvents(new PlayerChatTabComplete(), this);
+                Bukkit.getPluginManager().registerEvents(new BanCommand(), this);
             }
             if (getConfig().getBoolean("SpawnSettings.Enable")) {
                 registerCommand(this, new Spawn(), "Spawn命令", "spawn");
@@ -275,25 +240,22 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             }
             if (getConfig().getBoolean("FreezeCommandSettings.Enable")) {
                 registerCommand(this, new Freeze(), "冻结玩家", "freeze");
+                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.ChengToolsReloaded.Listeners.Freeze(), this);
             }
             if (getConfig().getBoolean("MOTDSettings.Enable")) {
-                if (isNewPaper()) {
-                    Bukkit.getPluginManager().registerEvents(new PaperServerListPing(), this);
-                } else {
-                    Bukkit.getPluginManager().registerEvents(new ServerListPing(), this);
-                }
+                Bukkit.getPluginManager().registerEvents(new MOTD(), this);
             }
             if (getConfig().getBoolean("FlyEnable")) {
                 registerCommand(this, new Fly(), "飞行系统", "fly");
-                Bukkit.getPluginManager().registerEvents(new PlayerChangedWorld(), this);
+                Bukkit.getPluginManager().registerEvents(new AutoFly(), this);
             }
             if (getConfig().getBoolean("BackEnable")) {
                 registerCommand(this, new Back(), "Back系统", "back");
-                Bukkit.getPluginManager().registerEvents(new PlayerDeath(), this);
+                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.ChengToolsReloaded.Listeners.Back(), this);
             }
             if (getConfig().getBoolean("TpBackEnable")) {
-                registerCommand(this, new Back(), "TpBack系统", "tpback");
-                Bukkit.getPluginManager().registerEvents(new PlayerTeleport(), this);
+                registerCommand(this, new TpBack(), "TpBack系统", "tpback");
+                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.ChengToolsReloaded.Listeners.TpBack(), this);
             }
             if (getConfig().getBoolean("TpBackEnable") || getConfig().getBoolean("BackEnable")) {
                 registerCommand(this, new UnBack(), "Back系统", "unback");
@@ -335,7 +297,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                 registerCommand(this, new Night(), "快速天黑命令", "night");
             }
             if (getConfig().getBoolean("AntiTiaoLue")) {
-                Bukkit.getPluginManager().registerEvents(new BlockPlace(), this);
+                Bukkit.getPluginManager().registerEvents(new AntiTiaoLue(), this);
             }
             if (PLIB) {
                 if (getConfig().getBoolean("CrashPlayerEnable")) {
@@ -347,7 +309,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             if (Vault) {
                 if (getConfig().getBoolean("EconomySettings.Enable")) {
                     Bukkit.getServicesManager().register(Economy.class, new EconomyImplementer(), ChengToolsReloaded.instance, ServicePriority.Normal);
-                    registerCommand(this, new cn.ChengZhiYa.ChengToolsReloaded.Commands.Vault.Money(), "查询", "money");
+                    registerCommand(this, new Money(), "查询", "money");
                     registerCommand(this, new Pay(), "转账", "pay");
                     registerCommand(this, new MoneyAdmin(), "管理员管理", "moneyadmin");
                     registerCommand(this, new MoneyAdmin(), "管理员管理", "ma");
@@ -357,11 +319,10 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             registerCommand(this, new Reload(), "重载插件", "chengtoolsreload");
             registerCommand(this, new Reload(), "重载插件", "ctreload");
             registerCommand(this, new Reload(), "重载插件", "ctr");
-            Bukkit.getPluginManager().registerEvents(new PlayerChat(), this);
-            Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocess(), this);
+            Bukkit.getPluginManager().registerEvents(new Chat(), this);
             Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
-            Bukkit.getPluginManager().registerEvents(new PlayerQuit(), this);
-            Bukkit.getPluginManager().registerEvents(new PlayerRespawn(), this);
+            Bukkit.getPluginManager().registerEvents(new CustomJoinQuitMessage(), this);
+            Bukkit.getPluginManager().registerEvents(new JoinTeleportSpawn(), this);
         }
 
         if (PAPI) {
@@ -437,6 +398,8 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             config.setJdbcUrl("jdbc:mysql://" + getConfig().getString("DataSettings.Host") + "/" + getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
             config.setUsername(getConfig().getString("DataSettings.User"));
             config.setPassword(getConfig().getString("DataSettings.Password"));
+            config.addDataSourceProperty("useUnicode", "true");
+            config.addDataSourceProperty("characterEncoding", "utf8");
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");
             config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -448,27 +411,46 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
         try {
             {
                 Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ChengTools_Economy` (`PlayerName` VARCHAR(50) NOT NULL DEFAULT '',`Money` DECIMAL(20,4) NOT NULL DEFAULT 0,PRIMARY KEY (`PlayerName`))");
+                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ChengTools_Economy` (" +
+                        "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
+                        "`Money` DECIMAL(20,4) NOT NULL DEFAULT 0," +
+                        "PRIMARY KEY (`PlayerName`)) " +
+                        "COLLATE='utf8mb4_general_ci';");
                 ps.executeUpdate();
                 ps.close();
                 connection.close();
             }
             {
                 Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ChengTools_Home` (`ID` BIGINT NOT NULL AUTO_INCREMENT,`Home` VARCHAR(100) NOT NULL DEFAULT '',`Owner` VARCHAR(50) NOT NULL DEFAULT '',`World` VARCHAR(50) NOT NULL DEFAULT '',`X` DOUBLE NOT NULL DEFAULT 0,`Y` DOUBLE NOT NULL DEFAULT 0,`Z` DOUBLE NOT NULL DEFAULT 0,`Yaw` DOUBLE NOT NULL DEFAULT 0,`Pitch` DOUBLE NOT NULL DEFAULT 0,PRIMARY KEY (`ID`),INDEX `Home` (`Home`),INDEX `Owner` (`Owner`))");
+                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ChengTools_Home` (" +
+                        "`ID` BIGINT NOT NULL AUTO_INCREMENT," +
+                        "`Home` VARCHAR(100) NOT NULL DEFAULT ''," +
+                        "`Owner` VARCHAR(50) NOT NULL DEFAULT ''," +
+                        "`World` VARCHAR(50) NOT NULL DEFAULT ''," +
+                        "`X` DOUBLE NOT NULL DEFAULT 0," +
+                        "`Y` DOUBLE NOT NULL DEFAULT 0," +
+                        "`Z` DOUBLE NOT NULL DEFAULT 0," +
+                        "`Yaw` DOUBLE NOT NULL DEFAULT 0," +
+                        "`Pitch` DOUBLE NOT NULL DEFAULT 0," +
+                        "PRIMARY KEY (`ID`)," +
+                        "INDEX `Home` (`Home`)," +
+                        "INDEX `Owner` (`Owner`)) " +
+                        "COLLATE='utf8mb4_general_ci';");
                 ps.executeUpdate();
                 ps.close();
                 connection.close();
             }
             {
                 Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ChengTools_Login` (`PlayerName` VARCHAR(50) NOT NULL DEFAULT '',`Password` VARCHAR(200) NOT NULL DEFAULT '',PRIMARY KEY (`PlayerName`))");
+                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `ChengTools_Login` (" +
+                        "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
+                        "`Password` VARCHAR(200) NOT NULL DEFAULT ''," +
+                        "PRIMARY KEY (`PlayerName`)) " +
+                        "COLLATE='utf8mb4_general_ci';");
                 ps.executeUpdate();
                 ps.close();
                 connection.close();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        } catch (SQLException ignored) {}
     }
 }

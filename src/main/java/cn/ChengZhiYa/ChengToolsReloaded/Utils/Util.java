@@ -65,14 +65,13 @@ public final class Util {
         }
     }
 
-    public static boolean isNewPaper() {
-        boolean IsPaper = true;
+    public static boolean ifSupportGetTps() {
         try {
             Bukkit.class.getMethod("getTPS");
+            return true;
         } catch (NoSuchMethodException e) {
-            IsPaper = false;
+            return false;
         }
-        return IsPaper;
     }
 
     public static String translateHexCodes(String message) {
@@ -104,6 +103,11 @@ public final class Util {
         return ChatColor(Message);
     }
 
+    public static void ColorLog(String Message) {
+        CommandSender sender = Bukkit.getConsoleSender();
+        sender.sendMessage(ChatColor(Message));
+    }
+
     public static String Sha256(String Message) {
         String encodeStr = "";
         try {
@@ -123,13 +127,8 @@ public final class Util {
         return encodeStr;
     }
 
-    public static boolean getLogin(Player player) {
+    public static boolean ifLogin(Player player) {
         return StringHasMap.getHasMap().get(player.getName() + "_Login") != null;
-    }
-
-    public static void ColorLog(String Message) {
-        CommandSender sender = Bukkit.getConsoleSender();
-        sender.sendMessage(ChatColor(Message));
     }
 
     public static Plugin getPluginName(String name) {

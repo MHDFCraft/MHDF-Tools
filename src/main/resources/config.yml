@@ -140,7 +140,8 @@ SuperListSettings:
 HomeSystemSettings:
   #开关
   Enable: true
-  #一个玩家最多能创建多少个家
+  #一个玩家默认最多能创建多少个家
+  #可以通过 ChengTools.Home.<数量> 控制
   MaxHomeTime: 5
 
 #公告系统设置
