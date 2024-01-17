@@ -1,11 +1,9 @@
 package cn.ChengZhiYa.ChengToolsReloaded;
 
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.*;
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.Back;
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.Freeze;
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.TpBack;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.MoneyAdmin;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Pay;
+import cn.ChengZhiYa.ChengToolsReloaded.Commands.*;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.IntHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.Hook.EconomyImplementer;
@@ -458,6 +456,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                 ps.close();
                 connection.close();
             }
-        } catch (SQLException ignored) {}
+        } catch (SQLException ignored) {
+        }
     }
 }

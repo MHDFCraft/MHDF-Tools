@@ -85,6 +85,7 @@ public final class MenuUtil {
         Item.setItemMeta(ItemMeta);
         return Item;
     }
+
     public static ItemStack getPlayerHead(String PlayerName, String DisplayName, List<String> Lores) {
         ItemStack Item = new ItemStack(Material.PLAYER_HEAD);
         ItemMeta ItemMeta = Item.getItemMeta();
@@ -99,7 +100,7 @@ public final class MenuUtil {
         Item.setItemMeta(SkullMeta);
         return Item;
     }
-    
+
     public static YamlConfiguration getHomeMenu() {
         if (HomeMenu == null) {
             File LangFile = new File(ChengToolsReloaded.instance.getDataFolder(), "HomeMenu.yml");

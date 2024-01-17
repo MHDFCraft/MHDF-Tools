@@ -22,7 +22,7 @@ public final class YamlFileUtil {
         }
     }
 
-    public static  void SaveResource(String FilePath, String ResourcePath, String OutFileName, boolean Replace) {
+    public static void SaveResource(String FilePath, String ResourcePath, String OutFileName, boolean Replace) {
         if (ResourcePath.isEmpty()) {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }

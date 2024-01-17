@@ -20,7 +20,7 @@ public final class Home implements TabExecutor {
         if (sender instanceof Player) {
             if (args.length == 0) {
                 Player player = (Player) sender;
-                OpenHomeMenu(player,1);
+                OpenHomeMenu(player, 1);
                 return false;
             }
             if (args.length == 1) {

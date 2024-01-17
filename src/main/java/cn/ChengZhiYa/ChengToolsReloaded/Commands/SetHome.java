@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Commands;
 
-import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,7 +16,7 @@ public final class SetHome implements CommandExecutor {
             if (args.length == 1) {
                 Player player = (Player) sender;
                 String HomeName = args[0];
-                if (getMaxHome(player)<= getPlayerHomeTime(player.getName())) {
+                if (getMaxHome(player) <= getPlayerHomeTime(player.getName())) {
                     sender.sendMessage(i18n("Home.HomeListFull", String.valueOf(getMaxHome(player))));
                     return false;
                 }
