@@ -1,0 +1,84 @@
+#菜单
+Menu:
+  #菜单标题 必须要有{Page}
+  Title: "&e家系统&6-&b第{Page}页"
+  #菜单大小
+  Size: 54
+  #参观玩家按钮的数量
+  HomeSize: 45
+  #物品列表
+  ItemList:
+    Border:
+      #物品类型
+      Type: "GRAY_STAINED_GLASS_PANE"
+      #物品名字
+      DisplayName: "&f "
+      #简介
+      Lore: [ ]
+      #格子位置
+      Slot: "45-53"
+      #点击事件
+      #[player]|<命令> #玩家执行命令
+      #[console]|<命令> #后台执行命令
+      #[playsound]|<音频>|<音量|<音效> #播放音频
+      #[message]|<消息第一行>|<消息第二行> #发送消息
+      #[PageUp] #上一页
+      #[PageNext] #下一页
+      #[Home] #前往家
+      ClickAction: [ ]
+    PageUp:
+      #物品作用类型
+      ItemType: "PageUp"
+      #物品类型
+      Type: "RED_STAINED_GLASS_PANE"
+      #物品名字
+      DisplayName: "&e上一页"
+      #简介
+      Lore: [ ]
+      #格子位置
+      Slot: "45"
+      #点击事件
+      ClickAction:
+        - "[PageUp]"
+        - "[playsound]|ITEM_BOOK_PAGE_TURN|25|1.5"
+    Page:
+      #物品类型
+      Type: "PAPER"
+      #物品名字
+      DisplayName: "&e当前页数:{Page}"
+      #简介
+      Lore: [ ]
+      #格子位置
+      Slot: "49"
+      #点击事件
+      ClickAction: [ ]
+    PageNext:
+      #物品作用类型
+      ItemType: "PageNext"
+      #物品类型
+      Type: "GREEN_STAINED_GLASS_PANE"
+      #物品名字
+      DisplayName: "&e下一页"
+      #简介
+      Lore: [ ]
+      #格子位置
+      Slot: "53"
+      #点击事件
+      ClickAction:
+        - "[PageNext]"
+        - "[playsound]|ITEM_BOOK_PAGE_TURN|25|1.5"
+    Home:
+      #物品作用类型
+      ItemType: "GoToHome"
+      #物品类型
+      Type: "{RandomBed}"
+      #物品名字
+      DisplayName: "&b{HomeName}"
+      #简介
+      Lore:
+        - ""
+        - "&a>>> 点击前往 <<<"
+      #点击事件
+      ClickAction:
+        - "[Home]"
+        - "[playsound]|ENTITY_GENERIC_EXPLODE|25|2.0"

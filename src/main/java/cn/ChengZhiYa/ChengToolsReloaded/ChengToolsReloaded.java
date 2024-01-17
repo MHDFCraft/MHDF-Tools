@@ -12,6 +12,7 @@ import cn.ChengZhiYa.ChengToolsReloaded.Hook.EconomyImplementer;
 import cn.ChengZhiYa.ChengToolsReloaded.Hook.Metrics;
 import cn.ChengZhiYa.ChengToolsReloaded.Hook.PlaceholderAPI;
 import cn.ChengZhiYa.ChengToolsReloaded.Listeners.*;
+import cn.ChengZhiYa.ChengToolsReloaded.Listeners.Menu.HomeMenu;
 import cn.ChengZhiYa.ChengToolsReloaded.Tasks.*;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.zaxxer.hikari.HikariConfig;
@@ -46,7 +47,7 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.*;
 import static cn.ChengZhiYa.ChengToolsReloaded.Utils.YamlFileUtil.SaveResource;
 
 public final class ChengToolsReloaded extends JavaPlugin implements Listener {
-    public static final String Version = "1.2.2";
+    public static final String Version = "1.2.3";
     public static ChengToolsReloaded instance;
     public static boolean PAPI = true;
     public static boolean PLIB = true;
@@ -186,6 +187,11 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             }
             LangFileData = YamlConfiguration.loadConfiguration(Lang_File);
 
+            File HomeMenuFile = new File(getDataFolder(), "HomeMenu.yml");
+            if (!HomeMenuFile.exists()) {
+                SaveResource(this.getDataFolder().getPath(), "HomeMenu.yml", "HomeMenu.yml", true);
+            }
+
             if (Objects.equals(getConfig().getString("DataSettings.Type"), "MySQL")) {
                 initializationDatabaseData();
             } else {
@@ -203,6 +209,7 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
                 registerCommand(this, new SetHome(), "设置家", "sethome");
                 registerCommand(this, new DelHome(), "删除家", "delhome");
                 registerCommand(this, new Home(), "传送至家", "home");
+                Bukkit.getPluginManager().registerEvents(new HomeMenu(), this);
             }
             if (getConfig().getBoolean("TimeMessageSettings.Enable")) {
                 BukkitTask TimeMessage = new TimeMessage().runTaskTimerAsynchronously(this, 0L, getConfig().getInt("TimeMessageSettings.Delay") * 20L);
