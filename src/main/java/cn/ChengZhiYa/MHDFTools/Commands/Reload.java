@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.Commands;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.HashMap.IntHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.Tasks.ChatDelay;
 import cn.ChengZhiYa.MHDFTools.Tasks.Scoreboard;
 import cn.ChengZhiYa.MHDFTools.Tasks.TimeMessage;

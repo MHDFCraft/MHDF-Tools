@@ -1,8 +1,8 @@
 package cn.ChengZhiYa.MHDFTools.Commands;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.HashMap.IntHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;

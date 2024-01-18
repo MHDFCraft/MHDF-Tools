@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.Utils;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -516,11 +516,11 @@ public final class Util {
             if (perm.startsWith("mhdftools.joinmessage.")) {
                 String Group = perm.substring("mhdftools.joinmessage.".length());
                 return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomJoinServerMessageSettings." + Group + ".JoinMessage"))
-                        .replaceAll("%PlayerName%",player.getName());
+                        .replaceAll("%PlayerName%", player.getName());
             }
         }
         return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomJoinServerMessageSettings.Default.JoinMessage"))
-                .replaceAll("%PlayerName%",player.getName());
+                .replaceAll("%PlayerName%", player.getName());
     }
 
     public static String getQuitMessage(Player player) {
@@ -529,10 +529,10 @@ public final class Util {
             if (perm.startsWith("mhdftools.quitmessage.")) {
                 String Group = perm.substring("mhdftools.quitmessage.".length());
                 return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings." + Group + ".QuitMessage"))
-                        .replaceAll("%PlayerName%",player.getName());
+                        .replaceAll("%PlayerName%", player.getName());
             }
         }
         return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings.Default.QuitMessage"))
-                .replaceAll("%PlayerName%",player.getName());
+                .replaceAll("%PlayerName%", player.getName());
     }
 }

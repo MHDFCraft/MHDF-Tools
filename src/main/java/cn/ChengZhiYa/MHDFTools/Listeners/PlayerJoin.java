@@ -1,9 +1,9 @@
 package cn.ChengZhiYa.MHDFTools.Listeners;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.HashMap.BooleanHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.ScoreboardHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -73,7 +73,7 @@ public final class PlayerJoin implements Listener {
         }
         if (MHDFTools.instance.getConfig().getBoolean("PlayerJoinSendMessageSettings.Enable")) {
             event.getPlayer().sendMessage(ChatColor(MHDFTools.instance.getConfig().getString("PlayerJoinSendMessageSettings.Message"))
-                    .replaceAll("%PlayerName%",event.getPlayer().getName())
+                    .replaceAll("%PlayerName%", event.getPlayer().getName())
             );
         }
     }

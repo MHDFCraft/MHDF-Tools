@@ -22,7 +22,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -311,10 +310,10 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                         @Override
                         public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
                             if (sender instanceof Player) {
-                                String RunCommand = ChatColor((Player) sender,getConfig().getString("CommandLink.CommandList." + Command + ".Command"));
+                                String RunCommand = ChatColor((Player) sender, getConfig().getString("CommandLink.CommandList." + Command + ".Command"));
                                 if (args.length != 0) {
-                                    for (int i=0 ; i<args.length ; i++) {
-                                        RunCommand = RunCommand.replaceAll("%"+i,args[i]);
+                                    for (int i = 0; i < args.length; i++) {
+                                        RunCommand = RunCommand.replaceAll("%" + i, args[i]);
                                     }
                                 }
                                 ((Player) sender).chat("/" + RunCommand);
@@ -324,13 +323,13 @@ public final class MHDFTools extends JavaPlugin implements Listener {
 
                         @Override
                         public java.util.@Nullable List<String> onTabComplete(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
-                            if (getConfig().getString("CommandLink.CommandList." + Command + "." + (args.length-1) + "_TabList") != null &&
+                            if (getConfig().getString("CommandLink.CommandList." + Command + "." + (args.length - 1) + "_TabList") != null &&
                                     Objects.equals(getConfig().getString("CommandLink.CommandList." + Command + "." + (args.length - 1) + "_TabList"), "{PlayerList}")) {
                                 return null;
                             }
-                            return getConfig().getStringList("CommandLink.CommandList." + Command + "." + (args.length-1) + "_TabList");
+                            return getConfig().getStringList("CommandLink.CommandList." + Command + "." + (args.length - 1) + "_TabList");
                         }
-                    },Command,Command);
+                    }, Command, Command);
                 }
             }
 

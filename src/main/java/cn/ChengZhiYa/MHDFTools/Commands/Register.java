@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.Commands;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.Utils.Database.LoginUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

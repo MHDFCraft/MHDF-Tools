@@ -1,8 +1,8 @@
 package cn.ChengZhiYa.MHDFTools.Tasks;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.HashMap.ObjectiveHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.ScoreboardHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
