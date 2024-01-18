@@ -12,6 +12,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.*;
 
 import java.io.BufferedReader;
@@ -507,5 +508,31 @@ public final class Util {
                 .replaceAll("%2", Vaule2)
                 .replaceAll("%3", Vaule3)
                 .replaceAll("%4", Vaule4));
+    }
+
+    public static String getJoinMessage(Player player) {
+        for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
+            String perm = permInfo.getPermission();
+            if (perm.startsWith("chengtools.joinmessage.")) {
+                String Group = perm.substring("chengtools.joinmessage.".length());
+                return ChatColor(player, ChengToolsReloaded.instance.getConfig().getString("CustomJoinServerMessageSettings." + Group + ".JoinMessage"))
+                        .replaceAll("%PlayerName%",player.getName());
+            }
+        }
+        return ChatColor(player, ChengToolsReloaded.instance.getConfig().getString("CustomJoinServerMessageSettings.Default.JoinMessage"))
+                .replaceAll("%PlayerName%",player.getName());
+    }
+
+    public static String getQuitMessage(Player player) {
+        for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
+            String perm = permInfo.getPermission();
+            if (perm.startsWith("chengtools.quitmessage.")) {
+                String Group = perm.substring("chengtools.quitmessage.".length());
+                return ChatColor(player, ChengToolsReloaded.instance.getConfig().getString("CustomQuitServerMessageSettings." + Group + ".QuitMessage"))
+                        .replaceAll("%PlayerName%",player.getName());
+            }
+        }
+        return ChatColor(player, ChengToolsReloaded.instance.getConfig().getString("CustomQuitServerMessageSettings.Default.QuitMessage"))
+                .replaceAll("%PlayerName%",player.getName());
     }
 }

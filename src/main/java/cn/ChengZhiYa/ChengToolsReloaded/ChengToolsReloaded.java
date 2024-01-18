@@ -1,7 +1,6 @@
 package cn.ChengZhiYa.ChengToolsReloaded;
 
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.Back;
-import cn.ChengZhiYa.ChengToolsReloaded.Commands.Freeze;
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.TpBack;
 import cn.ChengZhiYa.ChengToolsReloaded.Commands.*;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHasMap;
@@ -242,10 +241,6 @@ public final class ChengToolsReloaded extends JavaPlugin implements Listener {
             }
             if (getConfig().getBoolean("SuperStopSettings.Enable")) {
                 registerCommand(this, new Stop(), "关闭服务器", "stop");
-            }
-            if (getConfig().getBoolean("FreezeCommandSettings.Enable")) {
-                registerCommand(this, new Freeze(), "冻结玩家", "freeze");
-                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.ChengToolsReloaded.Listeners.Freeze(), this);
             }
             if (getConfig().getBoolean("MOTDSettings.Enable")) {
                 Bukkit.getPluginManager().registerEvents(new MOTD(), this);

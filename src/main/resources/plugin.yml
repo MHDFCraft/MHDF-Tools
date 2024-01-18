@@ -56,3 +56,7 @@ permissions:
     default: op
   ChengTools.Chat.Color:
     default: op
+  ChengTools.JoinMessage:
+    default: true
+  ChengTools.QuitMessage:
+    default: true

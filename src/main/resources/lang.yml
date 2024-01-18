@@ -85,9 +85,6 @@ Vanish:
   Disabled: "关闭"
   Done: "&6你的隐身模式已%1"
   SetDone: "&6已将%1的隐身模式%2"
-Freeze:
-  Done: "&a冻结成功!"
-  UnDone: "&a已取消冻结!"
 Gamemode:
   Survival: "生存模式"
   Adventure: "冒险模式"

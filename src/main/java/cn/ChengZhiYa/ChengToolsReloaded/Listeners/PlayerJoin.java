@@ -5,8 +5,6 @@ import cn.ChengZhiYa.ChengToolsReloaded.HashMap.BooleanHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.ScoreboardHasMap;
 import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHasMap;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,17 +22,6 @@ import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getNMSVersion;
 public final class PlayerJoin implements Listener {
     @EventHandler
     public void On_Event(PlayerJoinEvent event) {
-        if (ChengToolsReloaded.instance.getConfig().getBoolean("SpawnSettings.Enable") && ChengToolsReloaded.instance.getConfig().getBoolean("SpawnSettings.JoinTeleport")) {
-            Player player = event.getPlayer();
-            World world = Bukkit.getWorld(Objects.requireNonNull(ChengToolsReloaded.instance.getConfig().getString("SpawnSettings.World")));
-            double X = ChengToolsReloaded.instance.getConfig().getDouble("SpawnSettings.X");
-            double Y = ChengToolsReloaded.instance.getConfig().getDouble("SpawnSettings.Y");
-            double Z = ChengToolsReloaded.instance.getConfig().getDouble("SpawnSettings.Z");
-            float Yaw = (float) ChengToolsReloaded.instance.getConfig().getDouble("SpawnSettings.Yaw");
-            float Pitch = (float) ChengToolsReloaded.instance.getConfig().getDouble("SpawnSettings.Pitch");
-            Location SpawnLcation = new Location(world, X, Y, Z, Yaw, Pitch);
-            player.teleport(SpawnLcation);
-        }
         if (ChengToolsReloaded.instance.getConfig().getBoolean("EconomySettings.Enable")) {
             initializationPlayerData(event.getPlayer().getName());
         }
@@ -83,6 +70,11 @@ public final class PlayerJoin implements Listener {
                 }
             }
             event.getPlayer().kickPlayer(ChengToolsReloaded.instance.getConfig().getString("WhiteList.KickMessage"));
+        }
+        if (ChengToolsReloaded.instance.getConfig().getBoolean("PlayerJoinSendMessageSettings.Enable")) {
+            event.getPlayer().sendMessage(ChatColor(ChengToolsReloaded.instance.getConfig().getString("PlayerJoinSendMessageSettings.Message"))
+                    .replaceAll("%PlayerName%",event.getPlayer().getName())
+            );
         }
     }
 }

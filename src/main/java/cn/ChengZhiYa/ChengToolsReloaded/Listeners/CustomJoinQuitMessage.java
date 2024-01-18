@@ -1,37 +1,33 @@
 package cn.ChengZhiYa.ChengToolsReloaded.Listeners;
 
 import cn.ChengZhiYa.ChengToolsReloaded.ChengToolsReloaded;
-import cn.ChengZhiYa.ChengToolsReloaded.HashMap.StringHasMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.Objects;
-
-import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.i18n;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getJoinMessage;
+import static cn.ChengZhiYa.ChengToolsReloaded.Utils.Util.getQuitMessage;
 
 public final class CustomJoinQuitMessage implements Listener {
-
     @EventHandler
     public void PlayerJoinEvent(PlayerJoinEvent event) {
-        if (ChengToolsReloaded.instance.getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {
+        if (ChengToolsReloaded.instance.getConfig().getBoolean("CustomJoinServerMessageSettings.Enable")) {
             Player player = event.getPlayer();
-            if (StringHasMap.getHasMap().get(player.getName() + "_LoginIP") != null) {
-                if (StringHasMap.getHasMap().get(player.getName() + "_LoginIP").equals(Objects.requireNonNull(player.getAddress()).getHostName())) {
-                    StringHasMap.getHasMap().put(player.getName() + "_Login", "t");
-                    player.sendMessage(i18n("Login.AutoLogin"));
-                }
+            if (player.hasPermission("ChengTools.JoinMessage")) {
+                event.setJoinMessage(getJoinMessage(player));
             }
         }
     }
 
     @EventHandler
     public void PlayerQuitEvent(PlayerQuitEvent event) {
-        if (ChengToolsReloaded.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
+        if (ChengToolsReloaded.instance.getConfig().getBoolean("CustomQuitServerMessageSettings.Enable")) {
             Player player = event.getPlayer();
-            StringHasMap.getHasMap().put(player.getName() + "_Login", null);
+            if (player.hasPermission("ChengTools.QuitMessage")) {
+                event.setQuitMessage(getQuitMessage(player));
+            }
         }
     }
 }

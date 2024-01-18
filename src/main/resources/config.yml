@@ -20,19 +20,44 @@ DataSettings:
   #数据库
   Database: "ChengTools"
 
+#玩家进入服务器发送欢迎消息
+PlayerJoinSendMessageSettings:
+  #开关
+  Enable: true
+  #消息
+  Message: |-
+    &b%PlayerName%&e欢迎加入服务器呀~
+    &a服务器官方QQ群: 114514
+
 #自定义玩家进入服务器提示
 CustomJoinServerMessageSettings:
   #开关
   Enable: true
-  #玩家进入服务器的提示
-  JoinMessage: "&a&l%PlayerName%&e&l加入了游戏"
+  #默认设置
+  Default:
+    #玩家进入服务器的提示
+    JoinMessage: "&a&l%PlayerName%&e&l加入了游戏"
+  #拥有 ChengTools.JoinMessage.<名字> 权限的人的提示
+  #例: ChengTools.JoinMessage.admin
+  #组名字必须小写!
+  admin:
+    #玩家进入服务器的提示
+    JoinMessage: "&c&l%PlayerName%&e&l加入了游戏"
 
 #自定义玩家退出服务器提示
 CustomQuitServerMessageSettings:
   #开关
   Enable: true
-  #玩家退出服务器的提示
-  QuitMessage: "&a&l%PlayerName%&e&l离开了游戏"
+  #默认设置
+  Default:
+    #玩家退出服务器的提示
+    QuitMessage: "&a&l%PlayerName%&e&l离开了游戏"
+  #拥有 ChengTools.QuitMessage.<名字> 权限的人的提示
+  #例: ChengTools.QuitMessage.admin
+  #组名字必须小写!
+  admin:
+    #玩家退出服务器的提示
+    QuitMessage: "&c&l%PlayerName%&e&l离开了游戏"
 
 #反挑落系统
 AntiTiaoLue: true
@@ -110,17 +135,6 @@ PluginManageSettings:
   #白名单插件列表
   WhiteListPluginList:
     - "Cheng-Tools-Reloaded"
-
-#冻结玩家命令设置
-FreezeCommandSettings:
-  #开关
-  Enable: true
-  #冻结提示设置
-  FreezeMessageSettins:
-    #冻结提示开关
-    Enable: true
-    #冻结提示
-    Message: "&c你被冻结了，清联系管理员!"
 
 #超级List命令设置
 SuperListSettings:
