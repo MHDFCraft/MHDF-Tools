@@ -22,13 +22,18 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.net.URL;
@@ -77,8 +82,8 @@ public final class MHDFTools extends JavaPlugin implements Listener {
         {
             if (getDataFolder().getParentFile().isDirectory()) {
                 for (File PluginFile : Objects.requireNonNull(getDataFolder().getParentFile().listFiles())) {
-                    if (PluginFile.isFile() && PluginFile.getName().contains("Cheng-Tools-Reloaded") && PluginFile.getName().endsWith(".jar")) {
-                        String[] PluginName = PluginFile.getName().split("Cheng-Tools-Reloaded");
+                    if (PluginFile.isFile() && PluginFile.getName().contains("MHDF-Tools") && PluginFile.getName().endsWith(".jar")) {
+                        String[] PluginName = PluginFile.getName().split("MHDF-Tools");
                         if (!PluginName[1].equals("-" + Version + ".jar")) {
                             PluginFile.delete();
                         }
@@ -299,6 +304,36 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("AntiTiaoLue")) {
                 Bukkit.getPluginManager().registerEvents(new AntiTiaoLue(), this);
             }
+
+            if (getConfig().getBoolean("CommandLink.Enable")) {
+                for (String Command : Objects.requireNonNull(getConfig().getConfigurationSection("CommandLink.CommandList")).getKeys(false)) {
+                    registerCommand(this, new TabExecutor() {
+                        @Override
+                        public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
+                            if (sender instanceof Player) {
+                                String RunCommand = ChatColor((Player) sender,getConfig().getString("CommandLink.CommandList." + Command + ".Command"));
+                                if (args.length != 0) {
+                                    for (int i=0 ; i<args.length ; i++) {
+                                        RunCommand = RunCommand.replaceAll("%"+i,args[i]);
+                                    }
+                                }
+                                ((Player) sender).chat("/" + RunCommand);
+                            }
+                            return false;
+                        }
+
+                        @Override
+                        public java.util.@Nullable List<String> onTabComplete(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
+                            if (getConfig().getString("CommandLink.CommandList." + Command + "." + (args.length-1) + "_TabList") != null &&
+                                    Objects.equals(getConfig().getString("CommandLink.CommandList." + Command + "." + (args.length - 1) + "_TabList"), "{PlayerList}")) {
+                                return null;
+                            }
+                            return getConfig().getStringList("CommandLink.CommandList." + Command + "." + (args.length-1) + "_TabList");
+                        }
+                    },Command,Command);
+                }
+            }
+
             if (PLIB) {
                 if (getConfig().getBoolean("CrashPlayerEnable")) {
                     registerCommand(this, new CrashPlayerClient(), "崩端系统", "crashplayerclient");

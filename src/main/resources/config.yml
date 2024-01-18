@@ -59,42 +59,6 @@ CustomQuitServerMessageSettings:
     #玩家退出服务器的提示
     QuitMessage: "&c&l%PlayerName%&e&l离开了游戏"
 
-#反挑落系统
-AntiTiaoLue: true
-
-#更简单的Gamemode
-EasyGamemodeCommandEnable: true
-
-#Fly系统
-FlyEnable: true
-
-#Vanish系统
-VanishEnable: true
-
-#Back系统
-BackEnable: true
-
-#TpBack系统
-TpBackEnable: true
-
-#Invsee系统
-InvseeEnable: true
-
-#帽子系统
-HatEnable: true
-
-#崩端系统
-CrashPlayerEnable: true
-
-#快速晴天命令
-FastSunCommandEnable: true
-
-#快速调时间命令
-FastSetTimeCommandEnable: true
-
-#查询玩家IP与IP归属地命令
-IpCommandEnable: true
-
 #Tpa系统
 Tpa:
   #开关
@@ -283,3 +247,57 @@ ChatSettings:
   ChatBlackWork:
     - "SB"
     - "傻逼"
+
+#命令映射
+CommandLink:
+  #开关
+  Enable: true
+  #命令列表
+  CommandList:
+    #将/添加权限 映射成 /lp user %0 perm set %1
+    #%0为 参数1
+    #%1为 参数2
+    添加权限:
+      Command: "lp user %0 perm set %1"
+      #Tab补全列表功能 格式: <参数几>_TabList
+      #参数0的TAB补全
+      0_TabList: "{PlayerList}"
+      #参数1的TAB补全
+      1_TabList:
+        - "你不会用吗?"
+
+#反跳略系统
+AntiTiaoLue: true
+
+#更简单的Gamemode
+EasyGamemodeCommandEnable: true
+
+#Fly系统
+FlyEnable: true
+
+#Vanish系统
+VanishEnable: true
+
+#Back系统
+BackEnable: true
+
+#TpBack系统
+TpBackEnable: true
+
+#Invsee系统
+InvseeEnable: true
+
+#帽子系统
+HatEnable: true
+
+#崩端系统
+CrashPlayerEnable: true
+
+#快速晴天命令
+FastSunCommandEnable: true
+
+#快速调时间命令
+FastSetTimeCommandEnable: true
+
+#查询玩家IP与IP归属地命令
+IpCommandEnable: true
