@@ -18,7 +18,7 @@ DataSettings:
   #数据库密码
   Password: "root"
   #数据库
-  Database: "ChengTools"
+  Database: "MHDFTools"
 
 #玩家进入服务器发送欢迎消息
 PlayerJoinSendMessageSettings:
@@ -37,8 +37,8 @@ CustomJoinServerMessageSettings:
   Default:
     #玩家进入服务器的提示
     JoinMessage: "&a&l%PlayerName%&e&l加入了游戏"
-  #拥有 ChengTools.JoinMessage.<名字> 权限的人的提示
-  #例: ChengTools.JoinMessage.admin
+  #拥有 MHDFTools.JoinMessage.<名字> 权限的人的提示
+  #例: MHDFTools.JoinMessage.admin
   #组名字必须小写!
   admin:
     #玩家进入服务器的提示
@@ -52,8 +52,8 @@ CustomQuitServerMessageSettings:
   Default:
     #玩家退出服务器的提示
     QuitMessage: "&a&l%PlayerName%&e&l离开了游戏"
-  #拥有 ChengTools.QuitMessage.<名字> 权限的人的提示
-  #例: ChengTools.QuitMessage.admin
+  #拥有 MHDFTools.QuitMessage.<名字> 权限的人的提示
+  #例: MHDFTools.QuitMessage.admin
   #组名字必须小写!
   admin:
     #玩家退出服务器的提示
@@ -155,7 +155,7 @@ HomeSystemSettings:
   #开关
   Enable: true
   #一个玩家默认最多能创建多少个家
-  #可以通过 ChengTools.Home.<数量> 控制
+  #可以通过 MHDFTools.Home.<数量> 控制
   MaxHomeTime: 5
 
 #公告系统设置
@@ -168,7 +168,7 @@ TimeMessageSettings:
   ConsoleDisplayed: true
   #公告内容
   Message:
-    - "欢迎使用橙汁插件!"
+    - "欢迎使用梦回东方-工具!"
 
 #登录系统设置
 LoginSystemSettings:
@@ -195,7 +195,7 @@ WhiteList:
   #开关
   Enable: false
   #踢出提示
-  KickMessage: "&b橙-工具\n\n&c您没有白名单"
+  KickMessage: "&b梦回东方-工具\n\n&c您没有白名单"
   #白名单列表
   List:
     - "qwq"
@@ -225,9 +225,9 @@ SuperStopSettings:
   #开关
   Enable: true
   #服务器名称
-  ServerName: "&6&l橙式插件-橙工具"
+  ServerName: "&b梦回东方-工具"
   #默认关服提示
-  DefaultStopMessage: "&c&l服务器已关闭"
+  DefaultStopMessage: "&c服务器已关闭"
 
 #MOTD系统设置
 MOTDSettings:
@@ -236,7 +236,7 @@ MOTDSettings:
   #最大玩家数
   MaxPlayers: 5835
   #最大玩家数
-  Line1: "&6ChengTools"
+  Line1: "&bMHDFTools"
   Line2: "&6HelloWorld!"
 
 #计分板系统设置
@@ -244,7 +244,7 @@ ScoreboardSettings:
   #开关
   Enable: true
   #标题
-  Title: "&6橙式插件-橙工具"
+  Title: "&b梦回东方-工具"
   #内容
   Lines:
     - "&e&l欢迎%player_name%"

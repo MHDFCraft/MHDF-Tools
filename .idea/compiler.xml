@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Cheng-Tools-Reloaded" />
+        <module name="MHDF-Tools" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Cheng-Tools-Reloaded" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
