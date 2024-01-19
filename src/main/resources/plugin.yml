@@ -26,8 +26,6 @@ permissions:
     default: op
   MHDFTools.Command.Reload:
     default: op
-  MHDFTools.Command.PluginManage:
-    default: op
   MHDFTools.Command.PlayerTitle:
     default: op
   MHDFTools.Command.Stop:

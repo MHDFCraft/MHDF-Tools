@@ -148,22 +148,6 @@ TpaHere:
     &a玩家%1邀请你去他那里看看
     ?Accent?  ?Defuse?
     &7--------------&9Tpahere系统&7--------------
-PluginManage:
-  WhiteListPlugin: "&a不允许管理此插件!"
-  AlreadyLoad: "&a%1已经被加载了!"
-  AlreadyUnLoad: "&a%1已经被卸载了!"
-  LoadDone: "&a%1加载成功!"
-  UnLoadDone: "&a%1卸载成功!"
-  ReLoadDone: "&a%1重载成功!"
-  NotLoad: "&a这个插件没有被加载,无法重载!"
-  HelpMessage: |-
-    &f
-    &7-------&6插件管理&7-------
-    &6/%1 help &7 &e帮助界面
-    &6/%1 load <插件名称> &7- &e加载插件
-    &6/%1 unload <插件名称> &7- &e卸载插件
-    &6/%1 reload <插件名称> &7- &e重载插件
-    &7-------&6插件管理&7-------
 IPMessage: |-
   &e玩家&7: &6%1
   &eIP&7: &6%2

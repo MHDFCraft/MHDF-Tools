@@ -1,26 +1,33 @@
 package cn.ChengZhiYa.MHDFTools.Commands;
 
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.*;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
 
-public final class SetHome implements CommandExecutor {
+public final class SetHome implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             if (args.length == 1) {
                 Player player = (Player) sender;
                 String HomeName = args[0];
-                if (getMaxHome(player) <= getPlayerHomeTime(player.getName())) {
-                    sender.sendMessage(i18n("Home.HomeListFull", String.valueOf(getMaxHome(player))));
-                    return false;
+                if (!ifHomeExists(player.getName(), HomeName)) {
+                    if (getMaxHome(player) <= getPlayerHomeTime(player.getName())) {
+                        sender.sendMessage(i18n("Home.HomeListFull", String.valueOf(getMaxHome(player))));
+                        return false;
+                    }
+                    AddHome(player.getName(), HomeName, player.getLocation());
+                }else {
+                    SetHome(player.getName(), HomeName, player.getLocation());
                 }
-                AddHome(player.getName(), HomeName, player.getLocation());
                 sender.sendMessage(i18n("Home.SetDone", label));
             } else {
                 sender.sendMessage(i18n("Usage.Home", label));
@@ -29,5 +36,13 @@ public final class SetHome implements CommandExecutor {
             sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        if (args.length == 1) {
+            return getPlayerHomeList(sender.getName());
+        }
+        return null;
     }
 }

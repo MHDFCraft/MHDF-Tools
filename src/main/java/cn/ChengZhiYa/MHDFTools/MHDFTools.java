@@ -289,10 +289,6 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 registerCommand(this, new TpaHere(), "Tpahere系统", "tpahere");
                 new TpaHereTime().runTaskTimerAsynchronously(this, 0L, 20L);
             }
-            if (getConfig().getBoolean("PluginManageSettings.Enable")) {
-                registerCommand(this, new PluginManage(), "插件管理系统", "pluginmanage");
-                registerCommand(this, new PluginManage(), "插件管理系统", "pm");
-            }
             if (getConfig().getBoolean("FastSunCommandEnable")) {
                 registerCommand(this, new Sun(), "快速晴天命令", "sun");
             }
@@ -303,7 +299,6 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("AntiTiaoLue")) {
                 Bukkit.getPluginManager().registerEvents(new AntiTiaoLue(), this);
             }
-
             if (getConfig().getBoolean("CommandLink.Enable")) {
                 for (String Command : Objects.requireNonNull(getConfig().getConfigurationSection("CommandLink.CommandList")).getKeys(false)) {
                     registerCommand(this, new TabExecutor() {

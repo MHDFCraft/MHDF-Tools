@@ -16,32 +16,24 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.*;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public final class Util {
-    public static final HashMap<Object, GentleUnload> gentleUnloads = new HashMap<>();
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static YamlConfiguration LangFileData;
-    public static Field commandMapField;
-    public static Field OldCommands;
 
     static {
         try {
@@ -110,8 +102,8 @@ public final class Util {
     }
 
     public static String Sha256(String Message) {
-        String encodeStr = "";
         try {
+            System.out.println(1);
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update(Message.getBytes(StandardCharsets.UTF_8));
             StringBuilder stringBuffer = new StringBuilder();
@@ -122,147 +114,14 @@ public final class Util {
                 }
                 stringBuffer.append(temp);
             }
-            encodeStr = stringBuffer.toString().toUpperCase();
-        } catch (final Exception ignored) {
+            return stringBuffer.toString().toUpperCase();
+        } catch (Exception ignored) {
+            return "";
         }
-        return encodeStr;
     }
 
     public static boolean ifLogin(Player player) {
         return StringHasMap.getHasMap().get(player.getName() + "_Login") != null;
-    }
-
-    public static Plugin getPluginName(String name) {
-        return Bukkit.getPluginManager().getPlugin(name);
-    }
-
-    public static void reload(Plugin plugin) {
-        if (plugin != null) {
-            unload(plugin);
-            load(plugin);
-        }
-    }
-
-    private static void load(Plugin plugin) {
-        load(plugin.getName());
-    }
-
-    public static String load(String name) {
-        Plugin target = null;
-        boolean paperLoaded = false;
-
-        File pluginDir = new File("plugins");
-
-        if (!pluginDir.isDirectory()) {
-            return name;
-        }
-
-        File PluginFile = new File(pluginDir, name + ".jar");
-
-        if (!PluginFile.isFile())
-            for (File Files : Objects.requireNonNull(pluginDir.listFiles()))
-                if (Files.getName().endsWith(".jar")) try {
-                    PluginDescriptionFile desc = MHDFTools.instance.getPluginLoader().getPluginDescription(Files);
-                    if (desc.getName().equalsIgnoreCase(name)) {
-                        PluginFile = Files;
-                        break;
-                    }
-                } catch (InvalidDescriptionException e) {
-                    return name;
-                }
-
-        try {
-            Object paperPluginManagerImpl = Class.forName("io.papermc.paper.plugin.manager.PaperPluginManagerImpl").getMethod("getInstance").invoke(null);
-
-            Field instanceManagerF = paperPluginManagerImpl.getClass().getDeclaredField("instanceManager");
-            instanceManagerF.setAccessible(true);
-            Object instanceManager = instanceManagerF.get(paperPluginManagerImpl);
-
-            Method loadMethod = instanceManager.getClass().getMethod("loadPlugin", Path.class);
-            loadMethod.setAccessible(true);
-            target = (Plugin) loadMethod.invoke(instanceManager, PluginFile.toPath());
-
-            Method enableMethod = instanceManager.getClass().getMethod("enablePlugin", Plugin.class);
-            enableMethod.setAccessible(true);
-            enableMethod.invoke(instanceManager, target);
-
-            paperLoaded = true;
-        } catch (Exception ignore) {
-        }
-
-        if (!paperLoaded) {
-            try {
-                target = Bukkit.getPluginManager().loadPlugin(PluginFile);
-            } catch (InvalidDescriptionException e) {
-                return "这个插件的描述文件无效!";
-            } catch (InvalidPluginException e) {
-                return "这个插件不存在!";
-            }
-
-            Objects.requireNonNull(target).onLoad();
-            Bukkit.getPluginManager().enablePlugin(Objects.requireNonNull(target));
-        }
-
-        Plugin finalTarget = target;
-        //Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
-        //loadCommands(finalTarget);
-        //}, 10L);
-        return null;
-    }
-
-    public static void loadCommands(Plugin plugin) {
-        Map<String, Command> knownCommands = getOldCommands();
-        List<Map.Entry<String, Command>> commands = Objects.requireNonNull(knownCommands).entrySet().stream()
-                .filter(s -> {
-                    if (s.getKey().contains(":"))
-                        return s.getKey().split(":")[0].equalsIgnoreCase(plugin.getName());
-                    else {
-                        ClassLoader cl = s.getValue().getClass().getClassLoader();
-                        try {
-                            return cl.getClass() == pluginClassLoader && pluginClassLoaderPlugin.get(cl) == plugin;
-                        } catch (IllegalAccessException e) {
-                            return false;
-                        }
-                    }
-                }).collect(Collectors.toList());
-
-        for (Map.Entry<String, Command> entry : commands) {
-            String alias = entry.getKey();
-            Command command = entry.getValue();
-            new BukkitCommandWrap().wrap(command, alias);
-        }
-
-        new BukkitCommandWrap().sync();
-
-        if (!Bukkit.getOnlinePlayers().isEmpty())
-            for (Player player : Bukkit.getOnlinePlayers())
-                player.updateCommands();
-    }
-
-    public static Map<String, Command> getOldCommands() {
-        if (commandMapField == null) try {
-            commandMapField = Class.forName("org.bukkit.craftbukkit." + getNMSVersion() + ".CraftServer").getDeclaredField("commandMap");
-            commandMapField.setAccessible(true);
-        } catch (NoSuchFieldException | ClassNotFoundException e) {
-            return null;
-        }
-        SimpleCommandMap commandMap;
-        try {
-            commandMap = (SimpleCommandMap) commandMapField.get(Bukkit.getServer());
-        } catch (Exception e) {
-            return null;
-        }
-        if (OldCommands == null) try {
-            OldCommands = SimpleCommandMap.class.getDeclaredField("knownCommands");
-            OldCommands.setAccessible(true);
-        } catch (NoSuchFieldException e) {
-            return null;
-        }
-        try {
-            return (Map<String, Command>) OldCommands.get(commandMap);
-        } catch (IllegalAccessException e) {
-            return null;
-        }
     }
 
     public static String getNMSVersion() {
@@ -271,62 +130,6 @@ public final class Util {
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }
-    }
-
-    public static HashMap<Object, GentleUnload> getGentleUnloads() {
-        return new HashMap<>(gentleUnloads);
-    }
-
-    public static void unload(Plugin plugin) {
-        String name = plugin.getName();
-        if (!getGentleUnloads().containsKey(plugin)) {
-            //loadCommands(plugin);
-            PluginManager pluginManager = Bukkit.getPluginManager();
-            pluginManager.disablePlugin(plugin);
-            pluginManager.disablePlugin(plugin);
-        } else {
-            GentleUnload gentleUnload = getGentleUnloads().get(plugin);
-            if (!gentleUnload.askingForGentleUnload()) {
-                return;
-            }
-        }
-
-        ClassLoader cl = plugin.getClass().getClassLoader();
-        if (cl instanceof URLClassLoader) {
-            try {
-                Field pluginField = cl.getClass().getDeclaredField("plugin");
-                pluginField.setAccessible(true);
-                pluginField.set(cl, null);
-                Field pluginInitField = cl.getClass().getDeclaredField("pluginInit");
-                pluginInitField.setAccessible(true);
-                pluginInitField.set(cl, null);
-            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException |
-                     IllegalAccessException ignored) {
-            }
-            try {
-                ((URLClassLoader) cl).close();
-            } catch (IOException ignored) {
-            }
-        }
-        try {
-            Object paperPluginManagerImpl = Class.forName("io.papermc.paper.plugin.manager.PaperPluginManagerImpl").getMethod("getInstance").invoke(null);
-            Field instanceManagerField = paperPluginManagerImpl.getClass().getDeclaredField("instanceManager");
-            instanceManagerField.setAccessible(true);
-            Object instanceManager = instanceManagerField.get(paperPluginManagerImpl);
-            Field lookupNamesField = instanceManager.getClass().getDeclaredField("lookupNames");
-            lookupNamesField.setAccessible(true);
-            Map<String, Object> lookupNames = (Map<String, Object>) lookupNamesField.get(instanceManager);
-            Method disableMethod = instanceManager.getClass().getMethod("disablePlugin", Plugin.class);
-            disableMethod.setAccessible(true);
-            disableMethod.invoke(instanceManager, plugin);
-            lookupNames.remove(plugin.getName().toLowerCase());
-            Field pluginListField = instanceManager.getClass().getDeclaredField("plugins");
-            pluginListField.setAccessible(true);
-            List<Plugin> pluginList = (List<Plugin>) pluginListField.get(instanceManager);
-            pluginList.remove(plugin);
-        } catch (Exception ignored) {
-        }
-        System.gc();
     }
 
     public static void OpSendMessage(String Message) {
@@ -345,13 +148,6 @@ public final class Util {
                 }
             }
         }
-    }
-
-    public static List<String> getPluginNames(boolean fullName) {
-        List<String> plugins = new ArrayList<>();
-        for (Plugin plugin : Bukkit.getPluginManager().getPlugins())
-            plugins.add(fullName ? plugin.getDescription().getFullName() : plugin.getName());
-        return plugins;
     }
 
     public static GameMode GetGamemode(int GameModeID) {
@@ -511,26 +307,40 @@ public final class Util {
     }
 
     public static String getJoinMessage(Player player) {
+        HashMap<Integer, String> MessageList = new HashMap<>();
+        List<Integer> WeghitList = new ArrayList<>();
         for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
             String perm = permInfo.getPermission();
             if (perm.startsWith("mhdftools.joinmessage.")) {
                 String Group = perm.substring("mhdftools.joinmessage.".length());
-                return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomJoinServerMessageSettings." + Group + ".JoinMessage"))
-                        .replaceAll("%PlayerName%", player.getName());
+                int Weight = MHDFTools.instance.getConfig().getInt("CustomJoinServerMessageSettings." + Group + ".Weight");
+                MessageList.put(Weight, Group);
+                WeghitList.add(Weight);
             }
+        }
+        if (!MessageList.isEmpty()) {
+            WeghitList.sort(Collections.reverseOrder());
+            return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomJoinServerMessageSettings." + MessageList.get(WeghitList.get(0)) + ".JoinMessage")).replaceAll("%PlayerName%", player.getName());
         }
         return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomJoinServerMessageSettings.Default.JoinMessage"))
                 .replaceAll("%PlayerName%", player.getName());
     }
 
     public static String getQuitMessage(Player player) {
+        Map<Integer, String> MessageList = new HashMap<>();
+        List<Integer> WeghitList = new ArrayList<>();
         for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
             String perm = permInfo.getPermission();
             if (perm.startsWith("mhdftools.quitmessage.")) {
                 String Group = perm.substring("mhdftools.quitmessage.".length());
-                return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings." + Group + ".QuitMessage"))
-                        .replaceAll("%PlayerName%", player.getName());
+                int Weight = MHDFTools.instance.getConfig().getInt("CustomQuitServerMessageSettings." + Group + ".Weight");
+                MessageList.put(Weight, Group);
+                WeghitList.add(Weight);
             }
+        }
+        if (!MessageList.isEmpty()) {
+            WeghitList.sort(Collections.reverseOrder());
+            return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings." + MessageList.get(WeghitList.get(0)) + ".QuitMessage")).replaceAll("%PlayerName%", player.getName());
         }
         return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings.Default.QuitMessage"))
                 .replaceAll("%PlayerName%", player.getName());

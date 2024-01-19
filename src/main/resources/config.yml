@@ -35,12 +35,16 @@ CustomJoinServerMessageSettings:
   Enable: true
   #默认设置
   Default:
+    #权重
+    Weight: 0
     #玩家进入服务器的提示
     JoinMessage: "&a&l%PlayerName%&e&l加入了游戏"
   #拥有 MHDFTools.JoinMessage.<名字> 权限的人的提示
   #例: MHDFTools.JoinMessage.admin
   #组名字必须小写!
   admin:
+    #权重
+    Weight: 1
     #玩家进入服务器的提示
     JoinMessage: "&c&l%PlayerName%&e&l加入了游戏"
 
@@ -50,12 +54,16 @@ CustomQuitServerMessageSettings:
   Enable: true
   #默认设置
   Default:
+    #权重
+    Weight: 0
     #玩家退出服务器的提示
     QuitMessage: "&a&l%PlayerName%&e&l离开了游戏"
   #拥有 MHDFTools.QuitMessage.<名字> 权限的人的提示
   #例: MHDFTools.QuitMessage.admin
   #组名字必须小写!
   admin:
+    #权重
+    Weight: 1
     #玩家退出服务器的提示
     QuitMessage: "&c&l%PlayerName%&e&l离开了游戏"
 
@@ -91,14 +99,6 @@ EconomySettings:
   InitialMoney: 1000.0
   #金钱名字
   MoneyName: "&e金币"
-
-#插件管理系统设置
-PluginManageSettings:
-  #开关
-  Enable: true
-  #白名单插件列表
-  WhiteListPluginList:
-    - "Cheng-Tools-Reloaded"
 
 #超级List命令设置
 SuperListSettings:

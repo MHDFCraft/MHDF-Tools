@@ -36,7 +36,7 @@ public final class DatabaseUtil {
             ResultSet rs = ps.executeQuery();
             Object Data = "";
             if (rs.next()) {
-                Data = rs.getDouble(GetField);
+                Data = rs.getObject(GetField);
             }
             rs.close();
             ps.close();
