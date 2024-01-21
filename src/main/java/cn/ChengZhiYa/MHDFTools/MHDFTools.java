@@ -48,7 +48,7 @@ import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
 import static cn.ChengZhiYa.MHDFTools.Utils.YamlFileUtil.SaveResource;
 
 public final class MHDFTools extends JavaPlugin implements Listener {
-    public static final String Version = "1.2.3";
+    public static final String Version = "1.3.0";
     public static MHDFTools instance;
     public static boolean PAPI = true;
     public static boolean PLIB = true;

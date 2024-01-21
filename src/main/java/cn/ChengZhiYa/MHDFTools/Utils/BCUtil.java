@@ -288,7 +288,7 @@ public final class BCUtil {
             out.writeDouble(Location.getZ());
 
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
-        }else {
+        } else {
             LocationHasMap.getHasMap().put(Key, Location);
             StringHasMap.getHasMap().put(Key + "_Server", Server);
         }
@@ -312,7 +312,7 @@ public final class BCUtil {
             out.writeFloat(Location.getPitch());
 
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
-        }else {
+        } else {
             MHDFTools.instance.getConfig().set("SpawnSettings.Server", ServerName);
             MHDFTools.instance.getConfig().set("SpawnSettings.world", Location.getWorld().getName());
             MHDFTools.instance.getConfig().set("SpawnSettings.X", Location.getX());
