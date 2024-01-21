@@ -13,7 +13,8 @@ import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
-import org.bukkit.plugin.*;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.SimplePluginManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -103,7 +104,6 @@ public final class Util {
 
     public static String Sha256(String Message) {
         try {
-            System.out.println(1);
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update(Message.getBytes(StandardCharsets.UTF_8));
             StringBuilder stringBuffer = new StringBuilder();

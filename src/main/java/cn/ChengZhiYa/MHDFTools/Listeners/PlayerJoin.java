@@ -4,6 +4,7 @@ import cn.ChengZhiYa.MHDFTools.HashMap.BooleanHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.ScoreboardHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.Utils.BCUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -22,6 +23,8 @@ import static cn.ChengZhiYa.MHDFTools.Utils.Util.getNMSVersion;
 public final class PlayerJoin implements Listener {
     @EventHandler
     public void On_Event(PlayerJoinEvent event) {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BCUtil::getPlayerList, 20);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BCUtil::getServerName, 20);
         if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
             initializationPlayerData(event.getPlayer().getName());
         }

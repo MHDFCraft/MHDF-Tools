@@ -9,7 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHome;
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.TpPlayerHome;
+import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeLocation;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getPlayerHomeList;
 import static cn.ChengZhiYa.MHDFTools.Utils.MenuUtil.OpenHomeMenu;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
@@ -26,9 +27,9 @@ public final class Home implements TabExecutor {
             if (args.length == 1) {
                 Player player = (Player) sender;
                 String HomeName = args[0];
-                Location HomeLocation = getHome(player.getName(), HomeName);
+                Location HomeLocation = getHomeLocation(player.getName(), HomeName);
                 if (HomeLocation != null) {
-                    player.teleport(HomeLocation);
+                    TpPlayerHome(player.getName(), HomeName);
                     player.sendMessage(i18n("Home.TeleportDone"));
                 } else {
                     player.sendMessage(i18n("Home.NotFound", HomeName));

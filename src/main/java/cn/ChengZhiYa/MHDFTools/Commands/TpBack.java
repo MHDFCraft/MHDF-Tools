@@ -1,12 +1,14 @@
 package cn.ChengZhiYa.MHDFTools.Commands;
 
 import cn.ChengZhiYa.MHDFTools.HashMap.LocationHasMap;
+import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.*;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
 
 public final class TpBack implements CommandExecutor {
@@ -15,11 +17,14 @@ public final class TpBack implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (LocationHasMap.getHasMap().get(player.getName() + "_TpBackLocation") != null) {
-                LocationHasMap.getHasMap().put(player.getName() + "_UnBack", player.getLocation());
-                player.teleport(LocationHasMap.getHasMap().get(player.getName() + "_TpBackLocation"));
-                player.sendMessage(i18n("Back.Done"));
+                SaveLocation(player.getName() + "_UnBackLocation", ServerName, player.getLocation());
+                TpPlayerTo(player.getName(),
+                        StringHasMap.getHasMap().get(player.getName() + "_TpBackLocation_Server"),
+                        LocationHasMap.getHasMap().get(player.getName() + "_TpBackLocation")
+                );
+                player.sendMessage(i18n("TpBack.Done"));
             } else {
-                sender.sendMessage(i18n("Back.NotFound"));
+                sender.sendMessage(i18n("TpBack.NotFound"));
             }
         } else {
             sender.sendMessage(i18n("OnlyPlayer"));

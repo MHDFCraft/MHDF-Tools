@@ -16,10 +16,12 @@ import java.sql.SQLException;
 import java.util.*;
 
 import static cn.ChengZhiYa.MHDFTools.MHDFTools.dataSource;
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.getHomeServerName;
 
 public final class HomeUtil {
     static Map<Object, List<String>> HomeListHashMap = new HashMap<>();
     static Map<Object, Location> HomeLocationHashMap = new HashMap<>();
+    static Map<Object, Object> HomeServerHashMap = new HashMap<>();
 
     public static Map<Object, List<String>> getHomeListHashMap() {
         return HomeListHashMap;
@@ -27,6 +29,10 @@ public final class HomeUtil {
 
     public static Map<Object, Location> getHomeLocationHashMap() {
         return HomeLocationHashMap;
+    }
+
+    public static Map<Object, Object> getHomeServerHashMap() {
+        return HomeServerHashMap;
     }
 
     public static File getPlayerFile(String PlayerName) {
@@ -127,7 +133,50 @@ public final class HomeUtil {
         return new ArrayList<>();
     }
 
-    public static Location getHome(String PlayerName, String HomeName) {
+    public static int getMaxHome(Player player) {
+        List<Integer> MaxHomePermList = new ArrayList<>();
+        for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
+            String perm = permInfo.getPermission();
+            if (perm.startsWith("mhdftools.home.")) {
+                MaxHomePermList.add(Integer.valueOf(perm.substring("mhdftools.home.".length())));
+            }
+        }
+        if (!MaxHomePermList.isEmpty()) {
+            MaxHomePermList.sort(Collections.reverseOrder());
+            return MaxHomePermList.get(0);
+        }
+        return MHDFTools.instance.getConfig().getInt("HomeSystemSettings.MaxHomeTime");
+    }
+
+    public static String getHomeServer(String PlayerName, String HomeName) {
+        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+            if (getHomeServerHashMap().get(PlayerName + "|" + HomeName) == null) {
+                try {
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Home WHERE Home = ? AND Owner = ? LIMIT 1");
+                    ps.setString(1, HomeName);
+                    ps.setString(2, PlayerName);
+                    ResultSet rs = ps.executeQuery();
+                    String Server = null;
+                    if (rs.next()) {
+                        Server = rs.getString("Server");
+                    }
+                    getHomeServerHashMap().put(PlayerName + "|" + HomeName, Server);
+                    rs.close();
+                    ps.close();
+                    connection.close();
+                    return Server;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                return (String) getHomeServerHashMap().get(PlayerName + "|" + HomeName);
+            }
+        }
+        return "无";
+    }
+
+    public static Location getHomeLocation(String PlayerName, String HomeName) {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
             if (getHomeLocationHashMap().get(PlayerName + "|" + HomeName) == null) {
                 try {
@@ -187,16 +236,18 @@ public final class HomeUtil {
                     HomeList.add(HomeName);
                     getHomeListHashMap().put(PlayerName, HomeList);
                     getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
+                    getHomeServerHashMap().put(PlayerName + "|" + HomeName, getHomeServerName());
                     Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("INSERT INTO MHDFTools_Home (Home, Owner, World, X, Y, Z, Yaw, Pitch) VALUES (?,?,?,?,?,?,?,?)");
+                    PreparedStatement ps = connection.prepareStatement("INSERT INTO MHDFTools_Home (Home, Owner, Server, World, X, Y, Z, Yaw, Pitch) VALUES (?,?,?,?,?,?,?,?,?)");
                     ps.setString(1, HomeName);
                     ps.setString(2, PlayerName);
-                    ps.setString(3, HomeLocation.getWorld().getName());
-                    ps.setDouble(4, HomeLocation.getX());
-                    ps.setDouble(5, HomeLocation.getY());
-                    ps.setDouble(6, HomeLocation.getZ());
-                    ps.setDouble(7, HomeLocation.getYaw());
-                    ps.setDouble(8, HomeLocation.getPitch());
+                    ps.setString(3, getHomeServerName());
+                    ps.setString(4, HomeLocation.getWorld().getName());
+                    ps.setDouble(5, HomeLocation.getX());
+                    ps.setDouble(6, HomeLocation.getY());
+                    ps.setDouble(7, HomeLocation.getZ());
+                    ps.setDouble(8, HomeLocation.getYaw());
+                    ps.setDouble(9, HomeLocation.getPitch());
                     ps.executeUpdate();
                     ps.close();
                     connection.close();
@@ -236,16 +287,18 @@ public final class HomeUtil {
                 Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
                     try {
                         getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
+                        getHomeServerHashMap().put(PlayerName + "|" + HomeName, getHomeServerName());
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("UPDATE MHDFTools_Home SET World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?");
-                        ps.setString(1, HomeLocation.getWorld().getName());
-                        ps.setDouble(2, HomeLocation.getX());
-                        ps.setDouble(3, HomeLocation.getY());
-                        ps.setDouble(4, HomeLocation.getZ());
-                        ps.setDouble(5, HomeLocation.getYaw());
-                        ps.setDouble(6, HomeLocation.getPitch());
-                        ps.setString(7, HomeName);
-                        ps.setString(8, PlayerName);
+                        PreparedStatement ps = connection.prepareStatement("UPDATE MHDFTools_Home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?");
+                        ps.setString(1, getHomeServerName());
+                        ps.setString(2, HomeLocation.getWorld().getName());
+                        ps.setDouble(3, HomeLocation.getX());
+                        ps.setDouble(4, HomeLocation.getY());
+                        ps.setDouble(5, HomeLocation.getZ());
+                        ps.setDouble(6, HomeLocation.getYaw());
+                        ps.setDouble(7, HomeLocation.getPitch());
+                        ps.setString(8, HomeName);
+                        ps.setString(9, PlayerName);
                         ps.executeUpdate();
                         ps.close();
                         connection.close();
@@ -285,6 +338,7 @@ public final class HomeUtil {
                     HomeList.remove(HomeName);
                     getHomeListHashMap().put(PlayerName, HomeList);
                     getHomeLocationHashMap().remove(PlayerName + "|" + HomeName);
+                    getHomeServerHashMap().remove(PlayerName + "|" + HomeName);
                     try {
                         Connection connection = dataSource.getConnection();
                         PreparedStatement ps = connection.prepareStatement("DELETE FROM MHDFTools_Home WHERE Home = ? AND Owner = ?");
@@ -323,20 +377,5 @@ public final class HomeUtil {
                 }
             }
         }
-    }
-
-    public static int getMaxHome(Player player) {
-        List<Integer> MaxHomePermList = new ArrayList<>();
-        for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
-            String perm = permInfo.getPermission();
-            if (perm.startsWith("mhdftools.home.")) {
-                MaxHomePermList.add(Integer.valueOf(perm.substring("mhdftools.home.".length())));
-            }
-        }
-        if (!MaxHomePermList.isEmpty()) {
-            MaxHomePermList.sort(Collections.reverseOrder());
-            return MaxHomePermList.get(0);
-        }
-        return MHDFTools.instance.getConfig().getInt("HomeSystemSettings.MaxHomeTime");
     }
 }

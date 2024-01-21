@@ -354,6 +354,14 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             Bukkit.getPluginManager().registerEvents(new JoinTeleportSpawn(), this);
         }
 
+        //跨服模式
+        {
+            if (getConfig().getBoolean("BungeecordSettings.Enable")) {
+                getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+                getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeCordHook());
+            }
+        }
+
         if (PAPI) {
             Bukkit.getPluginManager().registerEvents(this, this);
             new PlaceholderAPI().register();
@@ -375,6 +383,13 @@ public final class MHDFTools extends JavaPlugin implements Listener {
         //取消注册PAPI
         if (PAPI) {
             new PlaceholderAPI().unregister();
+        }
+
+        {
+            if (getConfig().getBoolean("BungeecordSettings.Enable")) {
+                getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
+                getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", new BungeeCordHook());
+            }
         }
 
         ColorLog("&f============&6梦回东方-工具&f============");
@@ -455,6 +470,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                         "`ID` BIGINT NOT NULL AUTO_INCREMENT," +
                         "`Home` VARCHAR(100) NOT NULL DEFAULT ''," +
                         "`Owner` VARCHAR(50) NOT NULL DEFAULT ''," +
+                        "`Server` VARCHAR(50) NOT NULL DEFAULT ''," +
                         "`World` VARCHAR(50) NOT NULL DEFAULT ''," +
                         "`X` DOUBLE NOT NULL DEFAULT 0," +
                         "`Y` DOUBLE NOT NULL DEFAULT 0," +

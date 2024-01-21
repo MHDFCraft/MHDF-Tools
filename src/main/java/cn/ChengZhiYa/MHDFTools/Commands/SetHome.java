@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.SetHome;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.*;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
 
@@ -25,7 +26,7 @@ public final class SetHome implements TabExecutor {
                         return false;
                     }
                     AddHome(player.getName(), HomeName, player.getLocation());
-                }else {
+                } else {
                     SetHome(player.getName(), HomeName, player.getLocation());
                 }
                 sender.sendMessage(i18n("Home.SetDone", label));

@@ -3,23 +3,21 @@ package cn.ChengZhiYa.MHDFTools.Commands;
 import cn.ChengZhiYa.MHDFTools.HashMap.IntHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.List;
 
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.*;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
 
-public final class Tpa implements CommandExecutor {
+public final class Tpa implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
@@ -29,7 +27,7 @@ public final class Tpa implements CommandExecutor {
                     sender.sendMessage(i18n("Tpa.SendMe"));
                     return false;
                 }
-                if (Bukkit.getPlayer(PlayerName) == null) {
+                if (!ifPlayerOnline(PlayerName)) {
                     sender.sendMessage(i18n("PlayerNotOnline"));
                     return false;
                 }
@@ -37,47 +35,24 @@ public final class Tpa implements CommandExecutor {
                     sender.sendMessage(i18n("Tpa.RepectSend"));
                     return false;
                 }
-                TextComponent Message = new TextComponent();
-                for (String Messages : i18n("Tpa.Message").split("\\?")) {
-                    if (Messages.equals("Accent")) {
-                        TextComponent MessageButton = new TextComponent(ChatColor(i18n("Tpa.AccentMessage")));
-                        MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa accent " + sender.getName()));
-                        MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&a接受" + sender.getName() + "的传送请求"))));
-                        Message.addExtra(MessageButton);
-                    } else {
-                        if (Messages.equals("Defuse")) {
-                            TextComponent MessageButton = new TextComponent(ChatColor(i18n("Tpa.DefuseMessage")));
-                            MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa defuse " + sender.getName()));
-                            MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&c拒绝" + sender.getName() + "的传送请求"))));
-                            Message.addExtra(MessageButton);
-                        } else {
-                            Message.addExtra(new TextComponent(ChatColor(Messages.replaceAll("%1", sender.getName()))));
-                        }
-                    }
-                }
-                Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).spigot().sendMessage(Message);
+                SendTpa(PlayerName, sender.getName());
                 sender.sendMessage(ChatColor(i18n("Tpa.SendDone")));
-                IntHasMap.getHasMap().put(sender.getName() + "_TPATime", MHDFTools.instance.getConfig().getInt("Tpa.OutTime"));
-                StringHasMap.getHasMap().put(sender.getName() + "_TPAPlayerName", Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).getName());
                 return false;
             }
             if (args.length == 2) {
                 if (args[0].equals("accent")) {
                     if (StringHasMap.getHasMap().get(args[1] + "_TPAPlayerName") != null && StringHasMap.getHasMap().get(args[1] + "_TPAPlayerName").equals(sender.getName())) {
                         if (IntHasMap.getHasMap().get(args[1] + "_TPATime") != null && IntHasMap.getHasMap().get(args[1] + "_TPATime") >= 0) {
-                            IntHasMap.getHasMap().remove(args[1] + "_TPATime");
-                            StringHasMap.getHasMap().remove(args[1] + "_TPAPlayerName");
-                            if (Bukkit.getPlayer(args[1]) == null) {
+                            CancelTpa(args[1]);
+                            if (!ifPlayerOnline(args[1])) {
                                 sender.sendMessage(i18n("Tpa.Offline", args[1]));
                                 return false;
                             }
-                            Objects.requireNonNull(Bukkit.getPlayer(args[1])).teleport(((Player) sender).getLocation());
-                            Objects.requireNonNull(Bukkit.getPlayer(args[1])).sendMessage(i18n("Tpa.TeleportDone", args[1]));
-                            sender.sendMessage(i18n("Tpa.AcceptDone", sender.getName()));
-
+                            TpPlayer(args[1], sender.getName(), false);
+                            SendMessage(args[1], i18n("Tpa.TeleportDone", sender.getName()));
+                            sender.sendMessage(i18n("Tpa.AcceptDone", args[1]));
                         } else {
-                            IntHasMap.getHasMap().remove(args[1] + "_TPATime");
-                            StringHasMap.getHasMap().remove(args[1] + "_TPAPlayerName");
+                            CancelTpa(args[1]);
                             sender.sendMessage(i18n("Tpa.NotSendTeleport"));
                         }
                     } else {
@@ -88,17 +63,15 @@ public final class Tpa implements CommandExecutor {
                 if (args[0].equals("defuse")) {
                     if (StringHasMap.getHasMap().get(args[1] + "_TPAPlayerName") != null && StringHasMap.getHasMap().get(args[1] + "_TPAPlayerName").equals(sender.getName())) {
                         if (IntHasMap.getHasMap().get(args[1] + "_TPATime") != null && IntHasMap.getHasMap().get(args[1] + "_TPATime") >= 0) {
-                            IntHasMap.getHasMap().remove(args[1] + "_TPATime");
-                            StringHasMap.getHasMap().remove(args[1] + "_TPAPlayerName");
-                            if (Bukkit.getPlayer(args[1]) == null) {
+                            CancelTpa(args[1]);
+                            if (!ifPlayerOnline(args[1])) {
                                 sender.sendMessage(i18n("Tpa.Offline", args[1]));
                                 return false;
                             }
-                            Objects.requireNonNull(Bukkit.getPlayer(args[1])).sendMessage(i18n("Tpa.Defuse", sender.getName()));
+                            SendMessage(args[1], i18n("Tpa.Defuse", sender.getName()));
                             sender.sendMessage(i18n("Tpa.DefuseDone", args[1]));
                         } else {
-                            IntHasMap.getHasMap().remove(args[1] + "_TPATime");
-                            StringHasMap.getHasMap().remove(args[1] + "_TPAPlayerName");
+                            CancelTpa(args[1]);
                             sender.sendMessage(i18n("Tpa.NotSendTeleport"));
                         }
                     } else {
@@ -112,5 +85,14 @@ public final class Tpa implements CommandExecutor {
             sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (args.length == 1 && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+            getPlayerList();
+            return Arrays.asList(PlayerList);
+        }
+        return null;
     }
 }

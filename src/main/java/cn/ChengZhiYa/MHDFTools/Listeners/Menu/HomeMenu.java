@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHome;
+import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeLocation;
 import static cn.ChengZhiYa.MHDFTools.Utils.MenuUtil.*;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
 
@@ -58,7 +58,7 @@ public final class HomeMenu implements Listener {
                     if (ClickAction[0].equals("[Home]")) {
                         String DisplayName = event.getCurrentItem().getItemMeta().getDisplayName();
                         String HomeName = getPlaceholder(DisplayName, getMenuItemLangHashMap().get(DisplayName), "{HomeName}");
-                        player.teleport(Objects.requireNonNull(getHome(player.getName(), HomeName)));
+                        player.teleport(Objects.requireNonNull(getHomeLocation(player.getName(), HomeName)));
                         continue;
                     }
                     ColorLog(i18n("Message.ActionNoExists"));

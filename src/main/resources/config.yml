@@ -20,6 +20,31 @@ DataSettings:
   #数据库
   Database: "MHDFTools"
 
+#跨服模式
+BungeecordSettings:
+  #开关
+  Enable: false
+  #如果数据中没有存储家对应的服务器从这里读取
+  HomeDefaultServer: "无"
+
+#Spawn系统设置
+SpawnSettings:
+  #开关
+  Enable: true
+  #进服传送至Spawn位置
+  JoinTeleport: false
+  #复活自动传送至Spawn位置
+  ReSpawnTeleport: false
+  #Spawn系统服务器 跨服模式下必须配置
+  Server: "无"
+  #位置信息配置
+  World: "world"
+  X: 0.0
+  Y: 3.0
+  Z: 0.0
+  Yaw: 90.0
+  Pitch: 0.0
+
 #玩家进入服务器发送欢迎消息
 PlayerJoinSendMessageSettings:
   #开关
@@ -214,20 +239,6 @@ ScoreboardSettings:
     - "&e&l欢迎%player_name%"
     - "&e&lqwq"
     - "&e&lawa"
-
-#Spawn系统设置
-SpawnSettings:
-  #开关
-  Enable: true
-  #进服传送至Spawn位置
-  JoinTeleport: false
-  #位置信息配置
-  World: "world"
-  X: 0.0
-  Y: 3.0
-  Z: 0.0
-  Yaw: 90.0
-  Pitch: 0.0
 
 #聊天功能设置
 ChatSettings:

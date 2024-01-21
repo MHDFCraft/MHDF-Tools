@@ -7,13 +7,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.SaveLocation;
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.ServerName;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
 
 public final class Back implements Listener {
     @EventHandler
     public void PlayerDeathEvent(PlayerDeathEvent event) {
         Player player = event.getEntity();
-        LocationHasMap.getHasMap().put(player.getName() + "_BackLocation", player.getLocation());
+        SaveLocation(player.getName() + "_DeathLocation", ServerName, player.getLocation());
     }
 
     @EventHandler

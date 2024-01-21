@@ -7,16 +7,16 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.TpPlayerTo;
 
-public final class JoinTeleportSpawn implements Listener {
+public final class ReSpawnTeleportSpawn implements Listener {
     @EventHandler
-    public void PlayerJoinEvent(PlayerJoinEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("SpawnSettings.Enable") && MHDFTools.instance.getConfig().getBoolean("SpawnSettings.JoinTeleport")) {
+    public void onEvent(PlayerRespawnEvent event) {
+        if (MHDFTools.instance.getConfig().getBoolean("SpawnSettings.Enable") && MHDFTools.instance.getConfig().getBoolean("SpawnSettings.ReSpawnTeleport")) {
             Player player = event.getPlayer();
             World world = Bukkit.getWorld(Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SpawnSettings.World")));
             double X = MHDFTools.instance.getConfig().getDouble("SpawnSettings.X");
