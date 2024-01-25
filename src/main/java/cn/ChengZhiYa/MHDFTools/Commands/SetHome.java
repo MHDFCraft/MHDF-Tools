@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.Commands;
 
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -18,6 +19,9 @@ public final class SetHome implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             if (args.length == 1) {
+                if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(((Player) sender).getLocation().getWorld().getName())) {
+                    return false;
+                }
                 Player player = (Player) sender;
                 String HomeName = args[0];
                 if (!ifHomeExists(player.getName(), HomeName)) {

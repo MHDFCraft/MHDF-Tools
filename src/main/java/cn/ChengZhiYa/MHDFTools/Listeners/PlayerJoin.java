@@ -23,8 +23,10 @@ import static cn.ChengZhiYa.MHDFTools.Utils.Util.getNMSVersion;
 public final class PlayerJoin implements Listener {
     @EventHandler
     public void On_Event(PlayerJoinEvent event) {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BCUtil::getPlayerList, 20);
-        Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BCUtil::getServerName, 20);
+        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BCUtil::getPlayerList, 20);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BCUtil::getServerName, 20);
+        }
         if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
             initializationPlayerData(event.getPlayer().getName());
         }

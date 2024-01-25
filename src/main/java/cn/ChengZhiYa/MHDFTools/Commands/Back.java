@@ -2,6 +2,7 @@ package cn.ChengZhiYa.MHDFTools.Commands;
 
 import cn.ChengZhiYa.MHDFTools.HashMap.LocationHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,6 +18,9 @@ public final class Back implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (LocationHasMap.getHasMap().get(player.getName() + "_DeathLocation") != null) {
+                if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(LocationHasMap.getHasMap().get(player.getName() + "_DeathLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
+                    return false;
+                }
                 SaveLocation(player.getName() + "_UnBackLocation", ServerName, player.getLocation());
                 TpPlayerTo(player.getName(),
                         StringHasMap.getHasMap().get(player.getName() + "_DeathLocation_Server"),

@@ -146,6 +146,9 @@ HomeSystemSettings:
   #一个玩家默认最多能创建多少个家
   #可以通过 MHDFTools.Home.<数量> 控制
   MaxHomeTime: 5
+  #关闭世界列表
+  DisableWorldList:
+    - "pvp"
 
 #公告系统设置
 TimeMessageSettings:
@@ -277,6 +280,22 @@ CommandLink:
       1_TabList:
         - "你不会用吗?"
 
+#Back系统设置
+BackSettings:
+  #开关
+  Enable: true
+  #关闭世界列表
+  DisableWorldList:
+    - "pvp"
+
+#TpBack系统设置
+TpBackSettings:
+  #开关
+  Enable: true
+  #关闭世界列表
+  DisableWorldList:
+    - "pvp"
+
 #反跳略系统
 AntiTiaoLue: true
 
@@ -288,12 +307,6 @@ FlyEnable: true
 
 #Vanish系统
 VanishEnable: true
-
-#Back系统
-BackEnable: true
-
-#TpBack系统
-TpBackEnable: true
 
 #Invsee系统
 InvseeEnable: true

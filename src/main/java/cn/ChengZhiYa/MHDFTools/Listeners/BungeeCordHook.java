@@ -141,7 +141,7 @@ public final class BungeeCordHook implements PluginMessageListener {
             }
             if (subchannel.equals("SetSpawn")) {
                 MHDFTools.instance.getConfig().set("SpawnSettings.Server", in.readUTF());
-                MHDFTools.instance.getConfig().set("SpawnSettings.world", in.readUTF());
+                MHDFTools.instance.getConfig().set("SpawnSettings.World", in.readUTF());
                 MHDFTools.instance.getConfig().set("SpawnSettings.X", in.readDouble());
                 MHDFTools.instance.getConfig().set("SpawnSettings.Y", in.readDouble());
                 MHDFTools.instance.getConfig().set("SpawnSettings.Z", in.readDouble());

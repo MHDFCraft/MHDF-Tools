@@ -314,7 +314,7 @@ public final class BCUtil {
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {
             MHDFTools.instance.getConfig().set("SpawnSettings.Server", ServerName);
-            MHDFTools.instance.getConfig().set("SpawnSettings.world", Location.getWorld().getName());
+            MHDFTools.instance.getConfig().set("SpawnSettings.World", Location.getWorld().getName());
             MHDFTools.instance.getConfig().set("SpawnSettings.X", Location.getX());
             MHDFTools.instance.getConfig().set("SpawnSettings.Y", Location.getY());
             MHDFTools.instance.getConfig().set("SpawnSettings.Z", Location.getZ());
@@ -330,7 +330,7 @@ public final class BCUtil {
             getPlayerList();
             return Arrays.asList(PlayerList).contains(PlayerName);
         } else {
-            return Bukkit.getPlayer(PlayerName) == null;
+            return Bukkit.getPlayer(PlayerName) != null;
         }
     }
 }

@@ -48,7 +48,7 @@ import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
 import static cn.ChengZhiYa.MHDFTools.Utils.YamlFileUtil.SaveResource;
 
 public final class MHDFTools extends JavaPlugin implements Listener {
-    public static final String Version = "1.3.0";
+    public static final String Version = "1.3.1";
     public static MHDFTools instance;
     public static boolean PAPI = true;
     public static boolean PLIB = true;
@@ -242,6 +242,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("SpawnSettings.Enable")) {
                 registerCommand(this, new Spawn(), "Spawn命令", "spawn");
                 registerCommand(this, new SetSpawn(), "SetSpawn命令", "setspawn");
+                Bukkit.getPluginManager().registerEvents(new ReSpawnTeleportSpawn(), this);
             }
             if (getConfig().getBoolean("SuperStopSettings.Enable")) {
                 registerCommand(this, new Stop(), "关闭服务器", "stop");
@@ -253,15 +254,15 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 registerCommand(this, new Fly(), "飞行系统", "fly");
                 Bukkit.getPluginManager().registerEvents(new AutoFly(), this);
             }
-            if (getConfig().getBoolean("BackEnable")) {
+            if (getConfig().getBoolean("BackSettings.Enable")) {
                 registerCommand(this, new Back(), "Back系统", "back");
                 Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.Listeners.Back(), this);
             }
-            if (getConfig().getBoolean("TpBackEnable")) {
+            if (getConfig().getBoolean("TpBackSettings.Enable")) {
                 registerCommand(this, new TpBack(), "TpBack系统", "tpback");
                 Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.Listeners.TpBack(), this);
             }
-            if (getConfig().getBoolean("TpBackEnable") || getConfig().getBoolean("BackEnable")) {
+            if (getConfig().getBoolean("TpBackSettings.Enable") || getConfig().getBoolean("BackSettings.Enable")) {
                 registerCommand(this, new UnBack(), "Back系统", "unback");
             }
             if (getConfig().getBoolean("VanishEnable")) {
