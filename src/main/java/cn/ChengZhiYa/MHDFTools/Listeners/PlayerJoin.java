@@ -17,8 +17,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.EconomyUtil.initializationPlayerData;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.getNMSVersion;
+import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
 
 public final class PlayerJoin implements Listener {
     @EventHandler
@@ -69,12 +68,9 @@ public final class PlayerJoin implements Listener {
             ScoreboardHasMap.getHasMap().put(player.getName() + "_Scoreboard", Bukkit.getScoreboardManager().getNewScoreboard());
         }
         if (MHDFTools.instance.getConfig().getBoolean("WhiteList.Enable")) {
-            for (String WhiteList : MHDFTools.instance.getConfig().getStringList("WhiteList.List")) {
-                if (event.getPlayer().getName().equals(WhiteList)) {
-                    break;
-                }
+            if (!MHDFTools.instance.getConfig().getStringList("WhiteList.List").contains(event.getPlayer().getName())) {
+                event.getPlayer().kickPlayer(ChatColor(MHDFTools.instance.getConfig().getString("WhiteList.KickMessage")));
             }
-            event.getPlayer().kickPlayer(MHDFTools.instance.getConfig().getString("WhiteList.KickMessage"));
         }
         if (MHDFTools.instance.getConfig().getBoolean("PlayerJoinSendMessageSettings.Enable")) {
             event.getPlayer().sendMessage(ChatColor(MHDFTools.instance.getConfig().getString("PlayerJoinSendMessageSettings.Message"))

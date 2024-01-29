@@ -25,11 +25,7 @@ public final class JoinTeleportSpawn implements Listener {
             float Yaw = (float) MHDFTools.instance.getConfig().getDouble("SpawnSettings.Yaw");
             float Pitch = (float) MHDFTools.instance.getConfig().getDouble("SpawnSettings.Pitch");
             Location SpawnLcation = new Location(world, X, Y, Z, Yaw, Pitch);
-            if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
-                TpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString("SpawnSettings.Server"), SpawnLcation);
-            } else {
-                player.teleport(SpawnLcation);
-            }
+            Bukkit.getScheduler().runTaskLater(MHDFTools.instance,() -> TpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString("SpawnSettings.Server"), SpawnLcation),5);
         }
     }
 }
