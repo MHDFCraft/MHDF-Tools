@@ -25,7 +25,7 @@ public final class ReSpawnTeleportSpawn implements Listener {
             float Yaw = (float) MHDFTools.instance.getConfig().getDouble("SpawnSettings.Yaw");
             float Pitch = (float) MHDFTools.instance.getConfig().getDouble("SpawnSettings.Pitch");
             Location SpawnLcation = new Location(world, X, Y, Z, Yaw, Pitch);
-            Bukkit.getScheduler().runTaskLater(MHDFTools.instance,() -> TpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString("SpawnSettings.Server"), SpawnLcation),5);
+            Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> TpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString("SpawnSettings.Server"), SpawnLcation), 5);
         }
     }
 }

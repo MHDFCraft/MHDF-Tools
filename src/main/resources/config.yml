@@ -106,14 +106,6 @@ Tpahere:
   #超时时间
   OutTime: 60
 
-#原版op白名单系统设置
-VanillaOpWhitelist:
-  #开关
-  Enable: false
-  #白名单列表
-  Whitelist:
-    - "ChengZhiYa"
-
 #经济系统设置
 EconomySettings:
   #开关
@@ -243,25 +235,6 @@ ScoreboardSettings:
     - "&e&lqwq"
     - "&e&lawa"
 
-#聊天功能设置
-ChatSettings:
-  #防止重复聊天
-  AntiRepeatChat: true
-  #聊天间隔限制开关
-  ChatDelayEnable: false
-  #聊天间隔限制
-  ChatDelay: 3
-  #聊天自定义格式开关
-  ChatFormatEnable: true
-  #聊天自定义格式
-  ChatFormat: "&a%Player% &7>&f"
-  #聊天屏蔽词开关
-  ChatBlackWorkEnable: true
-  #聊天屏蔽词
-  ChatBlackWork:
-    - "SB"
-    - "傻逼"
-
 #命令映射
 CommandLink:
   #开关
@@ -325,3 +298,6 @@ FastSetTimeCommandEnable: true
 
 #查询玩家IP与IP归属地命令
 IpCommandEnable: true
+
+#菜单系统开关
+MenuEnable: true

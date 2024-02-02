@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.Commands;
 
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -8,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.TpPlayerHome;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeLocation;
@@ -20,9 +22,11 @@ public final class Home implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             if (args.length == 0) {
-                Player player = (Player) sender;
-                OpenHomeMenu(player, 1);
-                return false;
+                if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                    Player player = (Player) sender;
+                    OpenHomeMenu(player, 1);
+                    return false;
+                }
             }
             if (args.length == 1) {
                 Player player = (Player) sender;

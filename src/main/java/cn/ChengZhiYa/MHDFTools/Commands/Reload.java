@@ -2,10 +2,8 @@ package cn.ChengZhiYa.MHDFTools.Commands;
 
 import cn.ChengZhiYa.MHDFTools.HashMap.IntHasMap;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
-import cn.ChengZhiYa.MHDFTools.Tasks.ChatDelay;
 import cn.ChengZhiYa.MHDFTools.Tasks.Scoreboard;
 import cn.ChengZhiYa.MHDFTools.Tasks.TimeMessage;
-import cn.ChengZhiYa.MHDFTools.Tasks.VanillaOpWhitelist;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -39,11 +37,6 @@ public final class Reload implements CommandExecutor {
                 Bukkit.getScheduler().cancelTask(IntHasMap.getHasMap().get("OpWhiteListTaskID"));
                 IntHasMap.getHasMap().put("OpWhiteListTaskID", null);
             }
-
-            if (MHDFTools.instance.getConfig().getBoolean("ChatSettings.ChatDelayEnable")) {
-                BukkitTask ChatDelayTime = new ChatDelay().runTaskTimer(MHDFTools.instance, 0L, 20);
-                IntHasMap.getHasMap().put("ChatDelayTaskId", ChatDelayTime.getTaskId());
-            }
             if (MHDFTools.instance.getConfig().getBoolean("TimeMessageSettings.Enable")) {
                 BukkitTask TimeMessage = new TimeMessage().runTaskTimer(MHDFTools.instance, 0L, MHDFTools.instance.getConfig().getInt("TimeMessageSettings.Delay") * 20L);
                 IntHasMap.getHasMap().put("TimeMessageTaskId", TimeMessage.getTaskId());
@@ -51,10 +44,6 @@ public final class Reload implements CommandExecutor {
             if (MHDFTools.instance.getConfig().getBoolean("ScoreboardSettings.Enable")) {
                 BukkitTask Scoreboard = new Scoreboard().runTaskTimer(MHDFTools.instance, 0L, 20L);
                 IntHasMap.getHasMap().put("ScoreboardTaskID", Scoreboard.getTaskId());
-            }
-            if (MHDFTools.instance.getConfig().getBoolean("VanillaOpWhitelist.Enable")) {
-                BukkitTask WhiteListTask = new VanillaOpWhitelist().runTaskTimer(MHDFTools.instance, 0L, 20L);
-                IntHasMap.getHasMap().put("OpWhiteListTaskID", WhiteListTask.getTaskId());
             }
             MHDFTools.instance.reloadConfig();
             File LangData = new File(MHDFTools.instance.getDataFolder() + "/lang.yml");

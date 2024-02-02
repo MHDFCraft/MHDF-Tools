@@ -17,7 +17,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.EconomyUtil.initializationPlayerData;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
+import static cn.ChengZhiYa.MHDFTools.Utils.Util.getNMSVersion;
 
 public final class PlayerJoin implements Listener {
     @EventHandler

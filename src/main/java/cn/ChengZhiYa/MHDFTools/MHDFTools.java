@@ -9,7 +9,10 @@ import cn.ChengZhiYa.MHDFTools.Hook.EconomyImplementer;
 import cn.ChengZhiYa.MHDFTools.Hook.Metrics;
 import cn.ChengZhiYa.MHDFTools.Hook.PlaceholderAPI;
 import cn.ChengZhiYa.MHDFTools.Listeners.*;
+import cn.ChengZhiYa.MHDFTools.Listeners.Menu.ClickCustomMenu;
 import cn.ChengZhiYa.MHDFTools.Listeners.Menu.HomeMenu;
+import cn.ChengZhiYa.MHDFTools.Listeners.Menu.MenuArgsCommand;
+import cn.ChengZhiYa.MHDFTools.Listeners.Menu.OpenMenu;
 import cn.ChengZhiYa.MHDFTools.Tasks.*;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.zaxxer.hikari.HikariConfig;
@@ -64,7 +67,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
     @Override
     public void onLoad() {
         instance = this;
-        descriptionFile = this.getDescription();
+        descriptionFile = getDescription();
 
         ParserConfig.getGlobalInstance().setSafeMode(true);
     }
@@ -172,25 +175,32 @@ public final class MHDFTools extends JavaPlugin implements Listener {
 
         //初始化必要数据
         {
-            File PluginHome = new File(String.valueOf(this.getDataFolder()));
-            if (!PluginHome.exists()) {
-                PluginHome.mkdirs();
+            if (!getDataFolder().exists()) {
+                getDataFolder().mkdirs();
             }
 
-            File Config_File = new File(this.getDataFolder(), "config.yml");
+            File Config_File = new File(getDataFolder(), "config.yml");
             if (!Config_File.exists()) {
-                SaveResource(this.getDataFolder().getPath(), "config.yml", "config.yml", true);
+                SaveResource(getDataFolder().getPath(), "config.yml", "config.yml", true);
             }
 
-            File Lang_File = new File(this.getDataFolder(), "lang.yml");
+            File Lang_File = new File(getDataFolder(), "lang.yml");
             if (!Lang_File.exists()) {
-                SaveResource(this.getDataFolder().getPath(), "lang.yml", "lang.yml", true);
+                SaveResource(getDataFolder().getPath(), "lang.yml", "lang.yml", true);
             }
             LangFileData = YamlConfiguration.loadConfiguration(Lang_File);
 
-            File HomeMenuFile = new File(getDataFolder(), "HomeMenu.yml");
+            File MenuHome = new File(getDataFolder(), "Menus");
+            if (!MenuHome.exists()) {
+                MenuHome.mkdirs();
+                if (getConfig().getBoolean("MenuEnable")) {
+                    SaveResource(getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", true);
+                }
+            }
+
+            File HomeMenuFile = new File(getDataFolder(), "Menus/HomeMenu.yml");
             if (!HomeMenuFile.exists()) {
-                SaveResource(this.getDataFolder().getPath(), "HomeMenu.yml", "HomeMenu.yml", true);
+                SaveResource(getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", true);
             }
 
             if (Objects.equals(getConfig().getString("DataSettings.Type"), "MySQL")) {
@@ -215,14 +225,6 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("TimeMessageSettings.Enable")) {
                 BukkitTask TimeMessage = new TimeMessage().runTaskTimerAsynchronously(this, 0L, getConfig().getInt("TimeMessageSettings.Delay") * 20L);
                 IntHasMap.getHasMap().put("TimeMessageTaskId", TimeMessage.getTaskId());
-            }
-            if (getConfig().getBoolean("VanillaOpWhitelist.Enable")) {
-                BukkitTask WhiteListTask = new VanillaOpWhitelist().runTaskTimerAsynchronously(this, 0L, 20L);
-                IntHasMap.getHasMap().put("OpWhiteListTaskID", WhiteListTask.getTaskId());
-            }
-            if (getConfig().getBoolean("ChatSettings.ChatDelayEnable")) {
-                BukkitTask ChatDelayTime = new ChatDelay().runTaskTimerAsynchronously(this, 0L, 20);
-                IntHasMap.getHasMap().put("ChatDelayTaskId", ChatDelayTime.getTaskId());
             }
             if (getConfig().getBoolean("SuperListSettings.Enable")) {
                 registerCommand(this, new List(), "高级list命令", "superlist");
@@ -302,6 +304,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             }
             if (getConfig().getBoolean("CommandLink.Enable")) {
                 for (String Command : Objects.requireNonNull(getConfig().getConfigurationSection("CommandLink.CommandList")).getKeys(false)) {
+                    CommandLinkList.add(Command);
                     registerCommand(this, new TabExecutor() {
                         @Override
                         public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
@@ -328,6 +331,11 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     }, Command, Command);
                 }
             }
+            if (getConfig().getBoolean("MenuEnable")) {
+                Bukkit.getPluginManager().registerEvents(new OpenMenu(), this);
+                Bukkit.getPluginManager().registerEvents(new ClickCustomMenu(), this);
+                Bukkit.getPluginManager().registerEvents(new MenuArgsCommand(), this);
+            }
 
             if (PLIB) {
                 if (getConfig().getBoolean("CrashPlayerEnable")) {
@@ -349,7 +357,6 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             registerCommand(this, new Reload(), "重载插件", "chengtoolsreload");
             registerCommand(this, new Reload(), "重载插件", "ctreload");
             registerCommand(this, new Reload(), "重载插件", "ctr");
-            Bukkit.getPluginManager().registerEvents(new Chat(), this);
             Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
             Bukkit.getPluginManager().registerEvents(new CustomJoinQuitMessage(), this);
             Bukkit.getPluginManager().registerEvents(new JoinTeleportSpawn(), this);
@@ -386,6 +393,17 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             new PlaceholderAPI().unregister();
         }
 
+        try {
+            if (statement != null && !statement.isClosed()) {
+                statement.close();
+            }
+            if (dataSource != null && !dataSource.isClosed()) {
+                dataSource.close();
+            }
+        } catch (SQLException ignored) {
+        }
+
+        //取消注册BC Hook
         {
             if (getConfig().getBoolean("BungeecordSettings.Enable")) {
                 getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
@@ -414,15 +432,15 @@ public final class MHDFTools extends JavaPlugin implements Listener {
     }
 
     public void initializationYamlData() {
-        File Login_File = new File(this.getDataFolder(), "LoginData.yml");
+        File Login_File = new File(getDataFolder(), "LoginData.yml");
         if (getConfig().getBoolean("HomeSystemSettings.Enable")) {
-            File HomeFile = new File(this.getDataFolder() + "/HomeData");
+            File HomeFile = new File(getDataFolder() + "/HomeData");
             if (!HomeFile.exists()) {
                 HomeFile.mkdirs();
             }
         }
         if (getConfig().getBoolean("EconomySettings.Enable")) {
-            File VaultData = new File(this.getDataFolder() + "/VaultData");
+            File VaultData = new File(getDataFolder() + "/VaultData");
             if (!VaultData.exists()) {
                 VaultData.mkdirs();
             }

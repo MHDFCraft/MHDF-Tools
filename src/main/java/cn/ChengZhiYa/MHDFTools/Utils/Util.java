@@ -36,6 +36,8 @@ public final class Util {
     public static final Field pluginClassLoaderPlugin;
     public static YamlConfiguration LangFileData;
 
+    public static List<String> CommandLinkList = new ArrayList<>();
+
     static {
         try {
             pluginClassLoader = Class.forName("org.bukkit.plugin.java.PluginClassLoader");
