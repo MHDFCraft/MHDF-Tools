@@ -283,6 +283,9 @@ public final class MenuUtil {
     }
 
     public static List<String> AllowClickAction(Player player, YamlConfiguration Menu, String Item) {
+        if (Menu.getConfigurationSection("Menu.ItemList." + Item + ".ClickRequirements") == null) {
+            return new ArrayList<>();
+        }
         List<String> DenyActionList = new ArrayList<>();
         boolean Allow = true;
         for (String Requirements : Objects.requireNonNull(Menu.getConfigurationSection("Menu.ItemList." + Item + ".ClickRequirements")).getKeys(false)) {
