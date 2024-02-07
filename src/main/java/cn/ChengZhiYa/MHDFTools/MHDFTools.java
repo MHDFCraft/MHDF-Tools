@@ -269,12 +269,12 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("TpBackSettings.Enable") || getConfig().getBoolean("BackSettings.Enable")) {
                 registerCommand(this, new UnBack(), "Back系统", "unback");
             }
-            if (getConfig().getBoolean("InvseeSettings.Enable")) {
+            if (getConfig().getBoolean("VanishSettings.Enable")) {
                 registerCommand(this, new Vanish(), "Vanish系统", "vanish");
                 registerCommand(this, new Vanish(), "Vanish系统", "v");
                 Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.Listeners.Vanish(), this);
                 new cn.ChengZhiYa.MHDFTools.Tasks.Vanish().runTaskTimerAsynchronously(this, 0L, 20L);
-                if (getConfig().getBoolean("InvseeSettings.SaveVanishData")) {
+                if (getConfig().getBoolean("VanishSettings.SaveVanishData")) {
                     File VanishCacheFile = new File(getDataFolder(), "Cache/VanishCache.yml");
                     if (!VanishCacheFile.exists()) {
                         try {

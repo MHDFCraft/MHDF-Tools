@@ -12,6 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
@@ -41,11 +42,11 @@ public final class Vanish implements CommandExecutor {
                     }
                     PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);
                     player.addPotionEffect(INVISIBILITY);
+                    player.showBossBar(getVanishBossBar());
                     player.sendMessage(i18n("Vanish.Done", i18n("Vanish.Enable")));
                     if (!player.getName().equals(sender.getName())) {
                         sender.sendMessage(i18n("Vanish.SetDone", player.getName(), i18n("Vanish.Enable")));
                     }
-                    player.showBossBar(getVanishBossBar());
                     VanishList.add(player.getName());
                 } else {
                     for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -56,16 +57,19 @@ public final class Vanish implements CommandExecutor {
                         }
                     }
                     player.removePotionEffect(PotionEffectType.INVISIBILITY);
+                    player.hideBossBar(getVanishBossBar());
                     player.sendMessage(i18n("Vanish.Done", i18n("Vanish.Disabled")));
                     if (!player.getName().equals(sender.getName())) {
                         sender.sendMessage(i18n("Vanish.SetDone", player.getName(), i18n("Vanish.Disabled")));
                     }
-                    player.hideBossBar(getVanishBossBar());
                     VanishList.remove(player.getName());
                 }
                 File VanishCacheFile = new File(MHDFTools.instance.getDataFolder(), "Cache/VanishCache.yml");
                 YamlConfiguration VanishCache = YamlConfiguration.loadConfiguration(VanishCacheFile);
                 VanishCache.set("VanishList", VanishList);
+                try {
+                    VanishCache.save(VanishCacheFile);
+                } catch (IOException ignored) {}
             } else {
                 sender.sendMessage(i18n("NoPermission"));
             }
