@@ -5,6 +5,8 @@ import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -35,6 +37,8 @@ public final class Util {
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static YamlConfiguration LangFileData;
+    public static List<String> VanishList = new ArrayList<>();
+    public static BossBar VanishBossBar;
 
     public static List<String> CommandLinkList = new ArrayList<>();
 
@@ -131,14 +135,6 @@ public final class Util {
             return Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
-        }
-    }
-
-    public static void OpSendMessage(String Message) {
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player.isOp()) {
-                player.sendMessage(ChatColor(Message));
-            }
         }
     }
 
@@ -346,5 +342,12 @@ public final class Util {
         }
         return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings.Default.QuitMessage"))
                 .replaceAll("%PlayerName%", player.getName());
+    }
+
+    public static BossBar getVanishBossBar() {
+        if (VanishBossBar == null) {
+            VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
+        }
+        return VanishBossBar;
     }
 }

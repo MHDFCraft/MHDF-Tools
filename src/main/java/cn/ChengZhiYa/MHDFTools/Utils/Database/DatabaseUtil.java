@@ -48,7 +48,7 @@ public final class DatabaseUtil {
         }
     }
 
-    public static void SetData(String Table, String WhereField, String WhereValue, String SetField, Object SetValue) {
+    public static void Set(String Table, String WhereField, String WhereValue, String SetField, Object SetValue) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
             if (DataExists(Table, WhereField, WhereValue)) {
                 try {

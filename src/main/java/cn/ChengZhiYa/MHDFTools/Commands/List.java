@@ -18,14 +18,10 @@ public final class List implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         for (String Message : MHDFTools.instance.getConfig().getStringList("SuperListSettings.Message")) {
-            java.util.List<String> PlayerList = new ArrayList<>();
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                PlayerList.add(player.getName());
-            }
             Message = Message.replaceAll("%mem_used%", String.valueOf((runtime.totalMemory() - runtime.freeMemory()) / 1048576L)).
                     replaceAll("%mem_max%", String.valueOf(runtime.maxMemory() / 1048576L)).
-                    replaceAll("%PlayerList%", String.valueOf(PlayerList)).
-                    replaceAll("%Online%", String.valueOf(Bukkit.getOnlinePlayers().size())).
+                    replaceAll("%PlayerList%", String.valueOf(getOnlineList())).
+                    replaceAll("%Online%", String.valueOf(getOnlineList().size())).
                     replaceAll("%Max_Online%", String.valueOf(Bukkit.getMaxPlayers()));
             if (ifSupportGetTps()) {
                 Message = Message.replaceAll("%TPS_1%", getTps(1)).
@@ -35,5 +31,14 @@ public final class List implements CommandExecutor {
             sender.sendMessage(ChatColor(null, Message));
         }
         return false;
+    }
+
+    public java.util.List<String> getOnlineList() {
+        java.util.List<String> PlayerList = new ArrayList<>();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            PlayerList.add(player.getName());
+        }
+        PlayerList.removeAll(VanishList);
+        return PlayerList;
     }
 }

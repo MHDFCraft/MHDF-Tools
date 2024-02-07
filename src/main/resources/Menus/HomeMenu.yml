@@ -38,7 +38,7 @@ Menu:
       #[close] #关闭菜单
       #============================================
       #点击条件
-      ClickRequirements: {}
+      ClickRequirements: { }
       #点击操作
       ClickAction: [ ]
     PageUp:

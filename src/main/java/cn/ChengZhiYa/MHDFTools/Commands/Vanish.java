@@ -1,20 +1,20 @@
 package cn.ChengZhiYa.MHDFTools.Commands;
 
-import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.getNMSVersion;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
 
 public final class Vanish implements CommandExecutor {
     @Override
@@ -22,7 +22,16 @@ public final class Vanish implements CommandExecutor {
         if (sender instanceof Player) {
             if (sender.hasPermission("MHDFTools.Command.Vanish")) {
                 Player player = (Player) sender;
-                if (StringHasMap.getHasMap().get(player.getName() + "_Vanish") == null) {
+                if (args.length == 1) {
+                    if (sender.hasPermission("MHDFTools.Vanish.Give")) {
+                        if (Bukkit.getPlayer(args[0]) == null) {
+                            sender.sendMessage(i18n("PlayerNotOnline"));
+                            return false;
+                        }
+                        player = Bukkit.getPlayer(args[0]);
+                    }
+                }
+                if (!VanishList.contains(Objects.requireNonNull(player).getName())) {
                     for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
                         if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
                             OnlinePlayer.hidePlayer(player);
@@ -33,7 +42,11 @@ public final class Vanish implements CommandExecutor {
                     PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);
                     player.addPotionEffect(INVISIBILITY);
                     player.sendMessage(i18n("Vanish.Done", i18n("Vanish.Enable")));
-                    StringHasMap.getHasMap().put(player.getName() + "_Vanish", "已启用");
+                    if (!player.getName().equals(sender.getName())) {
+                        sender.sendMessage(i18n("Vanish.SetDone", player.getName(), i18n("Vanish.Enable")));
+                    }
+                    player.showBossBar(getVanishBossBar());
+                    VanishList.add(player.getName());
                 } else {
                     for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
                         if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
@@ -44,53 +57,17 @@ public final class Vanish implements CommandExecutor {
                     }
                     player.removePotionEffect(PotionEffectType.INVISIBILITY);
                     player.sendMessage(i18n("Vanish.Done", i18n("Vanish.Disabled")));
-                    StringHasMap.getHasMap().put(player.getName() + "_Vanish", null);
+                    if (!player.getName().equals(sender.getName())) {
+                        sender.sendMessage(i18n("Vanish.SetDone", player.getName(), i18n("Vanish.Disabled")));
+                    }
+                    player.hideBossBar(getVanishBossBar());
+                    VanishList.remove(player.getName());
                 }
+                File VanishCacheFile = new File(MHDFTools.instance.getDataFolder(), "Cache/VanishCache.yml");
+                YamlConfiguration VanishCache = YamlConfiguration.loadConfiguration(VanishCacheFile);
+                VanishCache.set("VanishList", VanishList);
             } else {
                 sender.sendMessage(i18n("NoPermission"));
-            }
-        }
-        if (args.length == 1) {
-            if (sender.hasPermission("MHDFTools.Vanish.Give")) {
-                String PlayerName = args[0];
-                if (Bukkit.getPlayer(PlayerName) == null) {
-                    sender.sendMessage(i18n("PlayerNotOnline"));
-                    return false;
-                }
-                Player player = Bukkit.getPlayer(PlayerName);
-                assert player != null;
-                if (StringHasMap.getHasMap().get(player.getName() + "_Vanish") == null) {
-                    for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                        if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
-                            OnlinePlayer.hidePlayer(player);
-                        } else {
-                            OnlinePlayer.hidePlayer(MHDFTools.instance, player);
-                        }
-                    }
-                    PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);
-                    player.addPotionEffect(INVISIBILITY);
-                    player.sendMessage(i18n("Vanish.Done", i18n("Vanish.Enable")));
-                    sender.sendMessage(i18n("Vanish.SetDone", player.getName(), i18n("Vanish.Enable")));
-                    StringHasMap.getHasMap().put(player.getName() + "_Vanish", "已启用");
-                } else {
-                    for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                        if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
-                            OnlinePlayer.showPlayer(player);
-                        } else {
-                            OnlinePlayer.showPlayer(MHDFTools.instance, player);
-                        }
-                    }
-                    player.removePotionEffect(PotionEffectType.INVISIBILITY);
-                    player.sendMessage(i18n("Vanish.Done", i18n("Vanish.Disabled")));
-                    sender.sendMessage(i18n("Vanish.SetDone", player.getName(), i18n("Vanish.Disabled")));
-                    StringHasMap.getHasMap().put(player.getName() + "_Vanish", null);
-                }
-            } else {
-                sender.sendMessage(i18n("NoPermission"));
-            }
-        } else {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(i18n("Usage.Vanish"));
             }
         }
         return false;

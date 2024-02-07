@@ -27,6 +27,13 @@ BungeecordSettings:
   #如果数据中没有存储家对应的服务器从这里读取
   HomeDefaultServer: "无"
 
+#隐身系统设置
+InvseeSettings:
+  #开关
+  Enable: true
+  #保存隐身数据
+  SaveVanishData: true
+
 #Spawn系统设置
 SpawnSettings:
   #开关
@@ -280,9 +287,6 @@ FlyEnable: true
 
 #Vanish系统
 VanishEnable: true
-
-#Invsee系统
-InvseeEnable: true
 
 #帽子系统
 HatEnable: true

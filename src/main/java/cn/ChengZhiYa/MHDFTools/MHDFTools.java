@@ -2,9 +2,9 @@ package cn.ChengZhiYa.MHDFTools;
 
 import cn.ChengZhiYa.MHDFTools.Commands.Back;
 import cn.ChengZhiYa.MHDFTools.Commands.TpBack;
+import cn.ChengZhiYa.MHDFTools.Commands.Vanish;
 import cn.ChengZhiYa.MHDFTools.Commands.*;
 import cn.ChengZhiYa.MHDFTools.HashMap.BooleanHasMap;
-import cn.ChengZhiYa.MHDFTools.HashMap.IntHasMap;
 import cn.ChengZhiYa.MHDFTools.Hook.EconomyImplementer;
 import cn.ChengZhiYa.MHDFTools.Hook.Metrics;
 import cn.ChengZhiYa.MHDFTools.Hook.PlaceholderAPI;
@@ -33,7 +33,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,7 +50,7 @@ import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
 import static cn.ChengZhiYa.MHDFTools.Utils.YamlFileUtil.SaveResource;
 
 public final class MHDFTools extends JavaPlugin implements Listener {
-    public static final String Version = "1.3.1";
+    public static final String Version = "1.3.3";
     public static MHDFTools instance;
     public static boolean PAPI = true;
     public static boolean PLIB = true;
@@ -203,6 +202,11 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 SaveResource(getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", true);
             }
 
+            File CacheHome = new File(getDataFolder(), "Cache");
+            if (!CacheHome.exists()) {
+                CacheHome.mkdirs();
+            }
+
             if (Objects.equals(getConfig().getString("DataSettings.Type"), "MySQL")) {
                 initializationDatabaseData();
             } else {
@@ -213,8 +217,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
         //初始化功能
         {
             if (getConfig().getBoolean("ScoreboardSettings.Enable")) {
-                BukkitTask Scoreboard = new Scoreboard().runTaskTimerAsynchronously(this, 0L, 20L);
-                IntHasMap.getHasMap().put("ScoreboardTaskID", Scoreboard.getTaskId());
+                new Scoreboard().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("HomeSystemSettings.Enable")) {
                 registerCommand(this, new SetHome(), "设置家", "sethome");
@@ -223,8 +226,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 Bukkit.getPluginManager().registerEvents(new HomeMenu(), this);
             }
             if (getConfig().getBoolean("TimeMessageSettings.Enable")) {
-                BukkitTask TimeMessage = new TimeMessage().runTaskTimerAsynchronously(this, 0L, getConfig().getInt("TimeMessageSettings.Delay") * 20L);
-                IntHasMap.getHasMap().put("TimeMessageTaskId", TimeMessage.getTaskId());
+                new TimeMessage().runTaskTimerAsynchronously(this, 0L, getConfig().getInt("TimeMessageSettings.Delay") * 20L);
             }
             if (getConfig().getBoolean("SuperListSettings.Enable")) {
                 registerCommand(this, new List(), "高级list命令", "superlist");
@@ -267,9 +269,25 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("TpBackSettings.Enable") || getConfig().getBoolean("BackSettings.Enable")) {
                 registerCommand(this, new UnBack(), "Back系统", "unback");
             }
-            if (getConfig().getBoolean("VanishEnable")) {
+            if (getConfig().getBoolean("InvseeSettings.Enable")) {
                 registerCommand(this, new Vanish(), "Vanish系统", "vanish");
                 registerCommand(this, new Vanish(), "Vanish系统", "v");
+                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.Listeners.Vanish(), this);
+                new cn.ChengZhiYa.MHDFTools.Tasks.Vanish().runTaskTimerAsynchronously(this, 0L, 20L);
+                if (getConfig().getBoolean("InvseeSettings.SaveVanishData")) {
+                    File VanishCacheFile = new File(getDataFolder(), "Cache/VanishCache.yml");
+                    if (!VanishCacheFile.exists()) {
+                        try {
+                            VanishCacheFile.createNewFile();
+                        } catch (IOException ignored) {
+                        }
+                    } else {
+                        YamlConfiguration VanishCache = YamlConfiguration.loadConfiguration(VanishCacheFile);
+                        if (VanishCache.get("VanishList") != null) {
+                            VanishList = VanishCache.getStringList("VanishList");
+                        }
+                    }
+                }
             }
             if (getConfig().getBoolean("IpCommandEnable")) {
                 registerCommand(this, new Ip(), "查询玩家IP与IP归属地命令", "ip");

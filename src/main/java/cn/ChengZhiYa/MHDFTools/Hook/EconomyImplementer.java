@@ -58,7 +58,7 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public double getBalance(String playerName) {
-        if (playerFileExists(playerName)) {
+        if (ifPlayerFileExists(playerName)) {
             return getMoney(playerName);
         }
         return 0.0D;
@@ -93,10 +93,9 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
-        if (playerFileExists(playerName)) {
-            if (takeMoney(playerName, amount)) {
-                return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, null);
-            }
+        if (ifPlayerFileExists(playerName)) {
+            takeMoney(playerName, amount);
+            return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, null);
         }
         return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, null);
     }
@@ -114,10 +113,9 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public EconomyResponse depositPlayer(String playerName, double amount) {
-        if (playerFileExists(playerName)) {
-            if (addMoney(playerName, amount)) {
-                return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, null);
-            }
+        if (ifPlayerFileExists(playerName)) {
+            addMoney(playerName, amount);
+            return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.SUCCESS, null);
         }
         return new EconomyResponse(amount, this.getBalance(playerName), ResponseType.FAILURE, null);
     }

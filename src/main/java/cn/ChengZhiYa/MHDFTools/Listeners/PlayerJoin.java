@@ -2,7 +2,6 @@ package cn.ChengZhiYa.MHDFTools.Listeners;
 
 import cn.ChengZhiYa.MHDFTools.HashMap.BooleanHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.ScoreboardHasMap;
-import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.Utils.BCUtil;
 import org.bukkit.Bukkit;
@@ -14,11 +13,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.EconomyUtil.initializationPlayerData;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.getNMSVersion;
 
 public final class PlayerJoin implements Listener {
     @EventHandler
@@ -39,18 +36,6 @@ public final class PlayerJoin implements Listener {
                     }
                 } else {
                     player.sendMessage(ChatColor("&cCheng-Tools无法检查更新!"));
-                }
-            }
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("VanishEnable")) {
-            Player player = event.getPlayer();
-            for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                if (StringHasMap.getHasMap().get(player.getName() + "_Vanish") != null) {
-                    if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
-                        OnlinePlayer.hidePlayer(player);
-                    } else {
-                        OnlinePlayer.hidePlayer(MHDFTools.instance, player);
-                    }
                 }
             }
         }
