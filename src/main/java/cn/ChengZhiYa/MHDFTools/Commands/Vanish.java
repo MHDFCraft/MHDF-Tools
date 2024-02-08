@@ -69,7 +69,8 @@ public final class Vanish implements CommandExecutor {
                 VanishCache.set("VanishList", VanishList);
                 try {
                     VanishCache.save(VanishCacheFile);
-                } catch (IOException ignored) {}
+                } catch (IOException ignored) {
+                }
             } else {
                 sender.sendMessage(i18n("NoPermission"));
             }

@@ -19,7 +19,6 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.getVanishBossBar;
 
 public final class Vanish implements Listener {
     @EventHandler
@@ -40,10 +39,11 @@ public final class Vanish implements Listener {
             }
         }
     }
+
     @EventHandler
     public void PlayerInteractEvent(PlayerInteractEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null) {
+            if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null) {
                 if (!VanishList.isEmpty()) {
                     Player player = event.getPlayer();
                     if (VanishList.contains(player.getName())) {

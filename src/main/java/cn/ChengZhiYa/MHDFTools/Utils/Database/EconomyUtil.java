@@ -19,7 +19,7 @@ import static cn.ChengZhiYa.MHDFTools.MHDFTools.dataSource;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.DatabaseUtil.*;
 
 public final class EconomyUtil {
-    public static final Map<Object, BigDecimal> MoneyHashMap = new HashMap<>();
+    static final Map<Object, BigDecimal> MoneyHashMap = new HashMap<>();
 
     public static Map<Object, BigDecimal> getMoneyHashMap() {
         return MoneyHashMap;

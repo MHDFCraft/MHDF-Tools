@@ -26,11 +26,6 @@ Vault:
     &6/%1 take <玩家ID> <金额> &7- &e扣除金钱
     &6/%1 set <玩家ID> <金额> &7- &e设置金钱
     &7-------&6经济系统&7-------
-Chat:
-  SendBlackWord: "&c你发的内容中有违禁词!"
-  SendBlackWordOpMessage: "&e玩家%1发送了违禁词:%2"
-  ChatDelay: "&e聊天冷却中!请等待%1秒后重试"
-  RepectDelay: "&c请不要刷屏!"
 Usage:
   Crash: "&c用法错误,用法:/%1 <玩家ID>"
   Fly: "&c用法错误,用法:/fly [玩家ID]"

@@ -140,6 +140,7 @@ public final class MenuUtil {
         return Message;
     }
 
+    @SuppressWarnings("ExtractMethodRecommender")
     public static void OpenHomeMenu(Player player, int Page) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
             String MenuTitle = ChatColor(Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.Title")).replaceAll("\\{Page\\}", String.valueOf(Page)));
@@ -314,6 +315,7 @@ public final class MenuUtil {
                 if (Material.getMaterial(Input) != null) {
                     Allow = player.getInventory().contains(Objects.requireNonNull(Material.getMaterial(Input)));
                 } else {
+                    Allow = false;
                     ColorLog("&c[MHDF-Tools]不存在" + Input + "这个空间ID的物品");
                 }
             }

@@ -73,9 +73,9 @@ public final class MHDFTools extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        //bstats
         ColorLog("&f============&6梦回东方-工具&f============");
 
+        //bstats
         if (getConfig().getBoolean("bStats")) {
             new Metrics(this, 17154);
         }
@@ -361,6 +361,11 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     registerCommand(this, new CrashPlayerClient(), "崩端系统", "crashclient");
                     registerCommand(this, new CrashPlayerClient(), "崩端系统", "crash");
                 }
+                /*
+                if (getConfig().getBoolean("TabSettings.Enable")) {
+                    new TABFormat().runTaskTimerAsynchronously(this, 0L, 20L);
+                }
+                */
             }
             if (Vault) {
                 if (getConfig().getBoolean("EconomySettings.Enable")) {

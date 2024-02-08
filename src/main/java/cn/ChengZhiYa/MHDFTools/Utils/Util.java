@@ -33,6 +33,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.PlayerList;
+
 public final class Util {
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
@@ -40,7 +42,7 @@ public final class Util {
     public static List<String> VanishList = new ArrayList<>();
     public static BossBar VanishBossBar;
 
-    public static List<String> CommandLinkList = new ArrayList<>();
+    public static final List<String> CommandLinkList = new ArrayList<>();
 
     static {
         try {
@@ -81,7 +83,7 @@ public final class Util {
 
     private static String translate(Pattern hex, String message) {
         Matcher matcher = hex.matcher(message);
-        StringBuffer buffer = new StringBuffer(message.length() + 32);
+        StringBuilder buffer = new StringBuilder(message.length() + 32);
         while (matcher.find()) {
             String group = matcher.group(1);
             matcher.appendReplacement(buffer,
@@ -349,5 +351,18 @@ public final class Util {
             VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
         }
         return VanishBossBar;
+    }
+
+    public static List<String> getPlayerList(boolean BCAPI) {
+        List<String> OnlinePlayerList = new ArrayList<>();
+        if (BCAPI && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+            OnlinePlayerList.addAll(Arrays.asList(PlayerList));
+        } else {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                OnlinePlayerList.add(player.getName());
+            }
+        }
+        OnlinePlayerList.removeAll(VanishList);
+        return OnlinePlayerList;
     }
 }

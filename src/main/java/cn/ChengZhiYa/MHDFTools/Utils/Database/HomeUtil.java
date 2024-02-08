@@ -19,9 +19,9 @@ import static cn.ChengZhiYa.MHDFTools.MHDFTools.dataSource;
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.getHomeServerName;
 
 public final class HomeUtil {
-    static Map<Object, List<String>> HomeListHashMap = new HashMap<>();
-    static Map<Object, Location> HomeLocationHashMap = new HashMap<>();
-    static Map<Object, Object> HomeServerHashMap = new HashMap<>();
+    static final Map<Object, List<String>> HomeListHashMap = new HashMap<>();
+    static final Map<Object, Location> HomeLocationHashMap = new HashMap<>();
+    static final Map<Object, Object> HomeServerHashMap = new HashMap<>();
 
     public static Map<Object, List<String>> getHomeListHashMap() {
         return HomeListHashMap;

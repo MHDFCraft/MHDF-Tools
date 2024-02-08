@@ -11,7 +11,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -48,10 +47,7 @@ public final class CrashPlayerClient implements CommandExecutor {
                 packetContainer.getFloat().write(2, Float.MAX_VALUE);
                 packetContainer.getFloat().write(3, Float.MAX_VALUE);
                 for (int i = 0; i < 25000; i++) {
-                    try {
-                        ProtocolLibrary.getProtocolManager().sendServerPacket(player, packetContainer, true);
-                    } catch (InvocationTargetException ignored) {
-                    }
+                    ProtocolLibrary.getProtocolManager().sendServerPacket(player, packetContainer, true);
                     if (!player.isOnline()) {
                         break;
                     }
