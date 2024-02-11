@@ -17,16 +17,20 @@ public final class TpaHereTime extends BukkitRunnable {
                     String PlayerName = Tpa.toString().replaceAll("_TPAHerePlayerName", "");
                     String TagerPlayerName = StringHasMap.getHasMap().get(Tpa);
                     int Time = IntHasMap.getHasMap().get(PlayerName + "_TPAHereTime");
-                    if (ifPlayerOnline(TagerPlayerName)) {
-                        if (Time >= 0) {
-                            IntHasMap.getHasMap().put(TagerPlayerName + "_TPATime", Time - 1);
+                    if (ifPlayerOnline(PlayerName)) {
+                        if (ifPlayerOnline(TagerPlayerName)) {
+                            if (Time >= 0) {
+                                IntHasMap.getHasMap().put(TagerPlayerName + "_TPATime", Time - 1);
+                            } else {
+                                SendMessage(PlayerName, i18n("TpaHere.TimeOutDone", TagerPlayerName));
+                                SendMessage(TagerPlayerName, i18n("TpaHere.TimeOut", PlayerName));
+                                CancelTpaHere(PlayerName);
+                            }
                         } else {
-                            SendMessage(PlayerName, i18n("TpaHere.TimeOutDone", TagerPlayerName));
-                            SendMessage(TagerPlayerName, i18n("TpaHere.TimeOut", PlayerName));
+                            SendMessage(PlayerName, i18n("TpaHere.Offline", TagerPlayerName));
                             CancelTpaHere(PlayerName);
                         }
-                    } else {
-                        SendMessage(PlayerName, i18n("TpaHere.Offline", TagerPlayerName));
+                    }else {
                         CancelTpaHere(PlayerName);
                     }
                 }
