@@ -82,7 +82,7 @@ public final class BCUtil {
             for (String Messages : i18n("Tpa.Message").split("\\?")) {
                 if (Messages.equals("Accent")) {
                     TextComponent MessageButton = new TextComponent(ChatColor(i18n("Tpa.AccentMessage")));
-                    MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa accent " + SendPlayerName));
+                    MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa accept " + SendPlayerName));
                     MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
                     Message.addExtra(MessageButton);
                 } else {
@@ -120,7 +120,7 @@ public final class BCUtil {
             for (String Messages : i18n("TpaHere.Message").split("\\?")) {
                 if (Messages.equals("Accent")) {
                     TextComponent MessageButton = new TextComponent(ChatColor(i18n("TpaHere.AccentMessage")));
-                    MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpahere accent " + SendPlayerName));
+                    MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpahere accept " + SendPlayerName));
                     MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
                     Message.addExtra(MessageButton);
                 } else {

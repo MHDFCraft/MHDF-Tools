@@ -40,7 +40,7 @@ public final class Tpa implements TabExecutor {
                 return false;
             }
             if (args.length == 2) {
-                if (args[0].equals("accent")) {
+                if (args[0].equals("accept")) {
                     if (StringHasMap.getHasMap().get(args[1] + "_TPAPlayerName") != null && StringHasMap.getHasMap().get(args[1] + "_TPAPlayerName").equals(sender.getName())) {
                         if (IntHasMap.getHasMap().get(args[1] + "_TPATime") != null && IntHasMap.getHasMap().get(args[1] + "_TPATime") >= 0) {
                             CancelTpa(args[1]);

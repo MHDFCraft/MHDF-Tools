@@ -20,7 +20,7 @@ public final class TpaHereTime extends BukkitRunnable {
                     if (ifPlayerOnline(PlayerName)) {
                         if (ifPlayerOnline(TagerPlayerName)) {
                             if (Time >= 0) {
-                                IntHasMap.getHasMap().put(TagerPlayerName + "_TPATime", Time - 1);
+                                IntHasMap.getHasMap().put(PlayerName + "_TPATime", Time - 1);
                             } else {
                                 SendMessage(PlayerName, i18n("TpaHere.TimeOutDone", TagerPlayerName));
                                 SendMessage(TagerPlayerName, i18n("TpaHere.TimeOut", PlayerName));

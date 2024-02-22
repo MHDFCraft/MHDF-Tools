@@ -40,7 +40,7 @@ public final class TpaHere implements TabExecutor {
                 return false;
             }
             if (args.length == 2) {
-                if (args[0].equals("accent")) {
+                if (args[0].equals("accept")) {
                     if (StringHasMap.getHasMap().get(args[1] + "_TPAHerePlayerName") != null && StringHasMap.getHasMap().get(args[1] + "_TPAHerePlayerName").equals(sender.getName())) {
                         if (IntHasMap.getHasMap().get(args[1] + "_TPAHereTime") != null && IntHasMap.getHasMap().get(args[1] + "_TPAHereTime") >= 0) {
                             CancelTpaHere(args[1]);
