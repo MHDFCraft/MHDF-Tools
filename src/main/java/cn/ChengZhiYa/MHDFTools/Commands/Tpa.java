@@ -48,7 +48,7 @@ public final class Tpa implements TabExecutor {
                                 sender.sendMessage(i18n("Tpa.Offline", args[1]));
                                 return false;
                             }
-                            TpPlayer(args[1], sender.getName(), false);
+                            TpPlayer(args[1], sender.getName());
                             SendMessage(args[1], i18n("Tpa.TeleportDone", sender.getName()));
                             sender.sendMessage(i18n("Tpa.AcceptDone", args[1]));
                         } else {

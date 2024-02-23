@@ -158,24 +158,8 @@ public final class BCUtil {
         }
     }
 
-    public static void TpPlayer(String PlayerName, String TargetPlayerName, boolean TpaHere) {
-        if (TpaHere) {
-            if (Bukkit.getPlayer(TargetPlayerName) == null && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
-                final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
-                if (player == null) {
-                    return;
-                }
-
-                ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                out.writeUTF("TpPlayer");
-                out.writeUTF(PlayerName);
-                out.writeUTF(TargetPlayerName);
-
-                player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
-            } else {
-                Objects.requireNonNull(Bukkit.getPlayer(TargetPlayerName)).teleport(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).getLocation());
-            }
-        } else if (Bukkit.getPlayer(PlayerName) == null && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+    public static void TpPlayer(String PlayerName, String TargetPlayerName) {
+        if (Bukkit.getPlayer(TargetPlayerName) == null && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;

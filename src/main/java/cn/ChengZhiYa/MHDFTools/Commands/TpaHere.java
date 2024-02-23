@@ -48,7 +48,7 @@ public final class TpaHere implements TabExecutor {
                                 sender.sendMessage(i18n("TpaHere.Offline", args[1]));
                                 return false;
                             }
-                            TpPlayer(sender.getName(), args[1], true);
+                            TpPlayer(sender.getName(), args[1]);
                             SendMessage(args[1], i18n("TpaHere.TeleportDone", sender.getName()));
                             sender.sendMessage(i18n("TpaHere.AcceptDone", args[1]));
                         } else {
