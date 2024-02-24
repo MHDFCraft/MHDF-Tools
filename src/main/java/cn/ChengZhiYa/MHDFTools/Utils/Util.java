@@ -4,6 +4,7 @@ import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
@@ -76,11 +77,6 @@ public final class Util {
         }
     }
 
-    public static String translateHexCodes(String message) {
-        Pattern hexPattern = Pattern.compile("&#" + "([A-Fa-f0-9]{6})");
-        return translate(hexPattern, message);
-    }
-
     private static String translate(Pattern hex, String message) {
         Matcher matcher = hex.matcher(message);
         StringBuilder buffer = new StringBuilder(message.length() + 32);
@@ -94,7 +90,7 @@ public final class Util {
     }
 
     public static String ChatColor(String Message) {
-        Message = ChatColor.translateAlternateColorCodes('&', translateHexCodes(Message));
+        Message = ChatColor.translateAlternateColorCodes('&', RGBColor(Message));
         return Message;
     }
 
@@ -103,6 +99,16 @@ public final class Util {
             Message = PlaceholderAPI.setPlaceholders(Player, Message);
         }
         return ChatColor(Message);
+    }
+
+    public static String RGBColor(String Message) {
+        Pattern pattern = Pattern.compile("&#([0-9a-fA-F]{6})");
+        Matcher matcher = pattern.matcher(Message);
+        while (matcher.find()) {
+            String colorCode = matcher.group(1);
+            Message = Message.replace("&#" + colorCode, "<SOLID:" + colorCode.toUpperCase() + ">");
+        }
+        return IridiumColorAPI.process(Message);
     }
 
     public static void ColorLog(String Message) {
