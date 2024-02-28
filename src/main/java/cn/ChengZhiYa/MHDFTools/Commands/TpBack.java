@@ -2,7 +2,6 @@ package cn.ChengZhiYa.MHDFTools.Commands;
 
 import cn.ChengZhiYa.MHDFTools.HashMap.IntHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.LocationHasMap;
-import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.ServerName;
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.TpPlayerTo;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
 
@@ -30,8 +30,7 @@ public final class TpBack implements CommandExecutor {
                 IntHasMap.getHasMap().put(player.getName() + "_BackTpDelay", MHDFTools.instance.getConfig().getInt("TpBackSettings.Delay"));
                 Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, () -> IntHasMap.getHasMap().remove(player.getName() + "_BackTpDelay"), 20L * MHDFTools.instance.getConfig().getInt("TpBackSettings.Delay"));
                 LocationHasMap.getHasMap().put(player.getName() + "_UnBackLocation", player.getLocation());
-                TpPlayerTo(player.getName(),
-                        StringHasMap.getHasMap().get(player.getName() + "_TpBackLocation_Server"),
+                TpPlayerTo(player.getName(), ServerName,
                         LocationHasMap.getHasMap().get(player.getName() + "_TpBackLocation")
                 );
                 player.sendMessage(i18n("TpBack.Done"));
