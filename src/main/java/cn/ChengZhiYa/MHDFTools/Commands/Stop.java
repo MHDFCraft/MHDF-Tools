@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
+import static cn.ChengZhiYa.MHDFTools.Utils.Util.PAPIChatColor;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
 
 public final class Stop implements CommandExecutor {
@@ -27,12 +27,12 @@ public final class Stop implements CommandExecutor {
                     StopMessage.append(" ").append(arg);
                 }
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.kickPlayer(ChatColor(player, MHDFTools.instance.getConfig().getString("SuperStopSettings.ServerName") + "\n" + StopMessage));
+                    player.kickPlayer(PAPIChatColor(player, MHDFTools.instance.getConfig().getString("SuperStopSettings.ServerName") + "\n" + StopMessage));
                 }
                 Bukkit.shutdown();
             } else {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.kickPlayer(ChatColor(player, MHDFTools.instance.getConfig().getString("SuperStopSettings.ServerName") + "\n" + Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SuperStopSettings.DefaultStopMessage"))));
+                    player.kickPlayer(PAPIChatColor(player, MHDFTools.instance.getConfig().getString("SuperStopSettings.ServerName") + "\n" + Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SuperStopSettings.DefaultStopMessage"))));
                 }
                 Bukkit.shutdown();
             }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.MenuUtil.*;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class ClickCustomMenu implements Listener {
     @EventHandler

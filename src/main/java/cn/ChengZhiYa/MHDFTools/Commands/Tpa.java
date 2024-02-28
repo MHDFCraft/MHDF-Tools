@@ -14,8 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.*;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class Tpa implements TabExecutor {
     @Override

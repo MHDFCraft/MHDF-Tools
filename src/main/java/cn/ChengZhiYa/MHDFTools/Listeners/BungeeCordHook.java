@@ -22,8 +22,8 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.PlayerList;
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.ServerName;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeLocation;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class BungeeCordHook implements PluginMessageListener {
     @Override
@@ -50,7 +50,7 @@ public final class BungeeCordHook implements PluginMessageListener {
                 for (String Messages : i18n("Tpa.Message").split("\\?")) {
                     if (Messages.equals("Accent")) {
                         TextComponent MessageButton = new TextComponent(ChatColor(i18n("Tpa.AccentMessage")));
-                        MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa accent " + SendPlayerName));
+                        MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa accept " + SendPlayerName));
                         MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
                         Message.addExtra(MessageButton);
                     } else {
@@ -77,7 +77,7 @@ public final class BungeeCordHook implements PluginMessageListener {
                 for (String Messages : i18n("TpaHere.Message").split("\\?")) {
                     if (Messages.equals("Accent")) {
                         TextComponent MessageButton = new TextComponent(ChatColor(i18n("TpaHere.AccentMessage")));
-                        MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpahere accent " + SendPlayerName));
+                        MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpahere accept " + SendPlayerName));
                         MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
                         Message.addExtra(MessageButton);
                     } else {

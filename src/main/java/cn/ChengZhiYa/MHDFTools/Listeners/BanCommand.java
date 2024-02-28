@@ -8,8 +8,8 @@ import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerCommandSendEvent;
 
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.ifLogin;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class BanCommand implements Listener {
     @EventHandler

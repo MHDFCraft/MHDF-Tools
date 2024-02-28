@@ -9,8 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class AntiTiaoLue implements Listener {
     @EventHandler

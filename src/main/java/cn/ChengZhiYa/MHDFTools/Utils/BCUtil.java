@@ -1,7 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.Utils;
 
 import cn.ChengZhiYa.MHDFTools.HashMap.IntHasMap;
-import cn.ChengZhiYa.MHDFTools.HashMap.LocationHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import com.google.common.collect.Iterables;
@@ -20,8 +19,8 @@ import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeLocation;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeServer;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 
 public final class BCUtil {
@@ -159,7 +158,7 @@ public final class BCUtil {
     }
 
     public static void TpPlayer(String PlayerName, String TargetPlayerName) {
-        if (Bukkit.getPlayer(TargetPlayerName) == null && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (Bukkit.getPlayer(PlayerName) == null && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -210,6 +209,8 @@ public final class BCUtil {
             out.writeDouble(Location.getX());
             out.writeDouble(Location.getY());
             out.writeDouble(Location.getZ());
+            out.writeFloat(Location.getYaw());
+            out.writeFloat(Location.getPitch());
 
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {
@@ -253,29 +254,6 @@ public final class BCUtil {
         }
         IntHasMap.getHasMap().remove(PlayerName + "_TPAHereTime");
         StringHasMap.getHasMap().remove(PlayerName + "_TPAHerePlayerName");
-    }
-
-    public static void SaveLocation(String Key, String Server, Location Location) {
-        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
-            final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
-            if (player == null) {
-                return;
-            }
-
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("SaveLocation");
-            out.writeUTF(Key);
-            out.writeUTF(Server);
-            out.writeUTF(Location.getWorld().getName());
-            out.writeDouble(Location.getX());
-            out.writeDouble(Location.getY());
-            out.writeDouble(Location.getZ());
-
-            player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
-        } else {
-            LocationHasMap.getHasMap().put(Key, Location);
-            StringHasMap.getHasMap().put(Key + "_Server", Server);
-        }
     }
 
     public static void SetSpawn(Location Location) {

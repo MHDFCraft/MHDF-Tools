@@ -30,7 +30,7 @@ public final class TpaTime extends BukkitRunnable {
                             SendMessage(PlayerName, i18n("Tpa.Offline", TagerPlayerName));
                             CancelTpa(PlayerName);
                         }
-                    }else {
+                    } else {
                         CancelTpa(PlayerName);
                     }
                 }

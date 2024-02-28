@@ -29,8 +29,9 @@ import java.util.stream.Stream;
 
 import static cn.ChengZhiYa.MHDFTools.MHDFTools.dataSource;
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.TpPlayerHome;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.ColorLog;
+import static cn.ChengZhiYa.MHDFTools.Utils.Util.PAPIChatColor;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
+import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
 
 public final class MenuUtil {
     static final Map<Object, String> MenuHashMap = new HashMap<>();
@@ -381,15 +382,15 @@ public final class MenuUtil {
                 continue;
             }
             if (Action[0].equals("[message]")) {
-                player.sendMessage(ChatColor(player, Action[1]).replaceAll(Action[0] + "\\|", "").replaceAll("\\|", "\n"));
+                player.sendMessage(PAPIChatColor(player, Action[1]).replaceAll(Action[0] + "\\|", "").replaceAll("\\|", "\n"));
                 continue;
             }
             if (Action[0].equals("[title]")) {
-                player.sendTitle(ChatColor(player, Action[1]), ChatColor(player, Action[2]), Integer.parseInt(Action[3]), Integer.parseInt(Action[4]), Integer.parseInt(Action[5]));
+                player.sendTitle(PAPIChatColor(player, Action[1]), PAPIChatColor(player, Action[2]), Integer.parseInt(Action[3]), Integer.parseInt(Action[4]), Integer.parseInt(Action[5]));
                 continue;
             }
             if (Action[0].equals("[actionbar]")) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor(player, Action[1])));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(PAPIChatColor(player, Action[1])));
                 continue;
             }
             if (Action[0].equals("[close]")) {

@@ -46,8 +46,11 @@ import java.sql.Statement;
 import java.util.Objects;
 import java.util.TimeZone;
 
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.getServerName;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
-import static cn.ChengZhiYa.MHDFTools.Utils.YamlFileUtil.SaveResource;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
+import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
+import static cn.chengzhiya.mhdfpluginapi.YamlFileUtil.SaveResource;
 
 public final class MHDFTools extends JavaPlugin implements Listener {
     public static final String Version = "1.3.6";
@@ -327,7 +330,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                         @Override
                         public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
                             if (sender instanceof Player) {
-                                String RunCommand = ChatColor((Player) sender, getConfig().getString("CommandLink.CommandList." + Command + ".Command"));
+                                String RunCommand = PAPIChatColor((Player) sender, getConfig().getString("CommandLink.CommandList." + Command + ".Command"));
                                 if (args.length != 0) {
                                     for (int i = 0; i < args.length; i++) {
                                         RunCommand = RunCommand.replaceAll("%" + i, args[i]);
@@ -376,7 +379,6 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     registerCommand(this, new MoneyAdmin(), "管理员管理", "ma");
                 }
             }
-
             registerCommand(this, new Reload(), "重载插件", "chengtoolsreload");
             registerCommand(this, new Reload(), "重载插件", "ctreload");
             registerCommand(this, new Reload(), "重载插件", "ctr");
@@ -390,6 +392,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("BungeecordSettings.Enable")) {
                 getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
                 getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeCordHook());
+                getServerName();
             }
         }
 

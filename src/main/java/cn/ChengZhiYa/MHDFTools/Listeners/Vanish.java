@@ -19,6 +19,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class Vanish implements Listener {
     @EventHandler

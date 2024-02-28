@@ -1,12 +1,12 @@
-NoPermission: "&c你没有权限怎么做!"
-OnlyPlayer: "&c这个命令只能玩家使用!"
-PlayerNotOnline: "&c这个玩家不存在或不在线"
-RelaodDone: "&a重载成功!"
+NoPermission: "&f붃 &c你没有权限怎么做!"
+OnlyPlayer: "&f분 &6这个命令只能玩家使用!"
+PlayerNotOnline: "&f분 &6这个玩家不存在或不在线"
+RelaodDone: "&f북 &a重载成功!"
 FastSetDone: "&a完成!"
-HatNoItem: "&c你需要拿着一个物品才能使用这个命令!"
-AntiTiaoLue: "&b[反跳略系统] &6玩家%1尝试在,X:%2 Y:%3 Z:%4 建造跳略,已阻止!"
+HatNoItem: "&f분 &6你需要拿着一个物品才能使用这个命令!"
+AntiTiaoLue: "&f부 &#7289da玩家%1尝试在,X:%2 Y:%3 Z:%4 建造跳略,已阻止!"
 OpWhiteList:
-  Message: "&c%1非法获取了op权限,已踢出!"
+  Message: "&f붃 &c%1非法获取了op权限,已踢出!"
   KickMessage: "连接中止"
 Vault:
   MoneyLessThan0: "&c金额必须大于0"
@@ -27,44 +27,46 @@ Vault:
     &6/%1 set <玩家ID> <金额> &7- &e设置金钱
     &7-------&6经济系统&7-------
 Usage:
-  Crash: "&c用法错误,用法:/%1 <玩家ID>"
-  Fly: "&c用法错误,用法:/fly [玩家ID]"
-  Vanish: "&c用法错误,用法:/%1 [玩家ID]"
-  Home: "&c用法错误,用法:/%1 <家名称>"
-  Freeze: "&c用法错误,用法:/freeze <玩家ID>"
-  Gamemode: "&c用法错误,用法:/%1 <游戏模式> [玩家ID]"
-  Invsee: "&c用法错误,用法:/invsee <玩家ID>"
-  Ip: "&c用法错误,用法:/ip <玩家ID>"
-  Tpa: "&c用法错误,用法:/tpa <玩家ID>"
-  TpaHere: "&c用法错误,用法:/tpahere <玩家ID>"
-  Money: "&c用法错误,用法:/money [玩家ID]"
-  Pay: "&c用法错误,用法:/pay <玩家ID> <金额>"
-  Login: "&c用法错误,用法:/%1 <密码>"
-  Register: "&c用法错误,用法:/%1 <密码>"
+  Crash: "&f붃 &c用法错误,用法:/%1 <玩家ID>"
+  Fly: "&f붃 &c用法错误,用法:/fly [玩家ID]"
+  Vanish: "&f붃 &c用法错误,用法:/%1 [玩家ID]"
+  Home: "&f붃 &c用法错误,用法:/%1 <家名称>"
+  Freeze: "&f붃 &c用法错误,用法:/freeze <玩家ID>"
+  Gamemode: "&f붃 &c用法错误,用法:/%1 <游戏模式> [玩家ID]"
+  Invsee: "&f붃 &c用法错误,用法:/invsee <玩家ID>"
+  Ip: "&f붃 &cc用法错误,用法:/ip <玩家ID>"
+  Tpa: "&f붃 &c用法错误,用法:/tpa <玩家ID>"
+  TpaHere: "&f붃 &c用法错误,用法:/tpahere <玩家ID>"
+  Money: "&f붃 &c用法错误,用法:/money [玩家ID]"
+  Pay: "&f붃 &c用法错误,用法:/pay <玩家ID> <金额>"
+  Login: "&f붃 &c用法错误,用法:/%1 <密码>"
+  Register: "&f붃 &c用法错误,用法:/%1 <密码>"
 Back:
   ReSpawn: |-
-    &a您的死亡位置如下，返回死亡地点请输入/back
-    &eX:%1 Y:%2 Z:%3
-  Done: "&a已返回死亡位置的位置,如果想回到传送前的位置请使用/unback!"
-  NotFound: "&c找不到死亡位置的位置!"
+    &f분 &6您的死亡位置如下，返回死亡地点请输入/back
+    &f분 &6X:%1 Y:%2 Z:%3
+  Done: "&f북 &a已返回死亡位置的位置,如果想回到传送前的位置请使用/unback!"
+  Delay: "&f붃 &c功能冷却中!"
+  NotFound: "&f분 &6找不到死亡位置的位置!"
 TpBack:
-  Done: "&a已返回上一次的位置,如果想回到传送前的位置请使用/unback!"
-  NotFound: "&c找不到上一次的位置!"
+  Done: "&f북 &a已返回上一次的位置,如果想回到传送前的位置请使用/unback!"
+  Delay: "&f붃 &c功能冷却中!"
+  NotFound: "&f분 &6找不到上一次的位置!"
 UnBack:
-  Done: "&a已返回传送前的位置!"
-  NotFound: "&c找不到你前往上一次的位置的记录!"
+  Done: "&f북 &a已返回传送前的位置!"
+  NotFound: "&f분 &6找不到你前往上一次的位置的记录!"
 Spawn:
-  SetDone: "&a设置成功!"
-  TeleportDone: "&a传送成功!"
+  SetDone: "&f부 &#7289da设置主城成功!"
+  TeleportDone: "&f북 &a已将你传送至主城!"
 Crash:
-  RepeatExecution: "&c请不要重复崩端!"
-  Execution: "&a已执行崩端,请自行判断是否崩端成功!"
+  RepeatExecution: "&f부 &#7289da请不要重复崩端!"
+  Execution: "&f부 &#7289da已执行崩端,请自行判断是否崩端成功!"
 Home:
-  NotFound: "&c你没有名为%1的家!"
-  HomeListFull: "&c你已经创建了%1个家了!不能再创建了!"
-  SetDone: "&a设置成功!"
-  TeleportDone: "&a传送成功!"
-  RemoveDone: "&a删除成功!"
+  NotFound: "&f분 &6你没有名为%1的家!"
+  HomeListFull: "&f분 &6你已经创建了%1个家了!不能再创建了!"
+  SetDone: "&f북 &a设置家成功!"
+  TeleportDone: "&f북 &a已回到家!"
+  RemoveDone: "&f붃 &c删除成功!"
 Fly:
   Enable: "开启"
   Disabled: "关闭"
@@ -73,16 +75,16 @@ Fly:
 Vanish:
   Enable: "开启"
   Disabled: "关闭"
-  Done: "&6你的隐身模式已%1"
-  SetDone: "&6已将%1的隐身模式%2"
-  Bossbar: "&f隐身中"
+  Done: "&f부 &#7289da你的神隐模式已%1"
+  SetDone: "&f부 &#7289da已将%1的神隐模式%2"
+  Bossbar: "&f神隐中"
 Gamemode:
   Survival: "生存模式"
   Adventure: "冒险模式"
   Creative: "创造模式"
   Spectator: "旁观模式"
   Server: "Server"
-  Done: "&f你的游戏模式已被更新为%1"
+  Done: "&f부 &#7289da你的游戏模式已被更新为%1"
   OtherOpDone: "&7[%1: 将%2的游戏模式改为%3]"
 Login:
   LoginMessage: "&e请使用/l <密码>以登录!"
@@ -98,48 +100,42 @@ Login:
   PasswordError: "&c密码错误!"
   AutoLogin: "&e欢迎回来! 已自动登录!"
 Tpa:
-  AccentMessage: "&7[&a同意&7]"
-  DefuseMessage: "&7[&c拒绝&7]"
-  AccentHoverMesasge: "&a接受%1的传送请求"
-  DefuseHoverMesasge: "&c拒绝%1的传送请求"
-  SendDone: "&a传送请求已发送"
-  RepectSend: "&c请不要重复发送Tpa!"
-  NotSendTeleport: "&c这个玩家没有给你发传送请求"
-  SendMe: "&c不能给自己发送传送请求!"
-  Offline: "&c错误,%1突然下线了,传送已取消!"
-  DefuseDone: "&c你拒绝了%1的传送请求!"
-  Defuse: "&c%1拒绝了你的请求!"
-  AcceptDone: "&a%1传送到了你这里!"
-  TeleportDone: "&a你传送到了%1那里!"
-  TimeOutDone: "&c你发给%1的传送请求已超时!"
-  TimeOut: "&c%1给你发的传送请求已超时!"
+  AccentMessage: "&f뇷"
+  DefuseMessage: "&f뇶"
+  AccentHoverMesasge: "&f북 &a接受%1的传送请求"
+  DefuseHoverMesasge: "&f붃 &c%1的传送请求"
+  SendDone: "&f북 &a传送请求已发送,对方有60s来同意你的请求"
+  RepectSend: "&f분 &6请不要重复发送Tpa!"
+  NotSendTeleport: "&f붃 &c这个玩家没有给你发传送请求"
+  Offline: "&f붃 &c错误,那个玩家突然下线了,传送已取消!"
+  DefuseDone: "&f붃 &c你拒绝了对方的传送请求!"
+  Defuse: "&f붃 &c对方拒绝了你的请求!"
+  AcceptDone: "&f북 &a%1传送到了你这里!"
+  TeleportDone: "&f북 &a传送成功!"
+  TimeOutDone: "&f분 &6你发给%1的传送请求已超时!"
+  TimeOut: "&f분 &6%1给你发的传送请求已超时!"
+  SendMe: "&f분 &6不能给自己发送传送请求!"
   Message: |-
-    &7--------------&9Tpa系统&7--------------
-    &a玩家%1想来你这里看看
-    ?Accent?  ?Defuse?
-    &7--------------&9Tpa系统&7--------------
+    &f북 &a%1申请传送到你这里&r ?Accent?  ?Defuse?
 TpaHere:
-  AccentMessage: "&7[&a同意&7]"
-  DefuseMessage: "&7[&c拒绝&7]"
-  AccentHoverMesasge: "&a接受%1的传送请求"
-  DefuseHoverMesasge: "&c拒绝%1的传送请求"
-  SendDone: "&a传送请求已发送"
-  RepectSend: "&c请不要重复发送Tpa!"
-  NotSendTeleport: "&c这个玩家没有给你发传送请求"
-  SendMe: "&c不能给自己发送传送请求!"
-  Offline: "&c错误,%1突然下线了,传送已取消!"
-  DefuseDone: "&c你拒绝了%1的传送请求!"
-  Defuse: "&c%1拒绝了你的请求!"
-  AcceptDone: "&a你传送到了%1那里!"
-  TeleportDone: "&a%1传送到了你这里!"
-  TimeOutDone: "&c你发给%1的传送请求已超时!"
-  TimeOut: "&c%1给你发的传送请求已超时!"
+  AccentMessage: "&f뇷"
+  DefuseMessage: "&f뇶"
+  AccentHoverMesasge: "&f북 &a接受%1的传送请求"
+  DefuseHoverMesasge: "&f붃 &c拒绝%1的传送请求"
+  SendDone: "&f북 &a传送请求已发送,对方有60s来同意你的请求"
+  RepectSend: "&f분 &6请不要重复发送Tpa!"
+  NotSendTeleport: "&f붃 &c这个玩家没有给你发传送请求"
+  Offline: "&f붃 &c错误,那个玩家突然下线了,传送已取消!"
+  DefuseDone: "&f붃 &c你拒绝了对方的传送请求!"
+  Defuse: "&f붃 &c对方拒绝了你的请求!"
+  AcceptDone: "&f북 &a你传送到了%1那里!"
+  TeleportDone: "&f북 &a%1传送到了你这里!"
+  TimeOutDone: "&f붃 &c你发给%1的传送请求已超时!"
+  TimeOut: "&f분 &6%1给你发的传送请求已超时!"
+  SendMe: "&f분 &6不能给自己发送传送请求!"
   Message: |-
-    &7--------------&9Tpahere系统&7--------------
-    &a玩家%1邀请你去他那里看看
-    ?Accent?  ?Defuse?
-    &7--------------&9Tpahere系统&7--------------
+    &f북 &a%1请求你传送到他身边 ?Accent?  ?Defuse?
 IPMessage: |-
-  &e玩家&7: &6%1
-  &eIP&7: &6%2
-  &eIP归属地&7: &6%3
+  &f부 &#7289da玩家: %1
+  &f부 &#7289daIP: %2
+  &f부 &#7289daIP归属地: %3

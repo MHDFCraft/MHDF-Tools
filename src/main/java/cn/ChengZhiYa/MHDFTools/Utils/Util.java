@@ -9,10 +9,12 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.*;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandMap;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
@@ -35,15 +37,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.PlayerList;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class Util {
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
+    public static final List<String> CommandLinkList = new ArrayList<>();
     public static YamlConfiguration LangFileData;
     public static List<String> VanishList = new ArrayList<>();
     public static BossBar VanishBossBar;
-
-    public static final List<String> CommandLinkList = new ArrayList<>();
 
     static {
         try {
@@ -77,24 +79,7 @@ public final class Util {
         }
     }
 
-    private static String translate(Pattern hex, String message) {
-        Matcher matcher = hex.matcher(message);
-        StringBuilder buffer = new StringBuilder(message.length() + 32);
-        while (matcher.find()) {
-            String group = matcher.group(1);
-            matcher.appendReplacement(buffer,
-                    "§x§" + group.charAt(0) + "§" + group.charAt(1) + "§" + group.charAt(2)
-                            + "§" + group.charAt(3) + "§" + group.charAt(4) + "§" + group.charAt(5));
-        }
-        return ChatColor.translateAlternateColorCodes('&', matcher.appendTail(buffer).toString());
-    }
-
-    public static String ChatColor(String Message) {
-        Message = ChatColor.translateAlternateColorCodes('&', RGBColor(Message));
-        return Message;
-    }
-
-    public static String ChatColor(OfflinePlayer Player, String Message) {
+    public static String PAPIChatColor(OfflinePlayer Player, String Message) {
         if (MHDFTools.PAPI) {
             Message = PlaceholderAPI.setPlaceholders(Player, Message);
         }
@@ -109,11 +94,6 @@ public final class Util {
             Message = Message.replace("&#" + colorCode, "<SOLID:" + colorCode.toUpperCase() + ">");
         }
         return IridiumColorAPI.process(Message);
-    }
-
-    public static void ColorLog(String Message) {
-        CommandSender sender = Bukkit.getConsoleSender();
-        sender.sendMessage(ChatColor(Message));
     }
 
     public static String Sha256(String Message) {
@@ -326,9 +306,9 @@ public final class Util {
         }
         if (!MessageList.isEmpty()) {
             WeghitList.sort(Collections.reverseOrder());
-            return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomJoinServerMessageSettings." + MessageList.get(WeghitList.get(0)) + ".JoinMessage")).replaceAll("%PlayerName%", player.getName());
+            return PAPIChatColor(player, MHDFTools.instance.getConfig().getString("CustomJoinServerMessageSettings." + MessageList.get(WeghitList.get(0)) + ".JoinMessage")).replaceAll("%PlayerName%", player.getName());
         }
-        return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomJoinServerMessageSettings.Default.JoinMessage"))
+        return PAPIChatColor(player, MHDFTools.instance.getConfig().getString("CustomJoinServerMessageSettings.Default.JoinMessage"))
                 .replaceAll("%PlayerName%", player.getName());
     }
 
@@ -346,9 +326,9 @@ public final class Util {
         }
         if (!MessageList.isEmpty()) {
             WeghitList.sort(Collections.reverseOrder());
-            return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings." + MessageList.get(WeghitList.get(0)) + ".QuitMessage")).replaceAll("%PlayerName%", player.getName());
+            return PAPIChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings." + MessageList.get(WeghitList.get(0)) + ".QuitMessage")).replaceAll("%PlayerName%", player.getName());
         }
-        return ChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings.Default.QuitMessage"))
+        return PAPIChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings.Default.QuitMessage"))
                 .replaceAll("%PlayerName%", player.getName());
     }
 

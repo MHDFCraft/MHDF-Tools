@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.ChatColor;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class TABFormat extends BukkitRunnable {
     @Override

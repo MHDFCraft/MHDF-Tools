@@ -1,15 +1,17 @@
 package cn.ChengZhiYa.MHDFTools.Commands;
 
+import cn.ChengZhiYa.MHDFTools.HashMap.IntHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.LocationHasMap;
 import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.*;
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.TpPlayerTo;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
 
 public final class Back implements CommandExecutor {
@@ -21,7 +23,13 @@ public final class Back implements CommandExecutor {
                 if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(LocationHasMap.getHasMap().get(player.getName() + "_DeathLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
-                SaveLocation(player.getName() + "_UnBackLocation", ServerName, player.getLocation());
+                if (IntHasMap.getHasMap().get(player.getName() + "_BackDelay") != null) {
+                    player.sendMessage(i18n("Back.Delay"));
+                    return false;
+                }
+                LocationHasMap.getHasMap().put(player.getName() + "_UnBackLocation", player.getLocation());
+                IntHasMap.getHasMap().put(player.getName() + "_BackDelay", MHDFTools.instance.getConfig().getInt("BackSettings.Delay"));
+                Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, () -> IntHasMap.getHasMap().remove(player.getName() + "_BackDelay"), 20L * MHDFTools.instance.getConfig().getInt("BackSettings.Delay"));
                 TpPlayerTo(player.getName(),
                         StringHasMap.getHasMap().get(player.getName() + "_DeathLocation_Server"),
                         LocationHasMap.getHasMap().get(player.getName() + "_DeathLocation")

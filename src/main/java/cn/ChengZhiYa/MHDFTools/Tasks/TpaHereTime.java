@@ -30,7 +30,7 @@ public final class TpaHereTime extends BukkitRunnable {
                             SendMessage(PlayerName, i18n("TpaHere.Offline", TagerPlayerName));
                             CancelTpaHere(PlayerName);
                         }
-                    }else {
+                    } else {
                         CancelTpaHere(PlayerName);
                     }
                 }

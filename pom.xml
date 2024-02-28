@@ -139,9 +139,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.iridium</groupId>
-            <artifactId>IridiumColorAPI</artifactId>
-            <version>LATEST</version>
+            <groupId>cn.ChengZhiYa</groupId>
+            <artifactId>MHDF-PluginAPI</artifactId>
+            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

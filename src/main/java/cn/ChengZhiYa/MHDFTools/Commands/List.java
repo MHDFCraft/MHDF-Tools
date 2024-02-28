@@ -25,7 +25,7 @@ public final class List implements CommandExecutor {
                         replaceAll("%TPS_5%", getTps(5)).
                         replaceAll("%TPS_15%", getTps(15));
             }
-            sender.sendMessage(ChatColor(null, Message));
+            sender.sendMessage(PAPIChatColor(null, Message));
         }
         return false;
     }

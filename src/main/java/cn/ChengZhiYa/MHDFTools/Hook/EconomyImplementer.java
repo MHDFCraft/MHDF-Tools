@@ -1,7 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.Hook;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
-import cn.ChengZhiYa.MHDFTools.Utils.Util;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
@@ -11,6 +10,7 @@ import java.io.File;
 import java.util.List;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.EconomyUtil.*;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class EconomyImplementer extends AbstractEconomy {
     public boolean isEnabled() {
@@ -38,7 +38,7 @@ public final class EconomyImplementer extends AbstractEconomy {
     }
 
     public String currencyNameSingular() {
-        return Util.ChatColor(MHDFTools.instance.getConfig().getString("EconomySettings.MoneyName"));
+        return ChatColor(MHDFTools.instance.getConfig().getString("EconomySettings.MoneyName"));
     }
 
     public boolean hasAccount(String playerName) {

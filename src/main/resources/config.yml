@@ -264,6 +264,8 @@ CommandLink:
 BackSettings:
   #开关
   Enable: true
+  #延迟
+  Delay: 3
   #关闭世界列表
   DisableWorldList:
     - "pvp"
@@ -272,6 +274,8 @@ BackSettings:
 TpBackSettings:
   #开关
   Enable: true
+  #延迟
+  Delay: 3
   #关闭世界列表
   DisableWorldList:
     - "pvp"
