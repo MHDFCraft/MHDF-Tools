@@ -114,7 +114,7 @@ public final class BungeeCordHook implements PluginMessageListener {
             }
             if (subchannel.equals("TpPlayerTo")) {
                 String PlayerName = in.readUTF();
-                Location Location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble());
+                Location Location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble(), in.readFloat(), in.readFloat());
                 Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () ->
                                 Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location)
                         , 20);
