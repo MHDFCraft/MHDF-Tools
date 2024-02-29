@@ -22,9 +22,9 @@ public final class HomeMenu implements Listener {
                 String Item = getMenuItemHashMap().get(event.getView().getTitle() + "|" + event.getCurrentItem().toString());
                 List<String> DenyActionList = AllowClickAction(player, getMenu("HomeMenu.yml"), Item);
                 if (DenyActionList.isEmpty()) {
-                    RunAction("HomeMenu.yml", player, getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".ClickAction"), Page, event.getCurrentItem());
+                    RunAction("HomeMenu.yml", player, getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".ClickAction"), Page, event.getCurrentItem(),event.getView().getTitle());
                 } else {
-                    RunAction("HomeMenu.yml", player, DenyActionList, Page, event.getCurrentItem());
+                    RunAction("HomeMenu.yml", player, DenyActionList, Page, event.getCurrentItem(),event.getView().getTitle());
                 }
             }
         }

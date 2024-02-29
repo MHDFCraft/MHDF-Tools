@@ -192,6 +192,12 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             }
             LangFileData = YamlConfiguration.loadConfiguration(Lang_File);
 
+            File Sound_File = new File(getDataFolder(), "sound.yml");
+            if (!Sound_File.exists()) {
+                SaveResource(getDataFolder().getPath(), "sound.yml", "sound.yml", true);
+            }
+            SoundFileData = YamlConfiguration.loadConfiguration(Sound_File);
+
             File MenuHome = new File(getDataFolder(), "Menus");
             if (!MenuHome.exists()) {
                 MenuHome.mkdirs();
@@ -264,10 +270,12 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("BackSettings.Enable")) {
                 registerCommand(this, new Back(), "Back系统", "back");
                 Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.Listeners.Back(), this);
+                new cn.ChengZhiYa.MHDFTools.Tasks.Back().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("TpBackSettings.Enable")) {
                 registerCommand(this, new TpBack(), "TpBack系统", "tpback");
                 Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.Listeners.TpBack(), this);
+                new cn.ChengZhiYa.MHDFTools.Tasks.TpBack().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("TpBackSettings.Enable") || getConfig().getBoolean("BackSettings.Enable")) {
                 registerCommand(this, new UnBack(), "Back系统", "unback");

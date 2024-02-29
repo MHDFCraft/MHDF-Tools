@@ -21,8 +21,8 @@ public final class Reload implements CommandExecutor {
             if (MHDFTools.instance.getConfig().getBoolean("InvseeSettings.Enable")) {
                 VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
             }
-            File LangData = new File(MHDFTools.instance.getDataFolder() + "/lang.yml");
-            LangFileData = YamlConfiguration.loadConfiguration(LangData);
+            LangFileData = YamlConfiguration.loadConfiguration(new File(MHDFTools.instance.getDataFolder(), "lang.yml"));
+            SoundFileData = YamlConfiguration.loadConfiguration(new File(MHDFTools.instance.getDataFolder(), "sound.yml"));
             sender.sendMessage(i18n("RelaodDone"));
         } else {
             sender.sendMessage(i18n("NoPermission"));

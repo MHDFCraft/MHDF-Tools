@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.ServerName;
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.TpPlayerTo;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
 
@@ -24,8 +25,7 @@ public final class UnBack implements CommandExecutor {
                 if (MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(LocationHasMap.getHasMap().get(player.getName() + "_UnBackLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
-                TpPlayerTo(player.getName(),
-                        StringHasMap.getHasMap().get(player.getName() + "_UnBackLocation_Server"),
+                TpPlayerTo(player.getName(),ServerName,
                         LocationHasMap.getHasMap().get(player.getName() + "_UnBackLocation")
                 );
                 player.sendMessage(i18n("UnBack.Done"));

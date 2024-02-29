@@ -19,7 +19,7 @@ import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeLocation;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeServer;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 
@@ -171,7 +171,10 @@ public final class BCUtil {
 
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {
-            Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(Bukkit.getPlayer(TargetPlayerName)).getLocation());
+            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
+                Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(Objects.requireNonNull(Bukkit.getPlayer(TargetPlayerName)).getLocation()));
+                PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+            });
         }
     }
 
@@ -190,7 +193,11 @@ public final class BCUtil {
 
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {
-            Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(getHomeLocation(PlayerName, HomeName)));
+
+            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
+                Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(getHomeLocation(PlayerName, HomeName)));
+                PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+            });
         }
     }
 
@@ -209,12 +216,15 @@ public final class BCUtil {
             out.writeDouble(Location.getX());
             out.writeDouble(Location.getY());
             out.writeDouble(Location.getZ());
-            out.writeFloat(Location.getYaw());
-            out.writeFloat(Location.getPitch());
+            out.writeDouble(Location.getYaw());
+            out.writeDouble(Location.getPitch());
 
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {
-            Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location);
+            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
+                Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location);
+                PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+            });
         }
     }
 
@@ -270,8 +280,8 @@ public final class BCUtil {
             out.writeDouble(Location.getX());
             out.writeDouble(Location.getY());
             out.writeDouble(Location.getZ());
-            out.writeFloat(Location.getYaw());
-            out.writeFloat(Location.getPitch());
+            out.writeDouble(Location.getYaw());
+            out.writeDouble(Location.getPitch());
 
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {

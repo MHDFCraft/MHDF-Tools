@@ -14,12 +14,16 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.io.File;
 import java.io.IOException;
 
+import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.getServerName;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.EconomyUtil.initializationPlayerData;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class PlayerJoin implements Listener {
     @EventHandler
     public void On_Event(PlayerJoinEvent event) {
+        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+            getServerName();
+        }
         if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BCUtil::getPlayerList, 20);
             Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BCUtil::getServerName, 20);

@@ -4,7 +4,6 @@ import cn.ChengZhiYa.MHDFTools.HashMap.StringHasMap;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
@@ -33,8 +32,6 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.PlayerList;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
@@ -43,9 +40,10 @@ public final class Util {
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static final List<String> CommandLinkList = new ArrayList<>();
-    public static YamlConfiguration LangFileData;
     public static List<String> VanishList = new ArrayList<>();
     public static BossBar VanishBossBar;
+    public static YamlConfiguration LangFileData;
+    public static YamlConfiguration SoundFileData;
 
     static {
         try {
@@ -84,16 +82,6 @@ public final class Util {
             Message = PlaceholderAPI.setPlaceholders(Player, Message);
         }
         return ChatColor(Message);
-    }
-
-    public static String RGBColor(String Message) {
-        Pattern pattern = Pattern.compile("&#([0-9a-fA-F]{6})");
-        Matcher matcher = pattern.matcher(Message);
-        while (matcher.find()) {
-            String colorCode = matcher.group(1);
-            Message = Message.replace("&#" + colorCode, "<SOLID:" + colorCode.toUpperCase() + ">");
-        }
-        return IridiumColorAPI.process(Message);
     }
 
     public static String Sha256(String Message) {
@@ -262,30 +250,34 @@ public final class Util {
         return Bukkit.getTPS();
     }
 
-    public static String i18n(String LangVaule) {
-        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule)));
+    public static String sound(String SoundKey) {
+        return SoundFileData.getString(SoundKey);
     }
 
-    public static String i18n(String LangVaule, String Vaule1) {
-        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
+    public static String i18n(String LangKey) {
+        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangKey)));
+    }
+
+    public static String i18n(String LangKey, String Vaule1) {
+        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangKey))
                 .replaceAll("%1", Vaule1));
     }
 
-    public static String i18n(String LangVaule, String Vaule1, String Vaule2) {
-        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
+    public static String i18n(String LangKey, String Vaule1, String Vaule2) {
+        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangKey))
                 .replaceAll("%1", Vaule1)
                 .replaceAll("%2", Vaule2));
     }
 
-    public static String i18n(String LangVaule, String Vaule1, String Vaule2, String Vaule3) {
-        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
+    public static String i18n(String LangKey, String Vaule1, String Vaule2, String Vaule3) {
+        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangKey))
                 .replaceAll("%1", Vaule1)
                 .replaceAll("%2", Vaule2)
                 .replaceAll("%3", Vaule3));
     }
 
-    public static String i18n(String LangVaule, String Vaule1, String Vaule2, String Vaule3, String Vaule4) {
-        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangVaule))
+    public static String i18n(String LangKey, String Vaule1, String Vaule2, String Vaule3, String Vaule4) {
+        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangKey))
                 .replaceAll("%1", Vaule1)
                 .replaceAll("%2", Vaule2)
                 .replaceAll("%3", Vaule3)
@@ -350,5 +342,15 @@ public final class Util {
         }
         OnlinePlayerList.removeAll(VanishList);
         return OnlinePlayerList;
+    }
+
+    public static void SendTitle(Player player, String TitleString) {
+        String[] Title = TitleString.split("\\|");
+        player.sendTitle(PAPIChatColor(player, Title[0]), PAPIChatColor(player, Title[1]), Integer.parseInt(Title[2]), Integer.parseInt(Title[3]), Integer.parseInt(Title[4]));
+    }
+
+    public static void PlaySound(Player player, String SoundString) {
+        String[] Sound = SoundString.split("\\|");
+        player.playSound(player, org.bukkit.Sound.valueOf(Sound[0]), Float.parseFloat(Sound[1]), Float.parseFloat(Sound[2]));
     }
 }

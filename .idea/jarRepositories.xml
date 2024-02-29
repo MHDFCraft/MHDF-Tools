@@ -22,6 +22,11 @@
       <option name="url" value="https://oss.sonatype.org/content/groups/public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="iridiumdevelopment" />
+      <option name="name" value="iridiumdevelopment" />
+      <option name="url" value="https://nexus.iridiumdevelopment.net/repository/maven-releases/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="localrepository" />
       <option name="name" value="localrepository" />
       <option name="url" value="file://D:\插件\Cheng-Tools-Reloaded/libs" />

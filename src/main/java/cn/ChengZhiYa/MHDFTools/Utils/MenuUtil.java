@@ -134,7 +134,9 @@ public final class MenuUtil {
     }
 
     public static String getPlaceholder(String Message, String LangMessage, String Placeholder) {
-        String[] OtherMessage = ChatColor(LangMessage).split(Placeholder.replaceAll("\\{", "\\\\{"));
+        String[] OtherMessage = ChatColor(LangMessage).split(
+                Placeholder.replaceAll("\\{", "\\\\{")
+        );
         for (String s : OtherMessage) {
             Message = Message.replaceAll(ChatColor(s), "");
         }
@@ -328,7 +330,7 @@ public final class MenuUtil {
         return DenyActionList;
     }
 
-    public static void RunAction(String Menu, Player player, List<String> ActionList, Integer Page, ItemStack ClickItem) {
+    public static void RunAction(String Menu, Player player, List<String> ActionList, Integer Page, ItemStack ClickItem,String MenuTitle) {
         for (String Actions : ActionList) {
             String[] Action = Actions.split("\\|");
             if (Menu.equals("HomeMenu.yml") && Page != null && ClickItem != null) {
@@ -342,7 +344,7 @@ public final class MenuUtil {
                 }
                 if (Action[0].equals("[Home]")) {
                     String DisplayName = ClickItem.getItemMeta().getDisplayName();
-                    String HomeName = getPlaceholder(DisplayName, getMenuItemHashMap().get(DisplayName), "{HomeName}");
+                    String HomeName = getPlaceholder(DisplayName, Objects.requireNonNull(getMenu(Menu).getString("Menu.ItemList." + getMenuItemHashMap().get(MenuTitle + "|" + ClickItem) + ".DisplayName")), "{HomeName}");
                     TpPlayerHome(player.getName(), HomeName);
                     continue;
                 }

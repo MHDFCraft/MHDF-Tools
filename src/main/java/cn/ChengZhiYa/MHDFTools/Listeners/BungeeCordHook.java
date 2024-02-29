@@ -22,7 +22,7 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.PlayerList;
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.ServerName;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeLocation;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class BungeeCordHook implements PluginMessageListener {
@@ -101,23 +101,26 @@ public final class BungeeCordHook implements PluginMessageListener {
             if (subchannel.equals("TpPlayer")) {
                 String PlayerName = in.readUTF();
                 String TargetPlayerName = in.readUTF();
-                Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () ->
-                                Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(Bukkit.getPlayer(TargetPlayerName)).getLocation())
-                        , 20);
+                Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
+                    Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(Bukkit.getPlayer(TargetPlayerName)).getLocation());
+                    PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                }, 20);
             }
             if (subchannel.equals("TpPlayerHome")) {
                 String PlayerName = in.readUTF();
                 String HomeName = in.readUTF();
-                Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () ->
-                                Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(getHomeLocation(PlayerName, HomeName)))
-                        , 20);
+                Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
+                    Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(getHomeLocation(PlayerName, HomeName)));
+                    PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                }, 20);
             }
             if (subchannel.equals("TpPlayerTo")) {
                 String PlayerName = in.readUTF();
-                Location Location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble(), in.readFloat(), in.readFloat());
-                Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () ->
-                                Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location)
-                        , 20);
+                Location Location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble(), (float) in.readDouble(), (float) in.readDouble());
+                Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
+                    Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location);
+                    PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                }, 20);
             }
             if (subchannel.equals("CancelTpa")) {
                 String PlayerName = in.readUTF();
@@ -145,8 +148,8 @@ public final class BungeeCordHook implements PluginMessageListener {
                 MHDFTools.instance.getConfig().set("SpawnSettings.X", in.readDouble());
                 MHDFTools.instance.getConfig().set("SpawnSettings.Y", in.readDouble());
                 MHDFTools.instance.getConfig().set("SpawnSettings.Z", in.readDouble());
-                MHDFTools.instance.getConfig().set("SpawnSettings.Yaw", in.readFloat());
-                MHDFTools.instance.getConfig().set("SpawnSettings.Pitch", in.readFloat());
+                MHDFTools.instance.getConfig().set("SpawnSettings.Yaw", in.readDouble());
+                MHDFTools.instance.getConfig().set("SpawnSettings.Pitch", in.readDouble());
                 MHDFTools.instance.saveConfig();
                 MHDFTools.instance.reloadConfig();
             }
