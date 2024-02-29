@@ -330,7 +330,7 @@ public final class MenuUtil {
         return DenyActionList;
     }
 
-    public static void RunAction(String Menu, Player player, List<String> ActionList, Integer Page, ItemStack ClickItem,String MenuTitle) {
+    public static void RunAction(String Menu, Player player, List<String> ActionList, Integer Page, ItemStack ClickItem, String MenuTitle) {
         for (String Actions : ActionList) {
             String[] Action = Actions.split("\\|");
             if (Menu.equals("HomeMenu.yml") && Page != null && ClickItem != null) {

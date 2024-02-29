@@ -23,9 +23,9 @@ public final class ClickCustomMenu implements Listener {
                     String Item = getMenuItemHashMap().get(event.getView().getTitle() + "|" + event.getCurrentItem().toString());
                     List<String> DenyActionList = AllowClickAction(player, getMenu(MenuFileName), Item);
                     if (DenyActionList.isEmpty()) {
-                        RunAction(MenuFileName, player, getMenu(MenuFileName).getStringList("Menu.ItemList." + Item + ".ClickAction"), null, null,null);
+                        RunAction(MenuFileName, player, getMenu(MenuFileName).getStringList("Menu.ItemList." + Item + ".ClickAction"), null, null, null);
                     } else {
-                        RunAction(MenuFileName, player, DenyActionList, null, null,null);
+                        RunAction(MenuFileName, player, DenyActionList, null, null, null);
                     }
                 }
             }
