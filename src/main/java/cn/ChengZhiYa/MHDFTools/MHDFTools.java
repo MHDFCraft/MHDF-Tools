@@ -53,7 +53,7 @@ import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
 import static cn.chengzhiya.mhdfpluginapi.YamlFileUtil.SaveResource;
 
 public final class MHDFTools extends JavaPlugin implements Listener {
-    public static final String Version = "1.3.6";
+    public static final String Version = "1.4.0";
     public static MHDFTools instance;
     public static boolean PAPI = true;
     public static boolean PLIB = true;
@@ -64,6 +64,100 @@ public final class MHDFTools extends JavaPlugin implements Listener {
 
     public static PluginDescriptionFile getDescriptionFile() {
         return descriptionFile;
+    }
+
+    public static void initializationYamlData() {
+        if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+            File HomeFile = new File(MHDFTools.instance.getDataFolder() + "/HomeData");
+            if (!HomeFile.exists()) {
+                HomeFile.mkdirs();
+            }
+        }
+        if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
+            File VaultData = new File(MHDFTools.instance.getDataFolder() + "/VaultData");
+            if (!VaultData.exists()) {
+                VaultData.mkdirs();
+            }
+        }
+        File LoginFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
+        if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
+            if (!LoginFile.exists()) {
+                try {
+                    LoginFile.createNewFile();
+                } catch (IOException ignored) {
+                }
+            }
+        }
+    }
+
+    public static void initializationDatabaseData() {
+        try {
+            HikariConfig config = new HikariConfig();
+            config.setJdbcUrl("jdbc:mysql://" + MHDFTools.instance.getConfig().getString("DataSettings.Host") + "/" + MHDFTools.instance.getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
+            config.setUsername(MHDFTools.instance.getConfig().getString("DataSettings.User"));
+            config.setPassword(MHDFTools.instance.getConfig().getString("DataSettings.Password"));
+            config.addDataSourceProperty("useUnicode", "true");
+            config.addDataSourceProperty("characterEncoding", "utf8");
+            config.addDataSourceProperty("cachePrepStmts", "true");
+            config.addDataSourceProperty("prepStmtCacheSize", "250");
+            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+            dataSource = new HikariDataSource(config);
+            statement = dataSource.getConnection().createStatement();
+        } catch (SQLException ignored) {
+            ColorLog("&c无法连接数据库");
+        }
+        try {
+            {
+                if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Economy` (" +
+                            "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "`Money` DECIMAL(20,4) NOT NULL DEFAULT 0," +
+                            "PRIMARY KEY (`PlayerName`)) " +
+                            "COLLATE='utf8mb4_general_ci';");
+                    ps.executeUpdate();
+                    ps.close();
+                    connection.close();
+                }
+            }
+            {
+                if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Home` (" +
+                            "`ID` BIGINT NOT NULL AUTO_INCREMENT," +
+                            "`Home` VARCHAR(100) NOT NULL DEFAULT ''," +
+                            "`Owner` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "`Server` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "`World` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "`X` DOUBLE NOT NULL DEFAULT 0," +
+                            "`Y` DOUBLE NOT NULL DEFAULT 0," +
+                            "`Z` DOUBLE NOT NULL DEFAULT 0," +
+                            "`Yaw` DOUBLE NOT NULL DEFAULT 0," +
+                            "`Pitch` DOUBLE NOT NULL DEFAULT 0," +
+                            "PRIMARY KEY (`ID`)," +
+                            "INDEX `Home` (`Home`)," +
+                            "INDEX `Owner` (`Owner`)) " +
+                            "COLLATE='utf8mb4_general_ci';");
+                    ps.executeUpdate();
+                    ps.close();
+                    connection.close();
+                }
+            }
+            {
+                if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Login` (" +
+                            "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "`Password` VARCHAR(200) NOT NULL DEFAULT ''," +
+                            "PRIMARY KEY (`PlayerName`)) " +
+                            "COLLATE='utf8mb4_general_ci';");
+                    ps.executeUpdate();
+                    ps.close();
+                    connection.close();
+                }
+            }
+        } catch (SQLException ignored) {
+        }
     }
 
     @Override
@@ -387,9 +481,8 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     registerCommand(this, new MoneyAdmin(), "管理员管理", "ma");
                 }
             }
-            registerCommand(this, new Reload(), "重载插件", "chengtoolsreload");
-            registerCommand(this, new Reload(), "重载插件", "ctreload");
-            registerCommand(this, new Reload(), "重载插件", "ctr");
+            registerCommand(this, new cn.ChengZhiYa.MHDFTools.Commands.MHDFTools(), "重载插件", "mhdftools");
+            registerCommand(this, new cn.ChengZhiYa.MHDFTools.Commands.MHDFTools(), "重载插件", "mt");
             Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
             Bukkit.getPluginManager().registerEvents(new CustomJoinQuitMessage(), this);
             Bukkit.getPluginManager().registerEvents(new JoinTeleportSpawn(), this);
@@ -463,93 +556,5 @@ public final class MHDFTools extends JavaPlugin implements Listener {
         is.close();
         fileOutputStream.flush();
         return fileOutputStream;
-    }
-
-    public void initializationYamlData() {
-        File Login_File = new File(getDataFolder(), "LoginData.yml");
-        if (getConfig().getBoolean("HomeSystemSettings.Enable")) {
-            File HomeFile = new File(getDataFolder() + "/HomeData");
-            if (!HomeFile.exists()) {
-                HomeFile.mkdirs();
-            }
-        }
-        if (getConfig().getBoolean("EconomySettings.Enable")) {
-            File VaultData = new File(getDataFolder() + "/VaultData");
-            if (!VaultData.exists()) {
-                VaultData.mkdirs();
-            }
-        }
-        if (getConfig().getBoolean("LoginSystemSettings.Enable")) {
-            if (!Login_File.exists()) {
-                try {
-                    Login_File.createNewFile();
-                } catch (IOException ignored) {
-                }
-            }
-        }
-    }
-
-    public void initializationDatabaseData() {
-        try {
-            HikariConfig config = new HikariConfig();
-            config.setJdbcUrl("jdbc:mysql://" + getConfig().getString("DataSettings.Host") + "/" + getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
-            config.setUsername(getConfig().getString("DataSettings.User"));
-            config.setPassword(getConfig().getString("DataSettings.Password"));
-            config.addDataSourceProperty("useUnicode", "true");
-            config.addDataSourceProperty("characterEncoding", "utf8");
-            config.addDataSourceProperty("cachePrepStmts", "true");
-            config.addDataSourceProperty("prepStmtCacheSize", "250");
-            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-            dataSource = new HikariDataSource(config);
-            statement = dataSource.getConnection().createStatement();
-        } catch (SQLException ignored) {
-            ColorLog("&c无法连接数据库");
-        }
-        try {
-            {
-                Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Economy` (" +
-                        "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
-                        "`Money` DECIMAL(20,4) NOT NULL DEFAULT 0," +
-                        "PRIMARY KEY (`PlayerName`)) " +
-                        "COLLATE='utf8mb4_general_ci';");
-                ps.executeUpdate();
-                ps.close();
-                connection.close();
-            }
-            {
-                Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Home` (" +
-                        "`ID` BIGINT NOT NULL AUTO_INCREMENT," +
-                        "`Home` VARCHAR(100) NOT NULL DEFAULT ''," +
-                        "`Owner` VARCHAR(50) NOT NULL DEFAULT ''," +
-                        "`Server` VARCHAR(50) NOT NULL DEFAULT ''," +
-                        "`World` VARCHAR(50) NOT NULL DEFAULT ''," +
-                        "`X` DOUBLE NOT NULL DEFAULT 0," +
-                        "`Y` DOUBLE NOT NULL DEFAULT 0," +
-                        "`Z` DOUBLE NOT NULL DEFAULT 0," +
-                        "`Yaw` DOUBLE NOT NULL DEFAULT 0," +
-                        "`Pitch` DOUBLE NOT NULL DEFAULT 0," +
-                        "PRIMARY KEY (`ID`)," +
-                        "INDEX `Home` (`Home`)," +
-                        "INDEX `Owner` (`Owner`)) " +
-                        "COLLATE='utf8mb4_general_ci';");
-                ps.executeUpdate();
-                ps.close();
-                connection.close();
-            }
-            {
-                Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Login` (" +
-                        "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
-                        "`Password` VARCHAR(200) NOT NULL DEFAULT ''," +
-                        "PRIMARY KEY (`PlayerName`)) " +
-                        "COLLATE='utf8mb4_general_ci';");
-                ps.executeUpdate();
-                ps.close();
-                connection.close();
-            }
-        } catch (SQLException ignored) {
-        }
     }
 }

@@ -128,7 +128,7 @@ public final class HomeUtil {
                 }
             }
             YamlConfiguration PlayerHomeData = YamlConfiguration.loadConfiguration(HomeData_File);
-            return PlayerHomeData.getStringList(PlayerName + "_HomeList");
+            return new ArrayList<>(Objects.requireNonNull(PlayerHomeData.getConfigurationSection("")).getKeys(false));
         }
         return new ArrayList<>();
     }
@@ -265,9 +265,6 @@ public final class HomeUtil {
                 }
             }
             YamlConfiguration PlayerHomeData = YamlConfiguration.loadConfiguration(HomeData_File);
-            List<String> HomeList = PlayerHomeData.getStringList(PlayerName + "_HomeList");
-            HomeList.add(HomeName);
-            PlayerHomeData.set(PlayerName + "_HomeList", HomeList);
             PlayerHomeData.set(HomeName + ".World", HomeLocation.getWorld().getName());
             PlayerHomeData.set(HomeName + ".X", HomeLocation.getX());
             PlayerHomeData.set(HomeName + ".Y", HomeLocation.getY());
@@ -278,6 +275,38 @@ public final class HomeUtil {
                 PlayerHomeData.save(HomeData_File);
             } catch (IOException ignored) {
             }
+        }
+    }
+
+    public static void AddHome(String ServerName, String PlayerName, String HomeName, Location HomeLocation) {
+        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+            Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+                try {
+                    List<String> HomeList = getPlayerHomeList(PlayerName);
+                    HomeList.add(HomeName);
+                    getHomeListHashMap().put(PlayerName, HomeList);
+                    getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
+                    getHomeServerHashMap().put(PlayerName + "|" + HomeName, getHomeServerName());
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("INSERT INTO MHDFTools_Home (Home, Owner, Server, World, X, Y, Z, Yaw, Pitch) VALUES (?,?,?,?,?,?,?,?,?)");
+                    ps.setString(1, HomeName);
+                    ps.setString(2, PlayerName);
+                    ps.setString(3, ServerName);
+                    ps.setString(4, HomeLocation.getWorld().getName());
+                    ps.setDouble(5, HomeLocation.getX());
+                    ps.setDouble(6, HomeLocation.getY());
+                    ps.setDouble(7, HomeLocation.getZ());
+                    ps.setDouble(8, HomeLocation.getYaw());
+                    ps.setDouble(9, HomeLocation.getPitch());
+                    ps.executeUpdate();
+                    ps.close();
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+        } else {
+            AddHome(PlayerName, HomeName, HomeLocation);
         }
     }
 
@@ -330,6 +359,37 @@ public final class HomeUtil {
         }
     }
 
+    public static void SetHome(String ServerName, String PlayerName, String HomeName, Location HomeLocation) {
+        if (ifHomeExists(PlayerName, HomeName)) {
+            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+                    try {
+                        getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
+                        getHomeServerHashMap().put(PlayerName + "|" + HomeName, getHomeServerName());
+                        Connection connection = dataSource.getConnection();
+                        PreparedStatement ps = connection.prepareStatement("UPDATE MHDFTools_Home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?");
+                        ps.setString(1, ServerName);
+                        ps.setString(2, HomeLocation.getWorld().getName());
+                        ps.setDouble(3, HomeLocation.getX());
+                        ps.setDouble(4, HomeLocation.getY());
+                        ps.setDouble(5, HomeLocation.getZ());
+                        ps.setDouble(6, HomeLocation.getYaw());
+                        ps.setDouble(7, HomeLocation.getPitch());
+                        ps.setString(8, HomeName);
+                        ps.setString(9, PlayerName);
+                        ps.executeUpdate();
+                        ps.close();
+                        connection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                });
+            } else {
+                SetHome(PlayerName, HomeName, HomeLocation);
+            }
+        }
+    }
+
     public static void RemoveHome(String PlayerName, String HomeName) {
         if (ifHomeExists(PlayerName, HomeName)) {
             if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
@@ -361,9 +421,6 @@ public final class HomeUtil {
                     }
                 }
                 YamlConfiguration PlayerHomeData = YamlConfiguration.loadConfiguration(HomeData_File);
-                List<String> HomeList = PlayerHomeData.getStringList(PlayerName + "_HomeList");
-                HomeList.remove(HomeName);
-                PlayerHomeData.set(PlayerName + "_HomeList", HomeList);
                 PlayerHomeData.set(HomeName + ".World", null);
                 PlayerHomeData.set(HomeName + ".X", null);
                 PlayerHomeData.set(HomeName + ".Y", null);

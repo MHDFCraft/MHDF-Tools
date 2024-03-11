@@ -69,43 +69,75 @@ public final class EconomyUtil {
     }
 
     public static double getMoney(String PlayerName) {
-        if (getMoneyHashMap().get(PlayerName) == null) {
-            try {
-                BigDecimal bg = (BigDecimal) GetData("MHDFTools_Economy", "PlayerName", PlayerName, "Money");
-                getMoneyHashMap().put(PlayerName, bg);
-                return bg.doubleValue();
-            } catch (Exception e) {
-                getMoneyHashMap().put(PlayerName, BigDecimal.valueOf(0.0));
-                return 0.0;
+        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+            if (getMoneyHashMap().get(PlayerName) == null) {
+                try {
+                    BigDecimal bg = getBigDecimal((Double) GetData("MHDFTools_Economy", "PlayerName", PlayerName, "Money"));
+                    getMoneyHashMap().put(PlayerName, bg);
+                    return bg.doubleValue();
+                } catch (Exception e) {
+                    getMoneyHashMap().put(PlayerName, BigDecimal.valueOf(0.0));
+                    return 0.0;
+                }
+            } else {
+                return getMoneyHashMap().get(PlayerName).doubleValue();
             }
         } else {
-            return getMoneyHashMap().get(PlayerName).doubleValue();
+            YamlConfiguration Data = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
+            return getBigDecimal(Data.getDouble("money")).doubleValue();
         }
     }
 
     public static void setMoney(String PlayerName, Double Money) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (ifPlayerFileExists(PlayerName)) {
-                getMoneyHashMap().put(PlayerName, getBigDecimal(Money));
-                Set("MHDFTools_Economy", "PlayerName", PlayerName, "Money", Money);
+            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                if (ifPlayerFileExists(PlayerName)) {
+                    getMoneyHashMap().put(PlayerName, getBigDecimal(Money));
+                    Set("MHDFTools_Economy", "PlayerName", PlayerName, "Money", Money);
+                }
+            } else {
+                YamlConfiguration Data = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
+                Data.set("money", getBigDecimal(Money));
+                try {
+                    Data.save(getPlayerFile(PlayerName));
+                } catch (IOException ignored) {
+                }
             }
         });
     }
 
     public static void addMoney(String PlayerName, Double Money) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (ifPlayerFileExists(PlayerName)) {
-                getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).add(getBigDecimal(Money)));
-                Add("MHDFTools_Economy", "PlayerName", PlayerName, "Money", Money);
+            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                if (ifPlayerFileExists(PlayerName)) {
+                    getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).add(getBigDecimal(Money)));
+                    Add("MHDFTools_Economy", "PlayerName", PlayerName, "Money", Money);
+                }
+            } else {
+                YamlConfiguration Data = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
+                Data.set("money", getBigDecimal(Data.getDouble("money")).add(getBigDecimal(Money)));
+                try {
+                    Data.save(getPlayerFile(PlayerName));
+                } catch (IOException ignored) {
+                }
             }
         });
     }
 
     public static void takeMoney(String PlayerName, Double Money) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (ifPlayerFileExists(PlayerName)) {
-                getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).subtract(getBigDecimal(Money)));
-                Take("MHDFTools_Economy", "PlayerName", PlayerName, "Money", Money);
+            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                if (ifPlayerFileExists(PlayerName)) {
+                    getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).subtract(getBigDecimal(Money)));
+                    Take("MHDFTools_Economy", "PlayerName", PlayerName, "Money", Money);
+                }
+            } else {
+                YamlConfiguration Data = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
+                Data.set("money", getBigDecimal(Data.getDouble("money")).subtract(getBigDecimal(Money)));
+                try {
+                    Data.save(getPlayerFile(PlayerName));
+                } catch (IOException ignored) {
+                }
             }
         });
     }

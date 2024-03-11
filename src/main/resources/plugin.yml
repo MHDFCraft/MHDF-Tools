@@ -6,6 +6,8 @@ authors: [ ChengZhiYa ]
 softdepend: [ Vault, PlaceholderAPI, ProtocolLib ]
 description: qwq
 permissions:
+  MHDFTools.Admin:
+    default: op
   MHDFTools.Command.Gamemode:
     default: op
   MHDFTools.Command.Fly:
@@ -23,8 +25,6 @@ permissions:
   MHDFTools.Command.Sun:
     default: op
   MHDFTools.Command.Invsee:
-    default: op
-  MHDFTools.Command.Reload:
     default: op
   MHDFTools.Command.PlayerTitle:
     default: op
