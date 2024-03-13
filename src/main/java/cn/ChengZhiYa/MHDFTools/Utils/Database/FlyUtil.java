@@ -20,8 +20,8 @@ import static cn.ChengZhiYa.MHDFTools.Utils.Database.DatabaseUtil.DataExists;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.DatabaseUtil.Take;
 
 public final class FlyUtil {
-    public static List<String> InFlyList = new ArrayList<>();
-    static HashMap<String, Integer> FlyTimeHashMap = new HashMap<>();
+    public static final List<String> InFlyList = new ArrayList<>();
+    static final HashMap<String, Integer> FlyTimeHashMap = new HashMap<>();
 
     public static HashMap<String, Integer> getFlyTimeHashMap() {
         return FlyTimeHashMap;

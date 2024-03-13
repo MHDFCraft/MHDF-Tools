@@ -27,7 +27,6 @@ public final class LoginUtil {
 
     public static boolean CheckPassword(String PlayerName, String Password) {
         if (LoginExists(PlayerName)) {
-            System.out.println(Password);
             if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 try {
                     Connection connection = dataSource.getConnection();
