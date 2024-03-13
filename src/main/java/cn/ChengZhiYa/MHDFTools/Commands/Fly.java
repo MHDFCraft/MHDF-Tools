@@ -26,7 +26,7 @@ public final class Fly implements CommandExecutor {
                     player.sendMessage(i18n("Fly.Done", i18n("Fly.Disabled")));
                     StringHasMap.getHasMap().put(player.getName() + "_Fly", null);
                 } else {
-                    addFly(player.getName(),-999);
+                    addFly(player.getName(), -999);
                     InFlyList.add(player.getName());
                     player.setAllowFlight(true);
                     player.sendMessage(i18n("Fly.Done", i18n("Fly.Enable")));
@@ -63,7 +63,7 @@ public final class Fly implements CommandExecutor {
                         sender.sendMessage(i18n("Fly.SetDone", player.getName(), i18n("Fly.Disabled")));
                         StringHasMap.getHasMap().put(player.getName() + "_Fly", null);
                     } else {
-                        addFly(player.getName(),-999);
+                        addFly(player.getName(), -999);
                         InFlyList.add(player.getName());
                         player.setAllowFlight(true);
                         player.sendMessage(i18n("Fly.Done", i18n("Fly.Enable")));

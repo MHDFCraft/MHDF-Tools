@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +16,8 @@ import java.util.List;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.MHDFTools.dataSource;
-import static cn.ChengZhiYa.MHDFTools.Utils.Database.DatabaseUtil.*;
+import static cn.ChengZhiYa.MHDFTools.Utils.Database.DatabaseUtil.DataExists;
+import static cn.ChengZhiYa.MHDFTools.Utils.Database.DatabaseUtil.Take;
 
 public final class FlyUtil {
     public static List<String> InFlyList = new ArrayList<>();
@@ -42,9 +44,24 @@ public final class FlyUtil {
     public static int getFlyTime(String PlayerName) {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
             if (getFlyTimeHashMap().get(PlayerName) == null) {
-                int PlayerTime = (int) GetData("MHDFTools_Fly", "PlayerName", PlayerName, "Time");
-                getFlyTimeHashMap().put(PlayerName, PlayerTime);
-                return PlayerTime;
+                try {
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Fly WHERE PlayerName = ? LIMIT 1");
+                    ps.setString(1, PlayerName);
+                    ResultSet rs = ps.executeQuery();
+                    int Time = -5835;
+                    if (rs.next()) {
+                        Time = rs.getInt("Time");
+                        getFlyTimeHashMap().put(PlayerName, Time);
+                    }
+                    rs.close();
+                    ps.close();
+                    connection.close();
+                    return Time;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return 0;
+                }
             } else {
                 return getFlyTimeHashMap().get(PlayerName);
             }
@@ -59,7 +76,7 @@ public final class FlyUtil {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
             if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getFlyTimeHashMap().put(PlayerName, getFlyTimeHashMap().get(PlayerName) - TakeTime);
-                Take("MHDF_Tools", "PlayerName", PlayerName, "Time", TakeTime);
+                Take("MHDFTools_Fly", "PlayerName", PlayerName, "Time", TakeTime);
             } else {
                 File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
                 YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);

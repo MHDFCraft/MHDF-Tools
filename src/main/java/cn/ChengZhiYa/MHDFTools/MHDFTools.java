@@ -207,7 +207,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     Connection connection = dataSource.getConnection();
                     PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Fly` (" +
                             "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
-                            "`Password` INT NOT NULL DEFAULT ''," +
+                            "`Time` INT NOT NULL DEFAULT 0," +
                             "PRIMARY KEY (`PlayerName`)) " +
                             "COLLATE='utf8mb4_general_ci';");
                     ps.executeUpdate();
@@ -215,7 +215,8 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     connection.close();
                 }
             }
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
