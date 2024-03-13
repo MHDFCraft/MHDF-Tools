@@ -353,4 +353,43 @@ public final class Util {
         String[] Sound = SoundString.split("\\|");
         player.playSound(player, org.bukkit.Sound.valueOf(Sound[0]), Float.parseFloat(Sound[1]), Float.parseFloat(Sound[2]));
     }
+
+    public static String getTimeString(int Time) {
+        int seconds = Time % 60;
+
+        int totalMinutes = Time / 60;
+        int minutes = totalMinutes % 60;
+
+        int totalHours = totalMinutes / 60;
+        int hours = totalHours % 24;
+
+        int totalDays = totalHours / 24;
+        int days = totalDays % 30;
+
+        int totalMonths = totalDays / 30;
+        int months = totalMonths % 12;
+
+        int years = totalMonths / 12;
+
+        StringBuilder sb = new StringBuilder();
+        if (years > 0) {
+            sb.append(years).append("年");
+        }
+        if (months > 0) {
+            sb.append(months).append("月");
+        }
+        if (days > 0) {
+            sb.append(days).append("日");
+        }
+        if (hours > 0) {
+            sb.append(hours).append("时");
+        }
+        if (minutes > 0) {
+            sb.append(minutes).append("分");
+        }
+        if (seconds > 0) {
+            sb.append(seconds).append("秒");
+        }
+        return sb.toString();
+    }
 }

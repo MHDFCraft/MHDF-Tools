@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools;
 
 import cn.ChengZhiYa.MHDFTools.Commands.Back;
+import cn.ChengZhiYa.MHDFTools.Commands.Fly;
 import cn.ChengZhiYa.MHDFTools.Commands.TpBack;
 import cn.ChengZhiYa.MHDFTools.Commands.Vanish;
 import cn.ChengZhiYa.MHDFTools.Commands.*;
@@ -67,20 +68,40 @@ public final class MHDFTools extends JavaPlugin implements Listener {
     }
 
     public static void initializationYamlData() {
+        //家系统数据文件夹
         if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
             File HomeFile = new File(MHDFTools.instance.getDataFolder() + "/HomeData");
             if (!HomeFile.exists()) {
                 HomeFile.mkdirs();
             }
         }
+        //家系统菜单与菜单系统
+        if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable") || MHDFTools.instance.getConfig().getBoolean("MenuEnable")) {
+            File MenuHome = new File(MHDFTools.instance.getDataFolder(), "Menus");
+            if (!MenuHome.exists()) {
+                MenuHome.mkdirs();
+                if (MHDFTools.instance.getConfig().getBoolean("MenuEnable")) {
+                    SaveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", true);
+                }
+            }
+        }
+        //家系统
+        if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+            File HomeMenuFile = new File(MHDFTools.instance.getDataFolder(), "Menus/HomeMenu.yml");
+            if (!HomeMenuFile.exists()) {
+                SaveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", true);
+            }
+        }
+        //经济系统数据文件夹
         if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
             File VaultData = new File(MHDFTools.instance.getDataFolder() + "/VaultData");
             if (!VaultData.exists()) {
                 VaultData.mkdirs();
             }
         }
-        File LoginFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
+        //登录系统
         if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
+            File LoginFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
             if (!LoginFile.exists()) {
                 try {
                     LoginFile.createNewFile();
@@ -88,9 +109,30 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 }
             }
         }
+        //隐身系统
+        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable") && MHDFTools.instance.getConfig().getBoolean("VanishSettings.SaveVanishData")) {
+            File VanishCacheFile = new File(MHDFTools.instance.getDataFolder(), "Cache/VanishCache.yml");
+            if (!VanishCacheFile.exists()) {
+                try {
+                    VanishCacheFile.createNewFile();
+                } catch (IOException ignored) {
+                }
+            }
+        }
+        //飞行系统
+        if (MHDFTools.instance.getConfig().getBoolean("FlySettings.Enable")) {
+            File FlyCacheFile = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
+            if (!FlyCacheFile.exists()) {
+                try {
+                    FlyCacheFile.createNewFile();
+                } catch (IOException ignored) {
+                }
+            }
+        }
     }
 
     public static void initializationDatabaseData() {
+        //连接数据库
         try {
             HikariConfig config = new HikariConfig();
             config.setJdbcUrl("jdbc:mysql://" + MHDFTools.instance.getConfig().getString("DataSettings.Host") + "/" + MHDFTools.instance.getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
@@ -107,6 +149,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             ColorLog("&c无法连接数据库");
         }
         try {
+            //经济系统
             {
                 if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
                     Connection connection = dataSource.getConnection();
@@ -120,6 +163,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     connection.close();
                 }
             }
+            //家系统
             {
                 if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
                     Connection connection = dataSource.getConnection();
@@ -143,12 +187,27 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     connection.close();
                 }
             }
+            //登录系统
             {
                 if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
                     Connection connection = dataSource.getConnection();
                     PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Login` (" +
                             "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                             "`Password` VARCHAR(200) NOT NULL DEFAULT ''," +
+                            "PRIMARY KEY (`PlayerName`)) " +
+                            "COLLATE='utf8mb4_general_ci';");
+                    ps.executeUpdate();
+                    ps.close();
+                    connection.close();
+                }
+            }
+            //飞行系统
+            {
+                if (MHDFTools.instance.getConfig().getBoolean("FlySettings.Enable")) {
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Fly` (" +
+                            "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "`Password` INT NOT NULL DEFAULT ''," +
                             "PRIMARY KEY (`PlayerName`)) " +
                             "COLLATE='utf8mb4_general_ci';");
                     ps.executeUpdate();
@@ -292,19 +351,6 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             }
             SoundFileData = YamlConfiguration.loadConfiguration(Sound_File);
 
-            File MenuHome = new File(getDataFolder(), "Menus");
-            if (!MenuHome.exists()) {
-                MenuHome.mkdirs();
-                if (getConfig().getBoolean("MenuEnable")) {
-                    SaveResource(getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", true);
-                }
-            }
-
-            File HomeMenuFile = new File(getDataFolder(), "Menus/HomeMenu.yml");
-            if (!HomeMenuFile.exists()) {
-                SaveResource(getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", true);
-            }
-
             File CacheHome = new File(getDataFolder(), "Cache");
             if (!CacheHome.exists()) {
                 CacheHome.mkdirs();
@@ -357,8 +403,10 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("MOTDSettings.Enable")) {
                 Bukkit.getPluginManager().registerEvents(new MOTD(), this);
             }
-            if (getConfig().getBoolean("FlyEnable")) {
+            if (getConfig().getBoolean("FlySettings.Enable")) {
                 registerCommand(this, new Fly(), "飞行系统", "fly");
+                registerCommand(this, new FlyTime(), "限时飞行系统", "flytime");
+                new cn.ChengZhiYa.MHDFTools.Tasks.Fly().runTaskTimerAsynchronously(this, 0L, 20L);
                 Bukkit.getPluginManager().registerEvents(new AutoFly(), this);
             }
             if (getConfig().getBoolean("BackSettings.Enable")) {
@@ -381,12 +429,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 new cn.ChengZhiYa.MHDFTools.Tasks.Vanish().runTaskTimerAsynchronously(this, 0L, 20L);
                 if (getConfig().getBoolean("VanishSettings.SaveVanishData")) {
                     File VanishCacheFile = new File(getDataFolder(), "Cache/VanishCache.yml");
-                    if (!VanishCacheFile.exists()) {
-                        try {
-                            VanishCacheFile.createNewFile();
-                        } catch (IOException ignored) {
-                        }
-                    } else {
+                    if (VanishCacheFile.exists()) {
                         YamlConfiguration VanishCache = YamlConfiguration.loadConfiguration(VanishCacheFile);
                         if (VanishCache.get("VanishList") != null) {
                             VanishList = VanishCache.getStringList("VanishList");

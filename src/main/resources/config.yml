@@ -280,14 +280,25 @@ TpBackSettings:
   DisableWorldList:
     - "pvp"
 
+
+#飞行系统设置
+FlySettings:
+  #开关
+  Enable: true
+  #当开启飞行时触发指定事件自动重新启用飞行
+  AutoOpenSettings:
+    #切换世界时
+    ChangeWorld: true
+    #重生
+    ReSpawn: true
+    #重新加入
+    ReJoin: true
+
 #反跳略系统
 AntiTiaoLue: true
 
 #更简单的Gamemode
 EasyGamemodeCommandEnable: true
-
-#Fly系统
-FlyEnable: true
 
 #Invsee系统
 InvseeEnable: true
