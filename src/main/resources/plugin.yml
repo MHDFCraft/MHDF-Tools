@@ -58,3 +58,8 @@ permissions:
     default: true
   MHDFTools.QuitMessage:
     default: true
+libraries:
+  - 'com.alibaba:fastjson:1.2.83'
+  - 'com.mojang:brigadier:1.0.18'
+  - 'com.zaxxer:HikariCP:5.0.1'
+  - 'org.apache.httpcomponents:httpclient:4.5.13'

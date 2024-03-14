@@ -40,16 +40,18 @@ public final class PlayerJoin implements Listener {
             initializationPlayerData(event.getPlayer().getName());
         }
         if (MHDFTools.instance.getConfig().getBoolean("CheckVersion")) {
-            Player player = event.getPlayer();
-            if (player.hasPermission("MHDFTools.Op")) {
-                if (!BooleanHasMap.getHasMap().get("CheckVersionError")) {
-                    if (!BooleanHasMap.getHasMap().get("IsLast")) {
-                        player.sendMessage(ChatColor("&cCheng-Tools不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/"));
+            try {
+                Player player = event.getPlayer();
+                if (player.hasPermission("MHDFTools.Op")) {
+                    if (!BooleanHasMap.getHasMap().get("CheckVersionError")) {
+                        if (!BooleanHasMap.getHasMap().get("IsLast")) {
+                            player.sendMessage(ChatColor("&cCheng-Tools不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/"));
+                        }
+                    } else {
+                        player.sendMessage(ChatColor("&cCheng-Tools无法检查更新!"));
                     }
-                } else {
-                    player.sendMessage(ChatColor("&cCheng-Tools无法检查更新!"));
                 }
-            }
+            }catch (Exception ignored) {}
         }
         if (MHDFTools.instance.getConfig().getBoolean("TpaSetting.Enable")) {
             Player player = event.getPlayer();

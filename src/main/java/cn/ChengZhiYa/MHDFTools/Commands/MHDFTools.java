@@ -16,7 +16,8 @@ import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.ConvertData.MySQLToYAML;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.ConvertData.YAMLToMySQL;
-import static cn.ChengZhiYa.MHDFTools.Utils.Database.ImportUtil.ImportHuskHomesMySQLData;
+import static cn.ChengZhiYa.MHDFTools.Utils.Database.ImportUtil.ImportCMIData;
+import static cn.ChengZhiYa.MHDFTools.Utils.Database.ImportUtil.ImportHuskHomesData;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
 
 public final class MHDFTools implements TabExecutor {
@@ -62,14 +63,17 @@ public final class MHDFTools implements TabExecutor {
                     return true;
                 }
             }
-            if (args.length == 6) {
+            if (args.length == 2) {
                 if (args[0].equals("import")) {
                     switch (args[1]) {
                         case "HuskHomes":
-                            ImportHuskHomesMySQLData(sender, args[2], args[3], args[4], args[5]);
+                            ImportHuskHomesData(sender);
+                            break;
+                        case "CMI":
+                            ImportCMIData(sender);
                             break;
                         default:
-                            sender.sendMessage(i18n("AdminCommands.import.NotFoundType"));
+                            sender.sendMessage(i18n("AdminCommands.import.NotFoundPlugin"));
                             break;
                     }
                     return true;
@@ -99,7 +103,7 @@ public final class MHDFTools implements TabExecutor {
                 case "convert":
                     return Arrays.asList("YAML", "MySQL");
                 case "import":
-                    return Arrays.asList("HuskHomes");
+                    return Arrays.asList("HuskHomes","CMI");
             }
         }
         return new ArrayList<>();
