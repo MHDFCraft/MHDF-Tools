@@ -30,7 +30,7 @@ public final class ImportUtil {
                 try {
                     File HuskHomesPluginDataHome = new File(MHDFTools.instance.getDataFolder().getAbsoluteFile().getParent() + "\\HuskHomes\\");
                     if (HuskHomesPluginDataHome.exists()) {
-                        YamlConfiguration HuskHomesConfig = YamlConfiguration.loadConfiguration(new File(HuskHomesPluginDataHome,"config.yml"));
+                        YamlConfiguration HuskHomesConfig = YamlConfiguration.loadConfiguration(new File(HuskHomesPluginDataHome, "config.yml"));
                         HikariConfig config = new HikariConfig();
                         DataSource dataSource;
                         {
@@ -114,15 +114,15 @@ public final class ImportUtil {
                             ps.close();
                             connection.close();
                         }
-                    }else {
-                        sender.sendMessage(i18n("AdminCommands.import.PluginNotInstall","HuskHomes"));
+                    } else {
+                        sender.sendMessage(i18n("AdminCommands.import.PluginNotInstall", "HuskHomes"));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                     sender.sendMessage(i18n("AdminCommands.import.ImportError"));
                 }
-            }else {
-                sender.sendMessage(i18n("AdminCommands.import.NotImport","Home"));
+            } else {
+                sender.sendMessage(i18n("AdminCommands.import.NotImport", "Home"));
             }
             sender.sendMessage(i18n("AdminCommands.import.ImportDone", "HuskHomes"));
         });
@@ -135,7 +135,7 @@ public final class ImportUtil {
                 try {
                     File HuskHomesPluginDataHome = new File(MHDFTools.instance.getDataFolder().getAbsoluteFile().getParent() + "\\CMI\\");
                     if (HuskHomesPluginDataHome.exists()) {
-                        YamlConfiguration HuskHomesConfig = YamlConfiguration.loadConfiguration(new File(HuskHomesPluginDataHome,"Settings/DataBaseInfo.yml"));
+                        YamlConfiguration HuskHomesConfig = YamlConfiguration.loadConfiguration(new File(HuskHomesPluginDataHome, "Settings/DataBaseInfo.yml"));
                         HikariConfig config = new HikariConfig();
                         DataSource dataSource;
                         {
@@ -167,7 +167,7 @@ public final class ImportUtil {
                             ResultSet rs = ps.executeQuery();
                             while (rs.next()) {
                                 String PlayerName = rs.getString("username");
-                                String[] HomeDatas = rs.getString("Homes").replaceAll("\\$-0%%",":").split(";");
+                                String[] HomeDatas = rs.getString("Homes").replaceAll("\\$-0%%", ":").split(";");
                                 for (String HomeData : HomeDatas) {
                                     String[] Data = HomeData.split(":");
                                     if (!ifHomeExists(PlayerName, Data[0])) {
@@ -196,15 +196,15 @@ public final class ImportUtil {
                             ps.close();
                             connection.close();
                         }
-                    }else {
-                        sender.sendMessage(i18n("AdminCommands.import.PluginNotInstall","CMI"));
+                    } else {
+                        sender.sendMessage(i18n("AdminCommands.import.PluginNotInstall", "CMI"));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                     sender.sendMessage(i18n("AdminCommands.import.ImportError"));
                 }
-            }else {
-                sender.sendMessage(i18n("AdminCommands.import.NotImport","Home"));
+            } else {
+                sender.sendMessage(i18n("AdminCommands.import.NotImport", "Home"));
             }
             sender.sendMessage(i18n("AdminCommands.import.ImportDone", "CMI"));
         });

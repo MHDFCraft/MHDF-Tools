@@ -103,7 +103,7 @@ public final class MHDFTools implements TabExecutor {
                 case "convert":
                     return Arrays.asList("YAML", "MySQL");
                 case "import":
-                    return Arrays.asList("HuskHomes","CMI");
+                    return Arrays.asList("HuskHomes", "CMI");
             }
         }
         return new ArrayList<>();

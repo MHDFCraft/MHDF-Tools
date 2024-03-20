@@ -51,7 +51,8 @@ public final class PlayerJoin implements Listener {
                         player.sendMessage(ChatColor("&cCheng-Tools无法检查更新!"));
                     }
                 }
-            }catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
         if (MHDFTools.instance.getConfig().getBoolean("TpaSetting.Enable")) {
             Player player = event.getPlayer();
