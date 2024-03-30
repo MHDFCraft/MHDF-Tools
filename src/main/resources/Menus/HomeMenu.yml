@@ -91,6 +91,11 @@ Menu:
       DisplayName: "&b{HomeName}"
       #简介
       Lore:
+        - "&b服务器: {Server}"
+        - "&b世界: {World}"
+        - "&bX: {X}"
+        - "&bY: {Y}"
+        - "&bZ: {Z}"
         - ""
         - "&a>>> 点击前往 <<<"
       #点击事件

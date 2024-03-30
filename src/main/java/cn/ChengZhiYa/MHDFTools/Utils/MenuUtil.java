@@ -29,6 +29,8 @@ import java.util.stream.Stream;
 
 import static cn.ChengZhiYa.MHDFTools.MHDFTools.dataSource;
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.TpPlayerHome;
+import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeLocation;
+import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeServer;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.PAPIChatColor;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
@@ -146,7 +148,7 @@ public final class MenuUtil {
     @SuppressWarnings("ExtractMethodRecommender")
     public static void OpenHomeMenu(Player player, int Page) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            String MenuTitle = ChatColor(Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.Title")).replaceAll("\\{Page\\}", String.valueOf(Page)));
+            String MenuTitle = PAPIChatColor(player, Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.Title")).replaceAll("\\{Page\\}", String.valueOf(Page)));
             getMenuHashMap().put(MenuTitle, "HomeMenu.yml");
             Inventory Menu = Bukkit.createInventory(player, getMenu("HomeMenu.yml").getInt("Menu.Size"), MenuTitle);
             int HomeSize = getMenu("HomeMenu.yml").getInt("Menu.HomeSize");
@@ -186,20 +188,34 @@ public final class MenuUtil {
             for (String Item : Objects.requireNonNull(getMenu("HomeMenu.yml").getConfigurationSection("Menu.ItemList")).getKeys(false)) {
                 String ItemType = getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".ItemType");
                 String Type = Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".Type"));
-                String DisplayName = Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".DisplayName"));
+                String DisplayName = PAPIChatColor(player, Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".DisplayName")));
                 int CustomModelData = getMenu("HomeMenu.yml").getInt("Menu.ItemList." + Item + ".Model");
                 int Amount = getMenu("HomeMenu.yml").getInt("Menu.ItemList." + Item + ".Amount");
                 if (Amount == 0) {
                     Amount = 1;
                 }
-                List<String> Lore = getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Lore");
+                List<String> Lore = new ArrayList<>();
                 if (ItemType != null) {
                     if (ItemType.equals("GoToHome")) {
                         if (!PlayerHomeList.isEmpty()) {
                             for (String HomeName : PlayerHomeList) {
+                                for (String Lores : getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Lore")) {
+                                    Lore.add(PAPIChatColor(player, Lores)
+                                            .replaceAll("\\{Server\\}", getHomeServer(player.getName(), HomeName))
+                                            .replaceAll("\\{World\\}", Objects.requireNonNull(getHomeLocation(player.getName(), HomeName)).getWorld().getName())
+                                            .replaceAll("\\{X\\}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), HomeName)).getBlockX()))
+                                            .replaceAll("\\{Y\\}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), HomeName)).getBlockY()))
+                                            .replaceAll("\\{Z\\}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), HomeName)).getBlockZ()))
+                                    );
+                                }
                                 ItemStack ItemStack = getItemStack(
-                                        Type.replaceAll("\\{HomeName\\}", HomeName),
-                                        DisplayName.replaceAll("\\{HomeName\\}", HomeName),
+                                        Type,
+                                        DisplayName.replaceAll("\\{HomeName\\}", HomeName)
+                                                .replaceAll("\\{Server\\}", getHomeServer(player.getName(), HomeName))
+                                                .replaceAll("\\{World\\}", Objects.requireNonNull(getHomeLocation(player.getName(), HomeName)).getWorld().getName())
+                                                .replaceAll("\\{X\\}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), HomeName)).getBlockX()))
+                                                .replaceAll("\\{Y\\}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), HomeName)).getBlockY()))
+                                                .replaceAll("\\{Z\\}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), HomeName)).getBlockZ())),
                                         Lore,
                                         CustomModelData,
                                         Amount
@@ -220,6 +236,9 @@ public final class MenuUtil {
                             continue;
                         }
                     }
+                }
+                for (String Lores : getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Lore")) {
+                    Lore.add(PAPIChatColor(player, Lores));
                 }
                 ItemStack ItemStack = getItemStack(
                         Type,
@@ -248,19 +267,22 @@ public final class MenuUtil {
 
     public static void OpenMenu(Player player, String MenuFile) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            String MenuTitle = ChatColor(Objects.requireNonNull(getMenu(MenuFile).getString("Menu.Title")));
+            String MenuTitle = PAPIChatColor(player, Objects.requireNonNull(getMenu(MenuFile).getString("Menu.Title")));
             getMenuHashMap().put(MenuTitle, MenuFile);
             Inventory Menu = Bukkit.createInventory(player, getMenu(MenuFile).getInt("Menu.Size"), MenuTitle);
 
             for (String Item : Objects.requireNonNull(getMenu(MenuFile).getConfigurationSection("Menu.ItemList")).getKeys(false)) {
                 String Type = Objects.requireNonNull(getMenu(MenuFile).getString("Menu.ItemList." + Item + ".Type"));
-                String DisplayName = Objects.requireNonNull(getMenu(MenuFile).getString("Menu.ItemList." + Item + ".DisplayName"));
+                String DisplayName = PAPIChatColor(player, Objects.requireNonNull(getMenu(MenuFile).getString("Menu.ItemList." + Item + ".DisplayName")));
                 int CustomModelData = getMenu(MenuFile).getInt("Menu.ItemList." + Item + ".Model");
                 int Amount = getMenu(MenuFile).getInt("Menu.ItemList." + Item + ".Amount");
                 if (Amount == 0) {
                     Amount = 1;
                 }
-                List<String> Lore = getMenu(MenuFile).getStringList("Menu.ItemList." + Item + ".Lore");
+                List<String> Lore = new ArrayList<>();
+                for (String Lores : getMenu(MenuFile).getStringList("Menu.ItemList." + Item + ".Lore")) {
+                    Lore.add(PAPIChatColor(player, Lores));
+                }
                 ItemStack ItemStack = getItemStack(
                         Type,
                         DisplayName,

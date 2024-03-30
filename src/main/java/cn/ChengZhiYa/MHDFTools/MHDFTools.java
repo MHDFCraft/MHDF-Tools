@@ -15,6 +15,8 @@ import cn.ChengZhiYa.MHDFTools.Listeners.Menu.HomeMenu;
 import cn.ChengZhiYa.MHDFTools.Listeners.Menu.MenuArgsCommand;
 import cn.ChengZhiYa.MHDFTools.Listeners.Menu.OpenMenu;
 import cn.ChengZhiYa.MHDFTools.Tasks.*;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -38,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Connection;
@@ -54,7 +57,7 @@ import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
 import static cn.chengzhiya.mhdfpluginapi.YamlFileUtil.SaveResource;
 
 public final class MHDFTools extends JavaPlugin implements Listener {
-    public static final String Version = "1.4.1";
+    public static final String Version = "1.4.2";
     public static MHDFTools instance;
     public static boolean PAPI = true;
     public static boolean PLIB = true;
@@ -275,20 +278,14 @@ public final class MHDFTools extends JavaPlugin implements Listener {
         //更新检测
         if (getConfig().getBoolean("CheckVersion")) {
             try {
-                URL url1 = new URL("http://gb95351e.dll.z-j.wang/Cheng-Tools-Reloaded-CheckVersion.html");
-                URLConnection urlConnection = url1.openConnection();
-                urlConnection.addRequestProperty("User-Agent", "Mozilla");
-                urlConnection.setReadTimeout(5000);
-                urlConnection.setConnectTimeout(5000);
-                InputStream in = url1.openStream();
-                InputStreamReader isr = new InputStreamReader(in);
-                BufferedReader bufr = new BufferedReader(isr);
-                String str;
-                StringBuilder stringBuilder = new StringBuilder();
-                while ((str = bufr.readLine()) != null) {
-                    stringBuilder.append(str);
-                }
-                String NewVersionString = stringBuilder.toString().replace("<!--", "").replace("-->", "");
+                HttpURLConnection conn = (HttpURLConnection) new URL("https://mhdf.love:8888/plugin/version/MHDF-Tools").openConnection();
+
+                conn.setRequestMethod("GET");
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                JSONObject Data = JSON.parseObject(in.readLine());
+                String NewVersionString = Data.getString("data");
+
                 if (!NewVersionString.equals(Version)) {
                     ColorLog("&c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
                     if (getConfig().getBoolean("AutoUpdate")) {
@@ -319,9 +316,9 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     ColorLog("&a当前插件版本是最新版!");
                 }
                 BooleanHasMap.getHasMap().put("CheckVersionError", false);
+
                 in.close();
-                isr.close();
-                bufr.close();
+                conn.disconnect();
             } catch (Exception e) {
                 ColorLog("&c[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
                 BooleanHasMap.getHasMap().put("IsLast", false);
