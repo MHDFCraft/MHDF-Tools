@@ -41,6 +41,10 @@ Menu:
       ClickRequirements: { }
       #点击操作
       ClickAction: [ ]
+      #蹲下点击条件
+      ShiftClickRequirements: { }
+      #蹲下点击操作
+      ShiftClickAction: [ ]
     PageUp:
       #物品作用类型
       ItemType: "PageUp"
@@ -98,7 +102,14 @@ Menu:
         - "&bZ: {Z}"
         - ""
         - "&a>>> 点击前往 <<<"
+        - "&c>>> SHIFT点击删除 <<<"
       #点击事件
       ClickAction:
         - "[Home]"
         - "[playsound]|ENTITY_GENERIC_EXPLODE|25|2.0"
+      #蹲下点击条件
+      ShiftClickRequirements: { }
+      #蹲下点击操作
+      ShiftClickAction:
+        - "[DelHome]"
+        - "[player]|home"

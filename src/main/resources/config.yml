@@ -280,7 +280,6 @@ TpBackSettings:
   DisableWorldList:
     - "pvp"
 
-
 #飞行系统设置
 FlySettings:
   #开关

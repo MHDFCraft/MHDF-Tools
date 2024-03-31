@@ -3,6 +3,7 @@ package cn.ChengZhiYa.MHDFTools.Listeners.Menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.List;
@@ -21,11 +22,22 @@ public final class ClickCustomMenu implements Listener {
                     event.setCancelled(true);
                     Player player = (Player) event.getWhoClicked();
                     String Item = getMenuItemHashMap().get(event.getView().getTitle() + "|" + event.getCurrentItem().toString());
-                    List<String> DenyActionList = AllowClickAction(player, getMenu(MenuFileName), Item);
-                    if (DenyActionList.isEmpty()) {
-                        RunAction(MenuFileName, player, getMenu(MenuFileName).getStringList("Menu.ItemList." + Item + ".ClickAction"), null, null, null);
-                    } else {
-                        RunAction(MenuFileName, player, DenyActionList, null, null, null);
+
+                    if (event.getClick() == ClickType.LEFT && event.getClick() == ClickType.RIGHT) {
+                        List<String> DenyActionList = AllowClickAction(player, getMenu(MenuFileName), Item, false);
+                        if (DenyActionList.isEmpty()) {
+                            RunAction(MenuFileName, player, getMenu(MenuFileName).getStringList("Menu.ItemList." + Item + ".ClickAction"), null, event.getCurrentItem(), event.getView().getTitle());
+                        } else {
+                            RunAction(MenuFileName, player, DenyActionList, null, event.getCurrentItem(), event.getView().getTitle());
+                        }
+                    }
+                    if (event.getClick() == ClickType.SHIFT_LEFT && event.getClick() == ClickType.SHIFT_RIGHT) {
+                        List<String> DenyActionList = AllowClickAction(player, getMenu(MenuFileName), Item, true);
+                        if (DenyActionList.isEmpty()) {
+                            RunAction(MenuFileName, player, getMenu(MenuFileName).getStringList("Menu.ItemList." + Item + ".ShiftClickAction"), null, event.getCurrentItem(), event.getView().getTitle());
+                        } else {
+                            RunAction(MenuFileName, player, DenyActionList, null, event.getCurrentItem(), event.getView().getTitle());
+                        }
                     }
                 }
             }

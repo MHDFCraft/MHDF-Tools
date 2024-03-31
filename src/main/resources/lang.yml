@@ -28,10 +28,6 @@ AdminCommands:
     Usage: "&e/{Command} reload"
     Description: "&b重载插件"
     ReloadDone: "&f북 &a重载成功!"
-  reload:
-    Usage: "&e/{Command} reload"
-    Description: "&b重载插件"
-    ReloadDone: "&f북 &a重载成功!"
   help:
     Usage: "&e/{Command} help"
     Description: "&b帮助"

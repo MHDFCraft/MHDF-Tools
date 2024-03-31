@@ -29,8 +29,7 @@ import java.util.stream.Stream;
 
 import static cn.ChengZhiYa.MHDFTools.MHDFTools.dataSource;
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.TpPlayerHome;
-import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeLocation;
-import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.getHomeServer;
+import static cn.ChengZhiYa.MHDFTools.Utils.Database.HomeUtil.*;
 import static cn.ChengZhiYa.MHDFTools.Utils.Util.PAPIChatColor;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
@@ -189,16 +188,16 @@ public final class MenuUtil {
                 String ItemType = getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".ItemType");
                 String Type = Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".Type"));
                 String DisplayName = PAPIChatColor(player, Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".DisplayName")));
-                int CustomModelData = getMenu("HomeMenu.yml").getInt("Menu.ItemList." + Item + ".Model");
+                int CustomModelData = getMenu("HomeMenu.yml").getInt("Menu.ItemList." + Item + ".CustomModelData");
                 int Amount = getMenu("HomeMenu.yml").getInt("Menu.ItemList." + Item + ".Amount");
                 if (Amount == 0) {
                     Amount = 1;
                 }
-                List<String> Lore = new ArrayList<>();
                 if (ItemType != null) {
                     if (ItemType.equals("GoToHome")) {
                         if (!PlayerHomeList.isEmpty()) {
                             for (String HomeName : PlayerHomeList) {
+                                List<String> Lore = new ArrayList<>();
                                 for (String Lores : getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Lore")) {
                                     Lore.add(PAPIChatColor(player, Lores)
                                             .replaceAll("\\{Server\\}", getHomeServer(player.getName(), HomeName))
@@ -237,6 +236,7 @@ public final class MenuUtil {
                         }
                     }
                 }
+                List<String> Lore = new ArrayList<>();
                 for (String Lores : getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Lore")) {
                     Lore.add(PAPIChatColor(player, Lores));
                 }
@@ -274,7 +274,7 @@ public final class MenuUtil {
             for (String Item : Objects.requireNonNull(getMenu(MenuFile).getConfigurationSection("Menu.ItemList")).getKeys(false)) {
                 String Type = Objects.requireNonNull(getMenu(MenuFile).getString("Menu.ItemList." + Item + ".Type"));
                 String DisplayName = PAPIChatColor(player, Objects.requireNonNull(getMenu(MenuFile).getString("Menu.ItemList." + Item + ".DisplayName")));
-                int CustomModelData = getMenu(MenuFile).getInt("Menu.ItemList." + Item + ".Model");
+                int CustomModelData = getMenu(MenuFile).getInt("Menu.ItemList." + Item + ".CustomModelData");
                 int Amount = getMenu(MenuFile).getInt("Menu.ItemList." + Item + ".Amount");
                 if (Amount == 0) {
                     Amount = 1;
@@ -308,16 +308,20 @@ public final class MenuUtil {
         });
     }
 
-    public static List<String> AllowClickAction(Player player, YamlConfiguration Menu, String Item) {
-        if (Menu.getConfigurationSection("Menu.ItemList." + Item + ".ClickRequirements") == null) {
+    public static List<String> AllowClickAction(Player player, YamlConfiguration Menu, String Item, boolean ShiftClick) {
+        String RequirmentsString = "ClickRequirements";
+        if (ShiftClick) {
+            RequirmentsString = "ShiftClickRequirements";
+        }
+        if (Menu.getConfigurationSection("Menu.ItemList." + Item + "." + RequirmentsString) == null) {
             return new ArrayList<>();
         }
         List<String> DenyActionList = new ArrayList<>();
         boolean Allow = true;
-        for (String Requirements : Objects.requireNonNull(Menu.getConfigurationSection("Menu.ItemList." + Item + ".ClickRequirements")).getKeys(false)) {
-            String Type = Menu.getString("Menu.ItemList." + Item + ".ClickRequirements." + Requirements + ".Type");
-            String Input = Menu.getString("Menu.ItemList." + Item + ".ClickRequirements." + Requirements + ".Input");
-            String Output = Menu.getString("Menu.ItemList." + Item + ".ClickRequirements." + Requirements + ".Output");
+        for (String Requirements : Objects.requireNonNull(Menu.getConfigurationSection("Menu.ItemList." + Item + "." + RequirmentsString)).getKeys(false)) {
+            String Type = Menu.getString("Menu.ItemList." + Item + "." + RequirmentsString + "." + Requirements + ".Type");
+            String Input = Menu.getString("Menu.ItemList." + Item + "." + RequirmentsString + "." + Requirements + ".Input");
+            String Output = Menu.getString("Menu.ItemList." + Item + "." + RequirmentsString + "." + Requirements + ".Output");
             if (Type != null && Input != null && Output != null && Type.equals(">")) {
                 Allow = Double.parseDouble(Input) > Double.parseDouble(Output);
             }
@@ -345,7 +349,7 @@ public final class MenuUtil {
                 }
             }
             if (!Allow) {
-                DenyActionList = Menu.getStringList("Menu.ItemList." + Item + ".ClickRequirements." + Requirements + ".DenyAction");
+                DenyActionList = Menu.getStringList("Menu.ItemList." + Item + "." + RequirmentsString + "." + Requirements + ".DenyAction");
                 break;
             }
         }
@@ -368,6 +372,12 @@ public final class MenuUtil {
                     String DisplayName = ClickItem.getItemMeta().getDisplayName();
                     String HomeName = getPlaceholder(DisplayName, Objects.requireNonNull(getMenu(Menu).getString("Menu.ItemList." + getMenuItemHashMap().get(MenuTitle + "|" + ClickItem) + ".DisplayName")), "{HomeName}");
                     TpPlayerHome(player.getName(), HomeName);
+                    continue;
+                }
+                if (Action[0].equals("[DelHome]")) {
+                    String DisplayName = ClickItem.getItemMeta().getDisplayName();
+                    String HomeName = getPlaceholder(DisplayName, Objects.requireNonNull(getMenu(Menu).getString("Menu.ItemList." + getMenuItemHashMap().get(MenuTitle + "|" + ClickItem) + ".DisplayName")), "{HomeName}");
+                    RemoveHome(player.getName(), HomeName);
                     continue;
                 }
             }

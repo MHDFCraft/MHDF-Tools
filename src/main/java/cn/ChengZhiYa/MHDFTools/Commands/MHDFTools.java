@@ -32,7 +32,7 @@ public final class MHDFTools implements TabExecutor {
                     }
                     LangFileData = YamlConfiguration.loadConfiguration(new File(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getDataFolder(), "lang.yml"));
                     SoundFileData = YamlConfiguration.loadConfiguration(new File(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getDataFolder(), "sound.yml"));
-                    sender.sendMessage(i18n("AdminCommands.reload.RelaodDone"));
+                    sender.sendMessage(i18n("AdminCommands.reload.ReloadDone"));
 
                     return true;
                 }

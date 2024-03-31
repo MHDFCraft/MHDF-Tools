@@ -3,6 +3,7 @@ package cn.ChengZhiYa.MHDFTools.Listeners.Menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.List;
@@ -20,11 +21,21 @@ public final class HomeMenu implements Listener {
                 Player player = (Player) event.getWhoClicked();
                 int Page = Integer.parseInt(getPlaceholder(event.getView().getTitle(), getMenu("HomeMenu.yml").getString("Menu.Title"), "{Page}"));
                 String Item = getMenuItemHashMap().get(event.getView().getTitle() + "|" + event.getCurrentItem().toString());
-                List<String> DenyActionList = AllowClickAction(player, getMenu("HomeMenu.yml"), Item);
-                if (DenyActionList.isEmpty()) {
-                    RunAction("HomeMenu.yml", player, getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".ClickAction"), Page, event.getCurrentItem(), event.getView().getTitle());
-                } else {
-                    RunAction("HomeMenu.yml", player, DenyActionList, Page, event.getCurrentItem(), event.getView().getTitle());
+                if (event.getClick() == ClickType.LEFT || event.getClick() == ClickType.RIGHT) {
+                    List<String> DenyActionList = AllowClickAction(player, getMenu("HomeMenu.yml"), Item, false);
+                    if (DenyActionList.isEmpty()) {
+                        RunAction("HomeMenu.yml", player, getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".ClickAction"), Page, event.getCurrentItem(), event.getView().getTitle());
+                    } else {
+                        RunAction("HomeMenu.yml", player, DenyActionList, Page, event.getCurrentItem(), event.getView().getTitle());
+                    }
+                }
+                if (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT) {
+                    List<String> DenyActionList = AllowClickAction(player, getMenu("HomeMenu.yml"), Item, true);
+                    if (DenyActionList.isEmpty()) {
+                        RunAction("HomeMenu.yml", player, getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".ShiftClickAction"), Page, event.getCurrentItem(), event.getView().getTitle());
+                    } else {
+                        RunAction("HomeMenu.yml", player, DenyActionList, Page, event.getCurrentItem(), event.getView().getTitle());
+                    }
                 }
             }
         }
