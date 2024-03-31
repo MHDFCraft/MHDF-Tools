@@ -248,16 +248,32 @@ public final class MenuUtil {
                         Amount
                 );
                 getMenuItemHashMap().put(MenuTitle + "|" + ItemStack.toString(), Item);
-
-                String[] ItemSlot = Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".Slot")).split("-");
-                if (ItemSlot.length == 2) {
-                    int Start = Integer.parseInt(ItemSlot[0]);
-                    int End = Integer.parseInt(ItemSlot[1]) + 1;
-                    for (int i = Start; i < End; i++) {
-                        Menu.setItem(i, ItemStack);
+                if (getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".Slot") != null) {
+                    String[] ItemSlot = Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".Slot")).split("-");
+                    if (ItemSlot.length == 2) {
+                        int Start = Integer.parseInt(ItemSlot[0]);
+                        int End = Integer.parseInt(ItemSlot[1]) + 1;
+                        for (int i = Start; i < End; i++) {
+                            Menu.setItem(i, ItemStack);
+                        }
+                    } else {
+                        Menu.setItem(Integer.parseInt(ItemSlot[0]), ItemStack);
                     }
                 } else {
-                    Menu.setItem(Integer.parseInt(ItemSlot[0]), ItemStack);
+                    if (!getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Slots").isEmpty()) {
+                        for (String Slots : getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Slots")) {
+                            String[] ItemSlot = Slots.split("-");
+                            if (ItemSlot.length == 2) {
+                                int Start = Integer.parseInt(ItemSlot[0]);
+                                int End = Integer.parseInt(ItemSlot[1]) + 1;
+                                for (int i = Start; i < End; i++) {
+                                    Menu.setItem(i, ItemStack);
+                                }
+                            } else {
+                                Menu.setItem(Integer.parseInt(ItemSlot[0]), ItemStack);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -292,15 +308,32 @@ public final class MenuUtil {
                 );
                 getMenuItemHashMap().put(MenuTitle + "|" + ItemStack.toString(), Item);
 
-                String[] ItemSlot = Objects.requireNonNull(getMenu(MenuFile).getString("Menu.ItemList." + Item + ".Slot")).split("-");
-                if (ItemSlot.length == 2) {
-                    int Start = Integer.parseInt(ItemSlot[0]);
-                    int End = Integer.parseInt(ItemSlot[1]) + 1;
-                    for (int i = Start; i < End; i++) {
-                        Menu.setItem(i, ItemStack);
+                if (getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".Slot") != null) {
+                    String[] ItemSlot = Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".Slot")).split("-");
+                    if (ItemSlot.length == 2) {
+                        int Start = Integer.parseInt(ItemSlot[0]);
+                        int End = Integer.parseInt(ItemSlot[1]) + 1;
+                        for (int i = Start; i < End; i++) {
+                            Menu.setItem(i, ItemStack);
+                        }
+                    } else {
+                        Menu.setItem(Integer.parseInt(ItemSlot[0]), ItemStack);
                     }
                 } else {
-                    Menu.setItem(Integer.parseInt(ItemSlot[0]), ItemStack);
+                    if (!getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Slots").isEmpty()) {
+                        for (String Slots : getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Slots")) {
+                            String[] ItemSlot = Slots.split("-");
+                            if (ItemSlot.length == 2) {
+                                int Start = Integer.parseInt(ItemSlot[0]);
+                                int End = Integer.parseInt(ItemSlot[1]) + 1;
+                                for (int i = Start; i < End; i++) {
+                                    Menu.setItem(i, ItemStack);
+                                }
+                            } else {
+                                Menu.setItem(Integer.parseInt(ItemSlot[0]), ItemStack);
+                            }
+                        }
+                    }
                 }
             }
 
