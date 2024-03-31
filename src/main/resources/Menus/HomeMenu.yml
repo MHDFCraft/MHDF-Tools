@@ -94,6 +94,9 @@ Menu:
       Type: "{RandomBed}"
       #物品名字
       DisplayName: "&b{HomeName}"
+      #格子位置 (此处不填默认空白处添加)
+      #Slots:
+      #  - "9-17"
       #简介
       Lore:
         - "&b服务器: {Server}"

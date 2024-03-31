@@ -196,6 +196,36 @@ public final class MenuUtil {
                 if (ItemType != null) {
                     if (ItemType.equals("GoToHome")) {
                         if (!PlayerHomeList.isEmpty()) {
+                            List<Integer> SlotList = new ArrayList<>();
+                            if (getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".Slot") != null) {
+                                String[] ItemSlot = Objects.requireNonNull(getMenu("HomeMenu.yml").getString("Menu.ItemList." + Item + ".Slot")).split("-");
+                                if (ItemSlot.length == 2) {
+                                    int Start = Integer.parseInt(ItemSlot[0]);
+                                    int End = Integer.parseInt(ItemSlot[1]) + 1;
+                                    for (int i = Start; i < End; i++) {
+                                        SlotList.add(i);
+                                    }
+                                } else {
+                                    SlotList.add(Integer.parseInt(ItemSlot[0]));
+                                }
+                            }
+                            if (!getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Slots").isEmpty()) {
+                                for (String Slots : getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Slots")) {
+                                    String[] ItemSlot = Slots.split("-");
+                                    if (ItemSlot.length == 2) {
+                                        int Start = Integer.parseInt(ItemSlot[0]);
+                                        int End = Integer.parseInt(ItemSlot[1]) + 1;
+                                        for (int i = Start; i < End; i++) {
+                                            SlotList.add(i);
+                                        }
+                                    } else {
+                                        SlotList.add(Integer.parseInt(ItemSlot[0]));
+                                    }
+                                }
+                            }
+                            SlotList = SlotList.subList(0, PlayerHomeList.size());
+
+                            int HomeSlot = 0;
                             for (String HomeName : PlayerHomeList) {
                                 List<String> Lore = new ArrayList<>();
                                 for (String Lores : getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + Item + ".Lore")) {
@@ -220,7 +250,13 @@ public final class MenuUtil {
                                         Amount
                                 );
                                 getMenuItemHashMap().put(MenuTitle + "|" + ItemStack.toString(), Item);
-                                Menu.addItem(ItemStack);
+
+                                if (!SlotList.isEmpty()) {
+                                    Menu.setItem(SlotList.get(HomeSlot), ItemStack);
+                                } else {
+                                    Menu.addItem(ItemStack);
+                                }
+                                HomeSlot++;
                             }
                         }
                         continue;
