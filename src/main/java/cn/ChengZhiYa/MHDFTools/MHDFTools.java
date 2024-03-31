@@ -77,23 +77,6 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 HomeFile.mkdirs();
             }
         }
-        //家系统菜单与菜单系统
-        if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable") || MHDFTools.instance.getConfig().getBoolean("MenuEnable")) {
-            File MenuHome = new File(MHDFTools.instance.getDataFolder(), "Menus");
-            if (!MenuHome.exists()) {
-                MenuHome.mkdirs();
-                if (MHDFTools.instance.getConfig().getBoolean("MenuEnable")) {
-                    SaveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", true);
-                }
-            }
-        }
-        //家系统
-        if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
-            File HomeMenuFile = new File(MHDFTools.instance.getDataFolder(), "Menus/HomeMenu.yml");
-            if (!HomeMenuFile.exists()) {
-                SaveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", true);
-            }
-        }
         //经济系统数据文件夹
         if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
             File VaultData = new File(MHDFTools.instance.getDataFolder() + "/VaultData");
@@ -107,16 +90,6 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (!LoginFile.exists()) {
                 try {
                     LoginFile.createNewFile();
-                } catch (IOException ignored) {
-                }
-            }
-        }
-        //隐身系统
-        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable") && MHDFTools.instance.getConfig().getBoolean("VanishSettings.SaveVanishData")) {
-            File VanishCacheFile = new File(MHDFTools.instance.getDataFolder(), "Cache/VanishCache.yml");
-            if (!VanishCacheFile.exists()) {
-                try {
-                    VanishCacheFile.createNewFile();
                 } catch (IOException ignored) {
                 }
             }
@@ -351,6 +324,34 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             File CacheHome = new File(getDataFolder(), "Cache");
             if (!CacheHome.exists()) {
                 CacheHome.mkdirs();
+            }
+
+            //家系统菜单与菜单系统
+            if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable") || MHDFTools.instance.getConfig().getBoolean("MenuEnable")) {
+                File MenuHome = new File(MHDFTools.instance.getDataFolder(), "Menus");
+                if (!MenuHome.exists()) {
+                    MenuHome.mkdirs();
+                    if (MHDFTools.instance.getConfig().getBoolean("MenuEnable")) {
+                        SaveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", true);
+                    }
+                }
+            }
+            //家系统
+            if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+                File HomeMenuFile = new File(MHDFTools.instance.getDataFolder(), "Menus/HomeMenu.yml");
+                if (!HomeMenuFile.exists()) {
+                    SaveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", true);
+                }
+            }
+            //隐身系统
+            if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable") && MHDFTools.instance.getConfig().getBoolean("VanishSettings.SaveVanishData")) {
+                File VanishCacheFile = new File(MHDFTools.instance.getDataFolder(), "Cache/VanishCache.yml");
+                if (!VanishCacheFile.exists()) {
+                    try {
+                        VanishCacheFile.createNewFile();
+                    } catch (IOException ignored) {
+                    }
+                }
             }
 
             if (Objects.equals(getConfig().getString("DataSettings.Type"), "MySQL")) {
