@@ -1,20 +1,20 @@
 package cn.ChengZhiYa.MHDFTools;
 
-import cn.ChengZhiYa.MHDFTools.Commands.Back;
-import cn.ChengZhiYa.MHDFTools.Commands.Fly;
-import cn.ChengZhiYa.MHDFTools.Commands.TpBack;
-import cn.ChengZhiYa.MHDFTools.Commands.Vanish;
-import cn.ChengZhiYa.MHDFTools.Commands.*;
-import cn.ChengZhiYa.MHDFTools.HashMap.BooleanHasMap;
-import cn.ChengZhiYa.MHDFTools.Hook.EconomyImplementer;
-import cn.ChengZhiYa.MHDFTools.Hook.Metrics;
-import cn.ChengZhiYa.MHDFTools.Hook.PlaceholderAPI;
-import cn.ChengZhiYa.MHDFTools.Listeners.*;
-import cn.ChengZhiYa.MHDFTools.Listeners.Menu.ClickCustomMenu;
-import cn.ChengZhiYa.MHDFTools.Listeners.Menu.HomeMenu;
-import cn.ChengZhiYa.MHDFTools.Listeners.Menu.MenuArgsCommand;
-import cn.ChengZhiYa.MHDFTools.Listeners.Menu.OpenMenu;
-import cn.ChengZhiYa.MHDFTools.Tasks.*;
+import cn.ChengZhiYa.MHDFTools.commands.Back;
+import cn.ChengZhiYa.MHDFTools.commands.Fly;
+import cn.ChengZhiYa.MHDFTools.commands.TpBack;
+import cn.ChengZhiYa.MHDFTools.commands.Vanish;
+import cn.ChengZhiYa.MHDFTools.commands.*;
+import cn.ChengZhiYa.MHDFTools.map.BooleanHasMap;
+import cn.ChengZhiYa.MHDFTools.hooks.EconomyImplementer;
+import cn.ChengZhiYa.MHDFTools.hooks.Metrics;
+import cn.ChengZhiYa.MHDFTools.hooks.PlaceholderAPI;
+import cn.ChengZhiYa.MHDFTools.listeners.*;
+import cn.ChengZhiYa.MHDFTools.listeners.menus.ClickCustomMenu;
+import cn.ChengZhiYa.MHDFTools.listeners.menus.HomeMenu;
+import cn.ChengZhiYa.MHDFTools.listeners.menus.MenuArgsCommand;
+import cn.ChengZhiYa.MHDFTools.listeners.menus.OpenMenu;
+import cn.ChengZhiYa.MHDFTools.tasks.*;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.ParserConfig;
@@ -49,8 +49,8 @@ import java.sql.Statement;
 import java.util.Objects;
 import java.util.TimeZone;
 
-import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.getServerName;
-import static cn.ChengZhiYa.MHDFTools.Utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.getServerName;
+import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
 import static cn.chengzhiya.mhdfpluginapi.YamlFileUtil.SaveResource;
@@ -109,17 +109,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
     public static void initializationDatabaseData() {
         //连接数据库
         try {
-            HikariConfig config = new HikariConfig();
-            config.setJdbcUrl("jdbc:mysql://" + MHDFTools.instance.getConfig().getString("DataSettings.Host") + "/" + MHDFTools.instance.getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
-            config.setUsername(MHDFTools.instance.getConfig().getString("DataSettings.User"));
-            config.setPassword(MHDFTools.instance.getConfig().getString("DataSettings.Password"));
-            config.addDataSourceProperty("useUnicode", "true");
-            config.addDataSourceProperty("characterEncoding", "utf8");
-            config.addDataSourceProperty("cachePrepStmts", "true");
-            config.addDataSourceProperty("prepStmtCacheSize", "250");
-            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-            dataSource = new HikariDataSource(config);
-            statement = dataSource.getConnection().createStatement();
+            connectMYSQL();
         } catch (SQLException ignored) {
             ColorLog("&c无法连接数据库");
         }
@@ -193,6 +183,20 @@ public final class MHDFTools extends JavaPlugin implements Listener {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void connectMYSQL() throws SQLException {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://" + MHDFTools.instance.getConfig().getString("DataSettings.Host") + "/" + MHDFTools.instance.getConfig().getString("DataSettings.databases") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
+        config.setUsername(MHDFTools.instance.getConfig().getString("DataSettings.User"));
+        config.setPassword(MHDFTools.instance.getConfig().getString("DataSettings.Password"));
+        config.addDataSourceProperty("useUnicode", "true");
+        config.addDataSourceProperty("characterEncoding", "utf8");
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        dataSource = new HikariDataSource(config);
+        statement = dataSource.getConnection().createStatement();
     }
 
     @Override
@@ -404,18 +408,18 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("FlySettings.Enable")) {
                 registerCommand(this, new Fly(), "飞行系统", "fly");
                 registerCommand(this, new FlyTime(), "限时飞行系统", "flytime");
-                new cn.ChengZhiYa.MHDFTools.Tasks.Fly().runTaskTimerAsynchronously(this, 0L, 20L);
+                new cn.ChengZhiYa.MHDFTools.tasks.Fly().runTaskTimerAsynchronously(this, 0L, 20L);
                 Bukkit.getPluginManager().registerEvents(new AutoFly(), this);
             }
             if (getConfig().getBoolean("BackSettings.Enable")) {
                 registerCommand(this, new Back(), "Back系统", "back");
-                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.Listeners.Back(), this);
-                new cn.ChengZhiYa.MHDFTools.Tasks.Back().runTaskTimerAsynchronously(this, 0L, 20L);
+                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.listeners.Back(), this);
+                new cn.ChengZhiYa.MHDFTools.tasks.Back().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("TpBackSettings.Enable")) {
                 registerCommand(this, new TpBack(), "TpBack系统", "tpback");
-                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.Listeners.TpBack(), this);
-                new cn.ChengZhiYa.MHDFTools.Tasks.TpBack().runTaskTimerAsynchronously(this, 0L, 20L);
+                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.listeners.TpBack(), this);
+                new cn.ChengZhiYa.MHDFTools.tasks.TpBack().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("TpBackSettings.Enable") || getConfig().getBoolean("BackSettings.Enable")) {
                 registerCommand(this, new UnBack(), "Back系统", "unback");
@@ -423,8 +427,8 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("VanishSettings.Enable")) {
                 registerCommand(this, new Vanish(), "Vanish系统", "vanish");
                 registerCommand(this, new Vanish(), "Vanish系统", "v");
-                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.Listeners.Vanish(), this);
-                new cn.ChengZhiYa.MHDFTools.Tasks.Vanish().runTaskTimerAsynchronously(this, 0L, 20L);
+                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.listeners.Vanish(), this);
+                new cn.ChengZhiYa.MHDFTools.tasks.Vanish().runTaskTimerAsynchronously(this, 0L, 20L);
                 if (getConfig().getBoolean("VanishSettings.SaveVanishData")) {
                     File VanishCacheFile = new File(getDataFolder(), "Cache/VanishCache.yml");
                     if (VanishCacheFile.exists()) {
@@ -522,8 +526,8 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     registerCommand(this, new MoneyAdmin(), "管理员管理", "ma");
                 }
             }
-            registerCommand(this, new cn.ChengZhiYa.MHDFTools.Commands.MHDFTools(), "重载插件", "mhdftools");
-            registerCommand(this, new cn.ChengZhiYa.MHDFTools.Commands.MHDFTools(), "重载插件", "mt");
+            registerCommand(this, new cn.ChengZhiYa.MHDFTools.commands.MHDFTools(), "重载插件", "mhdftools");
+            registerCommand(this, new cn.ChengZhiYa.MHDFTools.commands.MHDFTools(), "重载插件", "mt");
             Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
             Bukkit.getPluginManager().registerEvents(new CustomJoinQuitMessage(), this);
             Bukkit.getPluginManager().registerEvents(new JoinTeleportSpawn(), this);
@@ -551,32 +555,21 @@ public final class MHDFTools extends JavaPlugin implements Listener {
     public void onDisable() {
         instance = null;
 
-        //取消注册经济
         if (Vault) {
             Bukkit.getServicesManager().unregister(Economy.class, new EconomyImplementer());
         }
 
-        //取消注册PAPI
         if (PAPI) {
             new PlaceholderAPI().unregister();
         }
 
         try {
-            if (statement != null && !statement.isClosed()) {
-                statement.close();
-            }
-            if (dataSource != null && !dataSource.isClosed()) {
-                dataSource.close();
-            }
+            closeStatementAndDataSource();
         } catch (SQLException ignored) {
         }
 
-        //取消注册BC Hook
-        {
-            if (getConfig().getBoolean("BungeecordSettings.Enable")) {
-                getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
-                getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", new BungeeCordHook());
-            }
+        if (getConfig().getBoolean("BungeecordSettings.Enable")) {
+            unregisterBungeecordHooks();
         }
 
         ColorLog("&f============&6梦回东方-工具&f============");
@@ -584,18 +577,31 @@ public final class MHDFTools extends JavaPlugin implements Listener {
         ColorLog("&f============&6梦回东方-工具&f============");
     }
 
+    private void closeStatementAndDataSource() throws SQLException {
+        if (statement != null && !statement.isClosed()) {
+            statement.close();
+        }
+        if (dataSource != null && !dataSource.isClosed()) {
+            dataSource.close();
+        }
+    }
+
+    private void unregisterBungeecordHooks() {
+        getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
+        getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", new BungeeCordHook());
+    }
+
     @NotNull
     public FileOutputStream getOutputStream(CloseableHttpResponse response, String NewVersionString, int cache) throws IOException {
         HttpEntity entity = response.getEntity();
-        InputStream is = entity.getContent();
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(getDataFolder().getParentFile(), "Cheng-Tools-Reloaded-" + NewVersionString + ".jar"));
-        byte[] buffer = new byte[cache];
-        int ch;
-        while ((ch = is.read(buffer)) != -1) {
-            fileOutputStream.write(buffer, 0, ch);
+        try (InputStream is = entity.getContent(); FileOutputStream fileOutputStream = new FileOutputStream(new File(getDataFolder().getParentFile(), "Cheng-Tools-Reloaded-" + NewVersionString + ".jar"))) {
+            byte[] buffer = new byte[cache];
+            int bytesRead;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                fileOutputStream.write(buffer, 0, bytesRead);
+            }
+            fileOutputStream.flush();
+            return fileOutputStream;
         }
-        is.close();
-        fileOutputStream.flush();
-        return fileOutputStream;
     }
 }
