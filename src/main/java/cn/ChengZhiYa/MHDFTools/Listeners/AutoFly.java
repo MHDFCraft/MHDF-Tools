@@ -11,8 +11,19 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.FlyUtil.InFlyList;
+import static cn.ChengZhiYa.MHDFTools.Utils.Database.FlyUtil.removeFly;
 
 public final class AutoFly implements Listener {
+    @EventHandler
+    public void AutoClose(PlayerChangedWorldEvent event) {
+        Player player = event.getPlayer();
+        if (MHDFTools.instance.getConfig().getStringList("FlySettings.AntiFlyWorldList").contains(player.getLocation().getWorld().getName())) {
+            removeFly(player.getName());
+            InFlyList.remove(player.getName());
+            player.setAllowFlight(false);
+        }
+    }
+
     @EventHandler
     public void PlayerChangedWorldEvent(PlayerChangedWorldEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ChangeWorld")) {

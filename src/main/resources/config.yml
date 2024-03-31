@@ -292,6 +292,9 @@ FlySettings:
     ReSpawn: true
     #重新加入
     ReJoin: true
+  #禁止使用飞行系统世界列表
+  AntiFlyWorldList:
+    - "boss"
 
 #反跳略系统
 AntiTiaoLue: true
