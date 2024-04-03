@@ -223,7 +223,10 @@ public final class MenuUtil {
                                     }
                                 }
                             }
-                            SlotList = SlotList.subList(0, PlayerHomeList.size());
+
+                            if (!SlotList.isEmpty()) {
+                                SlotList = SlotList.subList(0, PlayerHomeList.size());
+                            }
 
                             int HomeSlot = 0;
                             for (String HomeName : PlayerHomeList) {
