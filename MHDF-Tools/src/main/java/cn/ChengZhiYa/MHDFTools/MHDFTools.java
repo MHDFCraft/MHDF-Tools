@@ -56,7 +56,7 @@ import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
 import static cn.chengzhiya.mhdfpluginapi.YamlFileUtil.SaveResource;
 
 public final class MHDFTools extends JavaPlugin implements Listener {
-    public static final String Version = "1.4.5";
+    public static final String Version = "1.4.6";
     public static MHDFTools instance;
     public static boolean PAPI = true;
     public static boolean PLIB = true;
