@@ -77,6 +77,11 @@
       <option name="url" value="https://libraries.minecraft.net" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="minecraft-libraries" />
+      <option name="name" value="minecraft-libraries" />
+      <option name="url" value="https://libraries.minecraft.net" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="dmulloy2-repo" />
       <option name="name" value="dmulloy2-repo" />
       <option name="url" value="https://repo.dmulloy2.net/repository/public/" />

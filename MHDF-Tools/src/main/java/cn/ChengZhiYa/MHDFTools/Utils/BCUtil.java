@@ -179,6 +179,7 @@ public final class BCUtil {
     }
 
     public static void TpPlayerHome(String PlayerName, String HomeName) {
+        System.out.println(ServerName);
         if (!getHomeServer(PlayerName, HomeName).equals(ServerName) && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MHDF-Tools.iml" filepath="$PROJECT_DIR$/MHDF-Tools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MHDF-Tools-BungeecordHook/MHDF-Tools-BungeecordHook.iml" filepath="$PROJECT_DIR$/MHDF-Tools-BungeecordHook/MHDF-Tools-BungeecordHook.iml" />
     </modules>
   </component>
 </project>

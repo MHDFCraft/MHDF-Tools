@@ -6,6 +6,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -441,14 +442,18 @@ public final class MenuUtil {
                     continue;
                 }
                 if (Action[0].equals("[Home]")) {
-                    String DisplayName = ClickItem.getItemMeta().getDisplayName();
-                    String HomeName = getPlaceholder(DisplayName, Objects.requireNonNull(getMenu(Menu).getString("Menu.ItemList." + getMenuItemHashMap().get(MenuTitle + "|" + ClickItem) + ".DisplayName")), "{HomeName}");
+                    String HomeName = getPlaceholder(
+                            ChatColor.stripColor(ClickItem.getItemMeta().getDisplayName()),
+                            ChatColor.stripColor(ChatColor(getMenu(Menu).getString("Menu.ItemList." + getMenuItemHashMap().get(MenuTitle + "|" + ClickItem) + ".DisplayName"))),
+                            "{HomeName}");
                     TpPlayerHome(player.getName(), HomeName);
                     continue;
                 }
                 if (Action[0].equals("[DelHome]")) {
-                    String DisplayName = ClickItem.getItemMeta().getDisplayName();
-                    String HomeName = getPlaceholder(DisplayName, Objects.requireNonNull(getMenu(Menu).getString("Menu.ItemList." + getMenuItemHashMap().get(MenuTitle + "|" + ClickItem) + ".DisplayName")), "{HomeName}");
+                    String HomeName = getPlaceholder(
+                            ChatColor.stripColor(ClickItem.getItemMeta().getDisplayName()),
+                            ChatColor.stripColor(ChatColor(getMenu(Menu).getString("Menu.ItemList." + getMenuItemHashMap().get(MenuTitle + "|" + ClickItem) + ".DisplayName"))),
+                            "{HomeName}");
                     RemoveHome(player.getName(), HomeName);
                     continue;
                 }
