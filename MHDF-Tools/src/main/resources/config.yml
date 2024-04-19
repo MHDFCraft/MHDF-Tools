@@ -185,6 +185,8 @@ LoginSystemSettings:
 WhiteList:
   #开关
   Enable: false
+  #拥有指定权限即可进入
+  Permission: "MHDFTools.Whitelist"
   #踢出提示
   KickMessage: "&b梦回东方-工具\n\n&c您没有白名单"
   #白名单列表

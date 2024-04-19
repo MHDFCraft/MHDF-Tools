@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.Utils.BCUtil.getServerName;
 import static cn.ChengZhiYa.MHDFTools.Utils.Database.EconomyUtil.initializationPlayerData;
@@ -69,7 +70,7 @@ public final class PlayerJoin implements Listener {
             ScoreboardHasMap.getHasMap().put(player.getName() + "_Scoreboard", Bukkit.getScoreboardManager().getNewScoreboard());
         }
         if (MHDFTools.instance.getConfig().getBoolean("WhiteList.Enable")) {
-            if (!MHDFTools.instance.getConfig().getStringList("WhiteList.List").contains(event.getPlayer().getName())) {
+            if (!MHDFTools.instance.getConfig().getStringList("WhiteList.List").contains(event.getPlayer().getName()) || event.getPlayer().hasPermission(Objects.requireNonNull(MHDFTools.instance.getConfig().getString("WhiteList.Permission")))) {
                 event.getPlayer().kickPlayer(ChatColor(MHDFTools.instance.getConfig().getString("WhiteList.KickMessage")));
             }
         }
