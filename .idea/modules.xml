@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/MHDF-Tools.iml" filepath="$PROJECT_DIR$/MHDF-Tools.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MHDF-Tools-BungeecordHook/MHDF-Tools-BungeecordHook.iml" filepath="$PROJECT_DIR$/MHDF-Tools-BungeecordHook/MHDF-Tools-BungeecordHook.iml" />
-    </modules>
-  </component>
-</project>
