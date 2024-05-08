@@ -9,10 +9,6 @@
 _✨一款轻量化便携性的Bukkit基础插件✨_
 
 _✨轻量 便携 快捷 即装即用 可无前置运行✨_
-
-**前置插件**
-ProtocolLib, PlaceholderAPI, Vault
-
 </div>
 
 <p align="center">
@@ -29,6 +25,10 @@ ProtocolLib, PlaceholderAPI, Vault
     <img src="https://img.shields.io/badge/JDK-17+-brightgreen?style=flat-square" alt="jdk-version">
 </p>
 
+## 前置插件
+
+_ProtocolLib, PlaceholderAPI, Vault_
+
 <p align="center">
   <a href="https://github.com/Love-MHDF/MHDF-Tools/releases">下载</a>
 </p>
@@ -39,12 +39,12 @@ ProtocolLib, PlaceholderAPI, Vault
     </a>
 </div>
 
-# 贡献者
+## 贡献者
 <a href="https://github.com/Love-MHDF/MHDF-Tools/graphs/contributors">
   <img src="https://stg.contrib.rocks/image?repo=Love-MHDF/MHDF-Tools" />
 </a>
 
 Made with [contrib.rocks](https://stg.contrib.rocks)
 
-# Star
+## Star
 [![Stargazers over time](https://starchart.cc/Love-MHDF/MHDF-Tools.svg?variant=adaptive)](https://starchart.cc/Love-MHDF/MHDF-Tools)
