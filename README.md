@@ -10,6 +10,9 @@ _✨一款轻量化便携性的Bukkit基础插件✨_
 
 _✨轻量 便携 快捷 即装即用 可无前置运行✨_
 
+## 前置插件
+ProtocolLib, PlaceholderAPI, Vault
+
 </div>
 
 <p align="center">
