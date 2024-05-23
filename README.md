@@ -34,7 +34,7 @@ _ProtocolLib, PlaceholderAPI, Vault_
 </p>
 
 <div align="center">
-    <a href="https://github.com/MisakaTAT/Shiro/pulse">
+    <a href="https://github.com/Love-MHDF/MHDF-Tools/pulse">
         <img src="https://repobeats.axiom.co/api/embed/e58f3e1358766291db33ba451d3e90be99811f4f.svg" alt="pulse">
     </a>
 </div>
