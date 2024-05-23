@@ -48,3 +48,9 @@ Made with [contrib.rocks](https://stg.contrib.rocks)
 
 ## Star
 [![Stargazers over time](https://starchart.cc/Love-MHDF/MHDF-Tools.svg?variant=adaptive)](https://starchart.cc/Love-MHDF/MHDF-Tools)
+
+## 特别感谢
+<div>
+    <a href="https://www.mhdf.love/">梦回东方</a>
+    <a href="https://cloud.fengidc.cn/">风IDC</a>
+</div>
