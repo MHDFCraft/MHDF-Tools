@@ -2,7 +2,7 @@ name: MHDF-Tools
 version: '${project.version}'
 main: cn.ChengZhiYa.MHDFTools.MHDFTools
 api-version: '1.20'
-authors: [ ChengZhiYa ]
+authoendrs: [ ChengZhiYa ]
 softdepend: [ Vault, PlaceholderAPI, ProtocolLib ]
 description: qwq
 permissions:

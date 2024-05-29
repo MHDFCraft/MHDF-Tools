@@ -16,8 +16,7 @@ Menu:
       #简介
       Lore: [ ]
       #格子位置
-      Slots:
-        - "45-53"
+      Slot: "45-53"
       #设置物品数量
       #Amount: 1
       #自定义物品模型
@@ -33,10 +32,12 @@ Menu:
       #[message]|<消息第一行>|<消息第二行> #发送消息
       #[title]|<消息第一行>|<消息第二行>|淡出时间|停留时间|淡出时间 #发送标题消息
       #[actionbar]|<消息> #发送ActionBar消息
+      #[openmenu]|<菜单> #打开指定菜单
+      #[close] #关闭菜单
+      #============================================
       #[PageUp] #上一页
       #[PageNext] #下一页
       #[Home] #传送至Home
-      #[close] #关闭菜单
       #============================================
       #点击条件
       ClickRequirements: { }
@@ -89,7 +90,7 @@ Menu:
         - "[playsound]|ITEM_BOOK_PAGE_TURN|25|1.5"
     Home:
       #物品作用类型
-      ItemType: "GoToHome"
+      ItemType: "Home"
       #物品类型
       Type: "{RandomBed}"
       #物品名字
