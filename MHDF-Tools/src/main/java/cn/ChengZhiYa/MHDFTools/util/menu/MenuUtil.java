@@ -246,14 +246,14 @@ public final class MenuUtil {
                             String itemDisplayName = getMenu(menuFileName).getString("Menu.ItemList." + itemID + "." + requirmentType + "." + requirement + ".Input.DisplayName");
                             List<String> itemLore = new ArrayList<>();
                             getMenu(menuFileName).getStringList("Menu.ItemList." + itemID + "." + requirmentType + "." + requirement + ".Input.Lore").forEach(s -> {
-                                itemLore.add(PAPIChatColor(player,s));
+                                itemLore.add(PAPIChatColor(player, s));
                             });
                             Integer itemCustomModelData = (Integer) getMenu(menuFileName).get("Menu.ItemList." + itemID + "." + requirmentType + "." + requirement + ".Input.CustomModelData");
                             Integer amount = (Integer) getMenu(menuFileName).get("Menu.ItemList." + itemID + "." + requirmentType + "." + requirement + ".Input.Amount");
 
                             for (ItemStack playerInvItem : player.getInventory().getContents()) {
                                 if (playerInvItem != null) {
-                                    if(itemType != null) {
+                                    if (itemType != null) {
                                         allow = playerInvItem.getType() == Material.getMaterial(itemType);
                                     }
                                     if (amount != null) {
@@ -261,7 +261,7 @@ public final class MenuUtil {
                                     }
                                     if (playerInvItem.getItemMeta() != null) {
                                         if (itemDisplayName != null && playerInvItem.getItemMeta().hasDisplayName()) {
-                                            allow = playerInvItem.getItemMeta().getDisplayName().equals(PAPIChatColor(player,itemDisplayName));
+                                            allow = playerInvItem.getItemMeta().getDisplayName().equals(PAPIChatColor(player, itemDisplayName));
                                         }
                                         if (!itemLore.isEmpty()) {
                                             allow = playerInvItem.getItemMeta().getLore() == itemLore;
@@ -321,8 +321,12 @@ public final class MenuUtil {
             case "[close]":
                 player.closeInventory();
                 break;
+            case "[openmenu]":
+                openMenu(player, menuFileName);
+                break;
+            default:
+                ColorLog("&c[MHDF-Tools]不存在" + action[0] + "这个操作");
         }
-        ColorLog("&c[MHDF-Tools]不存在" + action[0] + "这个操作");
     }
 
     public static void runAction(Player player, String menuFileName, List<String> actionList) {
