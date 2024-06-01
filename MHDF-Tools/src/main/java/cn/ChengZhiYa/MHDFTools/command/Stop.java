@@ -15,25 +15,23 @@ import static cn.ChengZhiYa.MHDFTools.util.Util.PAPIChatColor;
 public final class Stop implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (Bukkit.getOnlinePlayers().isEmpty()) {
-            Bukkit.shutdown();
-            return false;
-        }
-        if (args.length >= 1) {
-            StringBuilder StopMessage = new StringBuilder();
-            for (String arg : args) {
-                StopMessage.append(" ").append(arg);
+        if (!Bukkit.getOnlinePlayers().isEmpty()) {
+            String Message = Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SuperStopSettings.DefaultStopMessage"));
+
+            if (args.length >= 1) {
+                StringBuilder StopMessage = new StringBuilder();
+                for (String arg : args) {
+                    StopMessage.append(" ").append(arg);
+                }
+                Message = StopMessage.toString();
             }
+
             for (Player player : Bukkit.getOnlinePlayers()) {
-                player.kickPlayer(PAPIChatColor(player, MHDFTools.instance.getConfig().getString("SuperStopSettings.ServerName") + "\n" + StopMessage));
+                player.kickPlayer(PAPIChatColor(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SuperStopSettings.StopMessageFormat")).replaceAll("\\{Message}",Message)));
             }
-            Bukkit.shutdown();
-        } else {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                player.kickPlayer(PAPIChatColor(player, MHDFTools.instance.getConfig().getString("SuperStopSettings.ServerName") + "\n" + Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SuperStopSettings.DefaultStopMessage"))));
-            }
-            Bukkit.shutdown();
         }
+
+        Bukkit.shutdown();
         return false;
     }
 }

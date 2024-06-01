@@ -217,10 +217,13 @@ BanCommandSettings:
 SuperStopSettings:
   #开关
   Enable: true
-  #服务器名称
-  ServerName: "&b梦回东方-工具"
+  #关服提示格式
+  StopMessageFormat: |-
+    &b梦回东方-工具
+    {Message}
   #默认关服提示
-  DefaultStopMessage: "&c服务器已关闭"
+  DefaultStopMessage: |-
+    &c服务器已关闭
 
 #MOTD系统设置
 MOTDSettings:
