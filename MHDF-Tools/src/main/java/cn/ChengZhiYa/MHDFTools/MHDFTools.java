@@ -46,17 +46,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.TimeZone;
 
 import static cn.ChengZhiYa.MHDFTools.util.BCUtil.getServerName;
 import static cn.ChengZhiYa.MHDFTools.util.Util.*;
+import static cn.ChengZhiYa.MHDFTools.util.menu.MenuUtil.runAction;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
 import static cn.chengzhiya.mhdfpluginapi.YamlFileUtil.SaveResource;
 
 public final class MHDFTools extends JavaPlugin implements Listener {
-    public static final String Version = "1.4.6";
+    public static final String Version = "1.4.7";
     public static MHDFTools instance;
     public static boolean PAPI = true;
     public static boolean PLIB = true;
@@ -367,23 +369,23 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 new Scoreboard().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("HomeSystemSettings.Enable")) {
-                registerCommand(this, new SetHome(), "设置家", "sethome");
-                registerCommand(this, new DelHome(), "删除家", "delhome");
-                registerCommand(this, new Home(), "传送至家", "home");
+                registerCommand(this, new SetHome(), "设置家", "MHDFTools.Command.SetHome", "sethome");
+                registerCommand(this, new DelHome(), "删除家", "MHDFTools.Command.DelHome", "delhome");
+                registerCommand(this, new Home(), "传送至家", "MHDFTools.Command.Home", "home");
                 Bukkit.getPluginManager().registerEvents(new HomeMenu(), this);
             }
             if (getConfig().getBoolean("TimeMessageSettings.Enable")) {
                 new TimeMessage().runTaskTimerAsynchronously(this, 0L, getConfig().getInt("TimeMessageSettings.Delay") * 20L);
             }
             if (getConfig().getBoolean("SuperListSettings.Enable")) {
-                registerCommand(this, new List(), "高级list命令", "superlist");
-                registerCommand(this, new List(), "高级list命令", "list");
+                registerCommand(this, new List(), "高级list命令", "MHDFTools.Command.List", "superlist");
+                registerCommand(this, new List(), "高级list命令", "MHDFTools.Command.List", "list");
             }
             if (getConfig().getBoolean("LoginSystemSettings.Enable")) {
-                registerCommand(this, new Register(), "注册命令", "register");
-                registerCommand(this, new Register(), "注册命令", "reg");
-                registerCommand(this, new Login(), "登录命令", "l");
-                registerCommand(this, new Login(), "登录命令", "login");
+                registerCommand(this, new Register(), "注册命令", "MHDFTools.Command.Register", "register");
+                registerCommand(this, new Register(), "注册命令", "MHDFTools.Command.Register", "reg");
+                registerCommand(this, new Login(), "登录命令", "MHDFTools.Command.Login", "l");
+                registerCommand(this, new Login(), "登录命令", "MHDFTools.Command.Login", "login");
                 new LoginMessage().runTaskTimerAsynchronously(this, 0L, 20L);
                 Bukkit.getPluginManager().registerEvents(new LoginSystem(), this);
             }
@@ -391,38 +393,38 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 Bukkit.getPluginManager().registerEvents(new BanCommand(), this);
             }
             if (getConfig().getBoolean("SpawnSettings.Enable")) {
-                registerCommand(this, new Spawn(), "Spawn命令", "spawn");
-                registerCommand(this, new SetSpawn(), "SetSpawn命令", "setspawn");
+                registerCommand(this, new Spawn(), "Spawn命令", "MHDFTools.Command.Spawn", "spawn");
+                registerCommand(this, new SetSpawn(), "SetSpawn命令", "MHDFTools.Command.SetSpawn", "setspawn");
                 Bukkit.getPluginManager().registerEvents(new ReSpawnTeleportSpawn(), this);
             }
             if (getConfig().getBoolean("SuperStopSettings.Enable")) {
-                registerCommand(this, new Stop(), "关闭服务器", "stop");
+                registerCommand(this, new Stop(), "关闭服务器", "MHDFTools.Command.Stop", "stop");
             }
             if (getConfig().getBoolean("MOTDSettings.Enable")) {
                 Bukkit.getPluginManager().registerEvents(new MOTD(), this);
             }
             if (getConfig().getBoolean("FlySettings.Enable")) {
-                registerCommand(this, new Fly(), "飞行系统", "fly");
-                registerCommand(this, new FlyTime(), "限时飞行系统", "flytime");
+                registerCommand(this, new Fly(), "飞行系统", null, "fly");
+                registerCommand(this, new FlyTime(), "限时飞行系统", "MHDFTools.Command.FlyTime", "flytime");
                 new cn.ChengZhiYa.MHDFTools.task.Fly().runTaskTimerAsynchronously(this, 0L, 20L);
                 Bukkit.getPluginManager().registerEvents(new AutoFly(), this);
             }
             if (getConfig().getBoolean("BackSettings.Enable")) {
-                registerCommand(this, new Back(), "Back系统", "back");
+                registerCommand(this, new Back(), "Back系统", "MHDFTools.Command.Back", "back");
                 Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.listener.Back(), this);
                 new cn.ChengZhiYa.MHDFTools.task.Back().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("TpBackSettings.Enable")) {
-                registerCommand(this, new TpBack(), "TpBack系统", "tpback");
+                registerCommand(this, new TpBack(), "TpBack系统", "MHDFTools.Command.TpBack", "tpback");
                 Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.listener.TpBack(), this);
                 new cn.ChengZhiYa.MHDFTools.task.TpBack().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("TpBackSettings.Enable") || getConfig().getBoolean("BackSettings.Enable")) {
-                registerCommand(this, new UnBack(), "Back系统", "unback");
+                registerCommand(this, new UnBack(), "Back系统", "MHDFTools.Command.UnBack", "unback");
             }
             if (getConfig().getBoolean("VanishSettings.Enable")) {
-                registerCommand(this, new Vanish(), "Vanish系统", "vanish");
-                registerCommand(this, new Vanish(), "Vanish系统", "v");
+                registerCommand(this, new Vanish(), "Vanish系统", "MHDFTools.Command.Vanish", "vanish");
+                registerCommand(this, new Vanish(), "Vanish系统", "MHDFTools.Command.Vanish", "v");
                 Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.listener.Vanish(), this);
                 new cn.ChengZhiYa.MHDFTools.task.Vanish().runTaskTimerAsynchronously(this, 0L, 20L);
                 if (getConfig().getBoolean("VanishSettings.SaveVanishData")) {
@@ -436,32 +438,32 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 }
             }
             if (getConfig().getBoolean("IpCommandEnable")) {
-                registerCommand(this, new Ip(), "查询玩家IP与IP归属地命令", "ip");
+                registerCommand(this, new Ip(), "查询玩家IP与IP归属地命令", "MHDFTools.Command.Ip", "ip");
             }
             if (getConfig().getBoolean("EasyGamemodeCommandEnable")) {
-                registerCommand(this, new Gamemode(), new Gamemode(), "切换游戏模式", "gamemode");
-                registerCommand(this, new Gamemode(), new Gamemode(), "切换游戏模式", "gm");
+                registerCommand(this, new Gamemode(), "切换游戏模式", "MHDFTools.Command.Gamemode", "gamemode");
+                registerCommand(this, new Gamemode(), "切换游戏模式", "MHDFTools.Command.Gamemode", "gm");
             }
             if (getConfig().getBoolean("Tpa.Enable")) {
-                registerCommand(this, new Tpa(), "Tpa系统", "tpa");
+                registerCommand(this, new Tpa(), "Tpa系统", "MHDFTools.Command.Tpa", "tpa");
                 new TpaTime().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("InvseeEnable")) {
-                registerCommand(this, new Invsee(), "Invsee系统", "invsee");
+                registerCommand(this, new Invsee(), "Invsee系统", "MHDFTools.Command.Invsee", "invsee");
             }
             if (getConfig().getBoolean("HatEnable")) {
-                registerCommand(this, new Hat(), "Hat系统", "hat");
+                registerCommand(this, new Hat(), "Hat系统", "MHDFTools.Command.Hat", "hat");
             }
             if (getConfig().getBoolean("Tpahere.Enable")) {
-                registerCommand(this, new TpaHere(), "Tpahere系统", "tpahere");
+                registerCommand(this, new TpaHere(), "Tpahere系统", "MHDFTools.Command.TpaHere", "tpahere");
                 new TpaHereTime().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("FastSunCommandEnable")) {
-                registerCommand(this, new Sun(), "快速晴天命令", "sun");
+                registerCommand(this, new Sun(), "快速晴天命令", "MHDFTools.Command.Sun", "sun");
             }
             if (getConfig().getBoolean("FastSetTimeCommandEnable")) {
-                registerCommand(this, new Day(), "快速天亮命令", "day");
-                registerCommand(this, new Night(), "快速天黑命令", "night");
+                registerCommand(this, new Day(), "快速天亮命令", "MHDFTools.Command.Sun", "day");
+                registerCommand(this, new Night(), "快速天黑命令", "MHDFTools.Command.Night", "night");
             }
             if (getConfig().getBoolean("AntiTiaoLue")) {
                 Bukkit.getPluginManager().registerEvents(new AntiTiaoLue(), this);
@@ -472,27 +474,36 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     registerCommand(this, new TabExecutor() {
                         @Override
                         public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
-                            if (sender instanceof Player) {
-                                String RunCommand = PAPIChatColor((Player) sender, getConfig().getString("CommandLink.CommandList." + Command + ".Command"));
-                                if (args.length != 0) {
-                                    for (int i = 0; i < args.length; i++) {
-                                        RunCommand = RunCommand.replaceAll("%" + i, args[i]);
-                                    }
+                            if (getConfig().getBoolean("CommandLink.CommandList." + Command + ".OnlyPlayer")) {
+                                if (!(sender instanceof Player)) {
+                                    sender.sendMessage(i18n("OnlyPlayer"));
+                                    return false;
                                 }
-                                ((Player) sender).chat("/" + RunCommand);
                             }
+                            java.util.List<String> actionList = new ArrayList<>();
+                            if (getConfig().getString("CommandLink.CommandList." + Command + ".ActionList." + args.length) != null) {
+                                getConfig().getStringList("CommandLink.CommandList." + Command + ".ActionList." + args.length).forEach(action -> {
+                                    for (int i = 0; i < args.length; i++) {
+                                        action = action.replaceAll("%" + (i + 1), args[(i + 1)]);
+                                    }
+                                    actionList.add(action);
+                                });
+                            } else {
+                                actionList.addAll(getConfig().getStringList("CommandLink.CommandList." + Command + ".ActionList.Default"));
+                            }
+                            runAction(sender, null, actionList);
                             return false;
                         }
 
                         @Override
                         public java.util.@Nullable List<String> onTabComplete(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
-                            if (getConfig().getString("CommandLink.CommandList." + Command + "." + (args.length - 1) + "_TabList") != null &&
-                                    Objects.equals(getConfig().getString("CommandLink.CommandList." + Command + "." + (args.length - 1) + "_TabList"), "{PlayerList}")) {
+                            if (getConfig().getString("CommandLink.CommandList." + Command + ".TabList." + args.length) != null &&
+                                    Objects.equals(getConfig().getString("CommandLink.CommandList." + Command + ".TabList." + args.length), "{PlayerList}")) {
                                 return null;
                             }
-                            return getConfig().getStringList("CommandLink.CommandList." + Command + "." + (args.length - 1) + "_TabList");
+                            return getConfig().getStringList("CommandLink.CommandList." + Command + ".TabList." + args.length);
                         }
-                    }, Command, Command);
+                    }, Command, getConfig().getString("CommandLink.CommandList." + Command + "." + "Permission"), Command);
                 }
             }
             if (getConfig().getBoolean("MenuEnable")) {
@@ -503,9 +514,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
 
             if (PLIB) {
                 if (getConfig().getBoolean("CrashPlayerEnable")) {
-                    registerCommand(this, new CrashPlayerClient(), "崩端系统", "crashplayerclient");
-                    registerCommand(this, new CrashPlayerClient(), "崩端系统", "crashclient");
-                    registerCommand(this, new CrashPlayerClient(), "崩端系统", "crash");
+                    registerCommand(this, new Crash(), "崩端系统", "MHDFTools.Command.Crash", "crash");
                 }
                 /*
                 if (getConfig().getBoolean("TabSettings.Enable")) {
@@ -516,14 +525,12 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (Vault) {
                 if (getConfig().getBoolean("EconomySettings.Enable")) {
                     Bukkit.getServicesManager().register(Economy.class, new EconomyImplementer(), MHDFTools.instance, ServicePriority.Normal);
-                    registerCommand(this, new Money(), "查询", "money");
-                    registerCommand(this, new Pay(), "转账", "pay");
-                    registerCommand(this, new MoneyAdmin(), "管理员管理", "moneyadmin");
-                    registerCommand(this, new MoneyAdmin(), "管理员管理", "ma");
+                    registerCommand(this, new Money(), "查询", "MHDFTools.Command.Money", "money");
+                    registerCommand(this, new Pay(), "转账", "MHDFTools.Command.Pay", "pay");
+                    registerCommand(this, new MoneyAdmin(), "管理员管理", "MHDFTools.Command.MoneyAdmin", "moneyadmin");
                 }
             }
-            registerCommand(this, new cn.ChengZhiYa.MHDFTools.command.MHDFTools(), "重载插件", "mhdftools");
-            registerCommand(this, new cn.ChengZhiYa.MHDFTools.command.MHDFTools(), "重载插件", "mt");
+            registerCommand(this, new cn.ChengZhiYa.MHDFTools.command.MHDFTools(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
             Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
             Bukkit.getPluginManager().registerEvents(new CustomJoinQuitMessage(), this);
             Bukkit.getPluginManager().registerEvents(new JoinTeleportSpawn(), this);

@@ -156,20 +156,26 @@ public final class Util {
         return null;
     }
 
-    public static void registerCommand(Plugin plugin, CommandExecutor commandExecutor, String description, String... aliases) {
-        PluginCommand command = getCommand(aliases[0], plugin);
-        command.setAliases(Arrays.asList(aliases));
+    public static void registerCommand(Plugin plugin, CommandExecutor commandExecutor, String description, String permission, String commandString) {
+        PluginCommand command = getCommand(commandString, plugin);
         command.setDescription(description);
+        if (permission != null) {
+            command.setPermission(permission);
+            command.setPermissionMessage(i18n("NoPermission"));
+        }
         getCommandMap().register(plugin.getDescription().getName(), command);
         command.setExecutor(commandExecutor);
     }
 
-    public static void registerCommand(Plugin plugin, CommandExecutor commandExecutor, TabExecutor tabExecutor, String description, String... aliases) {
-        PluginCommand command = getCommand(aliases[0], plugin);
-        command.setAliases(Arrays.asList(aliases));
+    public static void registerCommand(Plugin plugin, TabExecutor tabExecutor, String description, String permission, String commandString) {
+        PluginCommand command = getCommand(commandString, plugin);
         command.setDescription(description);
+        if (permission != null) {
+            command.setPermission(permission);
+            command.setPermissionMessage(i18n("NoPermission"));
+        }
         getCommandMap().register(plugin.getDescription().getName(), command);
-        command.setExecutor(commandExecutor);
+        command.setExecutor(tabExecutor);
         command.setTabCompleter(tabExecutor);
     }
 

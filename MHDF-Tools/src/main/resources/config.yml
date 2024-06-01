@@ -254,13 +254,37 @@ CommandLink:
     #%0为 参数1
     #%1为 参数2
     添加权限:
-      Command: "lp user %0 perm set %1"
-      #Tab补全列表功能 格式: <参数几>_TabList
-      #参数0的TAB补全
-      0_TabList: "{PlayerList}"
-      #参数1的TAB补全
-      1_TabList:
-        - "你不会用吗?"
+      #仅玩家执行
+      OnlyPlayer: false
+      #必须拥有指定权限
+      Permission: "MHDFTools.CommandLink.添加权限"
+      #Tab补全列表功能
+      TabList:
+        #参数1的TAB补全
+        1:
+          - "{PlayerList}"
+        #参数2的TAB补全
+        2:
+          - "你不会用吗?"
+      #参数数量不同执行不同的命令
+      #============================================
+      #操作列表
+      #[player]|<命令> #玩家执行命令
+      #[console]|<命令> #后台执行命令
+      #[playsound]|<音频>|<音量|<音效> #播放音频
+      #[playsound_pack]|<音频>|<音量|<音效> #播放资源包音频
+      #[message]|<消息第一行>|<消息第二行> #发送消息
+      #[title]|<消息第一行>|<消息第二行>|淡出时间|停留时间|淡出时间 #发送标题消息
+      #[actionbar]|<消息> #发送ActionBar消息
+      #============================================
+      ActionList:
+        #有两个参数时执行的操作
+        2:
+          - "[player] lp user %1 perm set %2"
+        #默认操作
+        Default:
+          - "[message]|&c命令错误,正确格式:/添加权限 <玩家ID> <权限>"
+
 
 #Back系统设置
 BackSettings:

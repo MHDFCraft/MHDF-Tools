@@ -40,6 +40,7 @@ _ProtocolLib, PlaceholderAPI, Vault_
 </div>
 
 ## 贡献者
+
 <a href="https://github.com/Love-MHDF/MHDF-Tools/graphs/contributors">
   <img src="https://stg.contrib.rocks/image?repo=Love-MHDF/MHDF-Tools" />
 </a>
@@ -47,9 +48,11 @@ _ProtocolLib, PlaceholderAPI, Vault_
 Made with [contrib.rocks](https://stg.contrib.rocks)
 
 ## Star
+
 [![Stargazers over time](https://starchart.cc/Love-MHDF/MHDF-Tools.svg?variant=adaptive)](https://starchart.cc/Love-MHDF/MHDF-Tools)
 
 ## 特别感谢
+
 <div>
     <a href="https://www.mhdf.love/">梦回东方</a>
     <a href="https://cloud.fengidc.cn/">风IDC</a>

@@ -6,53 +6,67 @@ authoendrs: [ ChengZhiYa ]
 softdepend: [ Vault, PlaceholderAPI, ProtocolLib ]
 description: qwq
 permissions:
-  MHDFTools.Admin:
+  MHDFTools.Command.Back:
+    default: true
+  MHDFTools.Command.Crash:
     default: op
-  MHDFTools.Command.Gamemode:
-    default: op
+  MHDFTools.Command.Day:
+    default: true
+  MHDFTools.Command.DelHome:
+    default: true
   MHDFTools.Command.Fly:
+    default: op
+  MHDFTools.Command.FlyTime:
     default: op
   MHDFTools.Command.Fly.Give:
     default: op
-  MHDFTools.Command.Vanish:
+  MHDFTools.Command.Gamemode:
     default: op
-  MHDFTools.Command.Vanish.Give:
-    default: op
-  MHDFTools.Command.Day:
-    default: op
-  MHDFTools.Command.Night:
-    default: op
-  MHDFTools.Command.Sun:
-    default: op
+  MHDFTools.Command.Hat:
+    default: true
+  MHDFTools.Command.Home:
+    default: true
   MHDFTools.Command.Invsee:
-    default: op
-  MHDFTools.Command.PlayerTitle:
-    default: op
-  MHDFTools.Command.Stop:
-    default: op
-  MHDFTools.Command.Crash:
-    default: op
-  MHDFTools.Command.Freeze:
     default: op
   MHDFTools.Command.Ip:
     default: op
-  MHDFTools.Command.SetSpawn:
+  MHDFTools.Command.List:
     default: op
-  MHDFTools.Command.Point:
+  MHDFTools.Command.Login:
+    default: true
+  MHDFTools.Command.MHDFTools:
     default: op
+  MHDFTools.Command.Money:
+    default: true
   MHDFTools.Command.MoneyAdmin:
     default: op
+  MHDFTools.Command.Night:
+    default: op
+  MHDFTools.Command.Pay:
+    default: true
+  MHDFTools.Command.Register:
+    default: true
+  MHDFTools.Command.SetHome:
+    default: true
+  MHDFTools.Command.SetSpawn:
+    default: op
+  MHDFTools.Command.Spawn:
+    default: true
+  MHDFTools.Command.Stop:
+    default: op
+  MHDFTools.Command.Sun:
+    default: op
+  MHDFTools.Command.Tpa:
+    default: true
+  MHDFTools.Command.TpBack:
+    default: true
+  MHDFTools.Command.TpaHere:
+    default: true
+  MHDFTools.Command.UnBack:
+    default: true
+  MHDFTools.Command.Vanish:
+    default: op
   MHDFTools.SendUpdateMessage:
-    default: op
-  MHDFTools.Home:
-    default: true
-  MHDFTools.Chat:
-    default: true
-  MHDFTools.Chat.DelayBypass:
-    default: op
-  MHDFTools.Chat.BlackWorkBypass:
-    default: op
-  MHDFTools.Chat.Color:
     default: op
   MHDFTools.JoinMessage:
     default: true

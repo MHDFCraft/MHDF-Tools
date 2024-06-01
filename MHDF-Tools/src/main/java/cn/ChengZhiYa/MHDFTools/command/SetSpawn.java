@@ -12,16 +12,12 @@ import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
 public final class SetSpawn implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (sender.hasPermission("MHDFTools.Command.SetSpawn")) {
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-                BCUtil.SetSpawn(player.getLocation());
-                sender.sendMessage(i18n("Spawn.SetDone"));
-            } else {
-                sender.sendMessage(i18n("OnlyPlayer"));
-            }
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            BCUtil.SetSpawn(player.getLocation());
+            sender.sendMessage(i18n("Spawn.SetDone"));
         } else {
-            sender.sendMessage(i18n("NoPermission"));
+            sender.sendMessage(i18n("OnlyPlayer"));
         }
         return false;
     }

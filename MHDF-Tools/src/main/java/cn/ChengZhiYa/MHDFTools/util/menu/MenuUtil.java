@@ -10,6 +10,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -168,32 +169,6 @@ public final class MenuUtil {
         }
     }
 
-    public static void openMenu(Player player, String menuFileName) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            String title = PAPIChatColor(player, getMenu(menuFileName).getString("Menu.Title"));
-            Inventory menu = Bukkit.createInventory(player, getMenu(menuFileName).getInt("Menu.Size"), title);
-
-            for (String itemID : Objects.requireNonNull(getMenu(menuFileName).getConfigurationSection("Menu.ItemList")).getKeys(false)) {
-                String type = getMenu(menuFileName).getString("Menu.ItemList." + itemID + ".Type");
-                String displayName = getMenu(menuFileName).getString("Menu.ItemList." + itemID + ".DisplayName");
-                Integer customModelData = getMenu(menuFileName).getObject("Menu.ItemList." + itemID + ".CustomModelData", Integer.class);
-                Integer amount = getMenu(menuFileName).getObject("Menu.ItemList." + itemID + ".Amount", Integer.class);
-                List<String> lore = new ArrayList<>();
-                getMenu(menuFileName).getStringList("Menu.ItemList." + itemID + ".Lore").forEach(s -> lore.add(PAPIChatColor(player, s)));
-
-                List<String> slotList = new ArrayList<>();
-                if (getMenu("HomeMenu.yml").getString("Menu.ItemList." + itemID + ".Slot") != null) {
-                    slotList.add(getMenu("HomeMenu.yml").getString("Menu.ItemList." + itemID + ".Slot"));
-                } else {
-                    slotList.addAll(getMenu("HomeMenu.yml").getStringList("Menu.ItemList." + itemID + ".Slot"));
-                }
-
-                setMenuItem(menu, menuFileName, itemID, type, displayName, lore, customModelData, amount, slotList);
-            }
-            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.openInventory(menu));
-        });
-    }
-
     public static List<String> ifAllowClick(Player player, String menuFileName, String itemID, boolean shiftClick) {
         String requirmentType = shiftClick ? "ShiftClickRequirements" : "ClickRequirements";
 
@@ -286,52 +261,119 @@ public final class MenuUtil {
         return new ArrayList<>();
     }
 
-    public static void runAction(Player player, String menuFileName, String[] action) {
+    public static void runAction(CommandSender sender, String menuFileName, String[] action) {
         switch (action[0]) {
-            case "[console_args]":
-                StringHasMap.getHasMap().put(player.getName() + "_ArgsRunCommmand", "console|" + menuFileName + "|" + action[1] + "|" + action[2]);
-                player.closeInventory();
-                break;
-            case "[player_args]":
-                StringHasMap.getHasMap().put(player.getName() + "_ArgsRunCommmand", "player|" + menuFileName + "|" + action[1] + "|" + action[2]);
-                player.closeInventory();
-                break;
-            case "[player]":
-                Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.chat("/" + PlaceholderAPI.setPlaceholders(player, action[1])));
-                break;
-            case "[console]":
-                Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(player, action[1])));
-                break;
-            case "[playsound]":
-                try {
-                    player.playSound(player, Sound.valueOf(action[1]), Float.parseFloat(action[2]), Float.parseFloat(action[3]));
-                } catch (Exception e) {
-                    player.playSound(player, action[1], Float.parseFloat(action[2]), Float.parseFloat(action[3]));
+            case "[console_args]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    StringHasMap.getHasMap().put(sender.getName() + "_ArgsRunCommmand", "console|" + menuFileName + "|" + action[1] + "|" + action[2]);
+                    player.closeInventory();
                 }
                 break;
-            case "[message]":
-                player.sendMessage(PAPIChatColor(player, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"));
+            }
+            case "[player_args]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    StringHasMap.getHasMap().put(sender.getName() + "_ArgsRunCommmand", "player|" + menuFileName + "|" + action[1] + "|" + action[2]);
+                    player.closeInventory();
+                }
                 break;
-            case "[title]":
-                player.sendTitle(PAPIChatColor(player, action[1]), PAPIChatColor(player, action[2]), Integer.parseInt(action[3]), Integer.parseInt(action[4]), Integer.parseInt(action[5]));
+            }
+            case "[player]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.chat("/" + PlaceholderAPI.setPlaceholders(player, action[1])));
+                } else {
+                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(null, action[1])));
+                }
                 break;
-            case "[actionbar]":
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(PAPIChatColor(player, action[1])));
+            }
+            case "[console]": {
+                Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(null, action[1])));
                 break;
-            case "[close]":
-                player.closeInventory();
+            }
+            case "[playsound]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    try {
+                        player.playSound(player, Sound.valueOf(action[1]), Float.parseFloat(action[2]), Float.parseFloat(action[3]));
+                    } catch (Exception e) {
+                        player.playSound(player, action[1], Float.parseFloat(action[2]), Float.parseFloat(action[3]));
+                    }
+                    break;
+                }
+            }
+            case "[message]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    sender.sendMessage(PAPIChatColor(player, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"));
+                } else {
+                    sender.sendMessage(PAPIChatColor(null, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"));
+                }
                 break;
-            case "[openmenu]":
-                openMenu(player, menuFileName);
+            }
+            case "[title]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    player.sendTitle(PAPIChatColor(player, action[1]), PAPIChatColor(player, action[2]), Integer.parseInt(action[3]), Integer.parseInt(action[4]), Integer.parseInt(action[5]));
+                }
                 break;
+            }
+            case "[actionbar]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(PAPIChatColor(player, action[1])));
+                }
+                break;
+            }
+            case "[close]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    player.closeInventory();
+                }
+                break;
+            }
+            case "[openmenu]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    openMenu(player, menuFileName);
+                }
+                break;
+            }
             default:
                 ColorLog("&c[MHDF-Tools]不存在" + action[0] + "这个操作");
         }
     }
 
-    public static void runAction(Player player, String menuFileName, List<String> actionList) {
+    public static void runAction(CommandSender player, String menuFileName, List<String> actionList) {
         for (String actions : actionList) {
             runAction(player, menuFileName, actions.split("\\|"));
         }
+    }
+
+    public static void openMenu(Player player, String menuFileName) {
+        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+            String title = PAPIChatColor(player, getMenu(menuFileName).getString("Menu.Title"));
+            Inventory menu = Bukkit.createInventory(player, getMenu(menuFileName).getInt("Menu.Size"), title);
+
+            for (String itemID : Objects.requireNonNull(getMenu(menuFileName).getConfigurationSection("Menu.ItemList")).getKeys(false)) {
+                String type = getMenu(menuFileName).getString("Menu.ItemList." + itemID + ".Type");
+                String displayName = getMenu(menuFileName).getString("Menu.ItemList." + itemID + ".DisplayName");
+                Integer customModelData = getMenu(menuFileName).getObject("Menu.ItemList." + itemID + ".CustomModelData", Integer.class);
+                Integer amount = getMenu(menuFileName).getObject("Menu.ItemList." + itemID + ".Amount", Integer.class);
+                List<String> lore = new ArrayList<>();
+                getMenu(menuFileName).getStringList("Menu.ItemList." + itemID + ".Lore").forEach(s -> lore.add(PAPIChatColor(player, s)));
+
+                List<String> slotList = new ArrayList<>();
+                if (getMenu(menuFileName).getString("Menu.ItemList." + itemID + ".Slot") != null) {
+                    slotList.add(getMenu(menuFileName).getString("Menu.ItemList." + itemID + ".Slot"));
+                } else {
+                    slotList.addAll(getMenu(menuFileName).getStringList("Menu.ItemList." + itemID + ".Slot"));
+                }
+
+                setMenuItem(menu, menuFileName, itemID, type, displayName, lore, customModelData, amount, slotList);
+            }
+            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.openInventory(menu));
+        });
     }
 }

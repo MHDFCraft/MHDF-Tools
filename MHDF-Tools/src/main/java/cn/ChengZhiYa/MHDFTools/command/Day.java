@@ -12,14 +12,10 @@ import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
 public final class Day implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (sender.hasPermission("MHDFTools.Command.Day")) {
-            for (World world : Bukkit.getWorlds()) {
-                world.setTime(1000);
-            }
-            sender.sendMessage(i18n("FastSetDone"));
-        } else {
-            sender.sendMessage(i18n("NoPermission"));
+        for (World world : Bukkit.getWorlds()) {
+            world.setTime(1000);
         }
+        sender.sendMessage(i18n("FastSetDone"));
         return false;
     }
 }

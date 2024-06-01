@@ -23,64 +23,60 @@ import static cn.ChengZhiYa.MHDFTools.util.database.ImportUtil.ImportHuskHomesDa
 public final class MHDFTools implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (sender.hasPermission("MHDFTools.Admin")) {
-            if (args.length == 1) {
-                if (args[0].equals("reload")) {
-                    cn.ChengZhiYa.MHDFTools.MHDFTools.instance.reloadConfig();
-                    if (cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getConfig().getBoolean("InvseeSettings.Enable")) {
-                        VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
-                    }
-                    LangFileData = YamlConfiguration.loadConfiguration(new File(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getDataFolder(), "lang.yml"));
-                    SoundFileData = YamlConfiguration.loadConfiguration(new File(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getDataFolder(), "sound.yml"));
-                    sender.sendMessage(i18n("AdminCommands.reload.ReloadDone"));
+        if (args.length == 1) {
+            if (args[0].equals("reload")) {
+                cn.ChengZhiYa.MHDFTools.MHDFTools.instance.reloadConfig();
+                if (cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getConfig().getBoolean("InvseeSettings.Enable")) {
+                    VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
+                }
+                LangFileData = YamlConfiguration.loadConfiguration(new File(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getDataFolder(), "lang.yml"));
+                SoundFileData = YamlConfiguration.loadConfiguration(new File(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getDataFolder(), "sound.yml"));
+                sender.sendMessage(i18n("AdminCommands.reload.ReloadDone"));
 
-                    return true;
-                }
+                return true;
             }
-            if (args.length >= 2) {
-                if (args[0].equals("convert")) {
-                    switch (args[1]) {
-                        case "YAML":
-                            if (!Objects.equals(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getConfig().getString("DataSettings.Type"), "YAML")) {
-                                MySQLToYAML(sender);
+        }
+        if (args.length >= 2) {
+            if (args[0].equals("convert")) {
+                switch (args[1]) {
+                    case "YAML":
+                        if (!Objects.equals(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getConfig().getString("DataSettings.Type"), "YAML")) {
+                            MySQLToYAML(sender);
+                        } else {
+                            sender.sendMessage(i18n("AdminCommands.convert.ConvertInvalid", "YAML"));
+                        }
+                        break;
+                    case "MySQL":
+                        if (args.length == 6) {
+                            if (!Objects.equals(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                                YAMLToMySQL(sender, args[2], args[3], args[4], args[5]);
                             } else {
-                                sender.sendMessage(i18n("AdminCommands.convert.ConvertInvalid", "YAML"));
+                                sender.sendMessage(i18n("AdminCommands.convert.ConvertInvalid", "MySQL"));
                             }
                             break;
-                        case "MySQL":
-                            if (args.length == 6) {
-                                if (!Objects.equals(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-                                    YAMLToMySQL(sender, args[2], args[3], args[4], args[5]);
-                                } else {
-                                    sender.sendMessage(i18n("AdminCommands.convert.ConvertInvalid", "MySQL"));
-                                }
-                                break;
-                            }
-                        default:
-                            sender.sendMessage(i18n("AdminCommands.convert.NotFoundType"));
-                            break;
-                    }
-                    return true;
+                        }
+                    default:
+                        sender.sendMessage(i18n("AdminCommands.convert.NotFoundType"));
+                        break;
                 }
+                return true;
             }
-            if (args.length == 2) {
-                if (args[0].equals("import")) {
-                    switch (args[1]) {
-                        case "HuskHomes":
-                            ImportHuskHomesData(sender);
-                            break;
-                        case "CMI":
-                            ImportCMIData(sender);
-                            break;
-                        default:
-                            sender.sendMessage(i18n("AdminCommands.import.NotFoundPlugin"));
-                            break;
-                    }
-                    return true;
+        }
+        if (args.length == 2) {
+            if (args[0].equals("import")) {
+                switch (args[1]) {
+                    case "HuskHomes":
+                        ImportHuskHomesData(sender);
+                        break;
+                    case "CMI":
+                        ImportCMIData(sender);
+                        break;
+                    default:
+                        sender.sendMessage(i18n("AdminCommands.import.NotFoundPlugin"));
+                        break;
                 }
+                return true;
             }
-        } else {
-            sender.sendMessage(i18n("NoPermission"));
         }
 
         {

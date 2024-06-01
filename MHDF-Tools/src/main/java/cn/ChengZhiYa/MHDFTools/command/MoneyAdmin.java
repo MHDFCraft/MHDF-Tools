@@ -16,38 +16,36 @@ import static cn.ChengZhiYa.MHDFTools.util.database.EconomyUtil.*;
 public final class MoneyAdmin implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String s, String[] args) {
-        if (sender.hasPermission("MHDFTools.Command.MoneyAdmin")) {
-            if (args.length == 3) {
-                if (args[0].equals("add")) {
-                    if (Bukkit.getPlayer(args[1]) == null) {
-                        sender.sendMessage(i18n("PlayerNotOnline"));
-                        return false;
-                    }
-                    addMoney(args[1], Double.valueOf(args[2]));
-                    sender.sendMessage(i18n("Vault.AddDone", args[1], args[2]));
+        if (args.length == 3) {
+            if (args[0].equals("add")) {
+                if (Bukkit.getPlayer(args[1]) == null) {
+                    sender.sendMessage(i18n("PlayerNotOnline"));
                     return false;
                 }
-                if (args[0].equals("take")) {
-                    if (Bukkit.getPlayer(args[1]) == null) {
-                        sender.sendMessage(i18n("PlayerNotOnline"));
-                        return false;
-                    }
-                    takeMoney(args[1], Double.valueOf(args[2]));
-                    sender.sendMessage(i18n("Vault.TakeDone", args[1], args[2]));
-                    return false;
-                }
-                if (args[0].equals("set")) {
-                    if (Bukkit.getPlayer(args[1]) == null) {
-                        sender.sendMessage(i18n("PlayerNotOnline"));
-                        return false;
-                    }
-                    setMoney(args[1], Double.valueOf(args[2]));
-                    sender.sendMessage(i18n("Vault.SetDone", args[1], args[2]));
-                    return false;
-                }
+                addMoney(args[1], Double.valueOf(args[2]));
+                sender.sendMessage(i18n("Vault.AddDone", args[1], args[2]));
+                return false;
             }
-            Help(sender, s);
+            if (args[0].equals("take")) {
+                if (Bukkit.getPlayer(args[1]) == null) {
+                    sender.sendMessage(i18n("PlayerNotOnline"));
+                    return false;
+                }
+                takeMoney(args[1], Double.valueOf(args[2]));
+                sender.sendMessage(i18n("Vault.TakeDone", args[1], args[2]));
+                return false;
+            }
+            if (args[0].equals("set")) {
+                if (Bukkit.getPlayer(args[1]) == null) {
+                    sender.sendMessage(i18n("PlayerNotOnline"));
+                    return false;
+                }
+                setMoney(args[1], Double.valueOf(args[2]));
+                sender.sendMessage(i18n("Vault.SetDone", args[1], args[2]));
+                return false;
+            }
         }
+        Help(sender, s);
         return false;
     }
 

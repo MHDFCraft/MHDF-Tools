@@ -15,20 +15,16 @@ public final class Invsee implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
-            if (sender.hasPermission("MHDFTools.Command.Invsee")) {
-                if (args.length == 1) {
-                    Player player = (Player) sender;
-                    if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(i18n("PlayerNotOnline"));
-                        return false;
-                    }
-                    Player Player = Bukkit.getPlayer(args[0]);
-                    player.openInventory(Objects.requireNonNull(Player).getInventory());
-                } else {
-                    sender.sendMessage(i18n("Usage.Invsee"));
+            if (args.length == 1) {
+                Player player = (Player) sender;
+                if (Bukkit.getPlayer(args[0]) == null) {
+                    sender.sendMessage(i18n("PlayerNotOnline"));
+                    return false;
                 }
+                Player Player = Bukkit.getPlayer(args[0]);
+                player.openInventory(Objects.requireNonNull(Player).getInventory());
             } else {
-                sender.sendMessage(i18n("NoPermission"));
+                sender.sendMessage(i18n("Usage.Invsee"));
             }
         } else {
             sender.sendMessage(i18n("OnlyPlayer"));
