@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="https://github.com/Love-MHDF/MHDF-Tools/blob/master/Logo.png" width="200" height="200" alt="MHDF-Tools">
+   <img src="./Logo.png" width="200" height="200" alt="MHDF-Tools">
 </p>
 
 <div align="center">

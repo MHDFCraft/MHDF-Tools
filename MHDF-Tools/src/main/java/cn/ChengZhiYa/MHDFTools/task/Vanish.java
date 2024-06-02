@@ -3,12 +3,12 @@ package cn.ChengZhiYa.MHDFTools.task;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.util.Util.VanishList;
-import static cn.ChengZhiYa.MHDFTools.util.Util.getNMSVersion;
 
 public final class Vanish extends BukkitRunnable {
     @Override
@@ -19,10 +19,11 @@ public final class Vanish extends BukkitRunnable {
                     if (Bukkit.getPlayer(VanishPlayer) != null) {
                         Player player = Bukkit.getPlayer(VanishPlayer);
                         for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                            if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
-                                OnlinePlayer.hidePlayer(Objects.requireNonNull(player));
-                            } else {
+                            try {
+                                Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
                                 OnlinePlayer.hidePlayer(MHDFTools.instance, Objects.requireNonNull(player));
+                            } catch (NoSuchMethodException e) {
+                                OnlinePlayer.hidePlayer(Objects.requireNonNull(player));
                             }
                         }
                     }

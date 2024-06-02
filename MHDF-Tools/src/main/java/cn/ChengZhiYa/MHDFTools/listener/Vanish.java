@@ -13,12 +13,14 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.util.Util.*;
+import static cn.ChengZhiYa.MHDFTools.util.Util.VanishList;
+import static cn.ChengZhiYa.MHDFTools.util.Util.getVanishBossBar;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class Vanish implements Listener {
@@ -28,10 +30,11 @@ public final class Vanish implements Listener {
             Player player = event.getPlayer();
             if (VanishList.contains(player.getName())) {
                 for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                    if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
-                        OnlinePlayer.hidePlayer(player);
-                    } else {
+                    try {
+                        Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
                         OnlinePlayer.hidePlayer(MHDFTools.instance, player);
+                    } catch (NoSuchMethodException e) {
+                        OnlinePlayer.hidePlayer(player);
                     }
                 }
                 PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);

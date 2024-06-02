@@ -27,7 +27,7 @@ public final class Stop implements CommandExecutor {
             }
 
             for (Player player : Bukkit.getOnlinePlayers()) {
-                player.kickPlayer(PAPIChatColor(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SuperStopSettings.StopMessageFormat")).replaceAll("\\{Message}",Message)));
+                player.kickPlayer(PAPIChatColor(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SuperStopSettings.StopMessageFormat")).replaceAll("\\{Message}", Message)));
             }
         }
 

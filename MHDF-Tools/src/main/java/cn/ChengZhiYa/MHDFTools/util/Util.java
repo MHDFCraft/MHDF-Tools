@@ -57,6 +57,9 @@ public final class Util {
 
     public static String getIpLocation(String Ip) {
         try {
+            if (Ip.startsWith("127.")) {
+                return "本地局域网";
+            }
             URL url = new URL("https://opendata.baidu.com/api.php?query=" + Ip + "&co=&resource_id=6006&t=1433920989928&ie=utf8&oe=utf-8&format=json");
             URLConnection conn = url.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
@@ -104,14 +107,6 @@ public final class Util {
 
     public static boolean ifLogin(Player player) {
         return StringHasMap.getHasMap().get(player.getName() + "_Login") != null;
-    }
-
-    public static String getNMSVersion() {
-        try {
-            return Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
-        }
     }
 
     public static void OpSendMessage(String Message, String PlayerName) {

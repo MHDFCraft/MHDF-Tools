@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -33,10 +34,11 @@ public final class Vanish implements CommandExecutor {
             }
             if (!VanishList.contains(Objects.requireNonNull(player).getName())) {
                 for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                    if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
-                        OnlinePlayer.hidePlayer(player);
-                    } else {
+                    try {
+                        Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
                         OnlinePlayer.hidePlayer(MHDFTools.instance, player);
+                    } catch (NoSuchMethodException e) {
+                        OnlinePlayer.hidePlayer(player);
                     }
                 }
                 PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);
@@ -49,10 +51,11 @@ public final class Vanish implements CommandExecutor {
                 VanishList.add(player.getName());
             } else {
                 for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                    if (Integer.parseInt(Objects.requireNonNull(getNMSVersion()).split("_")[1]) <= 12) {
-                        OnlinePlayer.showPlayer(player);
-                    } else {
-                        OnlinePlayer.showPlayer(MHDFTools.instance, player);
+                    try {
+                        Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
+                        OnlinePlayer.hidePlayer(MHDFTools.instance, player);
+                    } catch (NoSuchMethodException e) {
+                        OnlinePlayer.hidePlayer(player);
                     }
                 }
                 player.removePotionEffect(PotionEffectType.INVISIBILITY);

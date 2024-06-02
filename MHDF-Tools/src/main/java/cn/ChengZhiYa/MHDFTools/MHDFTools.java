@@ -15,6 +15,10 @@ import cn.ChengZhiYa.MHDFTools.listener.Menu.HomeMenu;
 import cn.ChengZhiYa.MHDFTools.listener.Menu.MenuArgsCommand;
 import cn.ChengZhiYa.MHDFTools.listener.Menu.OpenMenu;
 import cn.ChengZhiYa.MHDFTools.task.*;
+import cn.ChengZhiYa.MHDFTools.util.libraries.classpath.ReflectionClassPathAppender;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.Dependency;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManager;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManagerImpl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.ParserConfig;
@@ -66,6 +70,8 @@ public final class MHDFTools extends JavaPlugin implements Listener {
     public static PluginDescriptionFile descriptionFile;
     public static Statement statement;
     public static HikariDataSource dataSource;
+
+    private DependencyManager dependencyManager;
 
     public static PluginDescriptionFile getDescriptionFile() {
         return descriptionFile;
@@ -201,6 +207,15 @@ public final class MHDFTools extends JavaPlugin implements Listener {
     public void onLoad() {
         instance = this;
         descriptionFile = getDescription();
+
+        this.dependencyManager = new DependencyManagerImpl(this, new ReflectionClassPathAppender(this.getClassLoader()));
+        this.dependencyManager.loadDependencies(new ArrayList<>(
+                java.util.List.of(
+                        Dependency.FAST_JSON,
+                        Dependency.HikariCP,
+                        Dependency.HTTPCLIENT
+                )
+        ));
 
         ParserConfig.getGlobalInstance().setSafeMode(true);
     }

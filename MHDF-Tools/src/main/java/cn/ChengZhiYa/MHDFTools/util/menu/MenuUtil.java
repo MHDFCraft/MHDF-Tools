@@ -39,7 +39,7 @@ public final class MenuUtil {
             if (type.startsWith("PlayerHead-")) {
                 return getPlayerHead(type.replaceAll("PlayerHead-", ""), displayName, lore, customModelData, amount);
             }
-            return getItemStack(Material.getMaterial(type), displayName, lore, customModelData, amount);
+            return getItemStack(Material.getMaterial(type.toUpperCase(Locale.ROOT)), displayName, lore, customModelData, amount);
         } else {
             return new ItemStack(Material.AIR);
         }
