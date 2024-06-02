@@ -419,7 +419,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 Bukkit.getPluginManager().registerEvents(new MOTD(), this);
             }
             if (getConfig().getBoolean("FlySettings.Enable")) {
-                registerCommand(this, new Fly(), "飞行系统", null, "fly");
+                registerCommand(this, new Fly(), "飞行系统", "MHDFTools.Command.Fly", "fly");
                 registerCommand(this, new FlyTime(), "限时飞行系统", "MHDFTools.Command.FlyTime", "flytime");
                 new cn.ChengZhiYa.MHDFTools.task.Fly().runTaskTimerAsynchronously(this, 0L, 20L);
                 Bukkit.getPluginManager().registerEvents(new AutoFly(), this);

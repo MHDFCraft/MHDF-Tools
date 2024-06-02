@@ -16,9 +16,11 @@ permissions:
     default: true
   MHDFTools.Command.Fly:
     default: op
-  MHDFTools.Command.FlyTime:
+  MHDFTools.Command.Fly.Infinite:
     default: op
   MHDFTools.Command.Fly.Give:
+    default: op
+  MHDFTools.Command.FlyTime:
     default: op
   MHDFTools.Command.Gamemode:
     default: op
