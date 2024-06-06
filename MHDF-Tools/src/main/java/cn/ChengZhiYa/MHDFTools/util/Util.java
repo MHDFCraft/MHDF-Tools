@@ -1,12 +1,19 @@
 package cn.ChengZhiYa.MHDFTools.util;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.BooleanHasMap;
 import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
@@ -20,13 +27,12 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
@@ -35,11 +41,13 @@ import java.util.*;
 
 import static cn.ChengZhiYa.MHDFTools.util.BCUtil.PlayerList;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
+import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
 
 public final class Util {
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static final List<String> CommandLinkList = new ArrayList<>();
+    public static final String Version = "1.4.7";
     public static List<String> VanishList = new ArrayList<>();
     public static BossBar VanishBossBar;
     public static YamlConfiguration LangFileData;
@@ -52,6 +60,83 @@ public final class Util {
             pluginClassLoaderPlugin.setAccessible(true);
         } catch (ClassNotFoundException | NoSuchFieldException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static FileOutputStream getOutputStream(CloseableHttpResponse response, String NewVersionString, int cache) throws IOException {
+        HttpEntity entity = response.getEntity();
+        InputStream is = entity.getContent();
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(MHDFTools.instance.getDataFolder().getParentFile(), "Cheng-Tools-Reloaded-" + NewVersionString + ".jar"));
+        byte[] buffer = new byte[cache];
+        int ch;
+        while ((ch = is.read(buffer)) != -1) {
+            fileOutputStream.write(buffer, 0, ch);
+        }
+        is.close();
+        fileOutputStream.flush();
+        return fileOutputStream;
+    }
+
+    public static void checkUpdate() {
+        try {
+            HttpURLConnection conn = (HttpURLConnection) new URL("https://mhdf.love:8888/plugin/version/MHDF-Tools").openConnection();
+
+            conn.setRequestMethod("GET");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            JSONObject Data = JSON.parseObject(in.readLine());
+            String NewVersionString = Data.getString("data");
+
+            if (!NewVersionString.equals(Version)) {
+                ColorLog("&c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
+                if (MHDFTools.instance.getConfig().getBoolean("AutoUpdate")) {
+                    Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+                        try {
+                            int cache = 10 * 1024;
+                            CloseableHttpClient httpClient = HttpClients.createDefault();
+                            RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000).
+                                    setConnectionRequestTimeout(5000)
+                                    .setSocketTimeout(5000)
+                                    .setRedirectsEnabled(true)
+                                    .build();
+                            HttpGet httpGet = new HttpGet("https://github.moeyy.xyz/https://github.com/Love-MHDF/MHDF-Tools/releases/download/" + NewVersionString + "/Cheng-Tools-Reloaded-" + NewVersionString + ".jar");
+                            httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54");
+                            httpGet.setConfig(requestConfig);
+                            CloseableHttpResponse response = httpClient.execute(httpGet);
+                            FileOutputStream fileOutputStream = getOutputStream(response, NewVersionString, cache);
+                            fileOutputStream.close();
+                            ChatColor("&c自动更新完成,下次重启时生效!");
+                            ChatColor("&a请手动删除旧版本插件,谢谢!");
+                        } catch (Exception ignored) {
+                            ChatColor("&c自动更新失败!");
+                        }
+                    });
+                }
+                BooleanHasMap.getHasMap().put("IsLast", true);
+            } else {
+                ColorLog("&a当前插件版本是最新版!");
+            }
+            BooleanHasMap.getHasMap().put("CheckVersionError", false);
+
+            in.close();
+            conn.disconnect();
+        } catch (Exception e) {
+            ColorLog("&c[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
+            BooleanHasMap.getHasMap().put("IsLast", false);
+            BooleanHasMap.getHasMap().put("CheckVersionError", true);
+        }
+    }
+
+    public static void deleteOldPlugins() {
+        if (MHDFTools.instance.getDataFolder().getParentFile().isDirectory()) {
+            for (File PluginFile : Objects.requireNonNull(MHDFTools.instance.getDataFolder().getParentFile().listFiles())) {
+                if (PluginFile.isFile() && PluginFile.getName().contains("MHDF-Tools") && PluginFile.getName().endsWith(".jar")) {
+                    String[] PluginName = PluginFile.getName().split("MHDF-Tools");
+                    if (!PluginName[1].equals("-" + Version + ".jar")) {
+                        PluginFile.delete();
+                    }
+                }
+            }
         }
     }
 

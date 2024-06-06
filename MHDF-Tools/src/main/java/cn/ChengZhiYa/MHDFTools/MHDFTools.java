@@ -5,8 +5,6 @@ import cn.ChengZhiYa.MHDFTools.command.Fly;
 import cn.ChengZhiYa.MHDFTools.command.TpBack;
 import cn.ChengZhiYa.MHDFTools.command.Vanish;
 import cn.ChengZhiYa.MHDFTools.command.*;
-import cn.ChengZhiYa.MHDFTools.hashmap.BooleanHasMap;
-import cn.ChengZhiYa.MHDFTools.hook.EconomyImplementer;
 import cn.ChengZhiYa.MHDFTools.hook.Metrics;
 import cn.ChengZhiYa.MHDFTools.hook.PlaceholderAPI;
 import cn.ChengZhiYa.MHDFTools.listener.*;
@@ -19,205 +17,68 @@ import cn.ChengZhiYa.MHDFTools.util.libraries.classpath.ReflectionClassPathAppen
 import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.Dependency;
 import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManager;
 import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManagerImpl;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.ParserConfig;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import net.milkbowl.vault.economy.Economy;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.TimeZone;
 
+import static cn.ChengZhiYa.MHDFTools.hook.Vault.hookVault;
+import static cn.ChengZhiYa.MHDFTools.hook.Vault.unHookVault;
 import static cn.ChengZhiYa.MHDFTools.util.BCUtil.getServerName;
+import static cn.ChengZhiYa.MHDFTools.util.FileUtil.createDir;
+import static cn.ChengZhiYa.MHDFTools.util.FileUtil.createFile;
 import static cn.ChengZhiYa.MHDFTools.util.Util.*;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.closeDatabase;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.initializationDatabaseData;
 import static cn.ChengZhiYa.MHDFTools.util.menu.MenuUtil.runAction;
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
 import static cn.chengzhiya.mhdfpluginapi.YamlFileUtil.SaveResource;
 
 public final class MHDFTools extends JavaPlugin implements Listener {
-    public static final String Version = "1.4.7";
     public static MHDFTools instance;
     public static boolean PAPI = true;
     public static boolean PLIB = true;
     public static boolean Vault = true;
-    public static PluginDescriptionFile descriptionFile;
-    public static Statement statement;
-    public static HikariDataSource dataSource;
-
-    private DependencyManager dependencyManager;
-
-    public static PluginDescriptionFile getDescriptionFile() {
-        return descriptionFile;
-    }
 
     public static void initializationYamlData() {
         //家系统数据文件夹
         if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
-            File HomeFile = new File(MHDFTools.instance.getDataFolder() + "/HomeData");
-            if (!HomeFile.exists()) {
-                HomeFile.mkdirs();
-            }
+            createDir("HomeData");
         }
         //经济系统数据文件夹
         if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
-            File VaultData = new File(MHDFTools.instance.getDataFolder() + "/VaultData");
-            if (!VaultData.exists()) {
-                VaultData.mkdirs();
-            }
+            createDir("VaultData");
         }
         //登录系统
         if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
-            File LoginFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
-            if (!LoginFile.exists()) {
-                try {
-                    LoginFile.createNewFile();
-                } catch (IOException ignored) {
-                }
-            }
+            createFile("LoginData.yml");
         }
         //飞行系统
         if (MHDFTools.instance.getConfig().getBoolean("FlySettings.Enable")) {
-            File FlyCacheFile = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
-            if (!FlyCacheFile.exists()) {
-                try {
-                    FlyCacheFile.createNewFile();
-                } catch (IOException ignored) {
-                }
-            }
-        }
-    }
-
-    public static void initializationDatabaseData() {
-        //连接数据库
-        try {
-            HikariConfig config = new HikariConfig();
-            config.setJdbcUrl("jdbc:mysql://" + MHDFTools.instance.getConfig().getString("DataSettings.Host") + "/" + MHDFTools.instance.getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
-            config.setUsername(MHDFTools.instance.getConfig().getString("DataSettings.User"));
-            config.setPassword(MHDFTools.instance.getConfig().getString("DataSettings.Password"));
-            config.addDataSourceProperty("useUnicode", "true");
-            config.addDataSourceProperty("characterEncoding", "utf8");
-            config.addDataSourceProperty("cachePrepStmts", "true");
-            config.addDataSourceProperty("prepStmtCacheSize", "250");
-            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-            dataSource = new HikariDataSource(config);
-            statement = dataSource.getConnection().createStatement();
-        } catch (SQLException ignored) {
-            ColorLog("&c无法连接数据库");
-        }
-        try {
-            //经济系统
-            {
-                if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Economy` (" +
-                            "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
-                            "`Money` DECIMAL(20,4) NOT NULL DEFAULT 0," +
-                            "PRIMARY KEY (`PlayerName`)) " +
-                            "COLLATE='utf8mb4_general_ci';");
-                    ps.executeUpdate();
-                    ps.close();
-                    connection.close();
-                }
-            }
-            //家系统
-            {
-                if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Home` (" +
-                            "`ID` BIGINT NOT NULL AUTO_INCREMENT," +
-                            "`Home` VARCHAR(100) NOT NULL DEFAULT ''," +
-                            "`Owner` VARCHAR(50) NOT NULL DEFAULT ''," +
-                            "`Server` VARCHAR(50) NOT NULL DEFAULT ''," +
-                            "`World` VARCHAR(50) NOT NULL DEFAULT ''," +
-                            "`X` DOUBLE NOT NULL DEFAULT 0," +
-                            "`Y` DOUBLE NOT NULL DEFAULT 0," +
-                            "`Z` DOUBLE NOT NULL DEFAULT 0," +
-                            "`Yaw` DOUBLE NOT NULL DEFAULT 0," +
-                            "`Pitch` DOUBLE NOT NULL DEFAULT 0," +
-                            "PRIMARY KEY (`ID`)," +
-                            "INDEX `Home` (`Home`)," +
-                            "INDEX `Owner` (`Owner`)) " +
-                            "COLLATE='utf8mb4_general_ci';");
-                    ps.executeUpdate();
-                    ps.close();
-                    connection.close();
-                }
-            }
-            //登录系统
-            {
-                if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Login` (" +
-                            "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
-                            "`Password` VARCHAR(200) NOT NULL DEFAULT ''," +
-                            "PRIMARY KEY (`PlayerName`)) " +
-                            "COLLATE='utf8mb4_general_ci';");
-                    ps.executeUpdate();
-                    ps.close();
-                    connection.close();
-                }
-            }
-            //飞行系统
-            {
-                if (MHDFTools.instance.getConfig().getBoolean("FlySettings.Enable")) {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Fly` (" +
-                            "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
-                            "`Time` INT NOT NULL DEFAULT 0," +
-                            "PRIMARY KEY (`PlayerName`)) " +
-                            "COLLATE='utf8mb4_general_ci';");
-                    ps.executeUpdate();
-                    ps.close();
-                    connection.close();
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            createFile("Cache/FlyCache.yml");
         }
     }
 
     @Override
     public void onLoad() {
         instance = this;
-        descriptionFile = getDescription();
 
-        this.dependencyManager = new DependencyManagerImpl(this, new ReflectionClassPathAppender(this.getClassLoader()));
-        this.dependencyManager.loadDependencies(new ArrayList<>(
-                java.util.List.of(
-                        Dependency.FAST_JSON,
-                        Dependency.HikariCP,
-                        Dependency.HTTPCLIENT
-                )
-        ));
-
-        ParserConfig.getGlobalInstance().setSafeMode(true);
+        DependencyManager dependencyManager = new DependencyManagerImpl(this, new ReflectionClassPathAppender(this.getClassLoader()));
+        java.util.List<Dependency> dependencies = new ArrayList<>();
+        dependencies.add(Dependency.FAST_JSON);
+        dependencies.add(Dependency.HikariCP);
+        dependencies.add(Dependency.HTTPCLIENT);
+        dependencies.add(Dependency.COMMONS_LANG);
+        dependencyManager.loadDependencies(dependencies);
     }
 
     @Override
@@ -229,18 +90,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             new Metrics(this, 17154);
         }
 
-        {
-            if (getDataFolder().getParentFile().isDirectory()) {
-                for (File PluginFile : Objects.requireNonNull(getDataFolder().getParentFile().listFiles())) {
-                    if (PluginFile.isFile() && PluginFile.getName().contains("MHDF-Tools") && PluginFile.getName().endsWith(".jar")) {
-                        String[] PluginName = PluginFile.getName().split("MHDF-Tools");
-                        if (!PluginName[1].equals("-" + Version + ".jar")) {
-                            PluginFile.delete();
-                        }
-                    }
-                }
-            }
-        }
+        deleteOldPlugins();
 
         //功能可用检查
         {
@@ -266,109 +116,39 @@ public final class MHDFTools extends JavaPlugin implements Listener {
 
         //更新检测
         if (getConfig().getBoolean("CheckVersion")) {
-            try {
-                HttpURLConnection conn = (HttpURLConnection) new URL("https://mhdf.love:8888/plugin/version/MHDF-Tools").openConnection();
-
-                conn.setRequestMethod("GET");
-
-                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                JSONObject Data = JSON.parseObject(in.readLine());
-                String NewVersionString = Data.getString("data");
-
-                if (!NewVersionString.equals(Version)) {
-                    ColorLog("&c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
-                    if (getConfig().getBoolean("AutoUpdate")) {
-                        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
-                            try {
-                                int cache = 10 * 1024;
-                                CloseableHttpClient httpClient = HttpClients.createDefault();
-                                RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000).
-                                        setConnectionRequestTimeout(5000)
-                                        .setSocketTimeout(5000)
-                                        .setRedirectsEnabled(true)
-                                        .build();
-                                HttpGet httpGet = new HttpGet("https://github.moeyy.xyz/https://github.com/BaiShenYaoDog/Cheng-Tools-Reloaded/releases/download/" + NewVersionString + "/Cheng-Tools-Reloaded-" + NewVersionString + ".jar");
-                                httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54");
-                                httpGet.setConfig(requestConfig);
-                                CloseableHttpResponse response = httpClient.execute(httpGet);
-                                FileOutputStream fileOutputStream = getOutputStream(response, NewVersionString, cache);
-                                fileOutputStream.close();
-                                ChatColor("&c自动更新完成,下次重启时生效!");
-                                ChatColor("&a请手动删除旧版本插件,谢谢!");
-                            } catch (Exception ignored) {
-                                ChatColor("&c自动更新失败!");
-                            }
-                        });
-                    }
-                    BooleanHasMap.getHasMap().put("IsLast", true);
-                } else {
-                    ColorLog("&a当前插件版本是最新版!");
-                }
-                BooleanHasMap.getHasMap().put("CheckVersionError", false);
-
-                in.close();
-                conn.disconnect();
-            } catch (Exception e) {
-                ColorLog("&c[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
-                BooleanHasMap.getHasMap().put("IsLast", false);
-                BooleanHasMap.getHasMap().put("CheckVersionError", true);
-            }
+            checkUpdate();
         }
 
         //初始化必要数据
         {
-            if (!getDataFolder().exists()) {
-                getDataFolder().mkdirs();
-            }
-
-            File Config_File = new File(getDataFolder(), "config.yml");
-            if (!Config_File.exists()) {
-                SaveResource(getDataFolder().getPath(), "config.yml", "config.yml", true);
-            }
+            createDir(getDataFolder());
+            SaveResource(getDataFolder().getPath(), "config.yml", "config.yml", false);
+            reloadConfig();
 
             File Lang_File = new File(getDataFolder(), "lang.yml");
-            if (!Lang_File.exists()) {
-                SaveResource(getDataFolder().getPath(), "lang.yml", "lang.yml", true);
-            }
+            SaveResource(getDataFolder().getPath(), "lang.yml", "lang.yml", false);
             LangFileData = YamlConfiguration.loadConfiguration(Lang_File);
 
             File Sound_File = new File(getDataFolder(), "sound.yml");
-            if (!Sound_File.exists()) {
-                SaveResource(getDataFolder().getPath(), "sound.yml", "sound.yml", true);
-            }
+            SaveResource(getDataFolder().getPath(), "sound.yml", "sound.yml", false);
             SoundFileData = YamlConfiguration.loadConfiguration(Sound_File);
 
-            File CacheHome = new File(getDataFolder(), "Cache");
-            if (!CacheHome.exists()) {
-                CacheHome.mkdirs();
-            }
+            createDir(new File(getDataFolder(), "Cache"));
 
             //家系统菜单与菜单系统
             if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable") || MHDFTools.instance.getConfig().getBoolean("MenuEnable")) {
-                File MenuHome = new File(MHDFTools.instance.getDataFolder(), "Menus");
-                if (!MenuHome.exists()) {
-                    MenuHome.mkdirs();
-                    if (MHDFTools.instance.getConfig().getBoolean("MenuEnable")) {
-                        SaveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", true);
-                    }
+                createDir(new File(getDataFolder(), "Menus"));
+                if (MHDFTools.instance.getConfig().getBoolean("MenuEnable")) {
+                    SaveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", false);
                 }
             }
             //家系统
             if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
-                File HomeMenuFile = new File(MHDFTools.instance.getDataFolder(), "Menus/HomeMenu.yml");
-                if (!HomeMenuFile.exists()) {
-                    SaveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", true);
-                }
+                SaveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", false);
             }
             //隐身系统
             if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable") && MHDFTools.instance.getConfig().getBoolean("VanishSettings.SaveVanishData")) {
-                File VanishCacheFile = new File(MHDFTools.instance.getDataFolder(), "Cache/VanishCache.yml");
-                if (!VanishCacheFile.exists()) {
-                    try {
-                        VanishCacheFile.createNewFile();
-                    } catch (IOException ignored) {
-                    }
-                }
+                createFile("Cache/VanishCache.yml");
             }
 
             if (Objects.equals(getConfig().getString("DataSettings.Type"), "MySQL")) {
@@ -499,7 +279,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                             if (getConfig().getString("CommandLink.CommandList." + Command + ".ActionList." + args.length) != null) {
                                 getConfig().getStringList("CommandLink.CommandList." + Command + ".ActionList." + args.length).forEach(action -> {
                                     for (int i = 0; i < args.length; i++) {
-                                        action = action.replaceAll("%" + (i + 1), args[(i + 1)]);
+                                        action = action.replaceAll("%" + (i + 1), args[i]);
                                     }
                                     actionList.add(action);
                                 });
@@ -512,11 +292,20 @@ public final class MHDFTools extends JavaPlugin implements Listener {
 
                         @Override
                         public java.util.@Nullable List<String> onTabComplete(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
-                            if (getConfig().getString("CommandLink.CommandList." + Command + ".TabList." + args.length) != null &&
-                                    Objects.equals(getConfig().getString("CommandLink.CommandList." + Command + ".TabList." + args.length), "{PlayerList}")) {
-                                return null;
+                            java.util.List<String> playerList = getPlayerList(getConfig().getBoolean("CommandLink.CommandList." + Command + ".BungeeCordGetPlayerList"));
+                            java.util.List<String> tabList = new ArrayList<>();
+                            if (getConfig().getString("CommandLink.CommandList." + Command + ".TabList." + args.length) != null) {
+                                for (String tab : getConfig().getStringList("CommandLink.CommandList." + Command + ".TabList." + args.length)) {
+                                    if (tab.equals("{PlayerList}")) {
+                                        tabList.addAll(playerList);
+                                    } else {
+                                        tabList.add(tab);
+                                    }
+                                }
+                            } else {
+                                tabList = null;
                             }
-                            return getConfig().getStringList("CommandLink.CommandList." + Command + ".TabList." + args.length);
+                            return tabList;
                         }
                     }, Command, getConfig().getString("CommandLink.CommandList." + Command + "." + "Permission"), Command);
                 }
@@ -531,15 +320,10 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 if (getConfig().getBoolean("CrashPlayerEnable")) {
                     registerCommand(this, new Crash(), "崩端系统", "MHDFTools.Command.Crash", "crash");
                 }
-                /*
-                if (getConfig().getBoolean("TabSettings.Enable")) {
-                    new TABFormat().runTaskTimerAsynchronously(this, 0L, 20L);
-                }
-                */
             }
             if (Vault) {
                 if (getConfig().getBoolean("EconomySettings.Enable")) {
-                    Bukkit.getServicesManager().register(Economy.class, new EconomyImplementer(), MHDFTools.instance, ServicePriority.Normal);
+                    hookVault();
                     registerCommand(this, new Money(), "查询", "MHDFTools.Command.Money", "money");
                     registerCommand(this, new Pay(), "转账", "MHDFTools.Command.Pay", "pay");
                     registerCommand(this, new MoneyAdmin(), "管理员管理", "MHDFTools.Command.MoneyAdmin", "moneyadmin");
@@ -561,7 +345,6 @@ public final class MHDFTools extends JavaPlugin implements Listener {
         }
 
         if (PAPI) {
-            Bukkit.getPluginManager().registerEvents(this, this);
             new PlaceholderAPI().register();
         }
 
@@ -575,7 +358,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
 
         //取消注册经济
         if (Vault) {
-            Bukkit.getServicesManager().unregister(Economy.class, new EconomyImplementer());
+            unHookVault();
         }
 
         //取消注册PAPI
@@ -583,15 +366,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             new PlaceholderAPI().unregister();
         }
 
-        try {
-            if (statement != null && !statement.isClosed()) {
-                statement.close();
-            }
-            if (dataSource != null && !dataSource.isClosed()) {
-                dataSource.close();
-            }
-        } catch (SQLException ignored) {
-        }
+        closeDatabase();
 
         //取消注册BC Hook
         {
@@ -604,20 +379,5 @@ public final class MHDFTools extends JavaPlugin implements Listener {
         ColorLog("&f============&6梦回东方-工具&f============");
         ColorLog("&e插件已卸载! 作者:292200693");
         ColorLog("&f============&6梦回东方-工具&f============");
-    }
-
-    @NotNull
-    public FileOutputStream getOutputStream(CloseableHttpResponse response, String NewVersionString, int cache) throws IOException {
-        HttpEntity entity = response.getEntity();
-        InputStream is = entity.getContent();
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(getDataFolder().getParentFile(), "Cheng-Tools-Reloaded-" + NewVersionString + ".jar"));
-        byte[] buffer = new byte[cache];
-        int ch;
-        while ((ch = is.read(buffer)) != -1) {
-            fileOutputStream.write(buffer, 0, ch);
-        }
-        is.close();
-        fileOutputStream.flush();
-        return fileOutputStream;
     }
 }

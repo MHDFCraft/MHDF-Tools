@@ -4,7 +4,6 @@ import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -282,14 +281,14 @@ public final class MenuUtil {
             case "[player]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.chat("/" + PlaceholderAPI.setPlaceholders(player, action[1])));
+                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.chat("/" + PAPIChatColor(player, action[1])));
                 } else {
-                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(null, action[1])));
+                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PAPIChatColor(null, action[1])));
                 }
                 break;
             }
             case "[console]": {
-                Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(null, action[1])));
+                Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PAPIChatColor(null, action[1])));
                 break;
             }
             case "[playsound]": {

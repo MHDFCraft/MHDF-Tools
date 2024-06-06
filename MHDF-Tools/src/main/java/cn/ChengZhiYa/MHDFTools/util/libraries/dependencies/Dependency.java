@@ -59,6 +59,13 @@ public enum Dependency {
             "jar-relocator"
     ),
 
+    COMMONS_LANG(
+            "org.apache.commons",
+            "commons-lang3",
+            "3.14.0",
+            null,
+            "commons-lang3"
+    ),
     FAST_JSON(
             "com.alibaba",
             "fastjson",

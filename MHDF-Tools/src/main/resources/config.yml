@@ -253,12 +253,12 @@ CommandLink:
   Enable: true
   #命令列表
   CommandList:
-    #将/添加权限 映射成 /lp user %0 perm set %1
-    #%0为 参数1
-    #%1为 参数2
+    #自定义命名
     添加权限:
       #仅玩家执行
       OnlyPlayer: false
+      #使用BCAPI获取玩家列表
+      BungeeCordGetPlayerList: false
       #必须拥有指定权限
       Permission: "MHDFTools.CommandLink.添加权限"
       #Tab补全列表功能
@@ -283,7 +283,7 @@ CommandLink:
       ActionList:
         #有两个参数时执行的操作
         2:
-          - "[player] lp user %1 perm set %2"
+          - "[player]|lp user %1 perm set %2"
         #默认操作
         Default:
           - "[message]|&c命令错误,正确格式:/添加权限 <玩家ID> <权限>"

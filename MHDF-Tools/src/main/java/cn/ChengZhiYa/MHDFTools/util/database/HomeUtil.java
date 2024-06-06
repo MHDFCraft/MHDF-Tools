@@ -15,8 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import static cn.ChengZhiYa.MHDFTools.MHDFTools.dataSource;
 import static cn.ChengZhiYa.MHDFTools.util.BCUtil.getHomeServerName;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.dataSource;
 
 public final class HomeUtil {
     static final Map<Object, List<String>> HomeListHashMap = new HashMap<>();
@@ -43,7 +43,7 @@ public final class HomeUtil {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
             try {
                 Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Home WHERE Home = ? AND Owner = ? LIMIT 1");
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_home WHERE Home = ? AND Owner = ? LIMIT 1");
                 ps.setString(1, HomeName);
                 ps.setString(2, PlayerName);
                 ResultSet rs = ps.executeQuery();
@@ -65,7 +65,7 @@ public final class HomeUtil {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
             try {
                 Connection connection = dataSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Home WHERE Owner = ?");
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_home WHERE Owner = ?");
                 ps.setString(1, PlayerName);
                 ResultSet rs = ps.executeQuery();
                 int Data = 0;
@@ -100,7 +100,7 @@ public final class HomeUtil {
             if (getHomeListHashMap().get(PlayerName) == null) {
                 try {
                     Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Home WHERE Owner = ?");
+                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_home WHERE Owner = ?");
                     ps.setString(1, PlayerName);
                     ResultSet rs = ps.executeQuery();
                     List<String> HomeList = new ArrayList<>();
@@ -153,7 +153,7 @@ public final class HomeUtil {
             if (getHomeServerHashMap().get(PlayerName + "|" + HomeName) == null) {
                 try {
                     Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Home WHERE Home = ? AND Owner = ? LIMIT 1");
+                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_home WHERE Home = ? AND Owner = ? LIMIT 1");
                     ps.setString(1, HomeName);
                     ps.setString(2, PlayerName);
                     ResultSet rs = ps.executeQuery();
@@ -181,7 +181,7 @@ public final class HomeUtil {
             if (getHomeLocationHashMap().get(PlayerName + "|" + HomeName) == null) {
                 try {
                     Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Home WHERE Home = ? AND Owner = ? LIMIT 1");
+                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_home WHERE Home = ? AND Owner = ? LIMIT 1");
                     ps.setString(1, HomeName);
                     ps.setString(2, PlayerName);
                     ResultSet rs = ps.executeQuery();
@@ -238,7 +238,7 @@ public final class HomeUtil {
                     getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
                     getHomeServerHashMap().put(PlayerName + "|" + HomeName, getHomeServerName());
                     Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("INSERT INTO MHDFTools_Home (Home, Owner, Server, World, X, Y, Z, Yaw, Pitch) VALUES (?,?,?,?,?,?,?,?,?)");
+                    PreparedStatement ps = connection.prepareStatement("INSERT INTO mhdftools.mhdftools_home (Home, Owner, Server, World, X, Y, Z, Yaw, Pitch) VALUES (?,?,?,?,?,?,?,?,?)");
                     ps.setString(1, HomeName);
                     ps.setString(2, PlayerName);
                     ps.setString(3, getHomeServerName());
@@ -288,7 +288,7 @@ public final class HomeUtil {
                     getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
                     getHomeServerHashMap().put(PlayerName + "|" + HomeName, getHomeServerName());
                     Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("INSERT INTO MHDFTools_Home (Home, Owner, Server, World, X, Y, Z, Yaw, Pitch) VALUES (?,?,?,?,?,?,?,?,?)");
+                    PreparedStatement ps = connection.prepareStatement("INSERT INTO mhdftools.mhdftools_home (Home, Owner, Server, World, X, Y, Z, Yaw, Pitch) VALUES (?,?,?,?,?,?,?,?,?)");
                     ps.setString(1, HomeName);
                     ps.setString(2, PlayerName);
                     ps.setString(3, ServerName);
@@ -318,7 +318,7 @@ public final class HomeUtil {
                         getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
                         getHomeServerHashMap().put(PlayerName + "|" + HomeName, getHomeServerName());
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("UPDATE MHDFTools_Home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?");
+                        PreparedStatement ps = connection.prepareStatement("UPDATE mhdftools.mhdftools_home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?");
                         ps.setString(1, getHomeServerName());
                         ps.setString(2, HomeLocation.getWorld().getName());
                         ps.setDouble(3, HomeLocation.getX());
@@ -367,7 +367,7 @@ public final class HomeUtil {
                         getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
                         getHomeServerHashMap().put(PlayerName + "|" + HomeName, getHomeServerName());
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("UPDATE MHDFTools_Home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?");
+                        PreparedStatement ps = connection.prepareStatement("UPDATE mhdftools.mhdftools_home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?");
                         ps.setString(1, ServerName);
                         ps.setString(2, HomeLocation.getWorld().getName());
                         ps.setDouble(3, HomeLocation.getX());
@@ -401,7 +401,7 @@ public final class HomeUtil {
                     getHomeServerHashMap().remove(PlayerName + "|" + HomeName);
                     try {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("DELETE FROM MHDFTools_Home WHERE Home = ? AND Owner = ?");
+                        PreparedStatement ps = connection.prepareStatement("DELETE FROM mhdftools.mhdftools_home WHERE Home = ? AND Owner = ?");
                         ps.setString(1, HomeName);
                         ps.setString(2, PlayerName);
                         ps.executeUpdate();

@@ -1,7 +1,7 @@
 name: MHDF-Tools
 version: '${project.version}'
 main: cn.ChengZhiYa.MHDFTools.MHDFTools
-api-version: '1.20'
+api-version: '1.17'
 authoendrs: [ ChengZhiYa ]
 softdepend: [ Vault, PlaceholderAPI, ProtocolLib ]
 description: qwq

@@ -15,9 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.MHDFTools.dataSource;
-import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.DataExists;
-import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.Take;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.*;
 
 public final class FlyUtil {
     public static final List<String> InFlyList = new ArrayList<>();

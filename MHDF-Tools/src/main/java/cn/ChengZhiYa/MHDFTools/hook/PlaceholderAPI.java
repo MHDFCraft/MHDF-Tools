@@ -6,14 +6,12 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import static cn.ChengZhiYa.MHDFTools.util.Util.Version;
 import static cn.ChengZhiYa.MHDFTools.util.database.EconomyUtil.getMoney;
 import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getMaxHome;
 import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getPlayerHomeList;
 
 public final class PlaceholderAPI extends PlaceholderExpansion {
-
-    public PlaceholderAPI() {
-    }
 
     @Override
     public @NotNull String getAuthor() {
@@ -27,7 +25,7 @@ public final class PlaceholderAPI extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return MHDFTools.getDescriptionFile().getVersion();
+        return Version;
     }
 
     @Override

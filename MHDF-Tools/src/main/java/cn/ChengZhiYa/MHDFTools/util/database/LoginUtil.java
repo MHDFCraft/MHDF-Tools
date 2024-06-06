@@ -12,13 +12,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.MHDFTools.dataSource;
 import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.DataExists;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.dataSource;
 
 public final class LoginUtil {
     public static Boolean LoginExists(String PlayerName) {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-            return DataExists("MHDFTools_Login", "PlayerName", PlayerName);
+            return DataExists("mhdftools.mhdftools_login", "PlayerName", PlayerName);
         }
         File Login_File = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
         YamlConfiguration PasswordData = YamlConfiguration.loadConfiguration(Login_File);
@@ -30,7 +30,7 @@ public final class LoginUtil {
             if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 try {
                     Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Login WHERE PlayerName = ? AND Password = ? LIMIT 1");
+                    PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_login WHERE PlayerName = ? AND Password = ? LIMIT 1");
                     ps.setString(1, PlayerName);
                     ps.setString(2, Password);
                     ResultSet rs = ps.executeQuery();
@@ -57,7 +57,7 @@ public final class LoginUtil {
                 Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
                     try {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("INSERT INTO MHDFTools_Login (PlayerName, Password) VALUES (?,?)");
+                        PreparedStatement ps = connection.prepareStatement("INSERT INTO mhdftools.mhdftools_login (PlayerName, Password) VALUES (?,?)");
                         ps.setString(1, PlayerName);
                         ps.setString(2, Password);
                         ps.executeUpdate();
