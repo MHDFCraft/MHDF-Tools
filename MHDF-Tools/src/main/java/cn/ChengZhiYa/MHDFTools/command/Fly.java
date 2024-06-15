@@ -20,7 +20,7 @@ public final class Fly implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (!MHDFTools.instance.getConfig().getStringList("FlySettings.AntiFlyWorldList").contains(player.getLocation().getWorld().getName())) {
-                if (sender.hasPermission("MHDFTools.Command.Fly.就只能有实体吧(")) {
+                if (sender.hasPermission("MHDFTools.Command.Fly.Infinite")) {
                     if (InFlyList.contains(player.getName())) {
                         removeFly(player.getName());
                         InFlyList.remove(player.getName());
