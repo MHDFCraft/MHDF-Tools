@@ -26,8 +26,8 @@ public final class Spawn implements CommandExecutor {
             double Z = MHDFTools.instance.getConfig().getDouble("SpawnSettings.Z");
             float Yaw = (float) MHDFTools.instance.getConfig().getDouble("SpawnSettings.Yaw");
             float Pitch = (float) MHDFTools.instance.getConfig().getDouble("SpawnSettings.Pitch");
-            Location SpawnLcation = new Location(world, X, Y, Z, Yaw, Pitch);
-            BCUtil.TpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString("SpawnSettings.Server"), SpawnLcation);
+            Location spawnLocation = new Location(world, X, Y, Z, Yaw, Pitch);
+            BCUtil.TpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString("SpawnSettings.Server"), spawnLocation);
             sender.sendMessage(i18n("Spawn.TeleportDone"));
         } else {
             sender.sendMessage(i18n("OnlyPlayer"));
