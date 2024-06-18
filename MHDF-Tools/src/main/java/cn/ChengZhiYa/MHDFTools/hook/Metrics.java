@@ -189,8 +189,8 @@ public final class Metrics {
          *                                    used to delegate the data collection to a another thread to prevent errors caused by
          *                                    concurrency. Can be {@code null}.
          * @param checkServiceEnabledSupplier A supplier to check if the service is still enabled.
-         * @param errorLogger                 A consumer that accepts log message and an error.
-         * @param infoLogger                  A consumer that accepts info log messages.
+         * @param errorLogger                 A consumer that accepts message message and an error.
+         * @param infoLogger                  A consumer that accepts info message messages.
          * @param logErrors                   Whether or not errors should be logged.
          * @param logSentData                 Whether or not the sent data should be logged.
          * @param logResponseStatusText       Whether or not the response status text should be logged.

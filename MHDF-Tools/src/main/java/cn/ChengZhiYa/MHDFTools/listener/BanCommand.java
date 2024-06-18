@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.listener;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,7 +10,6 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerCommandSendEvent;
 
 import static cn.ChengZhiYa.MHDFTools.util.Util.ifLogin;
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class BanCommand implements Listener {
     @EventHandler
@@ -33,7 +33,7 @@ public final class BanCommand implements Listener {
             if (MHDFTools.instance.getConfig().getStringList("BanCommandSettings.BanCommandList").contains("/" + Command)) {
                 event.setCancelled(true);
                 for (String Message : MHDFTools.instance.getConfig().getStringList("BanCommandSettings.UsedBanCommandMessage")) {
-                    event.getPlayer().sendMessage(ChatColor(PlaceholderAPI.setPlaceholders(event.getPlayer(), Message)));
+                    event.getPlayer().sendMessage(LogUtil.ChatColor(PlaceholderAPI.setPlaceholders(event.getPlayer(), Message)));
                 }
             }
         }

@@ -8,20 +8,19 @@ import org.bukkit.event.server.ServerListPingEvent;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.util.Util.PAPIChatColor;
-
+import static cn.ChengZhiYa.MHDFTools.util.Util.PAPI;
 public final class MOTD implements Listener {
     @EventHandler
     public void On_Event(PaperServerListPingEvent event) {
-        event.setMotd(PAPIChatColor(null, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("MOTDSettings.Line1"))) + "\n" +
-                PAPIChatColor(null, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("MOTDSettings.Line2"))));
+        event.setMotd(PAPI(null, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("MOTDSettings.Line1"))) + "\n" +
+                PAPI(null, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("MOTDSettings.Line2"))));
         event.setMaxPlayers(MHDFTools.instance.getConfig().getInt("MOTDSettings.MaxPlayers"));
     }
 
     @EventHandler
     public void On_Event(ServerListPingEvent event) {
-        event.setMotd(PAPIChatColor(null, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("MOTDSettings.Line1"))) + "\n" +
-                PAPIChatColor(null, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("MOTDSettings.Line2"))));
+        event.setMotd(PAPI(null, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("MOTDSettings.Line1"))) + "\n" +
+                PAPI(null, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("MOTDSettings.Line2"))));
         event.setMaxPlayers(MHDFTools.instance.getConfig().getInt("MOTDSettings.MaxPlayers"));
     }
 }

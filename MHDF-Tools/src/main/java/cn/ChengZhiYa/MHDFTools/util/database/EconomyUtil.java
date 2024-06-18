@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.util.database;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -18,11 +19,8 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.*;
 
 public final class EconomyUtil {
+    @Getter
     static final Map<Object, BigDecimal> MoneyHashMap = new HashMap<>();
-
-    public static Map<Object, BigDecimal> getMoneyHashMap() {
-        return MoneyHashMap;
-    }
 
     public static File getPlayerFile(String PlayerName) {
         return new File(MHDFTools.instance.getDataFolder() + "/VaultData", PlayerName + ".yml");
@@ -30,7 +28,7 @@ public final class EconomyUtil {
 
     public static Boolean ifPlayerFileExists(String PlayerName) {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-            return DataExists("mhdftools.mhdftools_economy", "PlayerName", PlayerName);
+            return dataExists("mhdftools.mhdftools_economy", "PlayerName", PlayerName);
         }
         return getPlayerFile(PlayerName).exists();
     }
@@ -71,7 +69,7 @@ public final class EconomyUtil {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
             if (getMoneyHashMap().get(PlayerName) == null) {
                 try {
-                    BigDecimal bg = getBigDecimal((Double) GetData("mhdftools.mhdftools_economy", "PlayerName", PlayerName, "Money"));
+                    BigDecimal bg = getBigDecimal((Double) getData("mhdftools.mhdftools_economy", "PlayerName", PlayerName, "Money"));
                     getMoneyHashMap().put(PlayerName, bg);
                     return bg.doubleValue();
                 } catch (Exception e) {
@@ -92,7 +90,7 @@ public final class EconomyUtil {
             if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getBigDecimal(Money));
-                    Set("mhdftools.mhdftools_economy", "PlayerName", PlayerName, "Money", Money);
+                    set("mhdftools.mhdftools_economy", "PlayerName", PlayerName, "Money", Money);
                 }
             } else {
                 YamlConfiguration Data = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
@@ -110,7 +108,7 @@ public final class EconomyUtil {
             if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).add(getBigDecimal(Money)));
-                    Add("mhdftools.mhdftools_economy", "PlayerName", PlayerName, "Money", Money);
+                    add("mhdftools.mhdftools_economy", "PlayerName", PlayerName, "Money", Money);
                 }
             } else {
                 YamlConfiguration Data = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
@@ -128,7 +126,7 @@ public final class EconomyUtil {
             if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).subtract(getBigDecimal(Money)));
-                    Take("mhdftools.mhdftools_economy", "PlayerName", PlayerName, "Money", Money);
+                    take("mhdftools.mhdftools_economy", "PlayerName", PlayerName, "Money", Money);
                 }
             } else {
                 YamlConfiguration Data = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));

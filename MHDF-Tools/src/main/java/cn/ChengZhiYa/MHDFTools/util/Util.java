@@ -3,6 +3,7 @@ package cn.ChengZhiYa.MHDFTools.util;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.hashmap.BooleanHasMap;
 import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -38,10 +39,9 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static cn.ChengZhiYa.MHDFTools.util.BCUtil.PlayerList;
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
-import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
 
 public final class Util {
     public static final Class<?> pluginClassLoader;
@@ -49,7 +49,7 @@ public final class Util {
     public static final List<String> CommandLinkList = new ArrayList<>();
     public static final String Version = "1.4.9";
     public static List<String> VanishList = new ArrayList<>();
-    public static BossBar VanishBossBar;
+    public static volatile BossBar VanishBossBar;
     public static YamlConfiguration LangFileData;
     public static YamlConfiguration SoundFileData;
 
@@ -88,7 +88,7 @@ public final class Util {
             String NewVersionString = Data.getString("data");
 
             if (!NewVersionString.equals(Version)) {
-                ColorLog("&c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
+                LogUtil.ChatColor("&c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
                 if (MHDFTools.instance.getConfig().getBoolean("AutoUpdate")) {
                     Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
                         try {
@@ -105,23 +105,23 @@ public final class Util {
                             CloseableHttpResponse response = httpClient.execute(httpGet);
                             FileOutputStream fileOutputStream = getOutputStream(response, NewVersionString, cache);
                             fileOutputStream.close();
-                            ChatColor("&c自动更新完成,下次重启时生效!");
-                            ChatColor("&a请手动删除旧版本插件,谢谢!");
+                            LogUtil.ChatColor("&c自动更新完成,下次重启时生效!");
+                            LogUtil.ChatColor("&a请手动删除旧版本插件,谢谢!");
                         } catch (Exception ignored) {
-                            ChatColor("&c自动更新失败!");
+                            LogUtil.ChatColor("&c自动更新失败!");
                         }
                     });
                 }
                 BooleanHasMap.getHasMap().put("IsLast", true);
             } else {
-                ColorLog("&a当前插件版本是最新版!");
+                LogUtil.ChatColor("&a当前插件版本是最新版!");
             }
             BooleanHasMap.getHasMap().put("CheckVersionError", false);
 
             in.close();
             conn.disconnect();
         } catch (Exception e) {
-            ColorLog("&c[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
+            LogUtil.ChatColor("&c[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
             BooleanHasMap.getHasMap().put("IsLast", false);
             BooleanHasMap.getHasMap().put("CheckVersionError", true);
         }
@@ -143,16 +143,18 @@ public final class Util {
     public static String getIpLocation(String Ip) {
         try {
             if (Ip.startsWith("127.")) {
-                return "本地局域网";
+                return "local";
             }
-            URL url = new URL("https://opendata.baidu.com/api.php?query=" + Ip + "&co=&resource_id=6006&t=1433920989928&ie=utf8&oe=utf-8&format=json");
+            URL url = new URL(
+                    "https://opendata.baidu.com/api.php?query=" + Ip
+                    + "&co=&resource_id=6006&t=1433920989928&ie=utf8&oe=utf-8&format=json");
             URLConnection conn = url.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
             JSONObject Json = JSONObject.parseObject(reader.readLine());
             JSONObject DataJson = JSONObject.parseObject(JSON.parseArray(Json.getString("data"), String.class).get(0));
             return DataJson.getString("location");
         } catch (IOException e) {
-            return "获取失败";
+            return "Failed get data";
         }
     }
 
@@ -165,11 +167,11 @@ public final class Util {
         }
     }
 
-    public static String PAPIChatColor(OfflinePlayer Player, String Message) {
+    public static String PAPI(OfflinePlayer Player, String Message) {
         if (MHDFTools.PAPI) {
             Message = PlaceholderAPI.setPlaceholders(Player, Message);
         }
-        return ChatColor(Message);
+        return (Message);
     }
 
     public static String Sha256(String Message) {
@@ -198,7 +200,7 @@ public final class Util {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.isOp()) {
                 if (!player.getName().equals(PlayerName)) {
-                    player.sendMessage(ChatColor(Message));
+                    player.sendMessage(LogUtil.ChatColor(Message));
                 }
             }
         }
@@ -284,198 +286,224 @@ public final class Util {
     }
 
     public static String getTps(int Time) {
-        double TPS1 = BigDecimal.valueOf(getTpsList()[0]).setScale(1, RoundingMode.HALF_UP).doubleValue();
-        double TPS5 = BigDecimal.valueOf(getTpsList()[1]).setScale(1, RoundingMode.HALF_UP).doubleValue();
-        double TPS15 = BigDecimal.valueOf(getTpsList()[2]).setScale(1, RoundingMode.HALF_UP).doubleValue();
-        if (TPS1 > 20.0D) {
-            TPS1 = 20.0D;
+        double[] tpsList = getTpsList();
+        double TPS1 = BigDecimal.valueOf(tpsList[0]).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        double TPS5 = BigDecimal.valueOf(tpsList[1]).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        double TPS15 = BigDecimal.valueOf(tpsList[2]).setScale(1, RoundingMode.HALF_UP).doubleValue();
+
+        if (TPS1 > 20.0D) TPS1 = 20.0D;
+        if (TPS5 > 20.0D) TPS5 = 20.0D;
+        if (TPS15 > 20.0D) TPS15 = 20.0D; //这里做限制 - 20
+
+        switch (Time) {
+            case 1:
+                if (TPS1 > 18.0D) {
+                    return "&a" + TPS1;
+                } else if (TPS1 > 16.0D) {
+                    return "&6" + TPS1;
+                } else {
+                    return "&c" + TPS1;
+                }
+            case 5:
+                if (TPS5 > 18.0D) {
+                    return "&a" + TPS5;
+                } else if (TPS5 > 16.0D) {
+                    return "&6" + TPS5;
+                } else {
+                    return "&c" + TPS5;
+                }
+            case 15:
+                if (TPS15 > 18.0D) {
+                    return "&a" + TPS15;
+                } else if (TPS15 > 16.0D) {
+                    return "&6" + TPS15;
+                } else {
+                    return "&c" + TPS15;
+                }
+            default:
+                return "获取失败";
         }
-        if (TPS5 > 20.0D) {
-            TPS5 = 20.0D;
-        }
-        if (TPS15 > 20.0D) {
-            TPS15 = 20.0D;
-        }
-        if (Time == 1) {
-            if (TPS1 > 18.0D) {
-                return "&a" + TPS1;
-            }
-            if (TPS1 > 16.0D) {
-                return "&6" + TPS1;
-            }
-            if (TPS1 < 16.0D) {
-                return "&c" + TPS1;
-            }
-        }
-        if (Time == 5) {
-            if (TPS5 > 18.0D) {
-                return "&a" + TPS5;
-            }
-            if (TPS5 > 16.0D) {
-                return "&6" + TPS5;
-            }
-            if (TPS5 < 16.0D) {
-                return "&c" + TPS5;
-            }
-        }
-        if (Time == 15) {
-            if (TPS15 > 18.0D) {
-                return "&a" + TPS15;
-            }
-            if (TPS15 > 16.0D) {
-                return "&6" + TPS15;
-            }
-            if (TPS15 < 16.0D) {
-                return "&c" + TPS15;
-            }
-        }
-        return "获取失败";
     }
 
     public static double[] getTpsList() {
         return Bukkit.getTPS();
     }
 
-    public static String sound(String SoundKey) {
-        return SoundFileData.getString(SoundKey);
+    // Method to retrieve sound from SoundFileData
+    public static String sound(String soundKey) {
+        return SoundFileData.getString(soundKey);
     }
 
-    public static String i18n(String LangKey) {
-        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangKey)));
+    // Method for internationalization with variable arguments
+    public static String i18n(String langKey, String... values) {
+        String message = Objects.requireNonNull(LangFileData.getString(langKey));
+        for (int i = 0; i < values.length; i++) {
+            message = message.replaceAll("%" + (i + 1), values[i]);
+        }
+        return LogUtil.ChatColor(message);
     }
 
-    public static String i18n(String LangKey, String Vaule1) {
-        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangKey))
-                .replaceAll("%1", Vaule1));
-    }
-
-    public static String i18n(String LangKey, String Vaule1, String Vaule2) {
-        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangKey))
-                .replaceAll("%1", Vaule1)
-                .replaceAll("%2", Vaule2));
-    }
-
-    public static String i18n(String LangKey, String Vaule1, String Vaule2, String Vaule3) {
-        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangKey))
-                .replaceAll("%1", Vaule1)
-                .replaceAll("%2", Vaule2)
-                .replaceAll("%3", Vaule3));
-    }
-
-    public static String i18n(String LangKey, String Vaule1, String Vaule2, String Vaule3, String Vaule4) {
-        return ChatColor(Objects.requireNonNull(LangFileData.getString(LangKey))
-                .replaceAll("%1", Vaule1)
-                .replaceAll("%2", Vaule2)
-                .replaceAll("%3", Vaule3)
-                .replaceAll("%4", Vaule4));
-    }
-
+    // Method to retrieve custom join message for player
     public static String getJoinMessage(Player player) {
-        HashMap<Integer, String> MessageList = new HashMap<>();
-        List<Integer> WeghitList = new ArrayList<>();
-        for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
-            String perm = permInfo.getPermission();
-            if (perm.startsWith("mhdftools.joinmessage.")) {
-                String Group = perm.substring("mhdftools.joinmessage.".length());
-                int Weight = MHDFTools.instance.getConfig().getInt("CustomJoinServerMessageSettings." + Group + ".Weight");
-                MessageList.put(Weight, Group);
-                WeghitList.add(Weight);
-            }
-        }
-        if (!MessageList.isEmpty()) {
-            WeghitList.sort(Collections.reverseOrder());
-            return PAPIChatColor(player, MHDFTools.instance.getConfig().getString("CustomJoinServerMessageSettings." + MessageList.get(WeghitList.get(0)) + ".JoinMessage")).replaceAll("%PlayerName%", player.getName());
-        }
-        return PAPIChatColor(player, MHDFTools.instance.getConfig().getString("CustomJoinServerMessageSettings.Default.JoinMessage"))
-                .replaceAll("%PlayerName%", player.getName());
+        return getCustomMessage(player, "CustomJoinServerMessageSettings", "JoinMessage");
     }
 
+    // Method to retrieve custom quit message for player
     public static String getQuitMessage(Player player) {
-        Map<Integer, String> MessageList = new HashMap<>();
-        List<Integer> WeghitList = new ArrayList<>();
+        return getCustomMessage(player, "CustomQuitServerMessageSettings", "QuitMessage");
+    }
+
+    // Helper method to retrieve custom messages
+    private static String getCustomMessage(Player player, String settingType, String messageType) {
+        Map<Integer, String> messageList = new HashMap<>();
+        List<Integer> weightList = new ArrayList<>();
+
         for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
             String perm = permInfo.getPermission();
-            if (perm.startsWith("mhdftools.quitmessage.")) {
-                String Group = perm.substring("mhdftools.quitmessage.".length());
-                int Weight = MHDFTools.instance.getConfig().getInt("CustomQuitServerMessageSettings." + Group + ".Weight");
-                MessageList.put(Weight, Group);
-                WeghitList.add(Weight);
+            if (perm.startsWith("mhdftools." + settingType)) {
+                String group = perm.substring(("mhdftools." + settingType).length());
+                int weight = MHDFTools.instance.getConfig().getInt(settingType + "." + group + ".Weight");
+                messageList.put(weight, group);
+                weightList.add(weight);
             }
         }
-        if (!MessageList.isEmpty()) {
-            WeghitList.sort(Collections.reverseOrder());
-            return PAPIChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings." + MessageList.get(WeghitList.get(0)) + ".QuitMessage")).replaceAll("%PlayerName%", player.getName());
+
+        if (!messageList.isEmpty()) {
+            weightList.sort(Collections.reverseOrder());
+            return PAPI(player, MHDFTools.instance.getConfig().getString(settingType + "." + messageList.get(weightList.get(0)) + "." + messageType))
+                    .replaceAll("%PlayerName%", player.getName());
         }
-        return PAPIChatColor(player, MHDFTools.instance.getConfig().getString("CustomQuitServerMessageSettings.Default.QuitMessage"))
+
+        return PAPI(player, MHDFTools.instance.getConfig().getString(settingType + ".Default." + messageType))
                 .replaceAll("%PlayerName%", player.getName());
     }
 
+    // Method to retrieve vanish BossBar
     public static BossBar getVanishBossBar() {
         if (VanishBossBar == null) {
-            VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
+            synchronized (Util.class) {
+                if (VanishBossBar == null) {
+                    VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
+                }
+            }
         }
         return VanishBossBar;
     }
 
-    public static List<String> getPlayerList(boolean BCAPI) {
-        List<String> OnlinePlayerList = new ArrayList<>();
-        if (BCAPI && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
-            OnlinePlayerList.addAll(Arrays.asList(PlayerList));
+    // Method to get player list, optionally excluding vanished players
+    public static List<String> getPlayerList(boolean useBungeecordAPI) {
+        List<String> onlinePlayerList = new ArrayList<>();
+
+        if (useBungeecordAPI && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+            onlinePlayerList.addAll(Arrays.asList(PlayerList));
         } else {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                OnlinePlayerList.add(player.getName());
-            }
+            onlinePlayerList = Bukkit.getOnlinePlayers().stream()
+                    .map(Player::getName)
+                    .filter(name -> !VanishList.contains(name))
+                    .collect(Collectors.toList());
         }
-        OnlinePlayerList.removeAll(VanishList);
-        return OnlinePlayerList;
+
+        return onlinePlayerList;
     }
 
-    public static void SendTitle(Player player, String TitleString) {
-        String[] Title = TitleString.split("\\|");
-        player.sendTitle(PAPIChatColor(player, Title[0]), PAPIChatColor(player, Title[1]), Integer.parseInt(Title[2]), Integer.parseInt(Title[3]), Integer.parseInt(Title[4]));
+    // Method to send a title to a player
+    public static void sendTitle(Player player, String titleString) {
+        String[] title = titleString.split("\\|");
+        player.sendTitle(PAPI(player, title[0]), PAPI(player, title[1]), Integer.parseInt(title[2]), Integer.parseInt(title[3]), Integer.parseInt(title[4]));
     }
 
-    public static void PlaySound(Player player, String SoundString) {
-        String[] Sound = SoundString.split("\\|");
-        player.playSound(player, org.bukkit.Sound.valueOf(Sound[0]), Float.parseFloat(Sound[1]), Float.parseFloat(Sound[2]));
+    // Method to play a sound to a player
+    public static void playSound(Player player, String soundString) {
+        String[] sound = soundString.split("\\|");
+        player.playSound(player, org.bukkit.Sound.valueOf(sound[0]), Float.parseFloat(sound[1]), Float.parseFloat(sound[2]));
     }
 
-    public static String getTimeString(int Time) {
-        int seconds = Time % 60;
-
-        int totalMinutes = Time / 60;
+    public static String getTimeString(int time) {
+        int seconds = time % 60;
+        int totalMinutes = time / 60;
         int minutes = totalMinutes % 60;
-
         int totalHours = totalMinutes / 60;
         int hours = totalHours % 24;
-
         int totalDays = totalHours / 24;
         int days = totalDays % 30;
-
         int totalMonths = totalDays / 30;
         int months = totalMonths % 12;
-
         int years = totalMonths / 12;
 
         StringBuilder sb = new StringBuilder();
-        if (years > 0) {
-            sb.append(years).append("年");
+
+        //年
+        switch (years) {
+            case 1:
+                sb.append("1年");
+                break;
+            case 0:
+                break;
+            default:
+                sb.append(years).append("年");
+                break;
         }
-        if (months > 0) {
-            sb.append(months).append("月");
+
+        //天
+        switch (months) {
+            case 1:
+                sb.append("1月");
+                break;
+            case 0:
+                break;
+            default:
+                sb.append(months).append("月");
+                break;
         }
-        if (days > 0) {
-            sb.append(days).append("日");
+
+        //天
+        switch (days) {
+            case 1:
+                sb.append("1日");
+                break;
+            case 0:
+                break;
+            default:
+                sb.append(days).append("日");
+                break;
         }
-        if (hours > 0) {
-            sb.append(hours).append("时");
+
+        //小时
+        switch (hours) {
+            case 1:
+                sb.append("1时");
+                break;
+            case 0:
+                break;
+            default:
+                sb.append(hours).append("时");
+                break;
         }
-        if (minutes > 0) {
-            sb.append(minutes).append("分");
+
+        //分钟
+        switch (minutes) {
+            case 1:
+                sb.append("1分");
+                break;
+            case 0:
+                break;
+            default:
+                sb.append(minutes).append("分");
+                break;
         }
-        if (seconds > 0) {
-            sb.append(seconds).append("秒");
+
+        //秒
+        switch (seconds) {
+            case 1:
+                sb.append("1秒");
+                break;
+            case 0:
+                break;
+            default:
+                sb.append(seconds).append("秒");
+                break;
         }
+
         return sb.toString();
     }
 }

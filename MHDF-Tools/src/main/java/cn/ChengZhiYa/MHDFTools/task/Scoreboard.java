@@ -11,7 +11,7 @@ import org.bukkit.scoreboard.Score;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.util.Util.PAPIChatColor;
+import static cn.ChengZhiYa.MHDFTools.util.Util.PAPI;
 
 public final class Scoreboard extends BukkitRunnable {
 
@@ -26,7 +26,7 @@ public final class Scoreboard extends BukkitRunnable {
                         if (ScoreboardHasMap.getHasMap().get(player.getName() + "_Scoreboard") == null) {
                             ScoreboardHasMap.getHasMap().put(player.getName() + "_Scoreboard", Bukkit.getScoreboardManager().getNewScoreboard());
                         }
-                        ObjectiveHasMap.getHasMap().put(player.getName() + "_Objective", ScoreboardHasMap.getHasMap().get(player.getName() + "_Scoreboard").registerNewObjective(PAPIChatColor(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("ScoreboardSettings.Title"))), "dummy"));
+                        ObjectiveHasMap.getHasMap().put(player.getName() + "_Objective", ScoreboardHasMap.getHasMap().get(player.getName() + "_Scoreboard").registerNewObjective(PAPI(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("ScoreboardSettings.Title"))), "dummy"));
                         ObjectiveHasMap.getHasMap().get(player.getName() + "_Objective").setDisplaySlot(DisplaySlot.SIDEBAR);
                         for (int i = 0; i < MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").size(); i++) {
                             Score ScoreMessage;
@@ -37,7 +37,7 @@ public final class Scoreboard extends BukkitRunnable {
                                 }
                                 ScoreMessage = ObjectiveHasMap.getHasMap().get(player.getName() + "_Objective").getScore(NullMessage.toString());
                             } else {
-                                ScoreMessage = ObjectiveHasMap.getHasMap().get(player.getName() + "_Objective").getScore(PAPIChatColor(player, MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").get(i)));
+                                ScoreMessage = ObjectiveHasMap.getHasMap().get(player.getName() + "_Objective").getScore(PAPI(player, MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").get(i)));
                             }
                             ScoreMessage.setScore(MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").size() - i);
                         }

@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.util.menu;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,21 +17,19 @@ import java.util.List;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.util.BCUtil.TpPlayerHome;
-import static cn.ChengZhiYa.MHDFTools.util.Util.PAPIChatColor;
+import static cn.ChengZhiYa.MHDFTools.util.Util.PAPI;
 import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.dataSource;
 import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.*;
 import static cn.ChengZhiYa.MHDFTools.util.menu.MenuUtil.*;
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
-
 public final class HomeMenuUtil {
     public final static String homeMenuFile = "HomeMenu.yml";
 
     public static String getPlaceholder(String Message, String LangMessage, String Placeholder) {
-        String[] OtherMessage = ChatColor(LangMessage).split(
+        String[] OtherMessage = LogUtil.ChatColor(LangMessage).split(
                 Placeholder.replaceAll("\\{", "\\\\{")
         );
         for (String s : OtherMessage) {
-            Message = Message.replaceAll(ChatColor(s), "");
+            Message = Message.replaceAll(LogUtil.ChatColor(s), "");
         }
         return Message;
     }
@@ -56,7 +55,7 @@ public final class HomeMenuUtil {
 
     public static void openHomeMenu(Player player, int page) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            String title = PAPIChatColor(player, getMenu(homeMenuFile).getString("Menu.Title")).replaceAll("\\{Page}", String.valueOf(page));
+            String title = PAPI(player, getMenu(homeMenuFile).getString("Menu.Title")).replaceAll("\\{Page}", String.valueOf(page));
             Inventory menu = Bukkit.createInventory(player, getMenu(homeMenuFile).getInt("Menu.Size"), title);
 
             int HomeSize = getMenu(homeMenuFile).getInt("Menu.HomeSize");
@@ -99,7 +98,7 @@ public final class HomeMenuUtil {
 
                                     getMenu(homeMenuFile).getStringList("Menu.ItemList." + itemID + ".Lore").forEach(s ->
                                             lore.add(
-                                                    PAPIChatColor(player, s)
+                                                    PAPI(player, s)
                                                             .replaceAll("\\{HomeName}", home)
                                                             .replaceAll("\\{Server}", getHomeServer(player.getName(), home))
                                                             .replaceAll("\\{World}", Objects.requireNonNull(getHomeLocation(player.getName(), home)).getWorld().getName())
@@ -135,10 +134,10 @@ public final class HomeMenuUtil {
                 }
 
                 getMenu(homeMenuFile).getStringList("Menu.ItemList." + itemID + ".Lore").forEach(s ->
-                        lore.add(PAPIChatColor(player, s).replaceAll("\\{Page}", String.valueOf(page)))
+                        lore.add(PAPI(player, s).replaceAll("\\{Page}", String.valueOf(page)))
                 );
 
-                getMenu(homeMenuFile).getStringList("Menu.ItemList." + itemID + ".Lore").forEach(s -> lore.add(PAPIChatColor(player, s)));
+                getMenu(homeMenuFile).getStringList("Menu.ItemList." + itemID + ".Lore").forEach(s -> lore.add(PAPI(player, s)));
 
                 setMenuItem(menu, homeMenuFile, itemID, type, displayName, lore, customModelData, amount, slotList);
             }
@@ -160,7 +159,7 @@ public final class HomeMenuUtil {
                 case "[Home]": {
                     String HomeName = getPlaceholder(
                             ChatColor.stripColor(clickItem.getItemMeta().getDisplayName()),
-                            ChatColor.stripColor(ChatColor(getMenu(homeMenuFile).getString("Menu.ItemList." + "Home" + ".DisplayName"))),
+                            ChatColor.stripColor(LogUtil.ChatColor(getMenu(homeMenuFile).getString("Menu.ItemList." + "Home" + ".DisplayName"))),
                             "{HomeName}");
                     TpPlayerHome(player.getName(), HomeName);
                     break;
@@ -168,7 +167,7 @@ public final class HomeMenuUtil {
                 case "[DelHome]": {
                     String HomeName = getPlaceholder(
                             ChatColor.stripColor(clickItem.getItemMeta().getDisplayName()),
-                            ChatColor.stripColor(ChatColor(getMenu(homeMenuFile).getString("Menu.ItemList." + "Home" + ".DisplayName"))),
+                            ChatColor.stripColor(LogUtil.ChatColor(getMenu(homeMenuFile).getString("Menu.ItemList." + "Home" + ".DisplayName"))),
                             "{HomeName}");
                     RemoveHome(player.getName(), HomeName);
                     break;

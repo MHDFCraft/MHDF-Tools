@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.listener;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.*;
@@ -21,7 +22,6 @@ import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.util.Util.VanishList;
 import static cn.ChengZhiYa.MHDFTools.util.Util.getVanishBossBar;
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class Vanish implements Listener {
     @EventHandler
@@ -57,9 +57,9 @@ public final class Vanish implements Listener {
                             Inventory ChestInventory = ((Container) event.getClickedBlock().getState()).getInventory();
                             Inventory inventory;
                             if (block instanceof ShulkerBox) {
-                                inventory = Bukkit.createInventory(player, InventoryType.SHULKER_BOX, ChatColor("&b无动画打开|" + block.getX() + "|" + block.getY() + "|" + block.getZ()));
+                                inventory = Bukkit.createInventory(player, InventoryType.SHULKER_BOX, LogUtil.ChatColor("&b无动画打开|" + block.getX() + "|" + block.getY() + "|" + block.getZ()));
                             } else {
-                                inventory = Bukkit.createInventory(player, ChestInventory.getSize(), ChatColor("&b无动画打开|" + block.getX() + "|" + block.getY() + "|" + block.getZ()));
+                                inventory = Bukkit.createInventory(player, ChestInventory.getSize(), LogUtil.ChatColor("&b无动画打开|" + block.getX() + "|" + block.getY() + "|" + block.getZ()));
                             }
                             inventory.setContents(ChestInventory.getContents());
                             player.openInventory(inventory);
@@ -73,7 +73,7 @@ public final class Vanish implements Listener {
     @EventHandler
     public void InventoryCloseEvent(InventoryCloseEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
-            if (event.getView().getTitle().contains(ChatColor("&b无动画打开"))) {
+            if (event.getView().getTitle().contains(LogUtil.ChatColor("&b无动画打开"))) {
                 Player player = (Player) event.getPlayer();
                 String[] Title = event.getView().getTitle().split("\\|");
                 Block Block = new Location(player.getWorld(), Integer.parseInt(Title[1]), Integer.parseInt(Title[2]), Integer.parseInt(Title[3])).getBlock();

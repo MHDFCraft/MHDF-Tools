@@ -3,6 +3,7 @@ package cn.ChengZhiYa.MHDFTools.util;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.hashmap.IntHasMap;
 import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
 import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -20,7 +21,6 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.util.Util.*;
 import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getHomeLocation;
 import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getHomeServer;
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 
 public final class BCUtil {
@@ -80,18 +80,18 @@ public final class BCUtil {
             TextComponent Message = new TextComponent();
             for (String Messages : i18n("Tpa.Message").split("\\?")) {
                 if (Messages.equals("Accent")) {
-                    TextComponent MessageButton = new TextComponent(ChatColor(i18n("Tpa.AccentMessage")));
+                    TextComponent MessageButton = new TextComponent(LogUtil.ChatColor(i18n("Tpa.AccentMessage")));
                     MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa accept " + SendPlayerName));
-                    MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
+                    MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(LogUtil.ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
                     Message.addExtra(MessageButton);
                 } else {
                     if (Messages.equals("Defuse")) {
-                        TextComponent MessageButton = new TextComponent(ChatColor(i18n("Tpa.DefuseMessage")));
+                        TextComponent MessageButton = new TextComponent(LogUtil.ChatColor(i18n("Tpa.DefuseMessage")));
                         MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa defuse " + SendPlayerName));
-                        MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&c拒绝" + SendPlayerName + "的传送请求"))));
+                        MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(LogUtil.ChatColor("&c拒绝" + SendPlayerName + "的传送请求"))));
                         Message.addExtra(MessageButton);
                     } else {
-                        Message.addExtra(new TextComponent(ChatColor(Messages.replaceAll("%1", SendPlayerName))));
+                        Message.addExtra(new TextComponent(LogUtil.ChatColor(Messages.replaceAll("%1", SendPlayerName))));
                     }
                 }
             }
@@ -118,18 +118,18 @@ public final class BCUtil {
             TextComponent Message = new TextComponent();
             for (String Messages : i18n("TpaHere.Message").split("\\?")) {
                 if (Messages.equals("Accent")) {
-                    TextComponent MessageButton = new TextComponent(ChatColor(i18n("TpaHere.AccentMessage")));
+                    TextComponent MessageButton = new TextComponent(LogUtil.ChatColor(i18n("TpaHere.AccentMessage")));
                     MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpahere accept " + SendPlayerName));
-                    MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
+                    MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(LogUtil.ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
                     Message.addExtra(MessageButton);
                 } else {
                     if (Messages.equals("Defuse")) {
-                        TextComponent MessageButton = new TextComponent(ChatColor(i18n("TpaHere.DefuseMessage")));
+                        TextComponent MessageButton = new TextComponent(LogUtil.ChatColor(i18n("TpaHere.DefuseMessage")));
                         MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpahere defuse " + SendPlayerName));
-                        MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&c拒绝" + SendPlayerName + "的传送请求"))));
+                        MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(LogUtil.ChatColor("&c拒绝" + SendPlayerName + "的传送请求"))));
                         Message.addExtra(MessageButton);
                     } else {
-                        Message.addExtra(new TextComponent(ChatColor(Messages.replaceAll("%1", SendPlayerName))));
+                        Message.addExtra(new TextComponent(LogUtil.ChatColor(Messages.replaceAll("%1", SendPlayerName))));
                     }
                 }
             }
@@ -173,7 +173,7 @@ public final class BCUtil {
         } else {
             Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
                 Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(Objects.requireNonNull(Bukkit.getPlayer(TargetPlayerName)).getLocation()));
-                PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
             });
         }
     }
@@ -196,7 +196,7 @@ public final class BCUtil {
 
             Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
                 Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(getHomeLocation(PlayerName, HomeName)));
-                PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
             });
         }
     }
@@ -223,7 +223,7 @@ public final class BCUtil {
         } else {
             Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
                 Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location);
-                PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
             });
         }
     }

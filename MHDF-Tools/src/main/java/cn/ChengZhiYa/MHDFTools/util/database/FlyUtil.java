@@ -28,7 +28,7 @@ public final class FlyUtil {
     public static boolean AllowFly(String PlayerName) {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
             if (getFlyTimeHashMap().get(PlayerName) == null) {
-                return DataExists("MHDFTools_Fly", "PlayerName", PlayerName);
+                return dataExists("MHDFTools_Fly", "PlayerName", PlayerName);
             } else {
                 return getFlyTimeHashMap().get(PlayerName) == null;
             }
@@ -74,7 +74,7 @@ public final class FlyUtil {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
             if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getFlyTimeHashMap().put(PlayerName, getFlyTimeHashMap().get(PlayerName) - TakeTime);
-                Take("MHDFTools_Fly", "PlayerName", PlayerName, "Time", TakeTime);
+                take("MHDFTools_Fly", "PlayerName", PlayerName, "Time", TakeTime);
             } else {
                 File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
                 YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);

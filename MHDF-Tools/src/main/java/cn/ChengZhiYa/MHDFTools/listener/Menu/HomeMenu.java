@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.listener.Menu;
 
 import cn.ChengZhiYa.MHDFTools.util.menu.HomeMenuUtil;
+import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,12 +14,11 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.util.menu.HomeMenuUtil.getPlaceholder;
 import static cn.ChengZhiYa.MHDFTools.util.menu.HomeMenuUtil.homeMenuFile;
 import static cn.ChengZhiYa.MHDFTools.util.menu.MenuUtil.*;
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class HomeMenu implements Listener {
     @EventHandler
     public void InventoryClickEvent(InventoryClickEvent event) {
-        if (event.getView().getTitle().contains(ChatColor(Objects.requireNonNull(getMenu(homeMenuFile).getString("Menu.Title")).split("\\{Page}")[0]))) {
+        if (event.getView().getTitle().contains(LogUtil.ChatColor(Objects.requireNonNull(getMenu(homeMenuFile).getString("Menu.Title")).split("\\{Page}")[0]))) {
             if (event.getCurrentItem() != null) {
                 event.setCancelled(true);
                 if (getMenuFromItem(event.getCurrentItem()) != null && getItemNameFromItem(event.getCurrentItem()) != null) {

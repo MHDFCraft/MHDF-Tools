@@ -8,8 +8,6 @@ import org.bukkit.Bukkit;
 import java.sql.*;
 import java.util.TimeZone;
 
-import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
-
 public final class DatabaseUtil {
     public static Statement statement;
     public static HikariDataSource dataSource;
@@ -25,31 +23,19 @@ public final class DatabaseUtil {
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");
             config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
             dataSource = new HikariDataSource(config);
             statement = dataSource.getConnection().createStatement();
-        } catch (SQLException ignored) {
-            ColorLog("&c无法连接数据库");
-        }
-        try {
-            //经济系统
-            {
-                if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_economy` (" +
+
+            initializeTable("EconomySettings",
+                    "CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_economy` (" +
                             "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                             "`Money` DECIMAL(20,4) NOT NULL DEFAULT 0," +
                             "PRIMARY KEY (`PlayerName`)) " +
                             "COLLATE='utf8mb4_general_ci';");
-                    ps.executeUpdate();
-                    ps.close();
-                    connection.close();
-                }
-            }
-            //家系统
-            {
-                if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_home` (" +
+
+            initializeTable("HomeSystemSettings",
+                    "CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_home` (" +
                             "`ID` BIGINT NOT NULL AUTO_INCREMENT," +
                             "`Home` VARCHAR(100) NOT NULL DEFAULT ''," +
                             "`Owner` VARCHAR(50) NOT NULL DEFAULT ''," +
@@ -64,41 +50,31 @@ public final class DatabaseUtil {
                             "INDEX `Home` (`Home`)," +
                             "INDEX `Owner` (`Owner`)) " +
                             "COLLATE='utf8mb4_general_ci';");
-                    ps.executeUpdate();
-                    ps.close();
-                    connection.close();
-                }
-            }
-            //登录系统
-            {
-                if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_login` (" +
+
+            initializeTable("LoginSystemSettings",
+                    "CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_login` (" +
                             "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                             "`Password` VARCHAR(200) NOT NULL DEFAULT ''," +
                             "PRIMARY KEY (`PlayerName`)) " +
                             "COLLATE='utf8mb4_general_ci';");
-                    ps.executeUpdate();
-                    ps.close();
-                    connection.close();
-                }
-            }
-            //飞行系统
-            {
-                if (MHDFTools.instance.getConfig().getBoolean("FlySettings.Enable")) {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Fly` (" +
+
+            initializeTable("FlySettings",
+                    "CREATE TABLE IF NOT EXISTS `MHDFTools_Fly` (" +
                             "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                             "`Time` INT NOT NULL DEFAULT 0," +
                             "PRIMARY KEY (`PlayerName`)) " +
                             "COLLATE='utf8mb4_general_ci';");
-                    ps.executeUpdate();
-                    ps.close();
-                    connection.close();
-                }
-            }
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to initialize database", e);
+        }
+    }
+
+    private static void initializeTable(String configKey, String sqlCreate) throws SQLException {
+        if (MHDFTools.instance.getConfig().getBoolean(configKey + ".Enable")) {
+            try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement(sqlCreate)) {
+                ps.executeUpdate();
+            }
         }
     }
 
@@ -114,54 +90,51 @@ public final class DatabaseUtil {
         }
     }
 
-    public static boolean DataExists(String Table, String Field, String Value) {
-        try {
-            Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + Table + " WHERE " + Field + " = ? LIMIT 1");
-            ps.setString(1, Value);
-            ResultSet rs = ps.executeQuery();
-            boolean 结果 = rs.next();
-            rs.close();
-            ps.close();
-            connection.close();
-            return 结果;
+    public static boolean dataExists(String table, String field, String value) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + field + " = ? LIMIT 1")) {
+            ps.setString(1, value);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    public static Object GetData(String Table, String WhereField, String WhereValue, String GetField) {
-        try {
-            Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + Table + " WHERE " + WhereField + " = ? LIMIT 1");
-            ps.setString(1, WhereValue);
-            ResultSet rs = ps.executeQuery();
-            Object Data = "";
-            if (rs.next()) {
-                Data = rs.getObject(GetField);
+    public static Object getData(String table, String whereField, String whereValue, String getField) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + whereField + " = ? LIMIT 1")) {
+            ps.setString(1, whereValue);
+            try (ResultSet rs = ps.executeQuery()) {
+                Object data = "";
+                if (rs.next()) {
+                    data = rs.getObject(getField);
+                }
+                return data;
             }
-            rs.close();
-            ps.close();
-            connection.close();
-            return Data;
         } catch (SQLException e) {
             e.printStackTrace();
             return "";
         }
     }
 
-    public static void Set(String Table, String WhereField, String WhereValue, String SetField, Object SetValue) {
+    public static void set(String table, String whereField, String whereValue, String setField, Object setValue) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (DataExists(Table, WhereField, WhereValue)) {
-                try {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("UPDATE " + Table + " SET " + SetField + " = ? WHERE " + WhereField + " = ?");
-                    ps.setObject(1, SetValue);
-                    ps.setString(2, WhereValue);
+            if (dataExists(table, whereField, whereValue)) {
+                try (Connection connection = dataSource.getConnection();
+                     PreparedStatement ps = connection.prepareStatement(
+                             "UPDATE "
+                                     + table
+                                     + " SET "
+                                     + setField
+                                     + " = ? WHERE "
+                                     + whereField
+                                     + " = ?")) {
+                    ps.setObject(1, setValue);
+                    ps.setString(2, whereValue);
                     ps.executeUpdate();
-                    ps.close();
-                    connection.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -169,17 +142,23 @@ public final class DatabaseUtil {
         });
     }
 
-    public static void Add(String Table, String WhereField, String WhereValue, String AddField, Object AddValue) {
+    public static void add(String table, String whereField, String whereValue, String addField, Object addValue) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (DataExists(Table, WhereField, WhereValue)) {
-                try {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("UPDATE " + Table + " SET " + AddField + " = " + AddField + "+? WHERE " + WhereField + " = ?");
-                    ps.setObject(1, AddValue);
-                    ps.setString(2, WhereValue);
+            if (dataExists(table, whereField, whereValue)) {
+                try (Connection connection = dataSource.getConnection();
+                     PreparedStatement ps = connection.prepareStatement(
+                                 "UPDATE "
+                                     + table
+                                     + " SET "
+                                     + addField
+                                     + " = "
+                                     + addField
+                                     + "+? WHERE "
+                                     + whereField
+                                     + " = ?")) {
+                    ps.setObject(1, addValue);
+                    ps.setString(2, whereValue);
                     ps.executeUpdate();
-                    ps.close();
-                    connection.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -187,17 +166,22 @@ public final class DatabaseUtil {
         });
     }
 
-    public static void Take(String Table, String WhereField, String WhereValue, String TakeField, Object TakeValue) {
+    public static void take(String table, String whereField, String whereValue, String takeField, Object takeValue) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (DataExists(Table, WhereField, WhereValue)) {
-                try {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement("UPDATE " + Table + " SET " + TakeField + " = " + TakeField + "-? WHERE " + WhereField + " = ?");
-                    ps.setObject(1, TakeValue);
-                    ps.setString(2, WhereValue);
+            if (dataExists(table, whereField, whereValue)) {
+                try (Connection connection = dataSource.getConnection();
+                     PreparedStatement ps = connection.prepareStatement(
+                             "UPDATE "
+                             + table
+                             + " SET "
+                             + takeField
+                             + " = "
+                             + takeField + "-? WHERE "
+                             + whereField
+                             + " = ?")) {
+                    ps.setObject(1, takeValue);
+                    ps.setString(2, whereValue);
                     ps.executeUpdate();
-                    ps.close();
-                    connection.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

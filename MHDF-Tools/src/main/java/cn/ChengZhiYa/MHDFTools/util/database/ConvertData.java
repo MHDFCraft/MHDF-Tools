@@ -204,7 +204,7 @@ public final class ConvertData {
                             if (!LoginExists(sender.getName())) {
                                 Register(Datas.replaceAll("_Password", ""), Data.getString(Datas));
                             } else {
-                                Set("mhdftools.mhdftools_login", "PlayerName", sender.getName(), "Password", Data.getString(Datas));
+                                set("mhdftools.mhdftools_login", "PlayerName", sender.getName(), "Password", Data.getString(Datas));
                             }
                         }
                     }

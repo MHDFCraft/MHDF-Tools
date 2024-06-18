@@ -16,10 +16,10 @@ public final class Fly extends BukkitRunnable {
             if (InFlyList.contains(player.getName()) && getFlyTime(player.getName()) != -999) {
                 takeFlyTime(player.getName(), 1);
                 if (LangFileData.getString("FlyTime.CountTime." + getFlyTime(player.getName())) != null) {
-                    SendTitle(Objects.requireNonNull(player), i18n("FlyTime.CountTime." + getFlyTime(player.getName())));
+                    sendTitle(Objects.requireNonNull(player), i18n("FlyTime.CountTime." + getFlyTime(player.getName())));
                 }
                 if (sound("FlyOffCountTime." + getFlyTime(player.getName())) != null) {
-                    PlaySound(Objects.requireNonNull(player), sound("FlyOffCountTime." + getFlyTime(player.getName())));
+                    playSound(Objects.requireNonNull(player), sound("FlyOffCountTime." + getFlyTime(player.getName())));
                 }
                 if (getFlyTime(player.getName()) <= 0) {
                     InFlyList.remove(player.getName());

@@ -1,11 +1,11 @@
-package cn.ChengZhiYa.MHDFTools.util;
+package cn.ChengZhiYa.MHDFTools.file;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 
 import java.io.File;
 import java.io.IOException;
 
-public final class FileUtil {
+public final class ConfigUtil {
     public static void createDir(File file) {
         if (!file.exists()) {
             file.mkdirs();

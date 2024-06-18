@@ -3,6 +3,7 @@ package cn.ChengZhiYa.MHDFTools.command;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.hashmap.IntHasMap;
 import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -15,7 +16,6 @@ import java.util.List;
 
 import static cn.ChengZhiYa.MHDFTools.util.BCUtil.*;
 import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class TpaHere implements TabExecutor {
     @Override
@@ -36,7 +36,7 @@ public final class TpaHere implements TabExecutor {
                     return false;
                 }
                 SendTpaHere(PlayerName, sender.getName());
-                sender.sendMessage(ChatColor(i18n("TpaHere.SendDone")));
+                sender.sendMessage(LogUtil.ChatColor(i18n("TpaHere.SendDone")));
                 return false;
             }
             if (args.length == 2) {

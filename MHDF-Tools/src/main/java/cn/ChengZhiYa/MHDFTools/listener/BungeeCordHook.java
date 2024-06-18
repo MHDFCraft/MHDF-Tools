@@ -4,6 +4,7 @@ import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.hashmap.IntHasMap;
 import cn.ChengZhiYa.MHDFTools.hashmap.LocationHasMap;
 import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -23,7 +24,6 @@ import static cn.ChengZhiYa.MHDFTools.util.BCUtil.PlayerList;
 import static cn.ChengZhiYa.MHDFTools.util.BCUtil.ServerName;
 import static cn.ChengZhiYa.MHDFTools.util.Util.*;
 import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getHomeLocation;
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class BungeeCordHook implements PluginMessageListener {
     @Override
@@ -49,18 +49,18 @@ public final class BungeeCordHook implements PluginMessageListener {
                 TextComponent Message = new TextComponent();
                 for (String Messages : i18n("Tpa.Message").split("\\?")) {
                     if (Messages.equals("Accent")) {
-                        TextComponent MessageButton = new TextComponent(ChatColor(i18n("Tpa.AccentMessage")));
+                        TextComponent MessageButton = new TextComponent(LogUtil.ChatColor(i18n("Tpa.AccentMessage")));
                         MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa accept " + SendPlayerName));
-                        MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
+                        MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(LogUtil.ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
                         Message.addExtra(MessageButton);
                     } else {
                         if (Messages.equals("Defuse")) {
-                            TextComponent MessageButton = new TextComponent(ChatColor(i18n("Tpa.DefuseMessage")));
+                            TextComponent MessageButton = new TextComponent(LogUtil.ChatColor(i18n("Tpa.DefuseMessage")));
                             MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa defuse " + SendPlayerName));
-                            MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&c拒绝" + SendPlayerName + "的传送请求"))));
+                            MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(LogUtil.ChatColor("&c拒绝" + SendPlayerName + "的传送请求"))));
                             Message.addExtra(MessageButton);
                         } else {
-                            Message.addExtra(new TextComponent(ChatColor(Messages.replaceAll("%1", SendPlayerName))));
+                            Message.addExtra(new TextComponent(LogUtil.ChatColor(Messages.replaceAll("%1", SendPlayerName))));
                         }
                     }
                 }
@@ -76,18 +76,18 @@ public final class BungeeCordHook implements PluginMessageListener {
                 TextComponent Message = new TextComponent();
                 for (String Messages : i18n("TpaHere.Message").split("\\?")) {
                     if (Messages.equals("Accent")) {
-                        TextComponent MessageButton = new TextComponent(ChatColor(i18n("TpaHere.AccentMessage")));
+                        TextComponent MessageButton = new TextComponent(LogUtil.ChatColor(i18n("TpaHere.AccentMessage")));
                         MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpahere accept " + SendPlayerName));
-                        MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
+                        MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(LogUtil.ChatColor("&a接受" + SendPlayerName + "的传送请求"))));
                         Message.addExtra(MessageButton);
                     } else {
                         if (Messages.equals("Defuse")) {
-                            TextComponent MessageButton = new TextComponent(ChatColor(i18n("TpaHere.DefuseMessage")));
+                            TextComponent MessageButton = new TextComponent(LogUtil.ChatColor(i18n("TpaHere.DefuseMessage")));
                             MessageButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpahere defuse " + SendPlayerName));
-                            MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor("&c拒绝" + SendPlayerName + "的传送请求"))));
+                            MessageButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(LogUtil.ChatColor("&c拒绝" + SendPlayerName + "的传送请求"))));
                             Message.addExtra(MessageButton);
                         } else {
-                            Message.addExtra(new TextComponent(ChatColor(Messages.replaceAll("%1", SendPlayerName))));
+                            Message.addExtra(new TextComponent(LogUtil.ChatColor(Messages.replaceAll("%1", SendPlayerName))));
                         }
                     }
                 }
@@ -103,7 +103,7 @@ public final class BungeeCordHook implements PluginMessageListener {
                 String TargetPlayerName = in.readUTF();
                 Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
                     Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(Bukkit.getPlayer(TargetPlayerName)).getLocation());
-                    PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                    playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                 }, 20);
             }
             if (subchannel.equals("TpPlayerHome")) {
@@ -111,7 +111,7 @@ public final class BungeeCordHook implements PluginMessageListener {
                 String HomeName = in.readUTF();
                 Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
                     Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(getHomeLocation(PlayerName, HomeName)));
-                    PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                    playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                 }, 20);
             }
             if (subchannel.equals("TpPlayerTo")) {
@@ -119,7 +119,7 @@ public final class BungeeCordHook implements PluginMessageListener {
                 Location Location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble(), (float) in.readDouble(), (float) in.readDouble());
                 Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
                     Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location);
-                    PlaySound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                    playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                 }, 20);
             }
             if (subchannel.equals("CancelTpa")) {

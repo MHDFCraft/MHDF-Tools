@@ -17,6 +17,7 @@ import cn.ChengZhiYa.MHDFTools.util.libraries.classpath.ReflectionClassPathAppen
 import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.Dependency;
 import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManager;
 import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManagerImpl;
+import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -31,17 +32,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static cn.ChengZhiYa.MHDFTools.api.YamlAPI.SaveResource;
+import static cn.ChengZhiYa.MHDFTools.file.ConfigUtil.createDir;
+import static cn.ChengZhiYa.MHDFTools.file.ConfigUtil.createFile;
 import static cn.ChengZhiYa.MHDFTools.hook.Vault.hookVault;
 import static cn.ChengZhiYa.MHDFTools.hook.Vault.unHookVault;
 import static cn.ChengZhiYa.MHDFTools.util.BCUtil.getServerName;
-import static cn.ChengZhiYa.MHDFTools.util.FileUtil.createDir;
-import static cn.ChengZhiYa.MHDFTools.util.FileUtil.createFile;
 import static cn.ChengZhiYa.MHDFTools.util.Util.*;
 import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.closeDatabase;
 import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.initializationDatabaseData;
 import static cn.ChengZhiYa.MHDFTools.util.menu.MenuUtil.runAction;
-import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
-import static cn.chengzhiya.mhdfpluginapi.YamlFileUtil.SaveResource;
 
 public final class MHDFTools extends JavaPlugin implements Listener {
     public static MHDFTools instance;
@@ -83,7 +83,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        ColorLog("&f============&6梦回东方-工具&f============");
+        LogUtil.ChatColor("&f============&6梦回东方-工具&f============");
 
         //bstats
         if (getConfig().getBoolean("bStats")) {
@@ -95,21 +95,21 @@ public final class MHDFTools extends JavaPlugin implements Listener {
         //功能可用检查
         {
             if (!ifSupportGetTps()) {
-                ColorLog("&e服务端不是Paper或是服务器版本较旧，已关闭自带TPS变量!");
+                LogUtil.ChatColor("&e服务端不是Paper或是服务器版本较旧，已关闭自带TPS变量!");
             }
 
             if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
-                ColorLog("&c找不到PlaceholderAPI,已关闭PAPI变量解析系统!");
+                LogUtil.ChatColor("&c找不到PlaceholderAPI,已关闭PAPI变量解析系统!");
                 PAPI = false;
             }
 
             if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) {
-                ColorLog("&c找不到ProtocolLib,无法启用崩端系统!");
+                LogUtil.ChatColor("&c找不到ProtocolLib,无法启用崩端系统!");
                 PLIB = false;
             }
 
             if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
-                ColorLog("&c找不到Vault,无法启用经济系统!");
+                LogUtil.ChatColor("&c找不到Vault,无法启用经济系统!");
                 Vault = false;
             }
         }
@@ -348,8 +348,8 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             new PlaceholderAPI().register();
         }
 
-        ColorLog("&e插件启动完成! 作者:292200693");
-        ColorLog("&f============&6梦回东方-工具&f============");
+        LogUtil.ChatColor("&e插件启动完成! 作者:292200693");
+        LogUtil.ChatColor("&f============&6梦回东方-工具&f============");
     }
 
     @Override
@@ -376,8 +376,8 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             }
         }
 
-        ColorLog("&f============&6梦回东方-工具&f============");
-        ColorLog("&e插件已卸载! 作者:292200693");
-        ColorLog("&f============&6梦回东方-工具&f============");
+        LogUtil.ChatColor("&f============&6梦回东方-工具&f============");
+        LogUtil.ChatColor("&e插件已卸载! 作者:292200693");
+        LogUtil.ChatColor("&f============&6梦回东方-工具&f============");
     }
 }

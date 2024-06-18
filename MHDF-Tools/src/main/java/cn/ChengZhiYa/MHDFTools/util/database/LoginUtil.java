@@ -12,13 +12,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.DataExists;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.dataExists;
 import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.dataSource;
 
 public final class LoginUtil {
     public static Boolean LoginExists(String PlayerName) {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-            return DataExists("mhdftools.mhdftools_login", "PlayerName", PlayerName);
+            return dataExists("mhdftools.mhdftools_login", "PlayerName", PlayerName);
         }
         File Login_File = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
         YamlConfiguration PasswordData = YamlConfiguration.loadConfiguration(Login_File);

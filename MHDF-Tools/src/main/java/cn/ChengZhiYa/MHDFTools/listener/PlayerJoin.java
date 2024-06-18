@@ -5,6 +5,7 @@ import cn.ChengZhiYa.MHDFTools.hashmap.BooleanHasMap;
 import cn.ChengZhiYa.MHDFTools.hashmap.ScoreboardHasMap;
 import cn.ChengZhiYa.MHDFTools.util.BCUtil;
 import cn.ChengZhiYa.MHDFTools.util.database.FlyUtil;
+import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -19,7 +20,6 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.util.BCUtil.getServerName;
 import static cn.ChengZhiYa.MHDFTools.util.database.EconomyUtil.initializationPlayerData;
 import static cn.ChengZhiYa.MHDFTools.util.database.FlyUtil.getFlyTimeHashMap;
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class PlayerJoin implements Listener {
     @EventHandler
@@ -46,10 +46,10 @@ public final class PlayerJoin implements Listener {
                 if (player.hasPermission("MHDFTools.Op")) {
                     if (!BooleanHasMap.getHasMap().get("CheckVersionError")) {
                         if (!BooleanHasMap.getHasMap().get("IsLast")) {
-                            player.sendMessage(ChatColor("&cCheng-Tools不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/"));
+                            player.sendMessage(LogUtil.ChatColor("&cCheng-Tools不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/"));
                         }
                     } else {
-                        player.sendMessage(ChatColor("&cCheng-Tools无法检查更新!"));
+                        player.sendMessage(LogUtil.ChatColor("&cCheng-Tools无法检查更新!"));
                     }
                 }
             } catch (Exception ignored) {
@@ -71,11 +71,11 @@ public final class PlayerJoin implements Listener {
         }
         if (MHDFTools.instance.getConfig().getBoolean("WhiteList.Enable")) {
             if (!MHDFTools.instance.getConfig().getStringList("WhiteList.List").contains(event.getPlayer().getName()) || event.getPlayer().hasPermission(Objects.requireNonNull(MHDFTools.instance.getConfig().getString("WhiteList.Permission")))) {
-                event.getPlayer().kickPlayer(ChatColor(MHDFTools.instance.getConfig().getString("WhiteList.KickMessage")));
+                event.getPlayer().kickPlayer(LogUtil.ChatColor(MHDFTools.instance.getConfig().getString("WhiteList.KickMessage")));
             }
         }
         if (MHDFTools.instance.getConfig().getBoolean("PlayerJoinSendMessageSettings.Enable")) {
-            event.getPlayer().sendMessage(ChatColor(MHDFTools.instance.getConfig().getString("PlayerJoinSendMessageSettings.Message"))
+            event.getPlayer().sendMessage(LogUtil.ChatColor(MHDFTools.instance.getConfig().getString("PlayerJoinSendMessageSettings.Message"))
                     .replaceAll("%PlayerName%", event.getPlayer().getName())
             );
         }

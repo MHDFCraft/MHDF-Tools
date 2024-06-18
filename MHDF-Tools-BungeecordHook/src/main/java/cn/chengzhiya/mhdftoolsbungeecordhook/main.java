@@ -8,7 +8,6 @@ public final class main extends Plugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
         main = this;
         getProxy().getPluginManager().registerListener(this, new PluginMessage());
         getProxy().registerChannel("BungeeCord");
@@ -16,7 +15,6 @@ public final class main extends Plugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
         main = null;
     }
 }
