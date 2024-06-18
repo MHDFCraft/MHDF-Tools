@@ -16,22 +16,36 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
 
 public final class Spawn implements CommandExecutor {
+
+    static String WORLD_CONFIG_KEY = "SpawnSettings.World";
+    static String X_CONFIG_KEY = "SpawnSettings.X";
+    static String Y_CONFIG_KEY = "SpawnSettings.Y";
+    static String Z_CONFIG_KEY = "SpawnSettings.Z";
+    static String YAW_CONFIG_KEY = "SpawnSettings.Yaw";
+    static String PITCH_CONFIG_KEY = "SpawnSettings.Pitch";
+    static String SERVER_CONFIG_KEY = "SpawnSettings.Server";
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            World world = Bukkit.getWorld(Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SpawnSettings.World")));
-            double X = MHDFTools.instance.getConfig().getDouble("SpawnSettings.X");
-            double Y = MHDFTools.instance.getConfig().getDouble("SpawnSettings.Y");
-            double Z = MHDFTools.instance.getConfig().getDouble("SpawnSettings.Z");
-            float Yaw = (float) MHDFTools.instance.getConfig().getDouble("SpawnSettings.Yaw");
-            float Pitch = (float) MHDFTools.instance.getConfig().getDouble("SpawnSettings.Pitch");
-            Location SpawnLcation = new Location(world, X, Y, Z, Yaw, Pitch);
-            BCUtil.TpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString("SpawnSettings.Server"), SpawnLcation);
-            sender.sendMessage(i18n("Spawn.TeleportDone"));
-        } else {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(i18n("OnlyPlayer"));
+            return false;
         }
-        return false;
+
+        Player player = (Player) sender;
+        World world = Bukkit.getWorld(Objects.requireNonNull(MHDFTools.instance.getConfig().getString(WORLD_CONFIG_KEY)));
+
+        double spawnX = MHDFTools.instance.getConfig().getDouble(X_CONFIG_KEY);
+        double spawnY = MHDFTools.instance.getConfig().getDouble(Y_CONFIG_KEY);
+        double spawnZ = MHDFTools.instance.getConfig().getDouble(Z_CONFIG_KEY);
+
+        float spawnYaw = (float) MHDFTools.instance.getConfig().getDouble(YAW_CONFIG_KEY);
+        float spawnPitch = (float) MHDFTools.instance.getConfig().getDouble(PITCH_CONFIG_KEY);
+
+        Location spawnLocation = new Location(world, spawnX, spawnY, spawnZ, spawnYaw, spawnPitch);
+        BCUtil.TpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString(SERVER_CONFIG_KEY), spawnLocation);
+        sender.sendMessage(i18n("Spawn.TeleportDone"));
+
+        return true;
     }
 }
