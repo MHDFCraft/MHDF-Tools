@@ -131,20 +131,6 @@ public enum Dependency {
         return s.replace("{}", ".");
     }
 
-    /**
-     * Creates a {@link MessageDigest} suitable for computing the checksums
-     * of dependencies.
-     *
-     * @return the digest
-     */
-    public static MessageDigest createDigest() {
-        try {
-            return MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public String getFileName(String classifier) {
         String name = artifact.toLowerCase(Locale.ROOT).replace('_', '-');
         String extra = classifier == null || classifier.isEmpty()

@@ -19,11 +19,11 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 import static cn.chengzhiya.mhdftools.util.BCUtil.PlayerList;
 import static cn.chengzhiya.mhdftools.util.BCUtil.ServerName;
 import static cn.chengzhiya.mhdftools.util.Util.*;
 import static cn.chengzhiya.mhdftools.util.database.HomeUtil.getHomeLocation;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class BungeeCordHook implements PluginMessageListener {
     @Override

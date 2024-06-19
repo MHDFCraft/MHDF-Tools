@@ -3,6 +3,7 @@ package cn.chengzhiya.mhdftools;
 import cn.chengzhiya.mhdftools.command.Back;
 import cn.chengzhiya.mhdftools.command.Fly;
 import cn.chengzhiya.mhdftools.command.TpBack;
+import cn.chengzhiya.mhdftools.command.Trash;
 import cn.chengzhiya.mhdftools.command.Vanish;
 import cn.chengzhiya.mhdftools.command.*;
 import cn.chengzhiya.mhdftools.hook.Metrics;
@@ -34,8 +35,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
-import static cn.chengzhiya.mhdfpluginapi.YamlFileUtil.SaveResource;
 import static cn.chengzhiya.mhdftools.hook.Vault.hookVault;
 import static cn.chengzhiya.mhdftools.hook.Vault.unHookVault;
 import static cn.chengzhiya.mhdftools.util.BCUtil.getServerName;
@@ -45,6 +44,8 @@ import static cn.chengzhiya.mhdftools.util.Util.*;
 import static cn.chengzhiya.mhdftools.util.database.DatabaseUtil.closeDatabase;
 import static cn.chengzhiya.mhdftools.util.database.DatabaseUtil.initializationDatabaseData;
 import static cn.chengzhiya.mhdftools.util.menu.MenuUtil.runAction;
+import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
+import static cn.chengzhiya.mhdfpluginapi.YamlFileUtil.SaveResource;
 
 public final class MHDFTools extends JavaPlugin implements Listener {
     public static MHDFTools instance;
@@ -167,7 +168,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                 new Scoreboard().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("TrashSettings.Enable")) {
-                registerCommand(this, new Trash(), "垃圾桶", "MHDFTools.Command.Trash", "trash");
+                registerCommand(this, new Trash(),"垃圾桶","MHDFTools.Command.Trash","trash");
             }
             if (getConfig().getBoolean("FastUseSettings.EnderChest")) {
                 Bukkit.getPluginManager().registerEvents(new EnderChest(), this);

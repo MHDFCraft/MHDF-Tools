@@ -16,10 +16,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 import static cn.chengzhiya.mhdftools.util.BCUtil.getServerName;
 import static cn.chengzhiya.mhdftools.util.database.EconomyUtil.initializationPlayerData;
 import static cn.chengzhiya.mhdftools.util.database.FlyUtil.getFlyTimeHashMap;
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class PlayerJoin implements Listener {
     @EventHandler
