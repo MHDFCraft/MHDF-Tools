@@ -6,7 +6,7 @@
 
     <groupId>MHDF-Tools</groupId>
     <artifactId>MHDF-Tools</artifactId>
-    <version>1.4.9</version>
+    <version>1.4.10</version>
     <packaging>jar</packaging>
 
     <name>MHDF-Tools</name>
@@ -42,7 +42,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>de.tr7zw.changeme.nbtapi</pattern>
-                                    <shadedPattern>cn.ChengZhiYa.MHDFTools.nbtapi</shadedPattern>
+                                    <shadedPattern>cn.chengzhiya.mhdftools.nbtapi</shadedPattern>
                                 </relocation>
                             </relocations>
                             <createDependencyReducedPom>false</createDependencyReducedPom>

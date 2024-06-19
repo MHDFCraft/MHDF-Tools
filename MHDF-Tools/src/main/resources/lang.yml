@@ -3,7 +3,6 @@ OnlyPlayer: "&f분 &6这个命令只能玩家使用!"
 PlayerNotOnline: "&f분 &6这个玩家不存在或不在线"
 FastSetDone: "&a完成!"
 HatNoItem: "&f분 &6你需要拿着一个物品才能使用这个命令!"
-AntiTiaoLue: "&f부 &#7289da玩家%1尝试在,X:%2 Y:%3 Z:%4 建造跳略,已阻止!"
 AdminCommands:
   Center: " &7| "
   convert:

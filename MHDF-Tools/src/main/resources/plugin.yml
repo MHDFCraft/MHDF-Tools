@@ -1,6 +1,6 @@
 name: MHDF-Tools
 version: '${project.version}'
-main: cn.ChengZhiYa.MHDFTools.MHDFTools
+main: cn.chengzhiya.mhdftools.MHDFTools
 api-version: '1.17'
 authoendrs: [ ChengZhiYa ]
 softdepend: [ Vault, PlaceholderAPI, ProtocolLib ]
@@ -62,12 +62,20 @@ permissions:
     default: true
   MHDFTools.Command.TpBack:
     default: true
+  MHDFTools.Command.Trash:
+    default: true
   MHDFTools.Command.TpaHere:
     default: true
   MHDFTools.Command.UnBack:
     default: true
   MHDFTools.Command.Vanish:
     default: op
+  MHDFTools.FastUse.EnderChest:
+    default: true
+  MHDFTools.FastUse.ShulkerBox:
+    default: true
+  MHDFTools.FastUse.CraftingTable:
+    default: true
   MHDFTools.SendUpdateMessage:
     default: op
   MHDFTools.JoinMessage:

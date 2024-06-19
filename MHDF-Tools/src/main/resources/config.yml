@@ -27,6 +27,30 @@ BungeecordSettings:
   #如果数据中没有存储家对应的服务器从这里读取
   HomeDefaultServer: "无"
 
+#垃圾桶设置
+TrashSettings:
+  #开关
+  Enable: true
+  #菜单配置
+  GUISettings:
+    #菜单类型(CHEST DISPENSER)
+    Type: CHEST
+    #菜单大小(仅限CHEST模式)
+    Size: 9
+    #菜单标题
+    Title: "&b垃圾桶"
+
+#右键快速使用设置
+FastUseSettings:
+  #右键打开末影箱
+  EnderChest: true
+  #右键打开潜影盒
+  ShulkerBox: true
+  #潜影盒菜单标题
+  ShulkerBoxMenuTitle: "&b快速使用-倩影盒"
+  #右键打开工作台
+  CraftingTable: true
+
 #隐身系统设置
 VanishSettings:
   #开关
@@ -99,15 +123,15 @@ CustomQuitServerMessageSettings:
     #玩家退出服务器的提示
     QuitMessage: "&c&l%PlayerName%&e&l离开了游戏"
 
-#Tpa系统
-Tpa:
+#Tpa系统设置
+TpaSettings:
   #开关
   Enable: true
   #超时时间
   OutTime: 60
 
-#Tpahere系统
-Tpahere:
+#TpaHere系统设置
+TpaHereSettings:
   #开关
   Enable: true
   #超时时间
@@ -182,7 +206,7 @@ LoginSystemSettings:
     - "/register"
 
 #白名单系统
-WhiteList:
+WhiteListSettings:
   #开关
   Enable: false
   #拥有指定权限即可进入
@@ -248,7 +272,7 @@ ScoreboardSettings:
     - "&e&lawa"
 
 #命令映射
-CommandLink:
+CommandLinkSettings:
   #开关
   Enable: true
   #命令列表
@@ -325,29 +349,42 @@ FlySettings:
   AntiFlyWorldList:
     - "boss"
 
-#反跳略系统
-AntiTiaoLue: true
+#更简单的游戏模式设置
+EasyGamemodeSettings:
+  #开关
+  Enable: true
 
-#更简单的Gamemode
-EasyGamemodeCommandEnable: true
+#Invsee系统设置
+InvseeSettings:
+  #开关
+  Enable: true
 
-#Invsee系统
-InvseeEnable: true
+#帽子系统设置
+HatSettings:
+  #开关
+  Enable: true
 
-#帽子系统
-HatEnable: true
+#崩端系统设置
+CrashPlayerSettings:
+  #开关
+  Enable: true
 
-#崩端系统
-CrashPlayerEnable: true
+#快速晴天命令设置
+FastSunSettings:
+  #开关
+  Enable: true
 
-#快速晴天命令
-FastSunCommandEnable: true
+#快速调时间命令设置
+FastSetTimeSettings:
+  #开关
+  Enable: true
 
-#快速调时间命令
-FastSetTimeCommandEnable: true
+#查询玩家IP与IP归属地命令设置
+IpSettings:
+  #开关
+  Enable: true
 
-#查询玩家IP与IP归属地命令
-IpCommandEnable: true
-
-#菜单系统开关
-MenuEnable: true
+#菜单系统开关设置
+MenuSettings:
+  #开关
+  Enable: true
