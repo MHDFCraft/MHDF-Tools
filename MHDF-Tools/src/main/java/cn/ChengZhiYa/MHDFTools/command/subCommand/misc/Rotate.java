@@ -36,7 +36,7 @@ public final class Rotate implements CommandExecutor {
         return true;
     }
 
-    public void randomiseAim(final Player player, final Location location) {
+    public void randomiseAim(Player player, Location location) {
         location.setPitch((float) Math.max(-90, ThreadLocalRandom.current().nextInt(90)));
         location.setYaw((float) Math.max(-180, ThreadLocalRandom.current().nextInt(180)));
         player.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN);

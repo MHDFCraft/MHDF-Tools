@@ -10,30 +10,33 @@ import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
 public final class TpaTime extends BukkitRunnable {
     @Override
     public void run() {
-        if (MHDFTools.instance.getConfig().getBoolean("TpaSettings.Enable")) {
-            for (Object Tpa : MapUtil.getStringHasMap().keySet()) {
-                if (Tpa.toString().contains("_TPAPlayerName")) {
-                    String PlayerName = Tpa.toString().replaceAll("_TPAPlayerName", "");
-                    String TagerPlayerName = MapUtil.getStringHasMap().get(Tpa);
-                    int Time = MapUtil.getIntHasMap().get(PlayerName + "_TPATime");
-                    if (ifPlayerOnline(PlayerName)) {
-                        if (ifPlayerOnline(TagerPlayerName)) {
-                            if (Time >= 0) {
-                                MapUtil.getIntHasMap().put(PlayerName + "_TPATime", Time - 1);
-                            } else {
-                                SendMessage(PlayerName, i18n("Tpa.TimeOutDone", TagerPlayerName));
-                                SendMessage(TagerPlayerName, i18n("Tpa.TimeOut", PlayerName));
-                                CancelTpa(PlayerName);
-                            }
+        if (!MHDFTools.instance.getConfig().getBoolean("TpaSettings.Enable")) {
+            return;
+        }
+
+        MapUtil.getStringHasMap().keySet().forEach(key -> {
+            if (key.toString().contains("_TPAPlayerName")) {
+                String playerName = key.toString().replaceAll("_TPAPlayerName", "");
+                String targetPlayerName = MapUtil.getStringHasMap().get(key);
+                int time = MapUtil.getIntHasMap().get(playerName + "_TPATime");
+
+                if (ifPlayerOnline(playerName)) {
+                    if (ifPlayerOnline(targetPlayerName)) {
+                        if (time >= 0) {
+                            MapUtil.getIntHasMap().put(playerName + "_TPATime", time - 1);
                         } else {
-                            SendMessage(PlayerName, i18n("Tpa.Offline", TagerPlayerName));
-                            CancelTpa(PlayerName);
+                            SendMessage(playerName, i18n("Tpa.TimeOutDone", targetPlayerName));
+                            SendMessage(targetPlayerName, i18n("Tpa.TimeOut", playerName));
+                            CancelTpa(playerName);
                         }
                     } else {
-                        CancelTpa(PlayerName);
+                        SendMessage(playerName, i18n("Tpa.Offline", targetPlayerName));
+                        CancelTpa(playerName);
                     }
+                } else {
+                    CancelTpa(playerName);
                 }
             }
-        }
+        });
     }
 }
