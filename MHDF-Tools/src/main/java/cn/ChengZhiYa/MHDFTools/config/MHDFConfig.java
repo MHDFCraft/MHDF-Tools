@@ -19,7 +19,6 @@ public class MHDFConfig {
     }
 
     public void createFile() {
-
         createDir(getDataFolder);
         saveResource(getDataFolder.getPath(), "config.yml", "config.yml", false);
         MHDFTools.instance.reloadConfig(); //材质

@@ -76,6 +76,8 @@ permissions:
     default: true
   MHDFTools.Command.Vanish:
     default: op
+  MHDFTools.Command.Rotate:
+    default: op
   MHDFTools.SendUpdateMessage:
     default: op
   MHDFTools.JoinMessage:

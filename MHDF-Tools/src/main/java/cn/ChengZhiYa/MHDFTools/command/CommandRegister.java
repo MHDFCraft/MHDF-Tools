@@ -171,6 +171,11 @@ public class CommandRegister implements Invitable {
                     if (isEnabled) {
                         registerTrashCommands();
                     }
+                case "RotateSettings":
+                    if (isEnabled) {
+                        registerRotateCommands();
+                    }
+                    break;
                 case "FastUseSettings.EnderChest": {
                     registerEnderChestCommands();
                 }
@@ -190,6 +195,9 @@ public class CommandRegister implements Invitable {
     }
     private void registerTrashCommands() {
         registerCommand(plugin, new Trash(),"垃圾桶","MHDFTools.Command.Trash","trash");
+    }
+    private void registerRotateCommands() {
+        registerCommand(plugin, new Rotate(), "给玩家转头", "MHDFTools.Command.rotate", "rotate");
     }
     private void registerHomeCommands() {
         registerCommand(plugin, new SetHome(), "设置家", "MHDFTools.Command.SetHome", "sethome");

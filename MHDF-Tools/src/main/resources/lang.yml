@@ -55,6 +55,7 @@ Vault:
     &6/%1 set <玩家ID> <金额> &7- &e设置金钱
     &7-------&6经济系统&7-------
 Usage:
+  Rotate: "&c用法错误,用法:/rotate <玩家ID>"
   Crash: "&c用法错误,用法:/%1 <玩家ID>"
   Fly: "&c用法错误,用法:/fly [玩家ID]"
   FlyTime: "&c用法错误,用法:/flytime <玩家ID> <时长>"
@@ -63,13 +64,16 @@ Usage:
   Freeze: "&c用法错误,用法:/freeze <玩家ID>"
   gameMode: "&c用法错误,用法:/%1 <游戏模式> [玩家ID]"
   Invsee: "&c用法错误,用法:/invsee <玩家ID>"
-  Ip: "&cc用法错误,用法:/ip <玩家ID>"
+  Ip: "&c用法错误,用法:/ip <玩家ID>"
   Tpa: "&c用法错误,用法:/tpa <玩家ID>"
   TpaHere: "&c用法错误,用法:/tpahere <玩家ID>"
   Money: "&c用法错误,用法:/money [玩家ID]"
   Pay: "&c用法错误,用法:/pay <玩家ID> <金额>"
   Login: "&c用法错误,用法:/%1 <密码>"
   Register: "c用法错误,用法:/%1 <密码>"
+Rotate:
+  NotFound: "&c找不到目标玩家!"
+  Done: "&a成功让目标进行转头"
 Back:
   ReSpawn: |-
     &6您的死亡位置如下，返回死亡地点请输入/back
