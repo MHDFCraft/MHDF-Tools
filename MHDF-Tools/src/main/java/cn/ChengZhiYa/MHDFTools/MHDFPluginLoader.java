@@ -16,7 +16,6 @@ public enum MHDFPluginLoader {
     public static boolean hasPlaceholderAPI = true;
     public static boolean hasProtocolLib = true;
     public static boolean hasVault = true;
-    String title;
     String startDone;
     String stopDone;
     private MHDFConfig config;
@@ -61,18 +60,17 @@ public enum MHDFPluginLoader {
         initManager.start();
         asyncCommand.start();
         LogUtil.color(startDone);
-        LogUtil.color(title);
+        LogUtil.color(获取佛祖());
     }
 
     public void stop() {
-        LogUtil.color(title);
         initManager.stop();
         closeDatabase();
         LogUtil.color(stopDone);
-        LogUtil.color(title);
     }
     private String getLogo() {
-        return  "&6          _____                    _____                    _____                    _____          \n" +
+        return  "" +
+                "&6          _____                    _____                    _____                    _____          \n" +
                 "&6         /\\    \\                  /\\    \\                  /\\    \\                  /\\    \\         \n" +
                 "&6        /::\\____\\                /::\\____\\                /::\\    \\                /::\\    \\        \n" +
                 "&6       /::::|   |               /:::/    /               /::::\\    \\              /::::\\    \\       \n" +
@@ -94,6 +92,31 @@ public enum MHDFPluginLoader {
                 "&6        \\::/    /                \\::/    /                \\::/____/                                 \n" +
                 "&6         \\/____/                  \\/____/                  ~~                                       \n" +
                 "&6                                                                                                    ";
+    }
+    private String 获取佛祖() { //hehe XD
+        return "&4开光!\n" +
+                "&e////////////////////////////////////////////////////////////////////\n" +
+                "&e//                          _ooOoo_                               //\n" +
+                "&e//                         o8888888o                              //\n" +
+                "&e//                         88\" . \"88                            //\n" +
+                "&e//                         (| ^_^ |)                              //\n" +
+                "&E//                         O\\  =  /O                             //\n" +
+                "&e//                      ____/`---'\\____                          //\n" +
+                "&e//                    .'  \\\\|     |//  `.                       //\n" +
+                "&e//                   /  \\\\|||  :  |||//  \\                     //\n" +
+                "&e//                  /  _||||| -:- |||||-  \\                      //\n" +
+                "&e//                  |   | \\\\\\  -  /// |   |                    //\n" +
+                "&e//                  | \\_|  ''\\---/''  |   |                     //\n" +
+                "&e//                  \\  .-\\__  `-`  ___/-. /                     //\n" +
+                "&e//                ___`. .'  /--.--\\  `. . ___                    //\n" +
+                "&e//              .\"\" '<  `.___\\_<|>_/___.'  >'\"\".             //\n" +
+                "&e//            | | :  `- \\`.;`\\ _ /`;.`/ - ` : | |               //\n" +
+                "&e//            \\  \\ `-.   \\_ __\\ /__ _/   .-` /  /             //\n" +
+                "&e//      ========`-.____`-.___\\_____/___.-`____.-'========        //\n" +
+                "&e//                           `=---='                              //\n" +
+                "&e//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        //\n" +
+                "&e//            &4佛祖保佑       &a永不宕机      &6永无BUG&e            //\n" +
+                "&e////////////////////////////////////////////////////////////////////";
     }
     public String getVersion() {
         return "1.4.11";

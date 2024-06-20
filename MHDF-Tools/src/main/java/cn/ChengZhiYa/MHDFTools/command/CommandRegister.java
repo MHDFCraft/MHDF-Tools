@@ -26,7 +26,6 @@ import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.time.Day;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.time.Night;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.weather.Sun;
 import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
-import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -47,7 +46,6 @@ public final class CommandRegister implements Invitable {
 
     @Override
     public void start() {
-        LogUtil.color("&e[MHDFTools] &f指令注册ing...");
         config = MHDFTools.instance.getConfig();
         registerCommand(plugin, new cn.ChengZhiYa.MHDFTools.command.subCommand.main.MHDFTools(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
         for (String configKey : config.getKeys(false)) {
@@ -163,7 +161,6 @@ public final class CommandRegister implements Invitable {
                     }
                     break;
             }
-            LogUtil.color("&e[MHDFTools] &a指令注册完毕!");
         }
     }
     private void registerTrashCommands() {
