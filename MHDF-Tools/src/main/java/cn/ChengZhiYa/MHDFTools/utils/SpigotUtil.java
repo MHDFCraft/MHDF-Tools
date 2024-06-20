@@ -10,8 +10,6 @@ import com.alibaba.fastjson.JSONObject;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
@@ -22,7 +20,9 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -35,13 +35,13 @@ import java.security.MessageDigest;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.PlayerList;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.PlayerList;
 
-public final class Util {
+public final class SpigotUtil {
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static final List<String> CommandLinkList = new ArrayList<>();
-    public static final String Version = "1.4.10";
+    public static final String Version = "1.4.9"; //for github
     public static List<String> VanishList = new ArrayList<>();
     public static volatile BossBar VanishBossBar;
     public static YamlConfiguration LangFileData;
@@ -55,20 +55,6 @@ public final class Util {
         } catch (ClassNotFoundException | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static FileOutputStream getOutputStream(CloseableHttpResponse response, String NewVersionString, int cache) throws IOException {
-        HttpEntity entity = response.getEntity();
-        InputStream is = entity.getContent();
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(MHDFTools.instance.getDataFolder().getParentFile(), "Cheng-Tools-Reloaded-" + NewVersionString + ".jar"));
-        byte[] buffer = new byte[cache];
-        int ch;
-        while ((ch = is.read(buffer)) != -1) {
-            fileOutputStream.write(buffer, 0, ch);
-        }
-        is.close();
-        fileOutputStream.flush();
-        return fileOutputStream;
     }
 
     public static void checkUpdate() {
@@ -326,7 +312,7 @@ public final class Util {
 
     public static BossBar getVanishBossBar() {
         if (VanishBossBar == null) {
-            synchronized (Util.class) {
+            synchronized (SpigotUtil.class) {
                 if (VanishBossBar == null) {
                     VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
                 }

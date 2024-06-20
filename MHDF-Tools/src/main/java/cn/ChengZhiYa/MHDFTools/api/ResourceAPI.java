@@ -7,10 +7,10 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-public final class YamlAPI {
+public final class ResourceAPI {
     public static InputStream getResource(String filename) {
         try {
-            URL URL2 = YamlAPI.class.getClassLoader().getResource(filename);
+            URL URL2 = ResourceAPI.class.getClassLoader().getResource(filename);
             if (URL2 == null) {
                 return null;
             }

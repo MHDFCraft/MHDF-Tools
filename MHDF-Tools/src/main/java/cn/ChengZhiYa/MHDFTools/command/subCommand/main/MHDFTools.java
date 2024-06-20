@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.database.ConvertData.MySQLToYAML;
 import static cn.ChengZhiYa.MHDFTools.utils.database.ConvertData.YAMLToMySQL;
 import static cn.ChengZhiYa.MHDFTools.utils.database.ImportUtil.importCMIData;

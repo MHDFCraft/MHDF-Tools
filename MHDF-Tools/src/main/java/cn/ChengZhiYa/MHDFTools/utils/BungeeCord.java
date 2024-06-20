@@ -17,12 +17,12 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeLocation;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeServer;
 
 
-public final class BCUtil {
+public final class BungeeCord {
     public static String[] PlayerList;
     public static String ServerName = "无";
 

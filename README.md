@@ -39,6 +39,12 @@ _ProtocolLib, PlaceholderAPI, Vault_
     </a>
 </div>
 
+## 预计的实现
+ <1>. 不再对密码明文处理
+ <2>. 使用数据包方式获取tps,丢弃Paper依赖
+ <3>. 
+
+
 ## 贡献者
 
 <a href="https://github.com/Love-MHDF/MHDF-Tools/graphs/contributors">

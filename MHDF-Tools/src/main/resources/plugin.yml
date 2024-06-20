@@ -14,14 +14,6 @@ permissions:
     default: true
   MHDFTools.Command.DelHome:
     default: true
-  MHDFTools.FastUse.EnderChest:
-    default: true
-  MHDFTools.Command.Trash:
-    default: true
-  MHDFTools.FastUse.ShulkerBox:
-    default: true
-  MHDFTools.FastUse.CraftingTable:
-    default: true
   MHDFTools.Command.Fly:
     default: op
   MHDFTools.Command.Fly.Infinite:
