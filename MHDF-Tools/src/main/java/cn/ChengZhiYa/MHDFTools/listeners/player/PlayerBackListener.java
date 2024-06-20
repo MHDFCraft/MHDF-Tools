@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class PlayerBackListener implements Listener {
 

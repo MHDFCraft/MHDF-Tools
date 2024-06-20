@@ -26,7 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.Placeholder;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 
 public final class MenuUtil {
     public static ItemStack getItemStack(String type, String displayName, List<String> lore, Integer customModelData, Integer amount) {

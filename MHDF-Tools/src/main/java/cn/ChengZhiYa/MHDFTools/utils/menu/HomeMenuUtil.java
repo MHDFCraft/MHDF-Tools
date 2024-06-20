@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.TpPlayerHome;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.Placeholder;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.TpPlayerHome;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataSource;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.*;

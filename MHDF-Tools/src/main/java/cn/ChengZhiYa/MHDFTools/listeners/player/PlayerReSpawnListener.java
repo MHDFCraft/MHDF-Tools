@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.TpPlayerTo;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.TpPlayerTo;
 
 public final class PlayerReSpawnListener implements Listener {
 

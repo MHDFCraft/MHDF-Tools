@@ -8,7 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Method;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.VanishList;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.VanishList;
 
 public final class PlayerVanishTask extends BukkitRunnable {
 

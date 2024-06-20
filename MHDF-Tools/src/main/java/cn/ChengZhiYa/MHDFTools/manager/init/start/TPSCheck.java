@@ -3,7 +3,7 @@ package cn.ChengZhiYa.MHDFTools.manager.init.start;
 import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.canTPS;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.canTPS;
 
 public class TPSCheck implements Invitable {
     @Override

@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 
 public final class List implements CommandExecutor {
     Runtime runtime = Runtime.getRuntime();

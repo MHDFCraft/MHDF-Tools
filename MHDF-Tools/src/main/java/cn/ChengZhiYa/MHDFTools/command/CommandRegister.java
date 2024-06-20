@@ -45,7 +45,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.runAction;
 
 public final class CommandRegister implements Invitable {

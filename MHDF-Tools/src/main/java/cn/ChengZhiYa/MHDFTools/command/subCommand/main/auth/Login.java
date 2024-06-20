@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil.checkPassword;
 import static cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil.loginExists;
 

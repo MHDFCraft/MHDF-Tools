@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
-import cn.ChengZhiYa.MHDFTools.utils.BCUtil;
+import cn.ChengZhiYa.MHDFTools.utils.BungeeCord;
 import cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.getServerName;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.getServerName;
 import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.initializationPlayerData;
 import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.getFlyTimeHashMap;
 
@@ -33,8 +33,8 @@ public final class PlayerJoinListener implements Listener {
             getServerName();
         }
         if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BCUtil::getPlayerList, 20);
-            Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BCUtil::getServerName, 20);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BungeeCord::getPlayerList, 20);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BungeeCord::getServerName, 20);
         }
         if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
             initializationPlayerData(event.getPlayer().getName());

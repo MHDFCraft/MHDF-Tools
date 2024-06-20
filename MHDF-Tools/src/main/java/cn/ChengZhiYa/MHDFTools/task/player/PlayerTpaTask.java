@@ -4,8 +4,8 @@ import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.*;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.*;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class PlayerTpaTask extends BukkitRunnable {
     @Override

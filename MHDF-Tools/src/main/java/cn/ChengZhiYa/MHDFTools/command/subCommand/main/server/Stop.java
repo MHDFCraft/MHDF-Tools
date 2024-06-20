@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.Placeholder;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 
 public final class Stop implements CommandExecutor {
     @Override

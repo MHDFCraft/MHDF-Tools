@@ -20,8 +20,8 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.VanishList;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.getVanishBossBar;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.VanishList;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.getVanishBossBar;
 
 public final class PlayerVanishListener implements Listener {
 

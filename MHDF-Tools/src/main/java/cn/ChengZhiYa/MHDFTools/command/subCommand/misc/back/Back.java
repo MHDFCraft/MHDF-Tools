@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class Back implements CommandExecutor {
 

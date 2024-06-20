@@ -7,8 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.getJoinMessage;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.getQuitMessage;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.getJoinMessage;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.getQuitMessage;
 
 public final class ServerJoinLeaveMessageListener implements Listener {
     @EventHandler

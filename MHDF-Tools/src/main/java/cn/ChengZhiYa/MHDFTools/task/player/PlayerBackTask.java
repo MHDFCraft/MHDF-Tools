@@ -5,9 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.ServerName;
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.TpPlayerTo;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.ServerName;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.TpPlayerTo;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 
 public final class PlayerBackTask extends BukkitRunnable {
 

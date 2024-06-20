@@ -8,9 +8,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.ServerName;
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.TpPlayerTo;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.ServerName;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.TpPlayerTo;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class UnBack implements CommandExecutor {
     @Override

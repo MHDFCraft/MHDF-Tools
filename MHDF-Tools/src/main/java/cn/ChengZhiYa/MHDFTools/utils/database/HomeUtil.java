@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.getHomeServerName;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.getHomeServerName;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataSource;
 
 public final class HomeUtil {

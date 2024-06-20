@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.TimeZone;
 import java.util.UUID;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.*;
 
 public final class ImportUtil {

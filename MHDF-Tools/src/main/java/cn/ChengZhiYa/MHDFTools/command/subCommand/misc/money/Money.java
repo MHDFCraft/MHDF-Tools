@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.getMoney;
 
 public final class Money implements CommandExecutor {

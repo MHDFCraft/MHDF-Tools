@@ -6,7 +6,7 @@ import cn.ChengZhiYa.MHDFTools.listeners.server.ServerChannelListener;
 import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.getServerName;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.getServerName;
 import static org.bukkit.Bukkit.getServer;
 
 public class bungeeCord implements Invitable {

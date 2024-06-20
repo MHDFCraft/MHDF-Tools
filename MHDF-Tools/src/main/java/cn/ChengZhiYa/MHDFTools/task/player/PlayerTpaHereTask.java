@@ -7,8 +7,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashSet;
 import java.util.Map;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.*;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.*;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class PlayerTpaHereTask extends BukkitRunnable {
     @Override

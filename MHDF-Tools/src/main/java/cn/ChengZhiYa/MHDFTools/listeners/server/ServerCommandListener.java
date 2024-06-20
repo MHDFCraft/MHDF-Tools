@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerCommandSendEvent;
 
 import java.util.List;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.ifLogin;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 
 public final class ServerCommandListener implements Listener {
     @EventHandler

@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.getIpLocation;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.getIpLocation;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class IP implements CommandExecutor {
     @Override

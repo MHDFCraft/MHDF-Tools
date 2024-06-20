@@ -6,8 +6,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
-import static cn.ChengZhiYa.MHDFTools.api.YamlAPI.saveResource;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.api.ResourceAPI.saveResource;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.file.FileCreator.createDir;
 
 public class MHDFConfig {

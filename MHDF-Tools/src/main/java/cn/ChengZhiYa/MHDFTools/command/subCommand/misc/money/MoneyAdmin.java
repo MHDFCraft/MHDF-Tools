@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.*;
 
 public final class MoneyAdmin implements TabExecutor {

@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.spawn;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
-import cn.ChengZhiYa.MHDFTools.utils.BCUtil;
+import cn.ChengZhiYa.MHDFTools.utils.BungeeCord;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class Spawn implements CommandExecutor {
 
@@ -43,7 +43,7 @@ public final class Spawn implements CommandExecutor {
         float spawnPitch = (float) MHDFTools.instance.getConfig().getDouble(PITCH_CONFIG_KEY);
 
         Location spawnLocation = new Location(world, spawnX, spawnY, spawnZ, spawnYaw, spawnPitch);
-        BCUtil.TpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString(SERVER_CONFIG_KEY), spawnLocation);
+        BungeeCord.TpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString(SERVER_CONFIG_KEY), spawnLocation);
         sender.sendMessage(i18n("Spawn.TeleportDone"));
 
         return true;

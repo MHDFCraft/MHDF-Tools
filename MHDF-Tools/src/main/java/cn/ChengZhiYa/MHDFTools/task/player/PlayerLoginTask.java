@@ -5,8 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.ifLogin;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 import static cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil.loginExists;
 
 public final class PlayerLoginTask extends BukkitRunnable {
