@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.listeners.player.fastuse;
+package cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.mode;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;

@@ -149,35 +149,46 @@ public final class HomeMenuUtil {
     public static void runAction(Player player, String menuFileName, int page, ItemStack clickItem, List<String> actionList) {
         for (String action : actionList) {
             switch (action) {
-                case "[PageUp]": {
+                case "[PageUp]":
                     openHomeMenu(player, page - 1);
                     break;
-                }
-                case "[PageNext]": {
+                case "[PageNext]":
                     openHomeMenu(player, page + 1);
                     break;
-                }
-                case "[Home]": {
-                    String HomeName = getPlaceholder(
-                            ChatColor.stripColor(clickItem.getItemMeta().getDisplayName()),
-                            ChatColor.stripColor(MessageUtil.colorMessage(getMenu(homeMenuFile).getString("menu.ItemList." + "Home" + ".DisplayName"))),
-                            "{HomeName}");
-                    TpPlayerHome(player.getName(), HomeName);
+                case "[Home]":
+                    handleHomeAction(player, clickItem);
                     break;
-                }
-                case "[DelHome]": {
-                    String HomeName = getPlaceholder(
-                            ChatColor.stripColor(clickItem.getItemMeta().getDisplayName()),
-                            ChatColor.stripColor(MessageUtil.colorMessage(getMenu(homeMenuFile).getString("menu.ItemList." + "Home" + ".DisplayName"))),
-                            "{HomeName}");
-                    RemoveHome(player.getName(), HomeName);
+                case "[DelHome]":
+                    handleDelHomeAction(player, clickItem);
                     break;
-                }
-                default: {
+                default:
                     MenuUtil.runAction(player, menuFileName, action.split("\\|"));
                     break;
-                }
             }
+        }
+    }
+
+    private static void handleHomeAction(Player player, ItemStack clickItem) {
+        String homeName = getHomeName(clickItem);
+        if (homeName != null) {
+            TpPlayerHome(player.getName(), homeName);
+        }
+    }
+
+    private static void handleDelHomeAction(Player player, ItemStack clickItem) {
+        String homeName = getHomeName(clickItem);
+        if (homeName != null) {
+            RemoveHome(player.getName(), homeName);
+        }
+    }
+
+    private static String getHomeName(ItemStack clickItem) {
+        try {
+            String displayName = ChatColor.stripColor(clickItem.getItemMeta().getDisplayName());
+            String menuDisplayName = ChatColor.stripColor(MessageUtil.colorMessage(getMenu(homeMenuFile).getString("menu.ItemList.Home.DisplayName")));
+            return getPlaceholder(displayName, menuDisplayName, "{HomeName}");
+        } catch (NullPointerException e) {
+            return null;
         }
     }
 }
