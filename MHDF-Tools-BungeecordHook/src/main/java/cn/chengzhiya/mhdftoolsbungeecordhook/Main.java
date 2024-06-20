@@ -3,13 +3,16 @@ package cn.chengzhiya.mhdftoolsbungeecordhook;
 import cn.chengzhiya.mhdftoolsbungeecordhook.Listeners.PluginMessage;
 import net.md_5.bungee.api.plugin.Plugin;
 
-public final class main extends Plugin {
-    public static main main;
+public final class Main extends Plugin {
+
+    public static Main main;
 
     @Override
     public void onEnable() {
         main = this;
+
         getProxy().getPluginManager().registerListener(this, new PluginMessage());
+
         getProxy().registerChannel("BungeeCord");
     }
 
