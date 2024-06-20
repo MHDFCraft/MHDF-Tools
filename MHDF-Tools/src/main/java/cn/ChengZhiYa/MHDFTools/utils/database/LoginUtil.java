@@ -16,53 +16,53 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataExists;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataSource;
 
 public final class LoginUtil {
-    public static Boolean loginExists(String playerName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-            return dataExists("mhdftools.mhdftools_login", "PlayerName", playerName);
+
+    private static final String LOGIN_TABLE = "mhdftools.mhdftools_login";
+
+    public static boolean loginExists(String playerName) {
+        if (isUsingMySQL()) {
+            return dataExists(LOGIN_TABLE, "PlayerName", playerName);
+        } else {
+            File loginFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
+            YamlConfiguration passwordData = YamlConfiguration.loadConfiguration(loginFile);
+            return passwordData.getString(playerName + "_Password") != null;
         }
-        File loginFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
-        YamlConfiguration passwordData = YamlConfiguration.loadConfiguration(loginFile);
-        return passwordData.getString(playerName + "_Password") != null;
     }
 
     public static boolean checkPassword(String playerName, String password) {
         if (loginExists(playerName)) {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-                try {
-                    Connection connection = dataSource.getConnection();
-                    PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_login WHERE PlayerName = ? AND Password = ? LIMIT 1");
+            if (isUsingMySQL()) {
+                try (Connection connection = dataSource.getConnection();
+                     PreparedStatement preparedStatement = connection.prepareStatement(
+                             "SELECT * FROM " + LOGIN_TABLE + " WHERE PlayerName = ? AND Password = ? LIMIT 1")) {
                     preparedStatement.setString(1, playerName);
                     preparedStatement.setString(2, password);
-                    ResultSet resultSet = preparedStatement.executeQuery();
-                    boolean dataExists = resultSet.next();
-                    resultSet.close();
-                    preparedStatement.close();
-                    connection.close();
-                    return dataExists;
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        return resultSet.next();
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                     return false;
                 }
+            } else {
+                File loginFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
+                YamlConfiguration passwordData = YamlConfiguration.loadConfiguration(loginFile);
+                return Objects.equals(passwordData.getString(playerName + "_Password"), password);
             }
-            File loginFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
-            YamlConfiguration passwordData = YamlConfiguration.loadConfiguration(loginFile);
-            return Objects.equals(passwordData.get(playerName + "_Password"), password);
         }
         return false;
     }
 
     public static void register(String playerName, String password) {
         if (!loginExists(playerName)) {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+            if (isUsingMySQL()) {
                 Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-                    try {
-                        Connection connection = dataSource.getConnection();
-                        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO mhdftools.mhdftools_login (PlayerName, Password) VALUES (?,?)");
+                    try (Connection connection = dataSource.getConnection();
+                         PreparedStatement preparedStatement = connection.prepareStatement(
+                                 "INSERT INTO " + LOGIN_TABLE + " (PlayerName, Password) VALUES (?, ?)")) {
                         preparedStatement.setString(1, playerName);
                         preparedStatement.setString(2, password);
                         preparedStatement.executeUpdate();
-                        preparedStatement.close();
-                        connection.close();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -74,8 +74,13 @@ public final class LoginUtil {
                 try {
                     passwordData.save(loginFile);
                 } catch (IOException ignored) {
+                    ignored.printStackTrace();
                 }
             }
         }
+    }
+
+    private static boolean isUsingMySQL() {
+        return Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL");
     }
 }

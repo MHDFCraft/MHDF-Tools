@@ -8,8 +8,8 @@ import org.bukkit.Bukkit;
 import java.sql.*;
 import java.util.TimeZone;
 
-import static cn.ChengZhiYa.MHDFTools.utils.file.fileCreator.createDir;
-import static cn.ChengZhiYa.MHDFTools.utils.file.fileCreator.createFile;
+import static cn.ChengZhiYa.MHDFTools.utils.file.FileCreator.createDir;
+import static cn.ChengZhiYa.MHDFTools.utils.file.FileCreator.createFile;
 
 public final class DatabaseUtil {
     public static Statement statement;

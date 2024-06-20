@@ -1,14 +1,14 @@
 package cn.ChengZhiYa.MHDFTools.config;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
-import cn.ChengZhiYa.MHDFTools.utils.file.fileCreator;
+import cn.ChengZhiYa.MHDFTools.utils.file.FileCreator;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
 import static cn.ChengZhiYa.MHDFTools.api.YamlAPI.saveResource;
 import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
-import static cn.ChengZhiYa.MHDFTools.utils.file.fileCreator.createDir;
+import static cn.ChengZhiYa.MHDFTools.utils.file.FileCreator.createDir;
 
 public class MHDFConfig {
     final File getDataFolder = MHDFTools.instance.getDataFolder();
@@ -47,7 +47,7 @@ public class MHDFConfig {
             //隐身系统
             if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")
                     && MHDFTools.instance.getConfig().getBoolean("VanishSettings.SaveVanishData")) {
-                fileCreator.createFile("Cache/VanishCache.yml");
+                FileCreator.createFile("Cache/VanishCache.yml");
             }
         }
     }

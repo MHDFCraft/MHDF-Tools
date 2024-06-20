@@ -5,7 +5,7 @@ import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import java.io.File;
 import java.io.IOException;
 
-public final class fileCreator {
+public final class FileCreator {
     public static void createDir(File file) {
         if (!file.exists()) {
             file.mkdirs();

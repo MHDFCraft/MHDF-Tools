@@ -322,6 +322,7 @@ public final class CommandRegister implements Invitable {
         registerCommand(plugin, new MoneyAdmin(), "管理员管理", "MHDFTools.Command.MoneyAdmin", "moneyadmin");
     }
 
+
     private void registerLinkCommands() {
         for (String Command : Objects.requireNonNull(config.getConfigurationSection("CommandLinkSettings.CommandList")).getKeys(false)) {
             CommandLinkList.add(Command);
