@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.task;
+package cn.ChengZhiYa.MHDFTools.task.player;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
@@ -10,7 +10,7 @@ import java.util.Map;
 import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
 
-public final class TpaHereTime extends BukkitRunnable {
+public final class PlayerTpaHereTask extends BukkitRunnable {
     @Override
     public void run() {
         if (MHDFTools.instance.getConfig().getBoolean("TpaHereSettings.Enable")) {

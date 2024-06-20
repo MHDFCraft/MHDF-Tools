@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.task;
+package cn.ChengZhiYa.MHDFTools.task.server;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
@@ -7,7 +7,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import static cn.ChengZhiYa.MHDFTools.utils.Util.Placeholder;
 
-public final class TimeMessage extends BukkitRunnable {
+public final class ServerTimeTask extends BukkitRunnable {
 
     private int i = 0;
 

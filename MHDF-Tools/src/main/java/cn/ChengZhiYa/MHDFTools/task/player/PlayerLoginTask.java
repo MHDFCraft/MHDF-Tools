@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.task;
+package cn.ChengZhiYa.MHDFTools.task.player;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
@@ -9,7 +9,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
 import static cn.ChengZhiYa.MHDFTools.utils.Util.ifLogin;
 import static cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil.loginExists;
 
-public final class LoginMessage extends BukkitRunnable {
+public final class PlayerLoginTask extends BukkitRunnable {
 
     public void run() {
         if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {

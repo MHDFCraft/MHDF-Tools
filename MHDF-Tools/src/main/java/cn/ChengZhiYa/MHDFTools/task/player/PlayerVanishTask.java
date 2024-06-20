@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.task;
+package cn.ChengZhiYa.MHDFTools.task.player;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 
 import static cn.ChengZhiYa.MHDFTools.utils.Util.VanishList;
 
-public final class Vanish extends BukkitRunnable {
+public final class PlayerVanishTask extends BukkitRunnable {
 
     private static Method hidePlayerMethod;
 

@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.task;
+package cn.ChengZhiYa.MHDFTools.task.player;
 
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.Bukkit;
@@ -9,7 +9,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.ServerName;
 import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.TpPlayerTo;
 import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
 
-public final class TpBack extends BukkitRunnable {
+public final class PlayerTpBackTask extends BukkitRunnable {
     @Override
     public void run() {
         for (Object key : MapUtil.getIntHasMap().keySet()) {

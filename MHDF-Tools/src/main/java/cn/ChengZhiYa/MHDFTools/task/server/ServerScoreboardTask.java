@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.task;
+package cn.ChengZhiYa.MHDFTools.task.server;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.utils.Util.Placeholder;
 
-public final class Scoreboard extends BukkitRunnable {
+public final class ServerScoreboardTask extends BukkitRunnable {
 
     @Override
     public void run() {
