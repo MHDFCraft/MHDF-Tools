@@ -42,7 +42,7 @@ public class InitManager {
                 //Misc
                 .put(UpdateCheck.class, new UpdateCheck())
                 .put(TPSCheck.class, new TPSCheck())
-
+                .put(Menu.class, new Menu())
                 //Database
                 .put(Database.class, new Database())
                 .build();

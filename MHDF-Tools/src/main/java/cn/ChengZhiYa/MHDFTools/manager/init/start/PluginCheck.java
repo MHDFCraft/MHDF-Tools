@@ -16,15 +16,15 @@ public class PluginCheck implements Invitable {
         boolean hasVault = pluginManager.getPlugin("Vault") != null;
 
         if (!hasPlaceholderAPI) {
-            LogUtil.color("&c找不到PlaceholderAPI,已关闭PAPI变量解析系统!");
+            LogUtil.color("&e[MHDFTools] &c找不到PlaceholderAPI,已关闭PAPI变量解析系统!");
             MHDFPluginLoader.hasPlaceholderAPI = false;
         }
         if (!hasProtocolLib) {
-            LogUtil.color("c找不到ProtocolLib,无法启用崩端系统!");
+            LogUtil.color("&e[MHDFTools] &c找不到ProtocolLib,无法启用崩端系统!");
             MHDFPluginLoader.hasProtocolLib = false;
         }
         if (!hasVault) {
-            LogUtil.color("&c找不到Vault,无法启用经济系统!");
+            LogUtil.color("&e[MHDFTools] &c找不到Vault,无法启用经济系统!");
             MHDFPluginLoader.hasVault = false;
         }
     }

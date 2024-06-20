@@ -68,17 +68,17 @@ public final class SpigotUtil {
             String NewVersionString = Data.getString("data");
 
             if (!NewVersionString.equals(Version)) {
-                LogUtil.color("&c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
+                LogUtil.color("&e[MHDFTools] &c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
                 MapUtil.getBooleanHasMap().put("IsLast", true);
             } else {
-                LogUtil.color("&a当前插件版本是最新版!");
+                LogUtil.color("&e[MHDFTools] &a当前插件版本是最新版!");
             }
             MapUtil.getBooleanHasMap().put("CheckVersionError", false);
 
             in.close();
             conn.disconnect();
         } catch (Exception e) {
-            LogUtil.color("&c[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
+            LogUtil.color("&e[MHDFTools] 获取检测更新时出错!请检查网络连接!");
             MapUtil.getBooleanHasMap().put("IsLast", false);
             MapUtil.getBooleanHasMap().put("CheckVersionError", true);
         }

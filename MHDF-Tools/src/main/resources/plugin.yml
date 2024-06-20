@@ -72,6 +72,8 @@ permissions:
     default: op
   MHDFTools.Command.Rotate:
     default: op
+  MHDFTools.Command.Version:
+    default: op
   MHDFTools.FastUse.EnderChest:
     default: true
   MHDFTools.FastUse.ShulkerBox:
