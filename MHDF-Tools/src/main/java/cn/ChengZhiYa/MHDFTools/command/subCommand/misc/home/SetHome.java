@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.SetHome;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.*;
 
 public final class SetHome implements TabExecutor {
