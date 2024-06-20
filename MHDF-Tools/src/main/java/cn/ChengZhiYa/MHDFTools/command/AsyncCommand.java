@@ -7,7 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class AsyncCommand {
+public final class AsyncCommand {
     FileConfiguration getConfig = MHDFTools.instance.getConfig();
     JavaPlugin plugin = MHDFPluginLoader.INSTANCE.getPlugin();
 

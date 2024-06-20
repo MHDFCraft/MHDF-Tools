@@ -28,8 +28,6 @@ package cn.ChengZhiYa.MHDFTools.utils.libraries.dependencies;
 import cn.ChengZhiYa.MHDFTools.utils.libraries.dependencies.relocation.Relocation;
 import com.google.common.collect.ImmutableList;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Locale;
 

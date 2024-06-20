@@ -24,6 +24,7 @@ public final class MHDFTools implements TabExecutor {
     private static final String DATA_FOLDER = "data.yml";
     private static final String YAML_TYPE = "YAML";
     private static final String MYSQL_TYPE = "MySQL";
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 1 && "reload".equals(args[0])) {
@@ -91,6 +92,7 @@ public final class MHDFTools implements TabExecutor {
                 .replaceAll("\\{import\\}", CommandHelp("import", label))
                 .replaceAll("\\{reload\\}", CommandHelp("reload", label)));
     }
+
     private void loadConfigurations() {
         cn.ChengZhiYa.MHDFTools.MHDFTools instance = cn.ChengZhiYa.MHDFTools.MHDFTools.instance;
         instance.reloadConfig();

@@ -106,7 +106,7 @@ public final class MenuUtil {
 
     public static String getItemNameFromItem(ItemStack item) {
         NBTItem nbtItem = new NBTItem(item);
-        return Objects.requireNonNull(nbtItem.getCompound("MHDFTools")).getString("Item");
+        return Objects.requireNonNull(nbtItem.getCompound("MHDFTools")).getString("item");
     }
 
     public static List<String> getCustomMenuList() {
@@ -133,7 +133,7 @@ public final class MenuUtil {
         NBTItem nbtItem = new NBTItem(getItemStack(type, displayName, lore, customModelData, amount));
         NBTCompound compound = nbtItem.addCompound("MHDFTools");
         compound.setString("menu", menuFileName);
-        compound.setString("Item", itemID);
+        compound.setString("item", itemID);
         return nbtItem.getItem();
     }
 

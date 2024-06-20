@@ -11,18 +11,11 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandMap;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.command.TabExecutor;
+import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
@@ -90,29 +83,6 @@ public final class Util {
 
             if (!NewVersionString.equals(Version)) {
                 LogUtil.color("&c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
-                if (MHDFTools.instance.getConfig().getBoolean("AutoUpdate")) {
-                    Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-                        try {
-                            int cache = 10 * 1024;
-                            CloseableHttpClient httpClient = HttpClients.createDefault();
-                            RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000).
-                                    setConnectionRequestTimeout(5000)
-                                    .setSocketTimeout(5000)
-                                    .setRedirectsEnabled(true)
-                                    .build();
-                            HttpGet httpGet = new HttpGet("https://github.moeyy.xyz/https://github.com/Love-MHDF/MHDF-Tools/releases/download/" + NewVersionString + "/Cheng-Tools-Reloaded-" + NewVersionString + ".jar");
-                            httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54");
-                            httpGet.setConfig(requestConfig);
-                            CloseableHttpResponse response = httpClient.execute(httpGet);
-                            FileOutputStream fileOutputStream = getOutputStream(response, NewVersionString, cache);
-                            fileOutputStream.close();
-                            LogUtil.color("&c自动更新完成,下次重启时生效!");
-                            LogUtil.color("&a请手动删除旧版本插件,谢谢!");
-                        } catch (Exception ignored) {
-                            LogUtil.color("&c自动更新失败!");
-                        }
-                    });
-                }
                 MapUtil.getBooleanHasMap().put("IsLast", true);
             } else {
                 LogUtil.color("&a当前插件版本是最新版!");
@@ -125,20 +95,6 @@ public final class Util {
             LogUtil.color("&c[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
             MapUtil.getBooleanHasMap().put("IsLast", false);
             MapUtil.getBooleanHasMap().put("CheckVersionError", true);
-
-        }
-    }
-
-    public static void deleteOldPlugins() {
-        if (MHDFTools.instance.getDataFolder().getParentFile().isDirectory()) {
-            for (File PluginFile : Objects.requireNonNull(MHDFTools.instance.getDataFolder().getParentFile().listFiles())) {
-                if (PluginFile.isFile() && PluginFile.getName().contains("MHDF-Tools") && PluginFile.getName().endsWith(".jar")) {
-                    String[] PluginName = PluginFile.getName().split("MHDF-Tools");
-                    if (!PluginName[1].equals("-" + Version + ".jar")) {
-                        PluginFile.delete();
-                    }
-                }
-            }
         }
     }
 
@@ -244,25 +200,15 @@ public final class Util {
         PluginCommand command = getCommand(commandString, plugin);
         command.setDescription(description);
 
-        if (permission == null) return;
-
+        if (permission != null) {
             command.setPermission(permission);
             command.setPermissionMessage(i18n("NoPermission"));
-            getCommandMap().register(plugin.getDescription().getName(), command);
-            command.setExecutor(commandExecutor);
-    }
-
-    public static void registerCommand(Plugin plugin, TabExecutor tabExecutor, String description, String permission, String commandString) {
-        PluginCommand command = getCommand(commandString, plugin);
-        command.setDescription(description);
-
-        if (permission == null) return;
-
-        command.setPermission(permission);
-        command.setPermissionMessage(i18n("NoPermission"));
+        }
         getCommandMap().register(plugin.getDescription().getName(), command);
-        command.setExecutor(tabExecutor);
-        command.setTabCompleter(tabExecutor);
+        command.setExecutor(commandExecutor);
+        if (commandExecutor instanceof TabExecutor) {
+            command.setTabCompleter((TabCompleter) commandExecutor);
+        }
     }
 
     private static PluginCommand getCommand(String name, Plugin plugin) {
@@ -337,6 +283,7 @@ public final class Util {
     public static String sound(String soundKey) {
         return SoundFileData.getString(soundKey);
     }
+
     public static String i18n(String langKey, String... values) {
         String message = Objects.requireNonNull(LangFileData.getString(langKey));
         for (int i = 0; i < values.length; i++) {
@@ -358,7 +305,7 @@ public final class Util {
         List<Integer> weightList = new ArrayList<>();
 
         for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
-             String perm = permInfo.getPermission();
+            String perm = permInfo.getPermission();
             if (perm.startsWith("mhdftools." + settingType)) {
                 String group = perm.substring(("mhdftools." + settingType).length());
                 int weight = MHDFTools.instance.getConfig().getInt(settingType + "." + group + ".Weight");
@@ -387,6 +334,7 @@ public final class Util {
         }
         return VanishBossBar;
     }
+
     public static List<String> getPlayerList(boolean useBungeecordAPI) {
         List<String> onlinePlayerList;
 
@@ -427,75 +375,33 @@ public final class Util {
         StringBuilder sb = new StringBuilder();
 
         //年
-        switch (years) {
-            case 1:
-                sb.append("1年");
-                break;
-            case 0:
-                break;
-            default:
-                sb.append(years).append("年");
-                break;
+        if (years != 0) {
+            sb.append(years).append("年");
         }
 
         //天
-        switch (months) {
-            case 1:
-                sb.append("1月");
-                break;
-            case 0:
-                break;
-            default:
-                sb.append(months).append("月");
-                break;
+        if (months != 0) {
+            sb.append(months).append("月");
         }
 
         //天
-        switch (days) {
-            case 1:
-                sb.append("1日");
-                break;
-            case 0:
-                break;
-            default:
-                sb.append(days).append("日");
-                break;
+        if (days != 0) {
+            sb.append(days).append("日");
         }
 
         //小时
-        switch (hours) {
-            case 1:
-                sb.append("1时");
-                break;
-            case 0:
-                break;
-            default:
-                sb.append(hours).append("时");
-                break;
+        if (hours != 0) {
+            sb.append(hours).append("时");
         }
 
         //分钟
-        switch (minutes) {
-            case 1:
-                sb.append("1分");
-                break;
-            case 0:
-                break;
-            default:
-                sb.append(minutes).append("分");
-                break;
+        if (minutes != 0) {
+            sb.append(minutes).append("分");
         }
 
         //秒
-        switch (seconds) {
-            case 1:
-                sb.append("1秒");
-                break;
-            case 0:
-                break;
-            default:
-                sb.append(seconds).append("秒");
-                break;
+        if (seconds != 0) {
+            sb.append(seconds).append("秒");
         }
 
         return sb.toString();

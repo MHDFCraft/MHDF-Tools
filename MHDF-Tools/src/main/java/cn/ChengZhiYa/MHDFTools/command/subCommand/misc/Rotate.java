@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
 
-public class Rotate implements CommandExecutor {
+public final class Rotate implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length != 1) {

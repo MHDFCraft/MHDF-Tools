@@ -4,6 +4,7 @@ import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 
 import static cn.ChengZhiYa.MHDFTools.utils.Util.canTPS;
+
 public class TPSCheck implements Invitable {
     @Override
     public void start() {

@@ -7,6 +7,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.HashMap;
 import java.util.Map;
+
 @UtilityClass
 public class MapUtil {
     static HashMap<Object, Boolean> booleanHasMap = new HashMap<>();

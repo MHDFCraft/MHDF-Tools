@@ -1,9 +1,8 @@
 package cn.ChengZhiYa.MHDFTools;
 
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class MHDFTools extends JavaPlugin implements Listener {
+public final class MHDFTools extends JavaPlugin {
 
     public static MHDFTools instance;
 

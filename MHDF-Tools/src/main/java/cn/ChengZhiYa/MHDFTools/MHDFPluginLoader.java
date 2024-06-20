@@ -16,9 +16,9 @@ public enum MHDFPluginLoader {
     public static boolean hasPlaceholderAPI = true;
     public static boolean hasProtocolLib = true;
     public static boolean hasVault = true;
-    String start;
+    String title;
     String startDone;
-    String stop;
+    String stopDone;
     private MHDFConfig config;
     private JavaPlugin plugin;
     private InitManager initManager;
@@ -40,22 +40,14 @@ public enum MHDFPluginLoader {
         stop();
     }
 
-
-
     private void initManagers() {
-        //startMessage
-        start = "&f============&6梦回东方-工具&f============";
-        startDone = "&e插件启动完成! 作者:292200693"
-                + "\n&f============&6梦回东方-工具&f============";
-        //Plugin
+        title = "&f============&6梦之工具&f============";
+        startDone = "&e插件启动完成! 作者:292200693";
+        stopDone = "&e插件已卸载! 作者:292200693";
+
         config = new MHDFConfig();
         asyncCommand = new AsyncCommand();
         initManager = new InitManager();
-
-        //stopMessage
-        stop = "&f============&6梦回东方-工具&f============" +
-                "\n&e插件已卸载! 作者:292200693" +
-                "\n&f============&6梦回东方-工具&f============";
     }
 
     public void load() {
@@ -63,16 +55,19 @@ public enum MHDFPluginLoader {
     }
 
     public void start() {
-        LogUtil.color(start);
+        LogUtil.color(title);
         config.loadConfig();
         initManager.start();
         asyncCommand.start();
-        // deleteOldPlugins();
         LogUtil.color(startDone);
+        LogUtil.color(title);
     }
+
     public void stop() {
+        LogUtil.color(title);
         initManager.stop();
         closeDatabase();
-        LogUtil.color(stop);
+        LogUtil.color(stopDone);
+        LogUtil.color(title);
     }
 }

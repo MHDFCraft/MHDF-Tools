@@ -14,6 +14,7 @@ public class InitManager {
     ClassToInstanceMap<Invitable> initializersOnLoad;
     ClassToInstanceMap<Invitable> initializersOnStart;
     ClassToInstanceMap<Invitable> initializersOnStop;
+
     public InitManager() {
         initializersOnLoad = new ImmutableClassToInstanceMap.Builder<Invitable>()
                 .put(Dependencies.class, new Dependencies())
@@ -48,7 +49,7 @@ public class InitManager {
 
         initializersOnStop = new ImmutableClassToInstanceMap.Builder<Invitable>()
                 //BungeeCord
-                .put(stopChannel.class , new stopChannel())
+                .put(stopChannel.class, new stopChannel())
 
                 //Plugin Init
                 .put(stopPlaceholderAPI.class, new stopPlaceholderAPI())

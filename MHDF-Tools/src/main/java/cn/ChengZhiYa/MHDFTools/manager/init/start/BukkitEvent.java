@@ -14,17 +14,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class BukkitEvent implements Invitable {
     JavaPlugin plugin = MHDFPluginLoader.INSTANCE.getPlugin();
+
     @Override
     public void start() {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new ServerJoinLeaveMessageListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new PlayerSpawnListener(), plugin);
-   //     Bukkit.getPluginManager().registerEvents(new PlayerChatEvent(), plugin);
+        //     Bukkit.getPluginManager().registerEvents(new PlayerChatEvent(), plugin);
 
         if (!MHDFTools.instance.getConfig().getBoolean("MenuEnable")) return; //menu Window Event (:
 
-            Bukkit.getPluginManager().registerEvents(new OpenMenu(), plugin);
-            Bukkit.getPluginManager().registerEvents(new ClickCustomMenu(), plugin);
-            Bukkit.getPluginManager().registerEvents(new MenuArgsCommand(), plugin);
-        }
+        Bukkit.getPluginManager().registerEvents(new OpenMenu(), plugin);
+        Bukkit.getPluginManager().registerEvents(new ClickCustomMenu(), plugin);
+        Bukkit.getPluginManager().registerEvents(new MenuArgsCommand(), plugin);
     }
+}

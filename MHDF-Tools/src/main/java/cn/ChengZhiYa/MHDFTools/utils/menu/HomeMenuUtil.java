@@ -21,6 +21,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.Util.PAPI;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataSource;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.*;
+
 public final class HomeMenuUtil {
     public final static String homeMenuFile = "HomeMenu.yml";
 

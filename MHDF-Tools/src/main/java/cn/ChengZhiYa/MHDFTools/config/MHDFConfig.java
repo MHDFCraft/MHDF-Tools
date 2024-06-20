@@ -16,6 +16,7 @@ public class MHDFConfig {
     public void loadConfig() {
         createFile();
         createVanishCache();
+        MHDFTools.instance.reloadConfig();
     }
 
     public void createFile() {
@@ -35,9 +36,9 @@ public class MHDFConfig {
 
         //家系统菜单与菜单系统
         if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")
-                || MHDFTools.instance.getConfig().getBoolean("MenuEnable")) {
+                || MHDFTools.instance.getConfig().getBoolean("MenuSettings.Enable")) {
             createDir(new File(getDataFolder, "Menus"));
-            if (MHDFTools.instance.getConfig().getBoolean("MenuEnable")) {
+            if (MHDFTools.instance.getConfig().getBoolean("MenuSettings.Enable")) {
                 saveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", false);
             }
             //家系统

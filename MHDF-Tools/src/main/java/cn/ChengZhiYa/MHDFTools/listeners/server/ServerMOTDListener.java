@@ -9,6 +9,7 @@ import org.bukkit.event.server.ServerListPingEvent;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.utils.Util.PAPI;
+
 public final class ServerMOTDListener implements Listener {
     @EventHandler
     public void On_Event(PaperServerListPingEvent event) {

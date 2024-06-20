@@ -26,13 +26,13 @@ import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.time.Day;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.time.Night;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.weather.Sun;
 import cn.ChengZhiYa.MHDFTools.listeners.player.*;
+import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.CraftingTable;
 import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.EnderChest;
 import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.ShulkerBox;
 import cn.ChengZhiYa.MHDFTools.listeners.server.ServerCommandListener;
 import cn.ChengZhiYa.MHDFTools.listeners.server.ServerMOTDListener;
 import cn.ChengZhiYa.MHDFTools.listeners.server.menu.HomeMenu;
 import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
-import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -48,7 +48,7 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.runAction;
 
-public class CommandRegister implements Invitable {
+public final class CommandRegister implements Invitable {
     FileConfiguration getConfig = MHDFTools.instance.getConfig();
     JavaPlugin plugin = MHDFPluginLoader.INSTANCE.getPlugin();
 
@@ -121,7 +121,6 @@ public class CommandRegister implements Invitable {
                 case "EasyGamemodeSettings":
                     if (isEnabled) {
                         registerGamemodeCommands();
-                        LogUtil.color("&aDone9");
                     }
                     break;
                 case "TpaSettings":
@@ -134,10 +133,11 @@ public class CommandRegister implements Invitable {
                         registerInvseeCommand();
                     }
                     break;
-                case "HatSettings": {
-                    registerHatCommand();
-                }
-                break;
+                case "HatSettings":
+                    if (isEnabled) {
+                        registerHatCommand();
+                    }
+                    break;
                 case "TpahereSettings":
                     if (isEnabled) {
                         registerTpaHereCommand();
@@ -162,6 +162,7 @@ public class CommandRegister implements Invitable {
                     if (isEnabled && MHDFPluginLoader.hasVault) {
                         registerEconomy();
                     }
+                    break;
                 case "CommandLinkSettings":
                     if (isEnabled) {
                         registerLinkCommands();
@@ -176,29 +177,45 @@ public class CommandRegister implements Invitable {
                         registerRotateCommands();
                     }
                     break;
-                case "FastUseSettings.EnderChest": {
-                    registerEnderChestCommands();
-                }
+                case "FastUseEnderChestSettings":
+                    if (isEnabled) {
+                        registerEnderChestCommands();
+                    }
                     break;
-                case "FastUseSettings.ShulkerBox": {
-                    registerShulkerBoxCommands();
-                }
-                break;
+                case "FastUseShulkerBoxSettings":
+                    if (isEnabled) {
+                        registerShulkerBoxCommands();
+                    }
+                    break;
+                case "FastUseCraftingTableSettings":
+                    if (isEnabled) {
+                        registerCraftingTableCommands();
+                    }
+                    break;
             }
         }
     }
+
     private void registerEnderChestCommands() {
         Bukkit.getPluginManager().registerEvents(new EnderChest(), plugin);
     }
+
     private void registerShulkerBoxCommands() {
         Bukkit.getPluginManager().registerEvents(new ShulkerBox(), plugin);
     }
-    private void registerTrashCommands() {
-        registerCommand(plugin, new Trash(),"垃圾桶","MHDFTools.Command.Trash","trash");
+
+    private void registerCraftingTableCommands() {
+        Bukkit.getPluginManager().registerEvents(new CraftingTable(), plugin);
     }
+
+    private void registerTrashCommands() {
+        registerCommand(plugin, new Trash(), "垃圾桶", "MHDFTools.Command.Trash", "trash");
+    }
+
     private void registerRotateCommands() {
         registerCommand(plugin, new Rotate(), "给玩家转头", "MHDFTools.Command.rotate", "rotate");
     }
+
     private void registerHomeCommands() {
         registerCommand(plugin, new SetHome(), "设置家", "MHDFTools.Command.SetHome", "sethome");
         registerCommand(plugin, new DelHome(), "删除家", "MHDFTools.Command.DelHome", "delhome");
@@ -292,9 +309,11 @@ public class CommandRegister implements Invitable {
         registerCommand(plugin, new Day(), "快速天亮命令", "MHDFTools.Command.Sun", "day");
         registerCommand(plugin, new Night(), "快速天黑命令", "MHDFTools.Command.Night", "night");
     }
+
     private void registerCrashCommand() {
         registerCommand(plugin, new Crash(), "崩端系统", "MHDFTools.Command.Crash", "crash");
     }
+
     private void registerEconomy() {
         registerCommand(plugin, new Money(), "查询", "MHDFTools.Command.Money", "money");
         registerCommand(plugin, new Pay(), "转账", "MHDFTools.Command.Pay", "pay");

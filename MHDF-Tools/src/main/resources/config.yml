@@ -40,16 +40,23 @@ TrashSettings:
     #菜单标题
     Title: "&b垃圾桶"
 
-#右键快速使用设置
-FastUseSettings:
-  #右键打开末影箱
-  EnderChest: true
-  #右键打开潜影盒
-  ShulkerBox: true
+#右键打开末影箱设置
+FastUseEnderChestSettings:
+  #开关
+  Enable: true
+
+#右键打开潜影盒设置
+FastUseShulkerBoxSettings:
+  #开关
+  Enable: true
   #潜影盒菜单标题
   ShulkerBoxMenuTitle: "&b快速使用-倩影盒"
-  #右键打开工作台
-  CraftingTable: true
+
+#右键打开末影箱设置
+FastUseCraftingTableSettings:
+  #开关
+  Enable: true
+
 
 #隐身系统设置
 VanishSettings:

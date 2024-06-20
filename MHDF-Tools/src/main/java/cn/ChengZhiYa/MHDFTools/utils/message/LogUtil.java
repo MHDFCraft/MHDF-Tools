@@ -13,6 +13,7 @@ public class LogUtil {
     public Logger getLogger() {
         return MHDFTools.instance.getLogger();
     }
+
     public void info(final String info) {
         getLogger().info(info);
     }
@@ -24,13 +25,14 @@ public class LogUtil {
     public void error(final String error) {
         getLogger().info(error);
     }
+
     public void color(String Message) {
         CommandSender sender = Bukkit.getConsoleSender();
         Message = MessageUtil.translateHexCodes(Message);
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
     }
+
     public void console(final String info) {
         Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', info));
     }
-
 }

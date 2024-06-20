@@ -169,7 +169,7 @@ public final class DatabaseUtil {
             if (dataExists(table, whereField, whereValue)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
-                                 "UPDATE "
+                             "UPDATE "
                                      + table
                                      + " SET "
                                      + addField
@@ -194,13 +194,13 @@ public final class DatabaseUtil {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
                              "UPDATE "
-                             + table
-                             + " SET "
-                             + takeField
-                             + " = "
-                             + takeField + "-? WHERE "
-                             + whereField
-                             + " = ?")) {
+                                     + table
+                                     + " SET "
+                                     + takeField
+                                     + " = "
+                                     + takeField + "-? WHERE "
+                                     + whereField
+                                     + " = ?")) {
                     ps.setObject(1, takeValue);
                     ps.setString(2, whereValue);
                     ps.executeUpdate();

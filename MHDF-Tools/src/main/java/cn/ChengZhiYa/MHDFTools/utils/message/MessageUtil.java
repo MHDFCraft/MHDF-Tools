@@ -20,6 +20,7 @@ public class MessageUtil {
         matcher.appendTail(sb);
         return sb.toString();
     }
+
     public static String colorMessage(String Message) {
         Message = translateHexCodes(Message);
         return ChatColor.translateAlternateColorCodes('&', Message);

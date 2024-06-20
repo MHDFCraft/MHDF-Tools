@@ -1,5 +1,5 @@
 #菜单
-Menu:
+menu:
   #菜单标题 必须要有{Page}
   Title: "&e家系统&6-&b第{Page}页"
   #菜单大小

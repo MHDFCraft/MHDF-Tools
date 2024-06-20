@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public final class EnderChest implements Listener {
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("FastUseSettings.EnderChest")) {
+        if (MHDFTools.instance.getConfig().getBoolean("FastUseEnderChestSettings.Enable")) {
             if (event.getAction() == Action.RIGHT_CLICK_AIR) {
                 Player player = event.getPlayer();
                 if (player.hasPermission("MHDFTools.FastUse.EnderChest")) {
