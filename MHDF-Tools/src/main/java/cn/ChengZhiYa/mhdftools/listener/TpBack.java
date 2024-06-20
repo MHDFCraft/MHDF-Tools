@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.listener;
+package cn.ChengZhiYa.MHDFTools.listener;
 
-import cn.chengzhiya.mhdftools.hashmap.LocationHasMap;
+import cn.ChengZhiYa.MHDFTools.hashmap.LocationHasMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

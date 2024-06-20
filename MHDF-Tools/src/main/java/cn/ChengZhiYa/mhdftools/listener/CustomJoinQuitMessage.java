@@ -1,14 +1,14 @@
-package cn.chengzhiya.mhdftools.listener;
+package cn.ChengZhiYa.MHDFTools.listener;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import static cn.chengzhiya.mhdftools.util.Util.getJoinMessage;
-import static cn.chengzhiya.mhdftools.util.Util.getQuitMessage;
+import static cn.ChengZhiYa.MHDFTools.util.Util.getJoinMessage;
+import static cn.ChengZhiYa.MHDFTools.util.Util.getQuitMessage;
 
 public final class CustomJoinQuitMessage implements Listener {
     @EventHandler

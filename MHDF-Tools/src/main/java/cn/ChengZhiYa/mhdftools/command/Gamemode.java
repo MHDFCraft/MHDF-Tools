@@ -1,4 +1,4 @@
-package cn.chengzhiya.mhdftools.command;
+package cn.ChengZhiYa.MHDFTools.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.Util.*;
+import static cn.ChengZhiYa.MHDFTools.util.Util.*;
 
 public final class Gamemode implements TabExecutor {
     @Override

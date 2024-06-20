@@ -1,8 +1,8 @@
-package cn.chengzhiya.mhdftools.util;
+package cn.ChengZhiYa.MHDFTools.util;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.hashmap.IntHasMap;
-import cn.chengzhiya.mhdftools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.IntHasMap;
+import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -18,9 +18,9 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
-import static cn.chengzhiya.mhdftools.util.Util.*;
-import static cn.chengzhiya.mhdftools.util.database.HomeUtil.getHomeLocation;
-import static cn.chengzhiya.mhdftools.util.database.HomeUtil.getHomeServer;
+import static cn.ChengZhiYa.MHDFTools.util.Util.*;
+import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getHomeLocation;
+import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getHomeServer;
 
 
 public final class BCUtil {

@@ -1,8 +1,8 @@
-package cn.chengzhiya.mhdftools.util;
+package cn.ChengZhiYa.MHDFTools.util;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.hashmap.BooleanHasMap;
-import cn.chengzhiya.mhdftools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.BooleanHasMap;
+import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -41,7 +41,7 @@ import java.util.*;
 
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
-import static cn.chengzhiya.mhdftools.util.BCUtil.PlayerList;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.PlayerList;
 
 public final class Util {
     public static final Class<?> pluginClassLoader;

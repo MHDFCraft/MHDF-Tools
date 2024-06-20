@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package cn.chengzhiya.mhdftools.util.libraries.loader;
+package cn.ChengZhiYa.MHDFTools.util.libraries.loader;
 
 /**
  * Minimal bootstrap plugin, called by the loader plugin.

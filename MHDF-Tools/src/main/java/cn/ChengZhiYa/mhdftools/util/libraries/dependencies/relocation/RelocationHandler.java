@@ -23,11 +23,11 @@
  *  SOFTWARE.
  */
 
-package cn.chengzhiya.mhdftools.util.libraries.dependencies.relocation;
+package cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.relocation;
 
-import cn.chengzhiya.mhdftools.util.libraries.dependencies.Dependency;
-import cn.chengzhiya.mhdftools.util.libraries.dependencies.DependencyManager;
-import cn.chengzhiya.mhdftools.util.libraries.dependencies.classloader.IsolatedClassLoader;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.Dependency;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManager;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.classloader.IsolatedClassLoader;
 
 import java.io.File;
 import java.io.IOException;

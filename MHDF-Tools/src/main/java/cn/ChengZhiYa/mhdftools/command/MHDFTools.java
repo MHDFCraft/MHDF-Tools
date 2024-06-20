@@ -1,4 +1,4 @@
-package cn.chengzhiya.mhdftools.command;
+package cn.ChengZhiYa.MHDFTools.command;
 
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
@@ -14,23 +14,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.Util.*;
-import static cn.chengzhiya.mhdftools.util.database.ConvertData.MySQLToYAML;
-import static cn.chengzhiya.mhdftools.util.database.ConvertData.YAMLToMySQL;
-import static cn.chengzhiya.mhdftools.util.database.ImportUtil.ImportCMIData;
-import static cn.chengzhiya.mhdftools.util.database.ImportUtil.ImportHuskHomesData;
+import static cn.ChengZhiYa.MHDFTools.util.Util.*;
+import static cn.ChengZhiYa.MHDFTools.util.database.ConvertData.MySQLToYAML;
+import static cn.ChengZhiYa.MHDFTools.util.database.ConvertData.YAMLToMySQL;
+import static cn.ChengZhiYa.MHDFTools.util.database.ImportUtil.ImportCMIData;
+import static cn.ChengZhiYa.MHDFTools.util.database.ImportUtil.ImportHuskHomesData;
 
 public final class MHDFTools implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 1) {
             if (args[0].equals("reload")) {
-                cn.chengzhiya.mhdftools.MHDFTools.instance.reloadConfig();
-                if (cn.chengzhiya.mhdftools.MHDFTools.instance.getConfig().getBoolean("InvseeSettings.Enable")) {
+                cn.ChengZhiYa.MHDFTools.MHDFTools.instance.reloadConfig();
+                if (cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getConfig().getBoolean("InvseeSettings.Enable")) {
                     VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
                 }
-                LangFileData = YamlConfiguration.loadConfiguration(new File(cn.chengzhiya.mhdftools.MHDFTools.instance.getDataFolder(), "lang.yml"));
-                SoundFileData = YamlConfiguration.loadConfiguration(new File(cn.chengzhiya.mhdftools.MHDFTools.instance.getDataFolder(), "sound.yml"));
+                LangFileData = YamlConfiguration.loadConfiguration(new File(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getDataFolder(), "lang.yml"));
+                SoundFileData = YamlConfiguration.loadConfiguration(new File(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getDataFolder(), "sound.yml"));
                 sender.sendMessage(i18n("AdminCommands.reload.ReloadDone"));
 
                 return true;
@@ -40,7 +40,7 @@ public final class MHDFTools implements TabExecutor {
             if (args[0].equals("convert")) {
                 switch (args[1]) {
                     case "YAML":
-                        if (!Objects.equals(cn.chengzhiya.mhdftools.MHDFTools.instance.getConfig().getString("DataSettings.Type"), "YAML")) {
+                        if (!Objects.equals(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getConfig().getString("DataSettings.Type"), "YAML")) {
                             MySQLToYAML(sender);
                         } else {
                             sender.sendMessage(i18n("AdminCommands.convert.ConvertInvalid", "YAML"));
@@ -48,7 +48,7 @@ public final class MHDFTools implements TabExecutor {
                         break;
                     case "MySQL":
                         if (args.length == 6) {
-                            if (!Objects.equals(cn.chengzhiya.mhdftools.MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                            if (!Objects.equals(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                                 YAMLToMySQL(sender, args[2], args[3], args[4], args[5]);
                             } else {
                                 sender.sendMessage(i18n("AdminCommands.convert.ConvertInvalid", "MySQL"));

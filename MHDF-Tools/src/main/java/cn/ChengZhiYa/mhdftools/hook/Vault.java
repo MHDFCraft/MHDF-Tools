@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.hook;
+package cn.ChengZhiYa.MHDFTools.hook;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;

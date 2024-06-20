@@ -1,12 +1,12 @@
-package cn.chengzhiya.mhdftools.task;
+package cn.ChengZhiYa.MHDFTools.task;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.hashmap.IntHasMap;
-import cn.chengzhiya.mhdftools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.IntHasMap;
+import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static cn.chengzhiya.mhdftools.util.BCUtil.*;
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.*;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
 
 public final class TpaTime extends BukkitRunnable {
     @Override

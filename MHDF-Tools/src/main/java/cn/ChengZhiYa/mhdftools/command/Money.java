@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.command;
+package cn.ChengZhiYa.MHDFTools.command;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
-import static cn.chengzhiya.mhdftools.util.database.EconomyUtil.getMoney;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.database.EconomyUtil.getMoney;
 
 public final class Money implements CommandExecutor {
     @Override

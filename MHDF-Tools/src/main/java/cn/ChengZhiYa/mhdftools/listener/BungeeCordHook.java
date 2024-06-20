@@ -1,9 +1,9 @@
-package cn.chengzhiya.mhdftools.listener;
+package cn.ChengZhiYa.MHDFTools.listener;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.hashmap.IntHasMap;
-import cn.chengzhiya.mhdftools.hashmap.LocationHasMap;
-import cn.chengzhiya.mhdftools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.IntHasMap;
+import cn.ChengZhiYa.MHDFTools.hashmap.LocationHasMap;
+import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -19,10 +19,10 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.BCUtil.PlayerList;
-import static cn.chengzhiya.mhdftools.util.BCUtil.ServerName;
-import static cn.chengzhiya.mhdftools.util.Util.*;
-import static cn.chengzhiya.mhdftools.util.database.HomeUtil.getHomeLocation;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.PlayerList;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.ServerName;
+import static cn.ChengZhiYa.MHDFTools.util.Util.*;
+import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getHomeLocation;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class BungeeCordHook implements PluginMessageListener {

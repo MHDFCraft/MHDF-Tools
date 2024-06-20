@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.util.database;
+package cn.ChengZhiYa.MHDFTools.util.database;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.database.DatabaseUtil.*;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.*;
 
 public final class EconomyUtil {
     static final Map<Object, BigDecimal> MoneyHashMap = new HashMap<>();

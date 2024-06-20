@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.util.database;
+package cn.ChengZhiYa.MHDFTools.util.database;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;
@@ -23,14 +23,14 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static cn.chengzhiya.mhdftools.MHDFTools.initializationYamlData;
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
-import static cn.chengzhiya.mhdftools.util.database.DatabaseUtil.*;
-import static cn.chengzhiya.mhdftools.util.database.EconomyUtil.ifPlayerFileExists;
-import static cn.chengzhiya.mhdftools.util.database.EconomyUtil.setMoney;
-import static cn.chengzhiya.mhdftools.util.database.HomeUtil.*;
-import static cn.chengzhiya.mhdftools.util.database.LoginUtil.LoginExists;
-import static cn.chengzhiya.mhdftools.util.database.LoginUtil.Register;
+import static cn.ChengZhiYa.MHDFTools.MHDFTools.initializationYamlData;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.*;
+import static cn.ChengZhiYa.MHDFTools.util.database.EconomyUtil.ifPlayerFileExists;
+import static cn.ChengZhiYa.MHDFTools.util.database.EconomyUtil.setMoney;
+import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.*;
+import static cn.ChengZhiYa.MHDFTools.util.database.LoginUtil.LoginExists;
+import static cn.ChengZhiYa.MHDFTools.util.database.LoginUtil.Register;
 
 public final class ConvertData {
     public static void MySQLToYAML(CommandSender sender) {

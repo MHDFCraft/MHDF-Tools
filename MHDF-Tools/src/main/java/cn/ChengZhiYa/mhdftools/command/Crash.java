@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.command;
+package cn.ChengZhiYa.MHDFTools.command;
 
-import cn.chengzhiya.mhdftools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
 
 public final class Crash implements CommandExecutor {
     @Override

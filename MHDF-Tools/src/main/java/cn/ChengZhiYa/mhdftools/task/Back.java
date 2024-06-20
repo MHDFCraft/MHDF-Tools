@@ -1,16 +1,16 @@
-package cn.chengzhiya.mhdftools.task;
+package cn.ChengZhiYa.MHDFTools.task;
 
-import cn.chengzhiya.mhdftools.hashmap.IntHasMap;
-import cn.chengzhiya.mhdftools.hashmap.LocationHasMap;
+import cn.ChengZhiYa.MHDFTools.hashmap.IntHasMap;
+import cn.ChengZhiYa.MHDFTools.hashmap.LocationHasMap;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.BCUtil.ServerName;
-import static cn.chengzhiya.mhdftools.util.BCUtil.TpPlayerTo;
-import static cn.chengzhiya.mhdftools.util.Util.*;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.ServerName;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.TpPlayerTo;
+import static cn.ChengZhiYa.MHDFTools.util.Util.*;
 
 public final class Back extends BukkitRunnable {
     @Override

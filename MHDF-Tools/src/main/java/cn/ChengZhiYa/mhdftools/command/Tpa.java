@@ -1,8 +1,8 @@
-package cn.chengzhiya.mhdftools.command;
+package cn.ChengZhiYa.MHDFTools.command;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.hashmap.IntHasMap;
-import cn.chengzhiya.mhdftools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.IntHasMap;
+import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -14,8 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
-import static cn.chengzhiya.mhdftools.util.BCUtil.*;
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.*;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
 
 public final class Tpa implements TabExecutor {
     @Override

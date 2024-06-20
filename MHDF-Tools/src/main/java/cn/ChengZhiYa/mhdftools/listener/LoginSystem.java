@@ -1,7 +1,7 @@
-package cn.chengzhiya.mhdftools.listener;
+package cn.ChengZhiYa.MHDFTools.listener;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,8 +13,8 @@ import org.bukkit.event.player.*;
 
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
-import static cn.chengzhiya.mhdftools.util.Util.ifLogin;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.Util.ifLogin;
 
 public final class LoginSystem implements Listener {
     @EventHandler

@@ -1,4 +1,4 @@
-package cn.chengzhiya.mhdftools.listener.menu;
+package cn.ChengZhiYa.MHDFTools.listener.menu;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.List;
 
-import static cn.chengzhiya.mhdftools.util.menu.MenuUtil.*;
+import static cn.ChengZhiYa.MHDFTools.util.menu.MenuUtil.*;
 
 public final class ClickCustomMenu implements Listener {
     @EventHandler

@@ -1,14 +1,14 @@
-package cn.chengzhiya.mhdftools.command;
+package cn.ChengZhiYa.MHDFTools.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.chengzhiya.mhdftools.util.Util.getTimeString;
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
-import static cn.chengzhiya.mhdftools.util.database.FlyUtil.addFly;
-import static cn.chengzhiya.mhdftools.util.database.FlyUtil.getFlyTime;
+import static cn.ChengZhiYa.MHDFTools.util.Util.getTimeString;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.database.FlyUtil.addFly;
+import static cn.ChengZhiYa.MHDFTools.util.database.FlyUtil.getFlyTime;
 
 public final class FlyTime implements CommandExecutor {
     @Override

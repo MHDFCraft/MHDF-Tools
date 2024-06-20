@@ -23,9 +23,9 @@
  *  SOFTWARE.
  */
 
-package cn.chengzhiya.mhdftools.util.libraries.classpath;
+package cn.ChengZhiYa.MHDFTools.util.libraries.classpath;
 
-import cn.chengzhiya.mhdftools.util.libraries.loader.JarInJarClassLoader;
+import cn.ChengZhiYa.MHDFTools.util.libraries.loader.JarInJarClassLoader;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

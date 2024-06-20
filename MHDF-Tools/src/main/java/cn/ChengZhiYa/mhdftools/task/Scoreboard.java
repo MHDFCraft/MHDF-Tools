@@ -1,8 +1,8 @@
-package cn.chengzhiya.mhdftools.task;
+package cn.ChengZhiYa.MHDFTools.task;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.hashmap.ObjectiveHasMap;
-import cn.chengzhiya.mhdftools.hashmap.ScoreboardHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.ObjectiveHasMap;
+import cn.ChengZhiYa.MHDFTools.hashmap.ScoreboardHasMap;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -11,7 +11,7 @@ import org.bukkit.scoreboard.Score;
 
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.Util.PAPIChatColor;
+import static cn.ChengZhiYa.MHDFTools.util.Util.PAPIChatColor;
 
 public final class Scoreboard extends BukkitRunnable {
 

@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.listener;
+package cn.ChengZhiYa.MHDFTools.listener;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.BCUtil.TpPlayerTo;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.TpPlayerTo;
 
 public final class ReSpawnTeleportSpawn implements Listener {
     @EventHandler

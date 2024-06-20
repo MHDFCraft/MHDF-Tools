@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.hook;
+package cn.ChengZhiYa.MHDFTools.hook;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.List;
 
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
-import static cn.chengzhiya.mhdftools.util.database.EconomyUtil.*;
+import static cn.ChengZhiYa.MHDFTools.util.database.EconomyUtil.*;
 
 public final class EconomyImplementer extends AbstractEconomy {
     public boolean isEnabled() {

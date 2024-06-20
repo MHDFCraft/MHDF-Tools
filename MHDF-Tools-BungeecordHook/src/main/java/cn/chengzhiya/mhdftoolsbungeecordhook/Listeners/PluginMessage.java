@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftoolsbungeecordhook.Listeners;
+package cn.ChengZhiYa.MHDFToolsBungeeCordHook.Listeners;
 
-import cn.chengzhiya.mhdftoolsbungeecordhook.main;
+import cn.ChengZhiYa.MHDFToolsBungeeCordHook.main;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.md_5.bungee.api.config.ServerInfo;

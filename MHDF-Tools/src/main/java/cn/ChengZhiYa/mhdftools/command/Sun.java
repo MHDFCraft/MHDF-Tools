@@ -1,4 +1,4 @@
-package cn.chengzhiya.mhdftools.command;
+package cn.ChengZhiYa.MHDFTools.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
 
 public final class Sun implements CommandExecutor {
     @Override

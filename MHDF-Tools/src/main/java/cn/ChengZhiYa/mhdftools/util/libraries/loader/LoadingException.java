@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package cn.chengzhiya.mhdftools.util.libraries.loader;
+package cn.ChengZhiYa.MHDFTools.util.libraries.loader;
 
 /**
  * Runtime exception used if there is a problem during loading

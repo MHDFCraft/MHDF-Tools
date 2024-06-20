@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.listener;
+package cn.ChengZhiYa.MHDFTools.listener;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerCommandSendEvent;
 
-import static cn.chengzhiya.mhdftools.util.Util.ifLogin;
+import static cn.ChengZhiYa.MHDFTools.util.Util.ifLogin;
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 
 public final class BanCommand implements Listener {

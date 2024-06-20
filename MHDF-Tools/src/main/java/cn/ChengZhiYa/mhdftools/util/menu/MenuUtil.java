@@ -1,7 +1,7 @@
-package cn.chengzhiya.mhdftools.util.menu;
+package cn.ChengZhiYa.MHDFTools.util.menu;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import net.md_5.bungee.api.ChatMessageType;
@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
 import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
-import static cn.chengzhiya.mhdftools.util.Util.PAPIChatColor;
+import static cn.ChengZhiYa.MHDFTools.util.Util.PAPIChatColor;
 
 public final class MenuUtil {
     public static ItemStack getItemStack(String type, String displayName, List<String> lore, Integer customModelData, Integer amount) {

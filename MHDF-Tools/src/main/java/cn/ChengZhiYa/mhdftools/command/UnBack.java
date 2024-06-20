@@ -1,16 +1,16 @@
-package cn.chengzhiya.mhdftools.command;
+package cn.ChengZhiYa.MHDFTools.command;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.hashmap.LocationHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.LocationHasMap;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.chengzhiya.mhdftools.util.BCUtil.ServerName;
-import static cn.chengzhiya.mhdftools.util.BCUtil.TpPlayerTo;
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.ServerName;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.TpPlayerTo;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
 
 public final class UnBack implements CommandExecutor {
     @Override

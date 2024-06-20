@@ -1,15 +1,15 @@
-package cn.chengzhiya.mhdftools.hook;
+package cn.ChengZhiYa.MHDFTools.hook;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.chengzhiya.mhdftools.util.Util.Version;
-import static cn.chengzhiya.mhdftools.util.database.EconomyUtil.getMoney;
-import static cn.chengzhiya.mhdftools.util.database.HomeUtil.getMaxHome;
-import static cn.chengzhiya.mhdftools.util.database.HomeUtil.getPlayerHomeList;
+import static cn.ChengZhiYa.MHDFTools.util.Util.Version;
+import static cn.ChengZhiYa.MHDFTools.util.database.EconomyUtil.getMoney;
+import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getMaxHome;
+import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getPlayerHomeList;
 
 public final class PlaceholderAPI extends PlaceholderExpansion {
 

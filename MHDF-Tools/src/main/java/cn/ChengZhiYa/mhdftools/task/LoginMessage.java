@@ -1,13 +1,13 @@
-package cn.chengzhiya.mhdftools.task;
+package cn.ChengZhiYa.MHDFTools.task;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
-import static cn.chengzhiya.mhdftools.util.Util.ifLogin;
-import static cn.chengzhiya.mhdftools.util.database.LoginUtil.LoginExists;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.Util.ifLogin;
+import static cn.ChengZhiYa.MHDFTools.util.database.LoginUtil.LoginExists;
 
 public final class LoginMessage extends BukkitRunnable {
 

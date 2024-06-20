@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.listener;
+package cn.ChengZhiYa.MHDFTools.listener;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import com.destroystokyo.paper.event.server.PaperServerListPingEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,7 +8,7 @@ import org.bukkit.event.server.ServerListPingEvent;
 
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.Util.PAPIChatColor;
+import static cn.ChengZhiYa.MHDFTools.util.Util.PAPIChatColor;
 
 public final class MOTD implements Listener {
     @EventHandler

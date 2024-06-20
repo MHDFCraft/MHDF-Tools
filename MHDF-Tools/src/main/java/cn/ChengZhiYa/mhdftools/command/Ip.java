@@ -1,4 +1,4 @@
-package cn.chengzhiya.mhdftools.command;
+package cn.ChengZhiYa.MHDFTools.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.Util.getIpLocation;
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.Util.getIpLocation;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
 
 public final class Ip implements CommandExecutor {
     @Override

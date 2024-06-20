@@ -1,4 +1,4 @@
-package cn.chengzhiya.mhdftools.hook;
+package cn.ChengZhiYa.MHDFTools.hook;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;

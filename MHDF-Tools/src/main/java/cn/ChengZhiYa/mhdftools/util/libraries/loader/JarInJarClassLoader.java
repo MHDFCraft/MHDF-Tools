@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package cn.chengzhiya.mhdftools.util.libraries.loader;
+package cn.ChengZhiYa.MHDFTools.util.libraries.loader;
 
 import java.io.IOException;
 import java.io.InputStream;

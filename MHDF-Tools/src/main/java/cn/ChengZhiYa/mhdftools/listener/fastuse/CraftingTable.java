@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.listener.fastuse;
+package cn.ChengZhiYa.MHDFTools.listener.fastuse;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

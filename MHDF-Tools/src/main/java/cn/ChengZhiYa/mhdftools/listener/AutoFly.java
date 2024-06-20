@@ -1,7 +1,7 @@
-package cn.chengzhiya.mhdftools.listener;
+package cn.ChengZhiYa.MHDFTools.listener;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,8 +10,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import static cn.chengzhiya.mhdftools.util.database.FlyUtil.InFlyList;
-import static cn.chengzhiya.mhdftools.util.database.FlyUtil.removeFly;
+import static cn.ChengZhiYa.MHDFTools.util.database.FlyUtil.InFlyList;
+import static cn.ChengZhiYa.MHDFTools.util.database.FlyUtil.removeFly;
 
 public final class AutoFly implements Listener {
     @EventHandler

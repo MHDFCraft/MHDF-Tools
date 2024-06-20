@@ -1,7 +1,7 @@
-package cn.chengzhiya.mhdftools.listener.menu;
+package cn.ChengZhiYa.MHDFTools.listener.menu;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.hashmap.StringHasMap;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.hashmap.StringHasMap;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -9,7 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import static cn.chengzhiya.mhdftools.util.menu.MenuUtil.openMenu;
+import static cn.ChengZhiYa.MHDFTools.util.menu.MenuUtil.openMenu;
 
 public final class MenuArgsCommand implements Listener {
     @EventHandler

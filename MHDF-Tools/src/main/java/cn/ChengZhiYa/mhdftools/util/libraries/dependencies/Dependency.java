@@ -23,9 +23,9 @@
  *  SOFTWARE.
  */
 
-package cn.chengzhiya.mhdftools.util.libraries.dependencies;
+package cn.ChengZhiYa.MHDFTools.util.libraries.dependencies;
 
-import cn.chengzhiya.mhdftools.util.libraries.dependencies.relocation.Relocation;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.relocation.Relocation;
 import com.google.common.collect.ImmutableList;
 
 import java.security.MessageDigest;

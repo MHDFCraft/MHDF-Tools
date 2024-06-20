@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.util.database;
+package cn.ChengZhiYa.MHDFTools.util.database;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,8 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import static cn.chengzhiya.mhdftools.util.BCUtil.getHomeServerName;
-import static cn.chengzhiya.mhdftools.util.database.DatabaseUtil.dataSource;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.getHomeServerName;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.dataSource;
 
 public final class HomeUtil {
     static final Map<Object, List<String>> HomeListHashMap = new HashMap<>();

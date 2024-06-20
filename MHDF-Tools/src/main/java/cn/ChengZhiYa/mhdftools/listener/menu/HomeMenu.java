@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.listener.menu;
+package cn.ChengZhiYa.MHDFTools.listener.menu;
 
-import cn.chengzhiya.mhdftools.util.menu.HomeMenuUtil;
+import cn.ChengZhiYa.MHDFTools.util.menu.HomeMenuUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Objects;
 
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
-import static cn.chengzhiya.mhdftools.util.menu.HomeMenuUtil.getPlaceholder;
-import static cn.chengzhiya.mhdftools.util.menu.HomeMenuUtil.homeMenuFile;
-import static cn.chengzhiya.mhdftools.util.menu.MenuUtil.*;
+import static cn.ChengZhiYa.MHDFTools.util.menu.HomeMenuUtil.getPlaceholder;
+import static cn.ChengZhiYa.MHDFTools.util.menu.HomeMenuUtil.homeMenuFile;
+import static cn.ChengZhiYa.MHDFTools.util.menu.MenuUtil.*;
 
 public final class HomeMenu implements Listener {
     @EventHandler

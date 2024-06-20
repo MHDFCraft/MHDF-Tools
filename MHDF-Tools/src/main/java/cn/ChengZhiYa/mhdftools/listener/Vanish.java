@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.listener;
+package cn.ChengZhiYa.MHDFTools.listener;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.*;
@@ -20,8 +20,8 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Objects;
 
 import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
-import static cn.chengzhiya.mhdftools.util.Util.VanishList;
-import static cn.chengzhiya.mhdftools.util.Util.getVanishBossBar;
+import static cn.ChengZhiYa.MHDFTools.util.Util.VanishList;
+import static cn.ChengZhiYa.MHDFTools.util.Util.getVanishBossBar;
 
 public final class Vanish implements Listener {
     @EventHandler

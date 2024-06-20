@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.util;
+package cn.ChengZhiYa.MHDFTools.util;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 
 import java.io.File;
 import java.io.IOException;

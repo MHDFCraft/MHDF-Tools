@@ -42,7 +42,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>de.tr7zw.changeme.nbtapi</pattern>
-                                    <shadedPattern>cn.chengzhiya.mhdftools.nbtapi</shadedPattern>
+                                    <shadedPattern>cn.ChengZhiYa.MHDFTools.nbtapi</shadedPattern>
                                 </relocation>
                             </relocations>
                             <createDependencyReducedPom>false</createDependencyReducedPom>

@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package cn.chengzhiya.mhdftools.util.libraries.dependencies.relocation;
+package cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.relocation;
 
 public final class RelocationHelper {
 

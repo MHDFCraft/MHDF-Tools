@@ -1,4 +1,4 @@
-package cn.chengzhiya.mhdftools.hashmap;
+package cn.ChengZhiYa.MHDFTools.hashmap;
 
 import java.util.HashMap;
 

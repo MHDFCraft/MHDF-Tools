@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package cn.chengzhiya.mhdftools.util.libraries.dependencies;
+package cn.ChengZhiYa.MHDFTools.util.libraries.dependencies;
 
 import java.util.Collection;
 import java.util.Set;

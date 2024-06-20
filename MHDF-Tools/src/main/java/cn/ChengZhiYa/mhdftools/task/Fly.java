@@ -1,4 +1,4 @@
-package cn.chengzhiya.mhdftools.task;
+package cn.ChengZhiYa.MHDFTools.task;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -6,8 +6,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.Util.*;
-import static cn.chengzhiya.mhdftools.util.database.FlyUtil.*;
+import static cn.ChengZhiYa.MHDFTools.util.Util.*;
+import static cn.ChengZhiYa.MHDFTools.util.database.FlyUtil.*;
 
 public final class Fly extends BukkitRunnable {
     @Override

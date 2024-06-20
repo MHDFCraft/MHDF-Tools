@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package cn.chengzhiya.mhdftools.util.libraries.classpath;
+package cn.ChengZhiYa.MHDFTools.util.libraries.classpath;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

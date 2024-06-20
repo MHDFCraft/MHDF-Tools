@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.util.database;
+package cn.ChengZhiYa.MHDFTools.util.database;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;
@@ -19,8 +19,8 @@ import java.util.Objects;
 import java.util.TimeZone;
 import java.util.UUID;
 
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
-import static cn.chengzhiya.mhdftools.util.database.HomeUtil.*;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.*;
 
 public final class ImportUtil {
     public static void ImportHuskHomesData(CommandSender sender) {

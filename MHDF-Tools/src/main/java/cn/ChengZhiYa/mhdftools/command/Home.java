@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.command;
+package cn.ChengZhiYa.MHDFTools.command;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,11 +11,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.BCUtil.TpPlayerHome;
-import static cn.chengzhiya.mhdftools.util.Util.i18n;
-import static cn.chengzhiya.mhdftools.util.database.HomeUtil.getHomeLocation;
-import static cn.chengzhiya.mhdftools.util.database.HomeUtil.getPlayerHomeList;
-import static cn.chengzhiya.mhdftools.util.menu.HomeMenuUtil.openHomeMenu;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.TpPlayerHome;
+import static cn.ChengZhiYa.MHDFTools.util.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getHomeLocation;
+import static cn.ChengZhiYa.MHDFTools.util.database.HomeUtil.getPlayerHomeList;
+import static cn.ChengZhiYa.MHDFTools.util.menu.HomeMenuUtil.openHomeMenu;
 
 public final class Home implements TabExecutor {
     @Override

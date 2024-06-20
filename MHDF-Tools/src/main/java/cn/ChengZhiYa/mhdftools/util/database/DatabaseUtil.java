@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.util.database;
+package cn.ChengZhiYa.MHDFTools.util.database;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;

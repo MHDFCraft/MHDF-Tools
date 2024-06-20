@@ -1,26 +1,26 @@
-package cn.chengzhiya.mhdftools;
+package cn.ChengZhiYa.MHDFTools;
 
-import cn.chengzhiya.mhdftools.command.Back;
-import cn.chengzhiya.mhdftools.command.Fly;
-import cn.chengzhiya.mhdftools.command.TpBack;
-import cn.chengzhiya.mhdftools.command.Trash;
-import cn.chengzhiya.mhdftools.command.Vanish;
-import cn.chengzhiya.mhdftools.command.*;
-import cn.chengzhiya.mhdftools.hook.Metrics;
-import cn.chengzhiya.mhdftools.hook.PlaceholderAPI;
-import cn.chengzhiya.mhdftools.listener.*;
-import cn.chengzhiya.mhdftools.listener.fastuse.CraftingTable;
-import cn.chengzhiya.mhdftools.listener.fastuse.EnderChest;
-import cn.chengzhiya.mhdftools.listener.fastuse.ShulkerBox;
-import cn.chengzhiya.mhdftools.listener.menu.ClickCustomMenu;
-import cn.chengzhiya.mhdftools.listener.menu.HomeMenu;
-import cn.chengzhiya.mhdftools.listener.menu.MenuArgsCommand;
-import cn.chengzhiya.mhdftools.listener.menu.OpenMenu;
-import cn.chengzhiya.mhdftools.task.*;
-import cn.chengzhiya.mhdftools.util.libraries.classpath.ReflectionClassPathAppender;
-import cn.chengzhiya.mhdftools.util.libraries.dependencies.Dependency;
-import cn.chengzhiya.mhdftools.util.libraries.dependencies.DependencyManager;
-import cn.chengzhiya.mhdftools.util.libraries.dependencies.DependencyManagerImpl;
+import cn.ChengZhiYa.MHDFTools.command.Back;
+import cn.ChengZhiYa.MHDFTools.command.Fly;
+import cn.ChengZhiYa.MHDFTools.command.TpBack;
+import cn.ChengZhiYa.MHDFTools.command.Trash;
+import cn.ChengZhiYa.MHDFTools.command.Vanish;
+import cn.ChengZhiYa.MHDFTools.command.*;
+import cn.ChengZhiYa.MHDFTools.hook.Metrics;
+import cn.ChengZhiYa.MHDFTools.hook.PlaceholderAPI;
+import cn.ChengZhiYa.MHDFTools.listener.*;
+import cn.ChengZhiYa.MHDFTools.listener.fastuse.CraftingTable;
+import cn.ChengZhiYa.MHDFTools.listener.fastuse.EnderChest;
+import cn.ChengZhiYa.MHDFTools.listener.fastuse.ShulkerBox;
+import cn.ChengZhiYa.MHDFTools.listener.menu.ClickCustomMenu;
+import cn.ChengZhiYa.MHDFTools.listener.menu.HomeMenu;
+import cn.ChengZhiYa.MHDFTools.listener.menu.MenuArgsCommand;
+import cn.ChengZhiYa.MHDFTools.listener.menu.OpenMenu;
+import cn.ChengZhiYa.MHDFTools.task.*;
+import cn.ChengZhiYa.MHDFTools.util.libraries.classpath.ReflectionClassPathAppender;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.Dependency;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManager;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManagerImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -35,15 +35,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.hook.Vault.hookVault;
-import static cn.chengzhiya.mhdftools.hook.Vault.unHookVault;
-import static cn.chengzhiya.mhdftools.util.BCUtil.getServerName;
-import static cn.chengzhiya.mhdftools.util.FileUtil.createDir;
-import static cn.chengzhiya.mhdftools.util.FileUtil.createFile;
-import static cn.chengzhiya.mhdftools.util.Util.*;
-import static cn.chengzhiya.mhdftools.util.database.DatabaseUtil.closeDatabase;
-import static cn.chengzhiya.mhdftools.util.database.DatabaseUtil.initializationDatabaseData;
-import static cn.chengzhiya.mhdftools.util.menu.MenuUtil.runAction;
+import static cn.ChengZhiYa.MHDFTools.hook.Vault.hookVault;
+import static cn.ChengZhiYa.MHDFTools.hook.Vault.unHookVault;
+import static cn.ChengZhiYa.MHDFTools.util.BCUtil.getServerName;
+import static cn.ChengZhiYa.MHDFTools.util.FileUtil.createDir;
+import static cn.ChengZhiYa.MHDFTools.util.FileUtil.createFile;
+import static cn.ChengZhiYa.MHDFTools.util.Util.*;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.closeDatabase;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.initializationDatabaseData;
+import static cn.ChengZhiYa.MHDFTools.util.menu.MenuUtil.runAction;
 import static cn.chengzhiya.mhdfpluginapi.Util.ColorLog;
 import static cn.chengzhiya.mhdfpluginapi.YamlFileUtil.SaveResource;
 
@@ -217,18 +217,18 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("FlySettings.Enable")) {
                 registerCommand(this, new Fly(), "飞行系统", "MHDFTools.Command.Fly", "fly");
                 registerCommand(this, new FlyTime(), "限时飞行系统", "MHDFTools.Command.FlyTime", "flytime");
-                new cn.chengzhiya.mhdftools.task.Fly().runTaskTimerAsynchronously(this, 0L, 20L);
+                new cn.ChengZhiYa.MHDFTools.task.Fly().runTaskTimerAsynchronously(this, 0L, 20L);
                 Bukkit.getPluginManager().registerEvents(new AutoFly(), this);
             }
             if (getConfig().getBoolean("BackSettings.Enable")) {
                 registerCommand(this, new Back(), "Back系统", "MHDFTools.Command.Back", "back");
-                Bukkit.getPluginManager().registerEvents(new cn.chengzhiya.mhdftools.listener.Back(), this);
-                new cn.chengzhiya.mhdftools.task.Back().runTaskTimerAsynchronously(this, 0L, 20L);
+                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.listener.Back(), this);
+                new cn.ChengZhiYa.MHDFTools.task.Back().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("TpBackSettings.Enable")) {
                 registerCommand(this, new TpBack(), "TpBack系统", "MHDFTools.Command.TpBack", "tpback");
-                Bukkit.getPluginManager().registerEvents(new cn.chengzhiya.mhdftools.listener.TpBack(), this);
-                new cn.chengzhiya.mhdftools.task.TpBack().runTaskTimerAsynchronously(this, 0L, 20L);
+                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.listener.TpBack(), this);
+                new cn.ChengZhiYa.MHDFTools.task.TpBack().runTaskTimerAsynchronously(this, 0L, 20L);
             }
             if (getConfig().getBoolean("TpBackSettings.Enable") || getConfig().getBoolean("BackSettings.Enable")) {
                 registerCommand(this, new UnBack(), "Back系统", "MHDFTools.Command.UnBack", "unback");
@@ -236,8 +236,8 @@ public final class MHDFTools extends JavaPlugin implements Listener {
             if (getConfig().getBoolean("VanishSettings.Enable")) {
                 registerCommand(this, new Vanish(), "Vanish系统", "MHDFTools.Command.Vanish", "vanish");
                 registerCommand(this, new Vanish(), "Vanish系统", "MHDFTools.Command.Vanish", "v");
-                Bukkit.getPluginManager().registerEvents(new cn.chengzhiya.mhdftools.listener.Vanish(), this);
-                new cn.chengzhiya.mhdftools.task.Vanish().runTaskTimerAsynchronously(this, 0L, 20L);
+                Bukkit.getPluginManager().registerEvents(new cn.ChengZhiYa.MHDFTools.listener.Vanish(), this);
+                new cn.ChengZhiYa.MHDFTools.task.Vanish().runTaskTimerAsynchronously(this, 0L, 20L);
                 if (getConfig().getBoolean("VanishSettings.SaveVanishData")) {
                     File VanishCacheFile = new File(getDataFolder(), "Cache/VanishCache.yml");
                     if (VanishCacheFile.exists()) {
@@ -342,7 +342,7 @@ public final class MHDFTools extends JavaPlugin implements Listener {
                     registerCommand(this, new MoneyAdmin(), "管理员管理", "MHDFTools.Command.MoneyAdmin", "moneyadmin");
                 }
             }
-            registerCommand(this, new cn.chengzhiya.mhdftools.command.MHDFTools(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
+            registerCommand(this, new cn.ChengZhiYa.MHDFTools.command.MHDFTools(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
             Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
             Bukkit.getPluginManager().registerEvents(new CustomJoinQuitMessage(), this);
             Bukkit.getPluginManager().registerEvents(new JoinTeleportSpawn(), this);

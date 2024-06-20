@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftoolsbungeecordhook;
+package cn.ChengZhiYa.MHDFToolsBungeeCordHook;
 
-import cn.chengzhiya.mhdftoolsbungeecordhook.Listeners.PluginMessage;
+import cn.ChengZhiYa.MHDFToolsBungeeCordHook.Listeners.PluginMessage;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public final class main extends Plugin {

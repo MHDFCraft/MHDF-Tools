@@ -1,11 +1,11 @@
-package cn.chengzhiya.mhdftools.task;
+package cn.ChengZhiYa.MHDFTools.task;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static cn.chengzhiya.mhdftools.util.Util.PAPIChatColor;
+import static cn.ChengZhiYa.MHDFTools.util.Util.PAPIChatColor;
 
 public final class TimeMessage extends BukkitRunnable {
 

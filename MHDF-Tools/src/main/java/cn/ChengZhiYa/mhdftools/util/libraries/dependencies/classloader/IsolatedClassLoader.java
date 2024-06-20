@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package cn.chengzhiya.mhdftools.util.libraries.dependencies.classloader;
+package cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.classloader;
 
 import java.net.URL;
 import java.net.URLClassLoader;

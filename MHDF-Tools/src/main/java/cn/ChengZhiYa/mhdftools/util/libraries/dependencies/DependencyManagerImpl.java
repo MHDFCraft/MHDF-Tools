@@ -23,13 +23,13 @@
  *  SOFTWARE.
  */
 
-package cn.chengzhiya.mhdftools.util.libraries.dependencies;
+package cn.ChengZhiYa.MHDFTools.util.libraries.dependencies;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
-import cn.chengzhiya.mhdftools.util.libraries.classpath.ClassPathAppender;
-import cn.chengzhiya.mhdftools.util.libraries.dependencies.classloader.IsolatedClassLoader;
-import cn.chengzhiya.mhdftools.util.libraries.dependencies.relocation.Relocation;
-import cn.chengzhiya.mhdftools.util.libraries.dependencies.relocation.RelocationHandler;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.util.libraries.classpath.ClassPathAppender;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.classloader.IsolatedClassLoader;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.relocation.Relocation;
+import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.relocation.RelocationHandler;
 import com.google.common.collect.ImmutableSet;
 
 import java.io.File;

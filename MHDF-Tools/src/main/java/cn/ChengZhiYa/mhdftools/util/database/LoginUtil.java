@@ -1,6 +1,6 @@
-package cn.chengzhiya.mhdftools.util.database;
+package cn.ChengZhiYa.MHDFTools.util.database;
 
-import cn.chengzhiya.mhdftools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -12,8 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import static cn.chengzhiya.mhdftools.util.database.DatabaseUtil.DataExists;
-import static cn.chengzhiya.mhdftools.util.database.DatabaseUtil.dataSource;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.DataExists;
+import static cn.ChengZhiYa.MHDFTools.util.database.DatabaseUtil.dataSource;
 
 public final class LoginUtil {
     public static Boolean LoginExists(String PlayerName) {
