@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.main.auth;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.Bukkit;
@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -18,13 +19,13 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil.loginExists;
 
 public final class Register implements CommandExecutor {
 
-    MHDFTools plugin;
+    JavaPlugin plugin;
     int maxPasswordLength;
     List<String> easyPasswords;
     boolean autoLogin;
 
-    public Register(MHDFTools plugin) {
-        this.plugin = plugin;
+    public Register() {
+        this.plugin = MHDFPluginLoader.INSTANCE.getPlugin();
         this.maxPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MaxPasswordLength");
         this.easyPasswords = plugin.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
         this.autoLogin = plugin.getConfig().getBoolean("LoginSystemSettings.AutoLogin");
