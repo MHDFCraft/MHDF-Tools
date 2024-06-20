@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static cn.ChengZhiYa.MHDFTools.util.Util.PAPI;
+import static cn.ChengZhiYa.MHDFTools.utils.Util.PAPI;
 
 public final class TimeMessage extends BukkitRunnable {
 

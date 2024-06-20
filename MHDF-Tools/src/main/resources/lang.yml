@@ -1,19 +1,18 @@
 NoPermission: "&f붃 &c你没有权限怎么做!"
-OnlyPlayer: "&f분 &6这个命令只能玩家使用!"
-PlayerNotOnline: "&f분 &6这个玩家不存在或不在线"
+OnlyPlayer: "&6这个命令只能玩家使用!"
+PlayerNotOnline: "&6这个玩家不存在或不在线"
 FastSetDone: "&a完成!"
-HatNoItem: "&f분 &6你需要拿着一个物品才能使用这个命令!"
-AntiTiaoLue: "&f부 &#7289da玩家%1尝试在,X:%2 Y:%3 Z:%4 建造跳略,已阻止!"
+HatNoItem: "&6你需要拿着一个物品才能使用这个命令!"
 AdminCommands:
   Center: " &7| "
   convert:
     Usage: "&e/{Command} convert <目标数据类型> [数据库地址] [数据库] [数据库账号] [数据库密码]"
     Description: "&b将插件数据转换成其他存储方式"
     NotFoundType: "&f붃 &c转换错误,目标类型不支持!"
-    ConvertStart: "&f북 &a开始将数据转换为%1存储!"
+    ConvertStart: "&a开始将数据转换为%1存储!"
     ConvertInvalid: "&f붃 &c转换失败,你已经是%1存储了!"
     ConvertError: "&f붃 &c转换错误,已紧急停止!"
-    ConvertDone: "&f북 &a已将%1转换为%2存储!"
+    ConvertDone: "&a已将%1转换为%2存储!"
   import:
     Usage: "&e/{Command} import <目标插件名字>"
     Description: "&b导入其他插件的数据"
@@ -21,13 +20,13 @@ AdminCommands:
     PluginNotInstall: "&f붃 &c导入错误,插件%1未安装!"
     NotFoundPlugin: "&f붃 &c导入错误,目标插件不支持!"
     NotFoundDataType: "&f붃 &c导入错误,目标数据类型不支持!"
-    ImportStart: "&f북 &a开始导入%1的数据!"
+    ImportStart: "&a开始导入%1的数据!"
     ImportError: "&f붃 &c导入错误,已紧急停止!"
-    ImportDone: "&f북 &a已将%1的数据导入!"
+    ImportDone: "&a已将%1的数据导入!"
   reload:
     Usage: "&e/{Command} reload"
     Description: "&b重载插件"
-    ReloadDone: "&f북 &a重载成功!"
+    ReloadDone: "&a重载成功!"
   help:
     Usage: "&e/{Command} help"
     Description: "&b帮助"
@@ -56,46 +55,46 @@ Vault:
     &6/%1 set <玩家ID> <金额> &7- &e设置金钱
     &7-------&6经济系统&7-------
 Usage:
-  Crash: "&f붃 &c用法错误,用法:/%1 <玩家ID>"
-  Fly: "&f붃 &c用法错误,用法:/fly [玩家ID]"
-  FlyTime: "&f붃 &c用法错误,用法:/flytime <玩家ID> <时长>"
-  Vanish: "&f붃 &c用法错误,用法:/%1 [玩家ID]"
-  Home: "&f붃 &c用法错误,用法:/%1 <家名称>"
-  Freeze: "&f붃 &c用法错误,用法:/freeze <玩家ID>"
-  Gamemode: "&f붃 &c用法错误,用法:/%1 <游戏模式> [玩家ID]"
-  Invsee: "&f붃 &c用法错误,用法:/invsee <玩家ID>"
-  Ip: "&f붃 &cc用法错误,用法:/ip <玩家ID>"
-  Tpa: "&f붃 &c用法错误,用法:/tpa <玩家ID>"
-  TpaHere: "&f붃 &c用法错误,用法:/tpahere <玩家ID>"
-  Money: "&f붃 &c用法错误,用法:/money [玩家ID]"
-  Pay: "&f붃 &c用法错误,用法:/pay <玩家ID> <金额>"
-  Login: "&f붃 &c用法错误,用法:/%1 <密码>"
-  Register: "&f붃 &c用法错误,用法:/%1 <密码>"
+  Crash: "&c用法错误,用法:/%1 <玩家ID>"
+  Fly: "&c用法错误,用法:/fly [玩家ID]"
+  FlyTime: "&c用法错误,用法:/flytime <玩家ID> <时长>"
+  Vanish: "&c用法错误,用法:/%1 [玩家ID]"
+  Home: "&c用法错误,用法:/%1 <家名称>"
+  Freeze: "&c用法错误,用法:/freeze <玩家ID>"
+  gameMode: "&c用法错误,用法:/%1 <游戏模式> [玩家ID]"
+  Invsee: "&c用法错误,用法:/invsee <玩家ID>"
+  Ip: "&cc用法错误,用法:/ip <玩家ID>"
+  Tpa: "&c用法错误,用法:/tpa <玩家ID>"
+  TpaHere: "&c用法错误,用法:/tpahere <玩家ID>"
+  Money: "&c用法错误,用法:/money [玩家ID]"
+  Pay: "&c用法错误,用法:/pay <玩家ID> <金额>"
+  Login: "&c用法错误,用法:/%1 <密码>"
+  Register: "c用法错误,用法:/%1 <密码>"
 Back:
   ReSpawn: |-
-    &f분 &6您的死亡位置如下，返回死亡地点请输入/back
-    &f분 &6X:%1 Y:%2 Z:%3
-  Done: "&f북 &a已返回死亡位置的位置,如果想回到传送前的位置请使用/unback!"
-  RepectSend: "&f붃 &c请不要重复使用命令!"
-  NotFound: "&f분 &6找不到死亡位置的位置!"
+    &6您的死亡位置如下，返回死亡地点请输入/back
+    &6X:%1 Y:%2 Z:%3
+  Done: "&a已返回死亡位置的位置,如果想回到传送前的位置请使用/unback!"
+  RepectSend: "&c请不要重复使用命令!"
+  NotFound: "&6找不到死亡位置的位置!"
 TpBack:
-  Done: "&f북 &a已返回上一次的位置,如果想回到传送前的位置请使用/unback!"
-  RepectSend: "&f붃 &c请不要重复使用命令!"
-  NotFound: "&f분 &6找不到上一次的位置!"
+  Done: "&a已返回上一次的位置,如果想回到传送前的位置请使用/unback!"
+  RepectSend: "&c请不要重复使用命令!"
+  NotFound: "&6找不到上一次的位置!"
 UnBack:
-  Done: "&f북 &a已返回传送前的位置!"
-  NotFound: "&f분 &6找不到你前往上一次的位置的记录!"
+  Done: "&a已返回传送前的位置!"
+  NotFound: "&6找不到你前往上一次的位置的记录!"
 Spawn:
-  SetDone: "&f부 &#7289da设置主城成功!"
-  TeleportDone: "&f북 &a已将你传送至主城!"
+  SetDone: "#7289da设置主城成功!"
+  TeleportDone: "&a已将你传送至主城!"
 Crash:
-  RepeatExecution: "&f부 &#7289da请不要重复崩端!"
-  Execution: "&f부 &#7289da已执行崩端,请自行判断是否崩端成功!"
+  RepeatExecution: "#7289da请不要重复崩端!"
+  Execution: "#7289da已执行崩端,请自行判断是否崩端成功!"
 Home:
-  NotFound: "&f분 &6你没有名为%1的家!"
-  HomeListFull: "&f분 &6你已经创建了%1个家了!不能再创建了!"
-  SetDone: "&f북 &a设置家成功!"
-  TeleportDone: "&f북 &a已回到家!"
+  NotFound: "&6你没有名为%1的家!"
+  HomeListFull: "&6你已经创建了%1个家了!不能再创建了!"
+  SetDone: "&a设置家成功!"
+  TeleportDone: "&a已回到家!"
   RemoveDone: "&f붃 &c删除成功!"
 Fly:
   Enable: "开启"
@@ -113,16 +112,16 @@ FlyTime:
 Vanish:
   Enable: "开启"
   Disabled: "关闭"
-  Done: "&f부 &#7289da你的神隐模式已%1"
-  SetDone: "&f부 &#7289da已将%1的神隐模式%2"
+  Done: "&f부 #7289da你的神隐模式已%1"
+  SetDone: "&f부 #7289da已将%1的神隐模式%2"
   Bossbar: "&f神隐中"
-Gamemode:
+gameMode:
   Survival: "生存模式"
   Adventure: "冒险模式"
   Creative: "创造模式"
   Spectator: "旁观模式"
   Server: "Server"
-  Done: "&f부 &#7289da你的游戏模式已被更新为%1"
+  Done: "&f부 #7289da你的游戏模式已被更新为%1"
   OtherOpDone: "&7[%1: 将%2的游戏模式改为%3]"
 Login:
   LoginMessage: "&e请使用/l <密码>以登录!"
@@ -140,43 +139,43 @@ Login:
 Tpa:
   AccentMessage: "&f뇷"
   DefuseMessage: "&f뇶"
-  AccentHoverMesasge: "&f북 &a接受%1的传送请求"
+  AccentHoverMesasge: "&a接受%1的传送请求"
   DefuseHoverMesasge: "&f붃 &c%1的传送请求"
-  SendDone: "&f북 &a传送请求已发送,对方有60s来同意你的请求"
-  RepectSend: "&f분 &6请不要重复发送Tpa!"
+  SendDone: "&a传送请求已发送,对方有60s来同意你的请求"
+  RepectSend: "&6请不要重复发送Tpa!"
   NotSendTeleport: "&f붃 &c这个玩家没有给你发传送请求"
   Offline: "&f붃 &c错误,那个玩家突然下线了,传送已取消!"
   DefuseDone: "&f붃 &c你拒绝了对方的传送请求!"
   Defuse: "&f붃 &c对方拒绝了你的请求!"
-  AcceptDone: "&f북 &a%1传送到了你这里!"
-  TeleportDone: "&f북 &a传送成功!"
-  TimeOutDone: "&f분 &6你发给%1的传送请求已超时!"
-  TimeOut: "&f분 &6%1给你发的传送请求已超时!"
-  SendMe: "&f분 &6不能给自己发送传送请求!"
+  AcceptDone: "&a%1传送到了你这里!"
+  TeleportDone: "&a传送成功!"
+  TimeOutDone: "&6你发给%1的传送请求已超时!"
+  TimeOut: "&6%1给你发的传送请求已超时!"
+  SendMe: "&6不能给自己发送传送请求!"
   Message: |-
-    &f북 &a%1申请传送到你这里&r ?Accent?  ?Defuse?
+    &a%1申请传送到你这里&r ?Accent?  ?Defuse?
 TpaHere:
   AccentMessage: "&f뇷"
   DefuseMessage: "&f뇶"
-  AccentHoverMesasge: "&f북 &a接受%1的传送请求"
+  AccentHoverMesasge: "&a接受%1的传送请求"
   DefuseHoverMesasge: "&f붃 &c拒绝%1的传送请求"
-  SendDone: "&f북 &a传送请求已发送,对方有60s来同意你的请求"
-  RepectSend: "&f분 &6请不要重复发送Tpa!"
+  SendDone: "&a传送请求已发送,对方有60s来同意你的请求"
+  RepectSend: "&6请不要重复发送Tpa!"
   NotSendTeleport: "&f붃 &c这个玩家没有给你发传送请求"
   Offline: "&f붃 &c错误,那个玩家突然下线了,传送已取消!"
   DefuseDone: "&f붃 &c你拒绝了对方的传送请求!"
   Defuse: "&f붃 &c对方拒绝了你的请求!"
-  AcceptDone: "&f북 &a你传送到了%1那里!"
-  TeleportDone: "&f북 &a%1传送到了你这里!"
+  AcceptDone: "&a你传送到了%1那里!"
+  TeleportDone: "&a%1传送到了你这里!"
   TimeOutDone: "&f붃 &c你发给%1的传送请求已超时!"
-  TimeOut: "&f분 &6%1给你发的传送请求已超时!"
-  SendMe: "&f분 &6不能给自己发送传送请求!"
+  TimeOut: "&6%1给你发的传送请求已超时!"
+  SendMe: "&6不能给自己发送传送请求!"
   Message: |-
-    &f북 &a%1请求你传送到他身边 ?Accent?  ?Defuse?
+    &a%1请求你传送到他身边 ?Accent?  ?Defuse?
 IPMessage: |-
-  &f부 &#7289da玩家: %1
-  &f부 &#7289daIP: %2
-  &f부 &#7289daIP归属地: %3
+  &f부 #7289da玩家: %1
+  &f부 #7289daIP: %2
+  &f부 #7289daIP归属地: %3
 TeleportDelay:
   5: "&6距离传送还有&b5&6秒|&f请不要移动!|10|70|20"
   4: "&6距离传送还有&b4&6秒|&f请不要移动!|10|70|20"

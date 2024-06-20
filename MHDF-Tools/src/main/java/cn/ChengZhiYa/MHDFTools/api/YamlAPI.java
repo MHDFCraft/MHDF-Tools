@@ -8,7 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class YamlAPI {
-    public static InputStream GetResource(String filename) {
+    public static InputStream getResource(String filename) {
         try {
             URL URL2 = YamlAPI.class.getClassLoader().getResource(filename);
             if (URL2 == null) {
@@ -22,11 +22,11 @@ public class YamlAPI {
         }
     }
 
-    public static void SaveResource(String FilePath, String OutFileName, String ResourcePath, boolean Replace) {
+    public static void saveResource(String FilePath, String OutFileName, String ResourcePath, boolean Replace) {
         if (ResourcePath.isEmpty()) {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
-        InputStream in = GetResource(ResourcePath = ResourcePath.replace('\\', '/'));
+        InputStream in = getResource(ResourcePath = ResourcePath.replace('\\', '/'));
         if (in == null) {
             throw new IllegalArgumentException("The embedded resource '" + ResourcePath + "' cannot be found in " + ResourcePath);
         }

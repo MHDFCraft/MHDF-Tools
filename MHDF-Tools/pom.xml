@@ -6,7 +6,7 @@
 
     <groupId>MHDF-Tools</groupId>
     <artifactId>MHDF-Tools</artifactId>
-    <version>1.4.9</version>
+    <version>1.4.10</version>
     <packaging>jar</packaging>
 
     <name>MHDF-Tools</name>
