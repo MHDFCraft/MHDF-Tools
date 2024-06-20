@@ -54,46 +54,38 @@ public class CommandRegister implements Invitable {
 
     @Override
     public void start() {
-        LogUtil.color("&aStart Register!");
         registerCommand(plugin, new cn.ChengZhiYa.MHDFTools.command.subCommand.main.MHDFTools(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
-        LogUtil.color("&aDone1");
         for (String configKey : getConfig.getKeys(false)) {
             boolean isEnabled = getConfig.getBoolean(configKey + ".Enable", true);
             switch (configKey) {
                 case "HomeSystemSettings":
                     if (isEnabled) {
                         registerHomeCommands();
-                        LogUtil.color("&aDone2");
                     }
                     break;
                 case "SuperListSettings":
                     if (isEnabled) {
                         registerSuperListCommands();
-                        LogUtil.color("&aDone3");
                     }
                     break;
                 case "LoginSystemSettings":
                     if (isEnabled) {
                         registerLoginCommands();
-                        LogUtil.color("&aDone4");
                     }
                     break;
                 case "BanCommandSettings":
                     if (isEnabled) {
                         registerBanCommand();
-                        LogUtil.color("&aDone5");
                     }
                     break;
                 case "SpawnSettings":
                     if (isEnabled) {
                         registerSpawnCommands();
-                        LogUtil.color("&aDone6");
                     }
                     break;
                 case "SuperStopSettings":
                     if (isEnabled) {
                         registerStopCommand();
-                        LogUtil.color("&aDone8");
                     }
                     break;
                 case "MOTDSettings":
