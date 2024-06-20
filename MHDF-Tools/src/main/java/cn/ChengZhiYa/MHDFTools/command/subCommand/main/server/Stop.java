@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.PAPI;
+import static cn.ChengZhiYa.MHDFTools.utils.Util.Placeholder;
 
 public final class Stop implements CommandExecutor {
     @Override
@@ -27,7 +27,7 @@ public final class Stop implements CommandExecutor {
             }
 
             for (Player player : Bukkit.getOnlinePlayers()) {
-                player.kickPlayer(PAPI(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SuperStopSettings.StopMessageFormat")).replaceAll("\\{Message}", Message)));
+                player.kickPlayer(Placeholder(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SuperStopSettings.StopMessageFormat")).replaceAll("\\{Message}", Message)));
             }
         }
 

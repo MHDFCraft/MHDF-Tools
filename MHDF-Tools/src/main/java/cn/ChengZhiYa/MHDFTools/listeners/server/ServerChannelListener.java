@@ -23,6 +23,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.ServerName;
 import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeLocation;
 
+@SuppressWarnings("ALL")
 public final class ServerChannelListener implements PluginMessageListener {
     @Override
     public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte @NotNull [] message) {

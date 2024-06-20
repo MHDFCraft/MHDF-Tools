@@ -6,45 +6,61 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.PAPI;
+import static cn.ChengZhiYa.MHDFTools.utils.Util.Placeholder;
 
 public final class Scoreboard extends BukkitRunnable {
 
+    @Override
     public void run() {
-        if (MHDFTools.instance.getConfig().getBoolean("ScoreboardSettings.Enable")) {
-            if (!Bukkit.getOnlinePlayers().isEmpty()) {
-                try {
-                    for (Player player : Bukkit.getOnlinePlayers()) {
-                        if (MapUtil.getObjectiveHasMap().get(player.getName() + "_Objective") != null) {
-                            MapUtil.getObjectiveHasMap().get(player.getName() + "_Objective").unregister();
-                        }
-                        if (MapUtil.getScoreboardHasMap().get(player.getName() + "_Scoreboard") == null) {
-                            MapUtil.getScoreboardHasMap().put(player.getName() + "_Scoreboard", Bukkit.getScoreboardManager().getNewScoreboard());
-                        }
-                        MapUtil.getObjectiveHasMap().put(player.getName() + "_Objective", MapUtil.getScoreboardHasMap().get(player.getName() + "_Scoreboard").registerNewObjective(PAPI(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("ScoreboardSettings.Title"))), "dummy"));
-                        MapUtil.getObjectiveHasMap().get(player.getName() + "_Objective").setDisplaySlot(DisplaySlot.SIDEBAR);
-                        for (int i = 0; i < MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").size(); i++) {
-                            Score ScoreMessage;
-                            if (MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").get(i) == null || MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").get(i).isEmpty()) {
-                                StringBuilder NullMessage = new StringBuilder(" ");
-                                for (int i1 = 0; i1 < i; i1++) {
-                                    NullMessage.append(" ");
-                                }
-                                ScoreMessage = MapUtil.getObjectiveHasMap().get(player.getName() + "_Objective").getScore(NullMessage.toString());
-                            } else {
-                                ScoreMessage = MapUtil.getObjectiveHasMap().get(player.getName() + "_Objective").getScore(PAPI(player, MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").get(i)));
-                            }
-                            ScoreMessage.setScore(MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").size() - i);
-                        }
-                        player.setScoreboard(MapUtil.getScoreboardHasMap().get(player.getName() + "_Scoreboard"));
-                    }
-                } catch (Exception ignored) {
-                }
+        if (!MHDFTools.instance.getConfig().getBoolean("ScoreboardSettings.Enable")) {
+            return;
+        }
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            updateScoreboard(player);
+        }
+    }
+
+    private void updateScoreboard(Player player) {
+        try {
+            String playerName = player.getName();
+            String scoreboardKey = playerName + "_Scoreboard";
+            MapUtil.getObjectiveHasMap().remove(playerName + "_Objective");
+
+            if (!MapUtil.getScoreboardHasMap().containsKey(scoreboardKey)) {
+                MapUtil.getScoreboardHasMap().put(scoreboardKey, Bukkit.getScoreboardManager().getNewScoreboard());
             }
+
+            Objective objective = MapUtil.getScoreboardHasMap().get(scoreboardKey).registerNewObjective("sidebar", "dummy");
+            objective.setDisplayName(Placeholder(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("ScoreboardSettings.Title"))));
+            objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+            MapUtil.getObjectiveHasMap().put(playerName + "_Objective", objective);
+
+            updateScoreboardLines(player, objective);
+
+            player.setScoreboard(MapUtil.getScoreboardHasMap().get(scoreboardKey));
+        } catch (Exception ignored) {
+        }
+    }
+
+    private void updateScoreboardLines(Player player, Objective objective) {
+        int size = MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").size();
+        for (int i = 0; i < size; i++) {
+            String line = MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").get(i);
+
+            if (line == null || line.isEmpty()) {
+                line = " ";
+            }
+
+            String finalLine = Placeholder(player, line);
+
+            Score score = objective.getScore(finalLine);
+            score.setScore(size - i);
         }
     }
 }

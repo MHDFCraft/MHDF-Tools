@@ -14,7 +14,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
 
 public final class IP implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 1) {
             String PlayerName = args[0];
             if (Bukkit.getPlayer(PlayerName) == null) {

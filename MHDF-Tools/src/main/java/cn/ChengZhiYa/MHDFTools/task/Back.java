@@ -5,35 +5,42 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Objects;
-
 import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.ServerName;
 import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.TpPlayerTo;
 import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
 
 public final class Back extends BukkitRunnable {
+
     @Override
     public void run() {
-        for (Object Key : MapUtil.getIntHasMap().keySet()) {
-            if (Key.toString().contains("_BackDelay")) {
-                String PlayerName = Key.toString().replaceAll("_BackDelay", "");
-                if (Bukkit.getPlayer(PlayerName) != null) {
-                    Player player = Bukkit.getPlayer(PlayerName);
-                    sendTitle(Objects.requireNonNull(player), i18n("TeleportDelay." + MapUtil.getIntHasMap().get(Key)));
-                    if (MapUtil.getIntHasMap().get(Key) > 0) {
-                        playSound(Objects.requireNonNull(player), sound("TeleportDelay." + MapUtil.getIntHasMap().get(Key)));
-                        MapUtil.getIntHasMap().put(Key, MapUtil.getIntHasMap().get(Key) - 1);
-                    } else {
-                        playSound(Objects.requireNonNull(player), sound("TeleportSound"));
-                        TpPlayerTo(PlayerName, ServerName, MapUtil.getLocationHasMap().get(PlayerName + "_DeathLocation"));
-                        MapUtil.getLocationHasMap().put(PlayerName + "_UnBackLocation", Objects.requireNonNull(player).getLocation());
-                        player.sendMessage(i18n("Back.Done"));
-                        MapUtil.getIntHasMap().remove(Key);
-                    }
+        for (Object key : MapUtil.getIntHasMap().keySet()) {
+            if (key.toString().contains("_BackDelay")) {
+                String playerName = key.toString().replace("_BackDelay", "");
+                Player player = Bukkit.getPlayer(playerName);
+
+                if (player != null) {
+                    handlePlayerBack(player, key.toString(), playerName);
                 } else {
-                    MapUtil.getIntHasMap().remove(Key);
+                    MapUtil.getIntHasMap().remove(key);
                 }
             }
+        }
+    }
+
+    private void handlePlayerBack(Player player, String key, String playerName) {
+        int teleportDelay = MapUtil.getIntHasMap().get(key);
+
+        sendTitle(player, i18n("TeleportDelay." + teleportDelay));
+
+        if (teleportDelay > 0) {
+            playSound(player, sound("TeleportDelay." + teleportDelay));
+            MapUtil.getIntHasMap().put(key, teleportDelay - 1);
+        } else {
+            playSound(player, sound("TeleportSound"));
+            TpPlayerTo(playerName, ServerName, MapUtil.getLocationHasMap().get(playerName + "_DeathLocation"));
+            MapUtil.getLocationHasMap().put(playerName + "_UnBackLocation", player.getLocation());
+            player.sendMessage(i18n("Back.Done"));
+            MapUtil.getIntHasMap().remove(key);
         }
     }
 }

@@ -18,8 +18,20 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil.loginExists;
 
 public final class Register implements CommandExecutor {
 
+    MHDFTools plugin;
+    int maxPasswordLength;
+    List<String> easyPasswords;
+    boolean autoLogin;
+
+    public Register(MHDFTools plugin) {
+        this.plugin = plugin;
+        this.maxPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MaxPasswordLength");
+        this.easyPasswords = plugin.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
+        this.autoLogin = plugin.getConfig().getBoolean("LoginSystemSettings.AutoLogin");
+    }
+
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender,@NotNull Command command,@NotNull String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(i18n("OnlyPlayer"));
             return false;
@@ -27,13 +39,13 @@ public final class Register implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (args.length == 1) {
-                handleRegistration(player, args[0]);
-            } else {
-                sender.sendMessage(i18n("Usage.Register", label));
-            }
-        });
+        if (args.length != 1) {
+            sender.sendMessage(i18n("Usage.Register", label));
+            return false;
+        }
+
+        String password = args[0];
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> handleRegistration(player, password));
 
         return true;
     }
@@ -44,24 +56,16 @@ public final class Register implements CommandExecutor {
             return;
         }
 
-        int minPasswordLength = MHDFTools.instance.getConfig().getInt("LoginSystemSettings.MinPaswordLength");
-        int maxPasswordLength = MHDFTools.instance.getConfig().getInt("LoginSystemSettings.MaxPaswordLength");
-        List<String> easyPasswords = MHDFTools.instance.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
-
-        if (password.length() < minPasswordLength) {
-            player.sendMessage(i18n("Login.LengthShort", String.valueOf(minPasswordLength)));
-            return;
-        }
         if (password.length() > maxPasswordLength) {
-            player.sendMessage(i18n("Login.LengthLong", String.valueOf(maxPasswordLength)));
+            player.sendMessage(i18n("Login.LengthInvalid", String.valueOf(maxPasswordLength)));
             return;
         }
-        for (String easyPassword : easyPasswords) {
-            if (password.equals(easyPassword)) {
-                player.sendMessage(i18n("Login.EasyPassword"));
-                return;
-            }
+
+        if (easyPasswords.contains(password)) {
+            player.sendMessage(i18n("Login.EasyPassword"));
+            return;
         }
+
         if (loginExists(player.getName())) {
             player.sendMessage(i18n("Login.AlreadyRegister"));
             return;
@@ -70,7 +74,7 @@ public final class Register implements CommandExecutor {
         MapUtil.getStringHasMap().put(player.getName() + "_Login", "t");
         LoginUtil.register(player.getName(), Sha256(password));
 
-        if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {
+        if (autoLogin) {
             String ipAddress = Objects.requireNonNull(player.getAddress()).getHostName();
             MapUtil.getStringHasMap().put(player.getName() + "_LoginIP", ipAddress);
         }

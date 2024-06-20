@@ -125,7 +125,7 @@ public final class Util {
         }
     }
 
-    public static String PAPI(OfflinePlayer Player, String Message) {
+    public static String Placeholder(OfflinePlayer Player, String Message) {
         if (MHDFPluginLoader.hasPlaceholderAPI) {
             Message = PlaceholderAPI.setPlaceholders(Player, Message);
         }
@@ -316,11 +316,11 @@ public final class Util {
 
         if (!messageList.isEmpty()) {
             weightList.sort(Collections.reverseOrder());
-            return PAPI(player, MHDFTools.instance.getConfig().getString(settingType + "." + messageList.get(weightList.get(0)) + "." + messageType))
+            return Placeholder(player, MHDFTools.instance.getConfig().getString(settingType + "." + messageList.get(weightList.get(0)) + "." + messageType))
                     .replaceAll("%PlayerName%", player.getName());
         }
 
-        return PAPI(player, MHDFTools.instance.getConfig().getString(settingType + ".Default." + messageType))
+        return Placeholder(player, MHDFTools.instance.getConfig().getString(settingType + ".Default." + messageType))
                 .replaceAll("%PlayerName%", player.getName());
     }
 
@@ -352,7 +352,7 @@ public final class Util {
 
     public static void sendTitle(Player player, String titleString) {
         String[] title = titleString.split("\\|");
-        player.sendTitle(PAPI(player, title[0]), PAPI(player, title[1]), Integer.parseInt(title[2]), Integer.parseInt(title[3]), Integer.parseInt(title[4]));
+        player.sendTitle(Placeholder(player, title[0]), Placeholder(player, title[1]), Integer.parseInt(title[2]), Integer.parseInt(title[3]), Integer.parseInt(title[4]));
     }
 
     public static void playSound(Player player, String soundString) {

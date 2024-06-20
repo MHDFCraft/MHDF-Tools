@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.TpPlayerHome;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.PAPI;
+import static cn.ChengZhiYa.MHDFTools.utils.Util.Placeholder;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataSource;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.*;
@@ -56,7 +56,7 @@ public final class HomeMenuUtil {
 
     public static void openHomeMenu(Player player, int page) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            String title = PAPI(player, getMenu(homeMenuFile).getString("menu.Title")).replaceAll("\\{Page}", String.valueOf(page));
+            String title = Placeholder(player, getMenu(homeMenuFile).getString("menu.Title")).replaceAll("\\{Page}", String.valueOf(page));
             Inventory menu = Bukkit.createInventory(player, getMenu(homeMenuFile).getInt("menu.Size"), title);
 
             int HomeSize = getMenu(homeMenuFile).getInt("menu.HomeSize");
@@ -99,7 +99,7 @@ public final class HomeMenuUtil {
 
                                     getMenu(homeMenuFile).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s ->
                                             lore.add(
-                                                    PAPI(player, s)
+                                                    Placeholder(player, s)
                                                             .replaceAll("\\{HomeName}", home)
                                                             .replaceAll("\\{Server}", getHomeServer(player.getName(), home))
                                                             .replaceAll("\\{World}", Objects.requireNonNull(getHomeLocation(player.getName(), home)).getWorld().getName())
@@ -135,10 +135,10 @@ public final class HomeMenuUtil {
                 }
 
                 getMenu(homeMenuFile).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s ->
-                        lore.add(PAPI(player, s).replaceAll("\\{Page}", String.valueOf(page)))
+                        lore.add(Placeholder(player, s).replaceAll("\\{Page}", String.valueOf(page)))
                 );
 
-                getMenu(homeMenuFile).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s -> lore.add(PAPI(player, s)));
+                getMenu(homeMenuFile).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s -> lore.add(Placeholder(player, s)));
 
                 setMenuItem(menu, homeMenuFile, itemID, type, displayName, lore, customModelData, amount, slotList);
             }

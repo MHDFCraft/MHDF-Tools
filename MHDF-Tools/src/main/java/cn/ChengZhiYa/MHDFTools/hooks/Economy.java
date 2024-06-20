@@ -12,7 +12,7 @@ import java.util.List;
 
 import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.*;
 
-public final class EconomyImplementer extends AbstractEconomy {
+public final class Economy extends AbstractEconomy {
     public boolean isEnabled() {
         return true;
     }

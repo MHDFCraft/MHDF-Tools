@@ -5,6 +5,7 @@ import cn.ChengZhiYa.MHDFTools.utils.BCUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,12 +22,9 @@ public final class PlayerSpawnListener implements Listener {
         Player player = event.getPlayer();
         Location spawnLocation = getSpawnLocation();
 
-        if (spawnLocation != null) {
-            Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
-                String serverName = MHDFTools.instance.getConfig().getString("SpawnSettings.Server");
-                BCUtil.TpPlayerTo(player.getName(), serverName, spawnLocation);
-            }, 5);
-        }
+        Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
+            BCUtil.TpPlayerTo(player.getName(), getServerName(), spawnLocation);
+        }, 5);
     }
 
     private boolean isEnabled() {
@@ -36,16 +34,21 @@ public final class PlayerSpawnListener implements Listener {
 
     private Location getSpawnLocation() {
         World world = Bukkit.getWorld(Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SpawnSettings.World")));
-        double X = MHDFTools.instance.getConfig().getDouble("SpawnSettings.X");
-        double Y = MHDFTools.instance.getConfig().getDouble("SpawnSettings.Y");
-        double Z = MHDFTools.instance.getConfig().getDouble("SpawnSettings.Z");
-        float yaw = (float) MHDFTools.instance.getConfig().getDouble("SpawnSettings.Yaw");
-        float pitch = (float) MHDFTools.instance.getConfig().getDouble("SpawnSettings.Pitch");
 
-        if (world == null) {
-            return null;
-        }
+        double x = getConfig().getDouble("SpawnSettings.X");
+        double y = getConfig().getDouble("SpawnSettings.Y");
+        double z = getConfig().getDouble("SpawnSettings.Z");
+        float yaw = (float) getConfig().getDouble("SpawnSettings.Yaw");
+        float pitch = (float) getConfig().getDouble("SpawnSettings.Pitch");
 
-        return new Location(world, X, Y, Z, yaw, pitch);
+        return new Location(world, x, y, z, yaw, pitch);
+    }
+
+    private String getServerName() {
+        return getConfig().getString("SpawnSettings.Server");
+    }
+
+    private FileConfiguration getConfig() {
+        return MHDFTools.instance.getConfig();
     }
 }
