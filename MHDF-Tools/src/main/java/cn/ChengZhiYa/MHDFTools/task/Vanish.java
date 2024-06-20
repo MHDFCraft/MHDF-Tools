@@ -8,7 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.util.Util.VanishList;
+import static cn.ChengZhiYa.MHDFTools.utils.Util.VanishList;
 
 public final class Vanish extends BukkitRunnable {
     @Override

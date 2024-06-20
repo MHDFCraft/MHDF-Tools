@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static cn.ChengZhiYa.MHDFTools.util.Util.PAPIChatColor;
+import static cn.ChengZhiYa.MHDFTools.utils.Util.PAPI;
 
 public final class TimeMessage extends BukkitRunnable {
 
@@ -19,10 +19,10 @@ public final class TimeMessage extends BukkitRunnable {
     public void run() {
         if (MHDFTools.instance.getConfig().getBoolean("TimeMessageSettings.Enable")) {
             if (MHDFTools.instance.getConfig().getBoolean("TimeMessageSettings.ConsoleDisplayed")) {
-                Bukkit.broadcastMessage(PAPIChatColor(null, MHDFTools.instance.getConfig().getStringList("TimeMessageSettings.Message").get(this.i)));
+                Bukkit.broadcastMessage(PAPI(null, MHDFTools.instance.getConfig().getStringList("TimeMessageSettings.Message").get(this.i)));
             } else {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.sendMessage(PAPIChatColor(null, MHDFTools.instance.getConfig().getStringList("TimeMessageSettings.Message").get(this.i)));
+                    player.sendMessage(PAPI(null, MHDFTools.instance.getConfig().getStringList("TimeMessageSettings.Message").get(this.i)));
                 }
             }
             this.i = order(this.i);

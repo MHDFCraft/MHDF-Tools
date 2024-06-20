@@ -388,3 +388,8 @@ IpSettings:
 MenuSettings:
   #开关
   Enable: true
+
+#让玩家转头系统的开关设置
+RotateSettings:
+  #开关
+  Enable: true
