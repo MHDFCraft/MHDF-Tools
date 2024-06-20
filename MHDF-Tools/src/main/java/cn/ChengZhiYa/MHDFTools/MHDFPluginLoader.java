@@ -93,7 +93,7 @@ public enum MHDFPluginLoader {
         LogUtil.color(stopDone);
     }
     private String getLogo() {
-        return  "" +
+        return  "\n" +
                 "&6          _____                    _____                    _____                    _____          \n" +
                 "&6         /\\    \\                  /\\    \\                  /\\    \\                  /\\    \\         \n" +
                 "&6        /::\\____\\                /::\\____\\                /::\\    \\                /::\\    \\        \n" +
