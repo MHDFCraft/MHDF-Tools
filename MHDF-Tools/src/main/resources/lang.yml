@@ -2,7 +2,7 @@ NoPermission: "&f붃 &c你没有权限怎么做!"
 OnlyPlayer: "&6这个命令只能玩家使用!"
 PlayerNotOnline: "&6这个玩家不存在或不在线"
 FastSetDone: "&a完成!"
-HatNoItem: "&6你需要拿着一个物品才能使用这个命令!"
+HatNoItem: "&f분 &6你需要拿着一个物品才能使用这个命令!"
 AdminCommands:
   Center: " &7| "
   convert:

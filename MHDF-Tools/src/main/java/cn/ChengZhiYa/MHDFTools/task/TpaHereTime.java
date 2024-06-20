@@ -10,8 +10,8 @@ import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
 public final class TpaHereTime extends BukkitRunnable {
     @Override
     public void run() {
-        if (MHDFTools.instance.getConfig().getBoolean("TpaHere.Enable")) {
-            for (Object Tpa : MapUtil.getStringHasMap().keySet()) {
+        if (MHDFTools.instance.getConfig().getBoolean("TpaHereSettings.Enable")) {
+            for (Object Tpa : StringHasMap.getHasMap().keySet()) {
                 if (Tpa.toString().contains("_TPAHerePlayerName")) {
                     String PlayerName = Tpa.toString().replaceAll("_TPAHerePlayerName", "");
                     String TagerPlayerName = MapUtil.getStringHasMap().get(Tpa);

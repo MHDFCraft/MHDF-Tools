@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:MHDF-Tools/src/main/java/cn/ChengZhiYa/MHDFTools/listeners/server/menu/HomeMenu.java
 package cn.ChengZhiYa.MHDFTools.listeners.server.menu;
+========
+package cn.ChengZhiYa.MHDFTools.listener.menu;
+>>>>>>>> master:MHDF-Tools/src/main/java/cn/ChengZhiYa/MHDFTools/listener/menu/HomeMenu.java
 
 import cn.ChengZhiYa.MHDFTools.utils.menu.HomeMenuUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
@@ -11,9 +15,16 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import java.util.List;
 import java.util.Objects;
 
+<<<<<<<< HEAD:MHDF-Tools/src/main/java/cn/ChengZhiYa/MHDFTools/listeners/server/menu/HomeMenu.java
 import static cn.ChengZhiYa.MHDFTools.utils.menu.HomeMenuUtil.getPlaceholder;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.HomeMenuUtil.homeMenuFile;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.*;
+========
+import static cn.chengzhiya.mhdfpluginapi.Util.ChatColor;
+import static cn.ChengZhiYa.MHDFTools.util.menu.HomeMenuUtil.getPlaceholder;
+import static cn.ChengZhiYa.MHDFTools.util.menu.HomeMenuUtil.homeMenuFile;
+import static cn.ChengZhiYa.MHDFTools.util.menu.MenuUtil.*;
+>>>>>>>> master:MHDF-Tools/src/main/java/cn/ChengZhiYa/MHDFTools/listener/menu/HomeMenu.java
 
 public final class HomeMenu implements Listener {
     @EventHandler

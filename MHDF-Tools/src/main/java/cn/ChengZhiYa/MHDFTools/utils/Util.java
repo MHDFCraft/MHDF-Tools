@@ -48,7 +48,7 @@ public final class Util {
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static final List<String> CommandLinkList = new ArrayList<>();
-    public static final String Version = "1.4.9";
+    public static final String Version = "1.4.10";
     public static List<String> VanishList = new ArrayList<>();
     public static volatile BossBar VanishBossBar;
     public static YamlConfiguration LangFileData;

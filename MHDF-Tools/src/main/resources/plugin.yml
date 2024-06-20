@@ -70,6 +70,8 @@ permissions:
     default: true
   MHDFTools.Command.TpBack:
     default: true
+  MHDFTools.Command.Trash:
+    default: true
   MHDFTools.Command.TpaHere:
     default: true
   MHDFTools.Command.UnBack:
@@ -78,6 +80,12 @@ permissions:
     default: op
   MHDFTools.Command.Rotate:
     default: op
+  MHDFTools.FastUse.EnderChest:
+    default: true
+  MHDFTools.FastUse.ShulkerBox:
+    default: true
+  MHDFTools.FastUse.CraftingTable:
+    default: true
   MHDFTools.SendUpdateMessage:
     default: op
   MHDFTools.JoinMessage:

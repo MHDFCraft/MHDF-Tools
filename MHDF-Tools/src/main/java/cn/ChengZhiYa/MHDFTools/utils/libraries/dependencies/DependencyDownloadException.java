@@ -34,7 +34,6 @@ public class DependencyDownloadException extends Exception {
         super(message);
     }
 
-
     public DependencyDownloadException(Throwable cause) {
         super(cause);
     }

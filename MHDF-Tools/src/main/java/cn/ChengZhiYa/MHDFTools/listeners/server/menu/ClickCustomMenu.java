@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:MHDF-Tools/src/main/java/cn/ChengZhiYa/MHDFTools/listeners/server/menu/ClickCustomMenu.java
 package cn.ChengZhiYa.MHDFTools.listeners.server.menu;
+========
+package cn.ChengZhiYa.MHDFTools.listener.menu;
+>>>>>>>> master:MHDF-Tools/src/main/java/cn/ChengZhiYa/MHDFTools/listener/menu/ClickCustomMenu.java
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
