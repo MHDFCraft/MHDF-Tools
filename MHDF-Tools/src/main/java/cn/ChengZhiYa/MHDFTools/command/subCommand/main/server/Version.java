@@ -13,11 +13,11 @@ public class Version implements CommandExecutor {
         if (args.length > 0) {
             return false;
         }
-        sender.sendMessage("§f============&6梦之工具&f============");
+        sender.sendMessage("§f============§6梦之工具§f============");
         sender.sendMessage("§7Version: §6" + MHDFPluginLoader.INSTANCE.getVersion());
         sender.sendMessage("§7Built: §6" + MHDFPluginLoader.INSTANCE.getBuild());
         sender.sendMessage("§7Server: §6" + Bukkit.getServer().getClass().getName().split("\\.")[3]);
-        sender.sendMessage("§f============&6梦之工具&f============");
+        sender.sendMessage("§f============§6梦之工具§f============");
         return true;
     }
 }

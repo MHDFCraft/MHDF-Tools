@@ -168,6 +168,9 @@ public final class CommandRegister implements Invitable {
     }
     private void registerPluginVersionCommands() {
         registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "version");
+        registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "ver");
+        registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "mver");
+        registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "mversion");
     }
 
     private void registerRotateCommands() {
