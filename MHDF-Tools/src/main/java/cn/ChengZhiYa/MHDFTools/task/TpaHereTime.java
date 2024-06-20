@@ -11,7 +11,7 @@ public final class TpaHereTime extends BukkitRunnable {
     @Override
     public void run() {
         if (MHDFTools.instance.getConfig().getBoolean("TpaHereSettings.Enable")) {
-            for (Object Tpa : StringHasMap.getHasMap().keySet()) {
+            for (Object Tpa : MapUtil.getStringHasMap().keySet()) {
                 if (Tpa.toString().contains("_TPAHerePlayerName")) {
                     String PlayerName = Tpa.toString().replaceAll("_TPAHerePlayerName", "");
                     String TagerPlayerName = MapUtil.getStringHasMap().get(Tpa);
