@@ -118,10 +118,10 @@ public enum MHDFPluginLoader {
                 "&6                                                                                                    ";
     }
     public String getVersion() {
-        return "1.4.11";
+        return "1.4.12 (美化)";
     }
 
     public String getBuild() {
-        return "224621-0.13";
+        return "224621-1.30";
     }
 }
