@@ -39,7 +39,7 @@ public final class ShulkerBox implements Listener {
     @EventHandler
     public void onClickInventoryEvent(InventoryClickEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("FastUseShulkerBoxSettings.Enable")) {
-            if (event.getView().getTitle().equals(MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("FastUse.ShulkerBoxMenuTitle")))) {
+            if (event.getView().getTitle().equals(MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("FastUseShulkerBoxSettings.MenuTitle")))) {
                 if (event.getCurrentItem() != null) {
                     event.setCancelled(event.getCurrentItem().getType().toString().contains("SHULKER_BOX"));
                 }

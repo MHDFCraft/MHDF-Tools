@@ -49,14 +49,16 @@ import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.runAction;
 
 public final class CommandRegister implements Invitable {
-    FileConfiguration getConfig = MHDFTools.instance.getConfig();
+    FileConfiguration config;
     JavaPlugin plugin = MHDFPluginLoader.INSTANCE.getPlugin();
 
     @Override
     public void start() {
+        config = MHDFTools.instance.getConfig();
+
         registerCommand(plugin, new cn.ChengZhiYa.MHDFTools.command.subCommand.main.MHDFTools(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
-        for (String configKey : getConfig.getKeys(false)) {
-            boolean isEnabled = getConfig.getBoolean(configKey + ".Enable", true);
+        for (String configKey : config.getKeys(false)) {
+            boolean isEnabled = config.getBoolean(configKey + ".Enable", true);
             switch (configKey) {
                 case "HomeSystemSettings":
                     if (isEnabled) {
@@ -321,28 +323,28 @@ public final class CommandRegister implements Invitable {
     }
 
     private void registerLinkCommands() {
-        for (String Command : Objects.requireNonNull(getConfig.getConfigurationSection("CommandLinkSettings.CommandList")).getKeys(false)) {
+        for (String Command : Objects.requireNonNull(config.getConfigurationSection("CommandLinkSettings.CommandList")).getKeys(false)) {
             CommandLinkList.add(Command);
             registerCommand(plugin, new TabExecutor() {
 
                 @Override
                 public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
-                    if (getConfig.getBoolean("CommandLinkSettings.CommandList." + Command + ".OnlyPlayer")) {
+                    if (config.getBoolean("CommandLinkSettings.CommandList." + Command + ".OnlyPlayer")) {
                         if (!(sender instanceof Player)) {
                             sender.sendMessage(i18n("OnlyPlayer"));
                             return false;
                         }
                     }
                     java.util.List<String> actionList = new ArrayList<>();
-                    if (getConfig.getString("CommandLinkSettings.CommandList." + Command + ".ActionList." + args.length) != null) {
-                        getConfig.getStringList("CommandLinkSettings.CommandList." + Command + ".ActionList." + args.length).forEach(action -> {
+                    if (config.getString("CommandLinkSettings.CommandList." + Command + ".ActionList." + args.length) != null) {
+                        config.getStringList("CommandLinkSettings.CommandList." + Command + ".ActionList." + args.length).forEach(action -> {
                             for (int i = 0; i < args.length; i++) {
                                 action = action.replaceAll("%" + (i + 1), args[i]);
                             }
                             actionList.add(action);
                         });
                     } else {
-                        actionList.addAll(getConfig.getStringList("CommandLinkSettings.CommandList." + Command + ".ActionList.Default"));
+                        actionList.addAll(config.getStringList("CommandLinkSettings.CommandList." + Command + ".ActionList.Default"));
                     }
                     runAction(sender, null, actionList);
                     return false;
@@ -350,10 +352,10 @@ public final class CommandRegister implements Invitable {
 
                 @Override
                 public java.util.@Nullable List<String> onTabComplete(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
-                    java.util.List<String> playerList = getPlayerList(getConfig.getBoolean("CommandLinkSettings.CommandList." + Command + ".BungeeCordGetPlayerList"));
+                    java.util.List<String> playerList = getPlayerList(config.getBoolean("CommandLinkSettings.CommandList." + Command + ".BungeeCordGetPlayerList"));
                     java.util.List<String> tabList = new ArrayList<>();
-                    if (getConfig.getString("CommandLinkSettings.CommandList." + Command + ".TabList." + args.length) != null) {
-                        for (String tab : getConfig.getStringList("CommandLinkSettings.CommandList." + Command + ".TabList." + args.length)) {
+                    if (config.getString("CommandLinkSettings.CommandList." + Command + ".TabList." + args.length) != null) {
+                        for (String tab : config.getStringList("CommandLinkSettings.CommandList." + Command + ".TabList." + args.length)) {
                             if (tab.equals("{PlayerList}")) {
                                 tabList.addAll(playerList);
                             } else {
@@ -365,7 +367,7 @@ public final class CommandRegister implements Invitable {
                     }
                     return tabList;
                 }
-            }, Command, getConfig.getString("CommandLinkSettings.CommandList." + Command + "." + "Permission"), Command);
+            }, Command, config.getString("CommandLinkSettings.CommandList." + Command + "." + "Permission"), Command);
         }
     }
 }

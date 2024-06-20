@@ -50,7 +50,7 @@ FastUseShulkerBoxSettings:
   #开关
   Enable: true
   #潜影盒菜单标题
-  ShulkerBoxMenuTitle: "&b快速使用-倩影盒"
+  MenuTitle: "&b快速使用-倩影盒"
 
 #右键打开末影箱设置
 FastUseCraftingTableSettings:

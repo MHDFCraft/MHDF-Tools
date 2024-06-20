@@ -16,13 +16,12 @@ public class MHDFConfig {
     public void loadConfig() {
         createFile();
         createVanishCache();
-        MHDFTools.instance.reloadConfig();
     }
 
     public void createFile() {
         createDir(getDataFolder);
         saveResource(getDataFolder.getPath(), "config.yml", "config.yml", false);
-        MHDFTools.instance.reloadConfig(); //材质
+        MHDFTools.instance.reloadConfig(); //配置
 
         File Lang_File = new File(getDataFolder, "lang.yml");
         saveResource(getDataFolder.getPath(), "lang.yml", "lang.yml", false);
