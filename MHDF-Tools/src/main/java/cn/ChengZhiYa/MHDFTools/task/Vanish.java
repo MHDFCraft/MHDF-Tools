@@ -6,25 +6,37 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Objects;
+import java.lang.reflect.Method;
 
 import static cn.ChengZhiYa.MHDFTools.utils.Util.VanishList;
 
 public final class Vanish extends BukkitRunnable {
+
+    private static Method hidePlayerMethod;
+
+    static {
+        try {
+            hidePlayerMethod = Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
-        if (MHDFTools.instance.getConfig().getBoolean("InvseeSettings.Enable")) {
-            if (!VanishList.isEmpty()) {
-                for (String VanishPlayer : VanishList) {
-                    if (Bukkit.getPlayer(VanishPlayer) != null) {
-                        Player player = Bukkit.getPlayer(VanishPlayer);
-                        for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
+        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
+            for (String vanishPlayer : VanishList) {
+                Player player = Bukkit.getPlayerExact(vanishPlayer);
+                if (player != null) {
+                    for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                        if (hidePlayerMethod != null) {
                             try {
-                                Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
-                                OnlinePlayer.hidePlayer(MHDFTools.instance, Objects.requireNonNull(player));
-                            } catch (NoSuchMethodException e) {
-                                OnlinePlayer.hidePlayer(Objects.requireNonNull(player));
+                                hidePlayerMethod.invoke(onlinePlayer, MHDFTools.instance, player);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
+                        } else {
+                            onlinePlayer.hidePlayer(player);
                         }
                     }
                 }
