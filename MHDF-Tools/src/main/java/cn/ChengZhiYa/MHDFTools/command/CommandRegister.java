@@ -9,11 +9,11 @@ import cn.ChengZhiYa.MHDFTools.command.subCommand.main.flight.FlyTime;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.gamemode.GameMode;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.server.List;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.server.Stop;
+import cn.ChengZhiYa.MHDFTools.command.subCommand.main.server.Version;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.teleport.Tpa;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.teleport.TpaHere;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.*;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.back.Back;
-import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.back.TpBack;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.home.DelHome;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.home.Home;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.home.SetHome;
@@ -25,15 +25,7 @@ import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.spawn.Spawn;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.time.Day;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.time.Night;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.weather.Sun;
-import cn.ChengZhiYa.MHDFTools.listeners.player.*;
-import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.CraftingTable;
-import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.EnderChest;
-import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.ShulkerBox;
-import cn.ChengZhiYa.MHDFTools.listeners.server.ServerCommandListener;
-import cn.ChengZhiYa.MHDFTools.listeners.server.ServerMOTDListener;
-import cn.ChengZhiYa.MHDFTools.listeners.server.menu.HomeMenu;
 import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -45,7 +37,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.runAction;
 
 public final class CommandRegister implements Invitable {
@@ -55,7 +47,6 @@ public final class CommandRegister implements Invitable {
     @Override
     public void start() {
         config = MHDFTools.instance.getConfig();
-
         registerCommand(plugin, new cn.ChengZhiYa.MHDFTools.command.subCommand.main.MHDFTools(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
         for (String configKey : config.getKeys(false)) {
             boolean isEnabled = config.getBoolean(configKey + ".Enable", true);
@@ -75,11 +66,6 @@ public final class CommandRegister implements Invitable {
                         registerLoginCommands();
                     }
                     break;
-                case "BanCommandSettings":
-                    if (isEnabled) {
-                        registerBanCommand();
-                    }
-                    break;
                 case "SpawnSettings":
                     if (isEnabled) {
                         registerSpawnCommands();
@@ -90,11 +76,6 @@ public final class CommandRegister implements Invitable {
                         registerStopCommand();
                     }
                     break;
-                case "MOTDSettings":
-                    if (isEnabled) {
-                        registerMOTDListener();
-                    }
-                    break;
                 case "FlySettings":
                     if (isEnabled) {
                         registerFlyCommands();
@@ -103,11 +84,6 @@ public final class CommandRegister implements Invitable {
                 case "BackSettings":
                     if (isEnabled) {
                         registerBackCommands();
-                    }
-                    break;
-                case "TpBackSettings":
-                    if (isEnabled) {
-                        registerTpBackCommands();
                     }
                     break;
                 case "VanishSettings":
@@ -179,39 +155,20 @@ public final class CommandRegister implements Invitable {
                         registerRotateCommands();
                     }
                     break;
-                case "FastUseEnderChestSettings":
+                case "VersionSettings":
                     if (isEnabled) {
-                        registerEnderChestCommands();
-                    }
-                    break;
-                case "FastUseShulkerBoxSettings":
-                    if (isEnabled) {
-                        registerShulkerBoxCommands();
-                    }
-                    break;
-                case "FastUseCraftingTableSettings":
-                    if (isEnabled) {
-                        registerCraftingTableCommands();
+                        registerPluginVersionCommands();
                     }
                     break;
             }
         }
     }
-
-    private void registerEnderChestCommands() {
-        Bukkit.getPluginManager().registerEvents(new EnderChest(), plugin);
-    }
-
-    private void registerShulkerBoxCommands() {
-        Bukkit.getPluginManager().registerEvents(new ShulkerBox(), plugin);
-    }
-
-    private void registerCraftingTableCommands() {
-        Bukkit.getPluginManager().registerEvents(new CraftingTable(), plugin);
-    }
-
     private void registerTrashCommands() {
         registerCommand(plugin, new Trash(), "垃圾桶", "MHDFTools.Command.Trash", "trash");
+    }
+    private void registerPluginVersionCommands() {
+        registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "version");
+        registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "mversion");
     }
 
     private void registerRotateCommands() {
@@ -222,7 +179,6 @@ public final class CommandRegister implements Invitable {
         registerCommand(plugin, new SetHome(), "设置家", "MHDFTools.Command.SetHome", "sethome");
         registerCommand(plugin, new DelHome(), "删除家", "MHDFTools.Command.DelHome", "delhome");
         registerCommand(plugin, new Home(), "传送至家", "MHDFTools.Command.Home", "home");
-        Bukkit.getPluginManager().registerEvents(new HomeMenu(), plugin);
     }
 
     private void registerSuperListCommands() {
@@ -235,47 +191,31 @@ public final class CommandRegister implements Invitable {
         registerCommand(plugin, new Register(), "注册命令", "MHDFTools.Command.Register", "reg");
         registerCommand(plugin, new Login(), "登录命令", "MHDFTools.Command.Login", "l");
         registerCommand(plugin, new Login(), "登录命令", "MHDFTools.Command.Login", "login");
-        Bukkit.getPluginManager().registerEvents(new PlayerLoginListener(), plugin);
-    }
-
-    private void registerBanCommand() {
-        Bukkit.getPluginManager().registerEvents(new ServerCommandListener(), plugin);
     }
 
     private void registerSpawnCommands() {
         registerCommand(plugin, new Spawn(), "Spawn命令", "MHDFTools.Command.Spawn", "spawn");
         registerCommand(plugin, new SetSpawn(), "SetSpawn命令", "MHDFTools.Command.SetSpawn", "setspawn");
-        Bukkit.getPluginManager().registerEvents(new PlayerReSpawnListener(), plugin);
+
     }
 
     private void registerStopCommand() {
         registerCommand(plugin, new Stop(), "关闭服务器", "MHDFTools.Command.Stop", "stop");
     }
 
-    private void registerMOTDListener() {
-        Bukkit.getPluginManager().registerEvents(new ServerMOTDListener(), plugin);
-    }
-
     private void registerFlyCommands() {
         registerCommand(plugin, new Fly(), "飞行系统", "MHDFTools.Command.Fly", "fly");
         registerCommand(plugin, new FlyTime(), "限时飞行系统", "MHDFTools.Command.FlyTime", "flytime");
-        Bukkit.getPluginManager().registerEvents(new PlayerAllowedFlightListener(), plugin);
+
     }
 
     private void registerBackCommands() {
         registerCommand(plugin, new Back(), "Back系统", "MHDFTools.Command.Back", "back");
-        Bukkit.getPluginManager().registerEvents(new PlayerBackListener(), plugin);
-    }
-
-    private void registerTpBackCommands() {
-        registerCommand(plugin, new TpBack(), "TpBack系统", "MHDFTools.Command.TpBack", "tpback");
-        Bukkit.getPluginManager().registerEvents(new PlayerTPBackListener(), plugin);
     }
 
     private void registerVanishCommands() {
         registerCommand(plugin, new Vanish(), "Vanish系统", "MHDFTools.Command.Vanish", "vanish");
         registerCommand(plugin, new Vanish(), "Vanish系统", "MHDFTools.Command.Vanish", "v");
-        Bukkit.getPluginManager().registerEvents(new PlayerVanishListener(), plugin);
     }
 
     private void registerIPCommand() {
@@ -321,6 +261,7 @@ public final class CommandRegister implements Invitable {
         registerCommand(plugin, new Pay(), "转账", "MHDFTools.Command.Pay", "pay");
         registerCommand(plugin, new MoneyAdmin(), "管理员管理", "MHDFTools.Command.MoneyAdmin", "moneyadmin");
     }
+
 
     private void registerLinkCommands() {
         for (String Command : Objects.requireNonNull(config.getConfigurationSection("CommandLinkSettings.CommandList")).getKeys(false)) {

@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
 
 @SuppressWarnings("ALL")
-public final class Metrics {
+public final class bStats {
 
     private final Plugin plugin;
 
@@ -37,7 +37,7 @@ public final class Metrics {
      * @param serviceId The id of the service. It can be found at <a
      *                  href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
      */
-    public Metrics(JavaPlugin plugin, int serviceId) {
+    public bStats(JavaPlugin plugin, int serviceId) {
         this.plugin = plugin;
         // Get the config file
         File bStatsFolder = new File(plugin.getDataFolder().getParentFile(), "bStats");

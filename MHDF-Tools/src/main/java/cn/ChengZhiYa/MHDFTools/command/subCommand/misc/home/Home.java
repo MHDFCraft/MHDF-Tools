@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.TpPlayerHome;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.TpPlayerHome;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeLocation;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getPlayerHomeList;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.HomeMenuUtil.openHomeMenu;

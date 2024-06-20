@@ -1,14 +1,14 @@
-NoPermission: "&f붃 &c你没有权限怎么做!"
+NoPermission: "&c你没有权限怎么做!"
 OnlyPlayer: "&6这个命令只能玩家使用!"
 PlayerNotOnline: "&6这个玩家不存在或不在线"
 FastSetDone: "&a完成!"
-HatNoItem: "&f분 &6你需要拿着一个物品才能使用这个命令!"
+HatNoItem: "&6你需要拿着一个物品才能使用这个命令!"
 AdminCommands:
   Center: " &7| "
   convert:
     Usage: "&e/{Command} convert <目标数据类型> [数据库地址] [数据库] [数据库账号] [数据库密码]"
     Description: "&b将插件数据转换成其他存储方式"
-    NotFoundType: "&f붃 &c转换错误,目标类型不支持!"
+    NotFoundType: "&c转换错误,目标类型不支持!"
     ConvertStart: "&a开始将数据转换为%1存储!"
     ConvertInvalid: "&f붃 &c转换失败,你已经是%1存储了!"
     ConvertError: "&f붃 &c转换错误,已紧急停止!"
@@ -125,7 +125,7 @@ gameMode:
   Creative: "创造模式"
   Spectator: "旁观模式"
   Server: "Server"
-  Done: "&f부 #7289da你的游戏模式已被更新为%1"
+  Done: "#7289da你的游戏模式已被更新为%1"
   OtherOpDone: "&7[%1: 将%2的游戏模式改为%3]"
 Login:
   LoginMessage: "&e请使用/l <密码>以登录!"
@@ -141,16 +141,16 @@ Login:
   PasswordError: "&c密码错误!"
   AutoLogin: "&e欢迎回来! 已自动登录!"
 Tpa:
-  AccentMessage: "&f뇷"
-  DefuseMessage: "&f뇶"
+  AccentMessage: "&a同意"
+  DefuseMessage: "&c不同意"
   AccentHoverMesasge: "&a接受%1的传送请求"
-  DefuseHoverMesasge: "&f붃 &c%1的传送请求"
+  DefuseHoverMesasge: "&c%1的传送请求"
   SendDone: "&a传送请求已发送,对方有60s来同意你的请求"
   RepectSend: "&6请不要重复发送Tpa!"
-  NotSendTeleport: "&f붃 &c这个玩家没有给你发传送请求"
-  Offline: "&f붃 &c错误,那个玩家突然下线了,传送已取消!"
-  DefuseDone: "&f붃 &c你拒绝了对方的传送请求!"
-  Defuse: "&f붃 &c对方拒绝了你的请求!"
+  NotSendTeleport: "&c这个玩家没有给你发传送请求"
+  Offline: "&c错误,那个玩家突然下线了,传送已取消!"
+  DefuseDone: "&c你拒绝了对方的传送请求!"
+  Defuse: "&c对方拒绝了你的请求!"
   AcceptDone: "&a%1传送到了你这里!"
   TeleportDone: "&a传送成功!"
   TimeOutDone: "&6你发给%1的传送请求已超时!"
@@ -159,27 +159,27 @@ Tpa:
   Message: |-
     &a%1申请传送到你这里&r ?Accent?  ?Defuse?
 TpaHere:
-  AccentMessage: "&f뇷"
-  DefuseMessage: "&f뇶"
+  AccentMessage: "&a同意"
+  DefuseMessage: "&c不同意"
   AccentHoverMesasge: "&a接受%1的传送请求"
   DefuseHoverMesasge: "&f붃 &c拒绝%1的传送请求"
   SendDone: "&a传送请求已发送,对方有60s来同意你的请求"
   RepectSend: "&6请不要重复发送Tpa!"
-  NotSendTeleport: "&f붃 &c这个玩家没有给你发传送请求"
-  Offline: "&f붃 &c错误,那个玩家突然下线了,传送已取消!"
-  DefuseDone: "&f붃 &c你拒绝了对方的传送请求!"
-  Defuse: "&f붃 &c对方拒绝了你的请求!"
+  NotSendTeleport: "&c这个玩家没有给你发传送请求"
+  Offline: "&c错误,那个玩家突然下线了,传送已取消!"
+  DefuseDone: "&c你拒绝了对方的传送请求!"
+  Defuse: "&&c对方拒绝了你的请求!"
   AcceptDone: "&a你传送到了%1那里!"
   TeleportDone: "&a%1传送到了你这里!"
-  TimeOutDone: "&f붃 &c你发给%1的传送请求已超时!"
+  TimeOutDone: "&c你发给%1的传送请求已超时!"
   TimeOut: "&6%1给你发的传送请求已超时!"
   SendMe: "&6不能给自己发送传送请求!"
   Message: |-
     &a%1请求你传送到他身边 ?Accent?  ?Defuse?
 IPMessage: |-
-  &f부 #7289da玩家: %1
-  &f부 #7289daIP: %2
-  &f부 #7289daIP归属地: %3
+  #7289da玩家: %1
+  #7289daIP: %2
+  #7289daIP归属地: %3
 TeleportDelay:
   5: "&6距离传送还有&b5&6秒|&f请不要移动!|10|70|20"
   4: "&6距离传送还有&b4&6秒|&f请不要移动!|10|70|20"

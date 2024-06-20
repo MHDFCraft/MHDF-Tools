@@ -13,8 +13,8 @@ import org.bukkit.event.player.*;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.ifLogin;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 
 public final class PlayerLoginListener implements Listener {
     @EventHandler

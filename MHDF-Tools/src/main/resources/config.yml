@@ -400,3 +400,8 @@ MenuSettings:
 RotateSettings:
   #开关
   Enable: true
+
+#查看插件/服务器的版本
+VersionSettings:
+  #开关
+  Enable: true

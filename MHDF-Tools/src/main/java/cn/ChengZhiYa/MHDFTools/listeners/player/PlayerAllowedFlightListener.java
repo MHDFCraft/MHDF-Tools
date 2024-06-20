@@ -15,50 +15,45 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.removeFlyTime;
 
 public final class PlayerAllowedFlightListener implements Listener {
     @EventHandler
-    public void AutoClose(PlayerChangedWorldEvent event) {
+    public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
-        if (MHDFTools.instance.getConfig().getStringList("FlySettings.AntiFlyWorldList").contains(player.getLocation().getWorld().getName())) {
+        String worldName = player.getLocation().getWorld().getName();
+        if (MHDFTools.instance.getConfig().getStringList("FlySettings.AntiFlyWorldList").contains(worldName)) {
             removeFlyTime(player.getName());
             InFlyList.remove(player.getName());
             player.setAllowFlight(false);
+        } else if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ChangeWorld")) {
+            handleFlight(player);
         }
     }
 
     @EventHandler
-    public void PlayerChangedWorldEvent(PlayerChangedWorldEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ChangeWorld")) {
-            Player player = event.getPlayer();
-            if (InFlyList.contains(player.getName())) {
-                player.setAllowFlight(true);
-            }
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+        if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReSpawn") &&
+                MapUtil.getStringHasMap().containsKey(player.getName() + "_Fly")) {
+            handleFlight(player);
         }
     }
 
     @EventHandler
-    public void PlayerRespawnEvent(PlayerRespawnEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReSpawn")) {
-            Player player = event.getPlayer();
-            if (MapUtil.getStringHasMap().get(player.getName() + "_Fly") != null) {
-                player.setAllowFlight(true);
-            }
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReJoin") &&
+                InFlyList.contains(player.getName())) {
+            handleFlight(player);
         }
     }
 
     @EventHandler
-    public void PlayerJoinEvent(PlayerJoinEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReJoin")) {
-            Player player = event.getPlayer();
-            if (InFlyList.contains(player.getName())) {
-                player.setAllowFlight(true);
-            }
-        }
-    }
-
-    @EventHandler
-    public void PlayerQuitEvent(PlayerQuitEvent event) {
+    public void onPlayerQuit(PlayerQuitEvent event) {
         if (!MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReJoin")) {
             Player player = event.getPlayer();
             InFlyList.remove(player.getName());
         }
+    }
+
+    private void handleFlight(Player player) {
+        player.setAllowFlight(true);
     }
 }

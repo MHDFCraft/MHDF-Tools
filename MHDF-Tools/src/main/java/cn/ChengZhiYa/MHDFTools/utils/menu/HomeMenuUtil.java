@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.TpPlayerHome;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.PAPI;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.TpPlayerHome;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataSource;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.*;
@@ -56,7 +56,7 @@ public final class HomeMenuUtil {
 
     public static void openHomeMenu(Player player, int page) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            String title = PAPI(player, getMenu(homeMenuFile).getString("menu.Title")).replaceAll("\\{Page}", String.valueOf(page));
+            String title = Placeholder(player, getMenu(homeMenuFile).getString("menu.Title")).replaceAll("\\{Page}", String.valueOf(page));
             Inventory menu = Bukkit.createInventory(player, getMenu(homeMenuFile).getInt("menu.Size"), title);
 
             int HomeSize = getMenu(homeMenuFile).getInt("menu.HomeSize");
@@ -99,7 +99,7 @@ public final class HomeMenuUtil {
 
                                     getMenu(homeMenuFile).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s ->
                                             lore.add(
-                                                    PAPI(player, s)
+                                                    Placeholder(player, s)
                                                             .replaceAll("\\{HomeName}", home)
                                                             .replaceAll("\\{Server}", getHomeServer(player.getName(), home))
                                                             .replaceAll("\\{World}", Objects.requireNonNull(getHomeLocation(player.getName(), home)).getWorld().getName())
@@ -135,10 +135,10 @@ public final class HomeMenuUtil {
                 }
 
                 getMenu(homeMenuFile).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s ->
-                        lore.add(PAPI(player, s).replaceAll("\\{Page}", String.valueOf(page)))
+                        lore.add(Placeholder(player, s).replaceAll("\\{Page}", String.valueOf(page)))
                 );
 
-                getMenu(homeMenuFile).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s -> lore.add(PAPI(player, s)));
+                getMenu(homeMenuFile).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s -> lore.add(Placeholder(player, s)));
 
                 setMenuItem(menu, homeMenuFile, itemID, type, displayName, lore, customModelData, amount, slotList);
             }
@@ -149,35 +149,46 @@ public final class HomeMenuUtil {
     public static void runAction(Player player, String menuFileName, int page, ItemStack clickItem, List<String> actionList) {
         for (String action : actionList) {
             switch (action) {
-                case "[PageUp]": {
+                case "[PageUp]":
                     openHomeMenu(player, page - 1);
                     break;
-                }
-                case "[PageNext]": {
+                case "[PageNext]":
                     openHomeMenu(player, page + 1);
                     break;
-                }
-                case "[Home]": {
-                    String HomeName = getPlaceholder(
-                            ChatColor.stripColor(clickItem.getItemMeta().getDisplayName()),
-                            ChatColor.stripColor(MessageUtil.colorMessage(getMenu(homeMenuFile).getString("menu.ItemList." + "Home" + ".DisplayName"))),
-                            "{HomeName}");
-                    TpPlayerHome(player.getName(), HomeName);
+                case "[Home]":
+                    handleHomeAction(player, clickItem);
                     break;
-                }
-                case "[DelHome]": {
-                    String HomeName = getPlaceholder(
-                            ChatColor.stripColor(clickItem.getItemMeta().getDisplayName()),
-                            ChatColor.stripColor(MessageUtil.colorMessage(getMenu(homeMenuFile).getString("menu.ItemList." + "Home" + ".DisplayName"))),
-                            "{HomeName}");
-                    RemoveHome(player.getName(), HomeName);
+                case "[DelHome]":
+                    handleDelHomeAction(player, clickItem);
                     break;
-                }
-                default: {
+                default:
                     MenuUtil.runAction(player, menuFileName, action.split("\\|"));
                     break;
-                }
             }
+        }
+    }
+
+    private static void handleHomeAction(Player player, ItemStack clickItem) {
+        String homeName = getHomeName(clickItem);
+        if (homeName != null) {
+            TpPlayerHome(player.getName(), homeName);
+        }
+    }
+
+    private static void handleDelHomeAction(Player player, ItemStack clickItem) {
+        String homeName = getHomeName(clickItem);
+        if (homeName != null) {
+            RemoveHome(player.getName(), homeName);
+        }
+    }
+
+    private static String getHomeName(ItemStack clickItem) {
+        try {
+            String displayName = ChatColor.stripColor(clickItem.getItemMeta().getDisplayName());
+            String menuDisplayName = ChatColor.stripColor(MessageUtil.colorMessage(getMenu(homeMenuFile).getString("menu.ItemList.Home.DisplayName")));
+            return getPlaceholder(displayName, menuDisplayName, "{HomeName}");
+        } catch (NullPointerException e) {
+            return null;
         }
     }
 }

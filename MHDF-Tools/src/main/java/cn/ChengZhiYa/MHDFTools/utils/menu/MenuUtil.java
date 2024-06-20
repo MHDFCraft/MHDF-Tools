@@ -26,7 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.PAPI;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 
 public final class MenuUtil {
     public static ItemStack getItemStack(String type, String displayName, List<String> lore, Integer customModelData, Integer amount) {
@@ -122,7 +122,7 @@ public final class MenuUtil {
     public static boolean ifCustomMenu(Player player, String title) {
         for (String MenuFileName : getCustomMenuList()) {
             YamlConfiguration Menu = getMenu(MenuFileName);
-            if (PAPI(player, Menu.getString("menu.Title")).equals(PAPI(player, title))) {
+            if (Placeholder(player, Menu.getString("menu.Title")).equals(Placeholder(player, title))) {
                 return true;
             }
         }
@@ -219,7 +219,7 @@ public final class MenuUtil {
                             String itemDisplayName = getMenu(menuFileName).getString("menu.ItemList." + itemID + "." + requirmentType + "." + requirement + ".Input.DisplayName");
                             List<String> itemLore = new ArrayList<>();
                             getMenu(menuFileName).getStringList("menu.ItemList." + itemID + "." + requirmentType + "." + requirement + ".Input.Lore").forEach(s -> {
-                                itemLore.add(PAPI(player, s));
+                                itemLore.add(Placeholder(player, s));
                             });
                             Integer itemCustomModelData = (Integer) getMenu(menuFileName).get("menu.ItemList." + itemID + "." + requirmentType + "." + requirement + ".Input.CustomModelData");
                             Integer amount = (Integer) getMenu(menuFileName).get("menu.ItemList." + itemID + "." + requirmentType + "." + requirement + ".Input.Amount");
@@ -234,7 +234,7 @@ public final class MenuUtil {
                                     }
                                     if (playerInvItem.getItemMeta() != null) {
                                         if (itemDisplayName != null && playerInvItem.getItemMeta().hasDisplayName()) {
-                                            allow = playerInvItem.getItemMeta().getDisplayName().equals(PAPI(player, itemDisplayName));
+                                            allow = playerInvItem.getItemMeta().getDisplayName().equals(Placeholder(player, itemDisplayName));
                                         }
                                         if (!itemLore.isEmpty()) {
                                             allow = playerInvItem.getItemMeta().getLore() == itemLore;
@@ -280,14 +280,14 @@ public final class MenuUtil {
             case "[player]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.chat("/" + PAPI(player, action[1])));
+                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.chat("/" + Placeholder(player, action[1])));
                 } else {
-                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PAPI(null, action[1])));
+                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
                 }
                 break;
             }
             case "[console]": {
-                Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PAPI(null, action[1])));
+                Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
                 break;
             }
             case "[playsound]": {
@@ -304,23 +304,23 @@ public final class MenuUtil {
             case "[message]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    sender.sendMessage(PAPI(player, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"));
+                    sender.sendMessage(Placeholder(player, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"));
                 } else {
-                    sender.sendMessage(PAPI(null, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"));
+                    sender.sendMessage(Placeholder(null, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"));
                 }
                 break;
             }
             case "[title]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    player.sendTitle(PAPI(player, action[1]), PAPI(player, action[2]), Integer.parseInt(action[3]), Integer.parseInt(action[4]), Integer.parseInt(action[5]));
+                    player.sendTitle(Placeholder(player, action[1]), Placeholder(player, action[2]), Integer.parseInt(action[3]), Integer.parseInt(action[4]), Integer.parseInt(action[5]));
                 }
                 break;
             }
             case "[actionbar]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(PAPI(player, action[1])));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(Placeholder(player, action[1])));
                 }
                 break;
             }
@@ -351,7 +351,7 @@ public final class MenuUtil {
 
     public static void openMenu(Player player, String menuFileName) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            String title = PAPI(player, getMenu(menuFileName).getString("menu.Title"));
+            String title = Placeholder(player, getMenu(menuFileName).getString("menu.Title"));
             Inventory menu = Bukkit.createInventory(player, getMenu(menuFileName).getInt("menu.Size"), title);
 
             for (String itemID : Objects.requireNonNull(getMenu(menuFileName).getConfigurationSection("menu.ItemList")).getKeys(false)) {
@@ -360,7 +360,7 @@ public final class MenuUtil {
                 Integer customModelData = getMenu(menuFileName).getObject("menu.ItemList." + itemID + ".CustomModelData", Integer.class);
                 Integer amount = getMenu(menuFileName).getObject("menu.ItemList." + itemID + ".Amount", Integer.class);
                 List<String> lore = new ArrayList<>();
-                getMenu(menuFileName).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s -> lore.add(PAPI(player, s)));
+                getMenu(menuFileName).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s -> lore.add(Placeholder(player, s)));
 
                 List<String> slotList = new ArrayList<>();
                 if (getMenu(menuFileName).getString("menu.ItemList." + itemID + ".Slot") != null) {

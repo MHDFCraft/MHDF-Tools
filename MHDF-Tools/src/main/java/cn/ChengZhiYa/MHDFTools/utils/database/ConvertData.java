@@ -23,7 +23,7 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.i18n;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.ifPlayerFileExists;
 import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.setMoney;

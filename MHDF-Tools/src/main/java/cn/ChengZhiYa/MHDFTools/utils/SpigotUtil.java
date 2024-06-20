@@ -10,8 +10,6 @@ import com.alibaba.fastjson.JSONObject;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
@@ -22,7 +20,9 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -35,13 +35,13 @@ import java.security.MessageDigest;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.PlayerList;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.PlayerList;
 
-public final class Util {
+public final class SpigotUtil {
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static final List<String> CommandLinkList = new ArrayList<>();
-    public static final String Version = "1.4.10";
+    public static final String Version = "1.4.9"; //for github
     public static List<String> VanishList = new ArrayList<>();
     public static volatile BossBar VanishBossBar;
     public static YamlConfiguration LangFileData;
@@ -57,20 +57,6 @@ public final class Util {
         }
     }
 
-    public static FileOutputStream getOutputStream(CloseableHttpResponse response, String NewVersionString, int cache) throws IOException {
-        HttpEntity entity = response.getEntity();
-        InputStream is = entity.getContent();
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(MHDFTools.instance.getDataFolder().getParentFile(), "Cheng-Tools-Reloaded-" + NewVersionString + ".jar"));
-        byte[] buffer = new byte[cache];
-        int ch;
-        while ((ch = is.read(buffer)) != -1) {
-            fileOutputStream.write(buffer, 0, ch);
-        }
-        is.close();
-        fileOutputStream.flush();
-        return fileOutputStream;
-    }
-
     public static void checkUpdate() {
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL("https://mhdf.love:8888/plugin/version/MHDF-Tools").openConnection();
@@ -82,17 +68,17 @@ public final class Util {
             String NewVersionString = Data.getString("data");
 
             if (!NewVersionString.equals(Version)) {
-                LogUtil.color("&c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
+                LogUtil.color("&e[MHDFTools] &c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
                 MapUtil.getBooleanHasMap().put("IsLast", true);
             } else {
-                LogUtil.color("&a当前插件版本是最新版!");
+                LogUtil.color("&e[MHDFTools] &a当前插件版本是最新版!");
             }
             MapUtil.getBooleanHasMap().put("CheckVersionError", false);
 
             in.close();
             conn.disconnect();
         } catch (Exception e) {
-            LogUtil.color("&c[Cheng-Tools-Reloaded]获取检测更新时出错!请检查网络连接!");
+            LogUtil.color("&e[MHDFTools] 获取检测更新时出错!请检查网络连接!");
             MapUtil.getBooleanHasMap().put("IsLast", false);
             MapUtil.getBooleanHasMap().put("CheckVersionError", true);
         }
@@ -125,7 +111,7 @@ public final class Util {
         }
     }
 
-    public static String PAPI(OfflinePlayer Player, String Message) {
+    public static String Placeholder(OfflinePlayer Player, String Message) {
         if (MHDFPluginLoader.hasPlaceholderAPI) {
             Message = PlaceholderAPI.setPlaceholders(Player, Message);
         }
@@ -316,17 +302,17 @@ public final class Util {
 
         if (!messageList.isEmpty()) {
             weightList.sort(Collections.reverseOrder());
-            return PAPI(player, MHDFTools.instance.getConfig().getString(settingType + "." + messageList.get(weightList.get(0)) + "." + messageType))
+            return Placeholder(player, MHDFTools.instance.getConfig().getString(settingType + "." + messageList.get(weightList.get(0)) + "." + messageType))
                     .replaceAll("%PlayerName%", player.getName());
         }
 
-        return PAPI(player, MHDFTools.instance.getConfig().getString(settingType + ".Default." + messageType))
+        return Placeholder(player, MHDFTools.instance.getConfig().getString(settingType + ".Default." + messageType))
                 .replaceAll("%PlayerName%", player.getName());
     }
 
     public static BossBar getVanishBossBar() {
         if (VanishBossBar == null) {
-            synchronized (Util.class) {
+            synchronized (SpigotUtil.class) {
                 if (VanishBossBar == null) {
                     VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
                 }
@@ -352,7 +338,7 @@ public final class Util {
 
     public static void sendTitle(Player player, String titleString) {
         String[] title = titleString.split("\\|");
-        player.sendTitle(PAPI(player, title[0]), PAPI(player, title[1]), Integer.parseInt(title[2]), Integer.parseInt(title[3]), Integer.parseInt(title[4]));
+        player.sendTitle(Placeholder(player, title[0]), Placeholder(player, title[1]), Integer.parseInt(title[2]), Integer.parseInt(title[3]), Integer.parseInt(title[4]));
     }
 
     public static void playSound(Player player, String soundString) {

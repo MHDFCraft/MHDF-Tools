@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.listeners.player.fastuse;
+package cn.ChengZhiYa.MHDFTools.listeners.server;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Material;
@@ -8,7 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public final class CraftingTable implements Listener {
+public class ServerInteractListener implements Listener {
+
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("FastUseCraftingTableSettings.Enable")) {

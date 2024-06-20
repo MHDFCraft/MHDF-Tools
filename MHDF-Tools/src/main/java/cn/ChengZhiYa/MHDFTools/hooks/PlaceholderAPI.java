@@ -6,7 +6,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.Version;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Version;
 import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.getMoney;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getMaxHome;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getPlayerHomeList;

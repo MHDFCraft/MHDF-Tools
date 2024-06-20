@@ -20,77 +20,89 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.VanishList;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.getVanishBossBar;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.VanishList;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.getVanishBossBar;
 
 public final class PlayerVanishListener implements Listener {
+
+    private static final String VANISH_OPEN_PREFIX = "&b无动画打开|";
+
     @EventHandler
-    public void PlayerJoinEvent(PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerJoinEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
             Player player = event.getPlayer();
             if (VanishList.contains(player.getName())) {
-                for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
-                    try {
-                        Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
-                        OnlinePlayer.hidePlayer(MHDFTools.instance, player);
-                    } catch (NoSuchMethodException e) {
-                        OnlinePlayer.hidePlayer(player);
-                    }
-                }
-                PotionEffect INVISIBILITY = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true);
-                player.addPotionEffect(INVISIBILITY);
-                player.showBossBar(getVanishBossBar());
+                hidePlayerFromOthers(player);
             }
         }
     }
 
     @EventHandler
-    public void PlayerInteractEvent(PlayerInteractEvent event) {
+    public void onPlayerInteract(PlayerInteractEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
             if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null) {
-                if (!VanishList.isEmpty()) {
-                    Player player = event.getPlayer();
-                    if (VanishList.contains(player.getName())) {
-                        Block block = event.getClickedBlock();
-                        if (block.getType().toString().contains("CHEST") || block.getType().toString().contains("SHULKER_BOX")) {
-                            event.setCancelled(true);
-                            Inventory ChestInventory = ((Container) event.getClickedBlock().getState()).getInventory();
-                            Inventory inventory;
-                            if (block instanceof ShulkerBox) {
-                                inventory = Bukkit.createInventory(player, InventoryType.SHULKER_BOX, MessageUtil.colorMessage("&b无动画打开|" + block.getX() + "|" + block.getY() + "|" + block.getZ()));
-                            } else {
-                                inventory = Bukkit.createInventory(player, ChestInventory.getSize(), MessageUtil.colorMessage("&b无动画打开|" + block.getX() + "|" + block.getY() + "|" + block.getZ()));
-                            }
-                            inventory.setContents(ChestInventory.getContents());
-                            player.openInventory(inventory);
-                        }
-                    }
+                Player player = event.getPlayer();
+                if (VanishList.contains(player.getName())) {
+                    handleVanishInteract(event, player);
                 }
             }
         }
     }
 
     @EventHandler
-    public void InventoryCloseEvent(InventoryCloseEvent event) {
+    public void onInventoryClose(InventoryCloseEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
-            if (event.getView().getTitle().contains(MessageUtil.colorMessage("&b无动画打开"))) {
-                Player player = (Player) event.getPlayer();
-                String[] Title = event.getView().getTitle().split("\\|");
-                Block Block = new Location(player.getWorld(), Integer.parseInt(Title[1]), Integer.parseInt(Title[2]), Integer.parseInt(Title[3])).getBlock();
-                BlockState BlockState = Block.getState();
-                Inventory inventory = ((Container) BlockState).getInventory();
-                if (inventory.getHolder() instanceof DoubleChest) {
-                    DoubleChest DoubleChest = (DoubleChest) inventory.getHolder();
-                    ((Container) ((Chest) Objects.requireNonNull(DoubleChest.getLeftSide())).getBlock().getState()).getInventory().setContents(event.getInventory().getContents());
-                    ((Container) ((Chest) Objects.requireNonNull(DoubleChest.getRightSide())).getBlock().getState()).getInventory().setContents(event.getInventory().getContents());
-                } else if (inventory.getHolder() instanceof ShulkerBox) {
-                    ShulkerBox ShulkerBox = (ShulkerBox) inventory.getHolder();
-                    ((Container) ShulkerBox.getBlock().getState()).getInventory().setContents(event.getInventory().getContents());
-                } else {
-                    inventory.setContents(event.getInventory().getContents());
-                    BlockState.update();
-                }
+            if (event.getView().getTitle().contains(VANISH_OPEN_PREFIX)) {
+                handleVanishInventoryClose(event);
             }
+        }
+    }
+
+    private void hidePlayerFromOthers(Player player) {
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            try {
+                Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
+                onlinePlayer.hidePlayer(MHDFTools.instance, player);
+            } catch (NoSuchMethodException e) {
+                onlinePlayer.hidePlayer(player);
+            }
+        }
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 255, true));
+        player.showBossBar(getVanishBossBar());
+    }
+
+    private void handleVanishInteract(PlayerInteractEvent event, Player player) {
+        Block block = event.getClickedBlock();
+        if (block != null && (block.getType().toString().contains("CHEST") || block.getType().toString().contains("SHULKER_BOX"))) {
+            event.setCancelled(true);
+            openVanishInventory(player, block);
+        }
+    }
+
+    private void openVanishInventory(Player player, Block block) {
+        Inventory inventory;
+        if (block instanceof ShulkerBox) {
+            inventory = Bukkit.createInventory(player, InventoryType.SHULKER_BOX, MessageUtil.colorMessage(VANISH_OPEN_PREFIX + block.getX() + "|" + block.getY() + "|" + block.getZ()));
+        } else {
+            inventory = Bukkit.createInventory(player, ((Container) block.getState()).getInventory().getSize(), MessageUtil.colorMessage(VANISH_OPEN_PREFIX + block.getX() + "|" + block.getY() + "|" + block.getZ()));
+        }
+        inventory.setContents(((Container) block.getState()).getInventory().getContents());
+        player.openInventory(inventory);
+    }
+
+    private void handleVanishInventoryClose(InventoryCloseEvent event) {
+        Player player = (Player) event.getPlayer();
+        String[] title = event.getView().getTitle().split("\\|");
+        Block block = new Location(player.getWorld(), Integer.parseInt(title[1]), Integer.parseInt(title[2]), Integer.parseInt(title[3])).getBlock();
+        Inventory inventory = ((Container) block.getState()).getInventory();
+
+        if (inventory.getHolder() instanceof DoubleChest) {
+            DoubleChest doubleChest = (DoubleChest) inventory.getHolder();
+            ((Container) ((Chest) Objects.requireNonNull(doubleChest.getLeftSide())).getBlock().getState()).getInventory().setContents(event.getInventory().getContents());
+            ((Container) ((Chest) Objects.requireNonNull(doubleChest.getRightSide())).getBlock().getState()).getInventory().setContents(event.getInventory().getContents());
+        } else {
+            inventory.setContents(event.getInventory().getContents());
+            ((BlockState) Objects.requireNonNull(inventory.getHolder())).update();
         }
     }
 }

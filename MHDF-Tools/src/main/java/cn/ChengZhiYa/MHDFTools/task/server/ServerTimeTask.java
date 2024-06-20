@@ -1,13 +1,13 @@
-package cn.ChengZhiYa.MHDFTools.task;
+package cn.ChengZhiYa.MHDFTools.task.server;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.PAPI;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 
-public final class TimeMessage extends BukkitRunnable {
+public final class ServerTimeTask extends BukkitRunnable {
 
     private int i = 0;
 
@@ -19,10 +19,10 @@ public final class TimeMessage extends BukkitRunnable {
     public void run() {
         if (MHDFTools.instance.getConfig().getBoolean("TimeMessageSettings.Enable")) {
             if (MHDFTools.instance.getConfig().getBoolean("TimeMessageSettings.ConsoleDisplayed")) {
-                Bukkit.broadcastMessage(PAPI(null, MHDFTools.instance.getConfig().getStringList("TimeMessageSettings.Message").get(this.i)));
+                Bukkit.broadcastMessage(Placeholder(null, MHDFTools.instance.getConfig().getStringList("TimeMessageSettings.Message").get(this.i)));
             } else {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.sendMessage(PAPI(null, MHDFTools.instance.getConfig().getStringList("TimeMessageSettings.Message").get(this.i)));
+                    player.sendMessage(Placeholder(null, MHDFTools.instance.getConfig().getStringList("TimeMessageSettings.Message").get(this.i)));
                 }
             }
             this.i = order(this.i);

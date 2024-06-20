@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 
 public final class Vanish implements CommandExecutor {
     @Override

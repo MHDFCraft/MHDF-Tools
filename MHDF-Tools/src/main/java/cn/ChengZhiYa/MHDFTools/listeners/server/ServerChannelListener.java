@@ -18,11 +18,12 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.PlayerList;
-import static cn.ChengZhiYa.MHDFTools.utils.BCUtil.ServerName;
-import static cn.ChengZhiYa.MHDFTools.utils.Util.*;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.PlayerList;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.ServerName;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeLocation;
 
+@SuppressWarnings("ALL")
 public final class ServerChannelListener implements PluginMessageListener {
     @Override
     public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte @NotNull [] message) {

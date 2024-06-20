@@ -9,67 +9,70 @@ import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerCommandSendEvent;
 
-import static cn.ChengZhiYa.MHDFTools.utils.Util.ifLogin;
+import java.util.List;
+
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 
 public final class ServerCommandListener implements Listener {
     @EventHandler
-    public void PlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
+    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
             if (!ifLogin(event.getPlayer())) {
-                String Command = event.getMessage().split(" ")[0];
-                if (MHDFTools.instance.getConfig().getStringList("LoginSystemSettings.AllowUsedComamnds").contains(Command)) {
+                String command = event.getMessage().split(" ")[0];
+                if (MHDFTools.instance.getConfig().getStringList("LoginSystemSettings.AllowUsedComamnds").contains(command)) {
                     return;
                 }
                 event.setCancelled(true);
+                return;
             }
         }
+
         if (MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.Enable")) {
+            String command = event.getMessage().split(" ")[0];
             if (event.getPlayer().hasPermission("MHDFTools.BanCommand.Bypass")) {
                 if (!MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.OpBypass")) {
                     return;
                 }
             }
-            String Command = event.getMessage().split(" ")[0];
-            if (MHDFTools.instance.getConfig().getStringList("BanCommandSettings.BanCommandList").contains("/" + Command)) {
+            if (MHDFTools.instance.getConfig().getStringList("BanCommandSettings.BanCommandList").contains("/" + command)) {
                 event.setCancelled(true);
-                for (String Message : MHDFTools.instance.getConfig().getStringList("BanCommandSettings.UsedBanCommandMessage")) {
-                    event.getPlayer().sendMessage(MessageUtil.colorMessage(PlaceholderAPI.setPlaceholders(event.getPlayer(), Message)));
+                for (String message : MHDFTools.instance.getConfig().getStringList("BanCommandSettings.UsedBanCommandMessage")) {
+                    event.getPlayer().sendMessage(MessageUtil.colorMessage(PlaceholderAPI.setPlaceholders(event.getPlayer(), message)));
                 }
             }
         }
     }
 
     @EventHandler
-    public void PlayerCommandSendEvent(PlayerCommandSendEvent event) {
+    public void onPlayerCommandSend(PlayerCommandSendEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.Enable")) {
-            if (event.getPlayer().hasPermission("MHDFTools.BanCommand.Bypass")) {
-                if (!MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.OpBypass")) {
-                    for (String BanCommand : MHDFTools.instance.getConfig().getStringList("BanCommandSettings.BanCommandList")) {
-                        event.getCommands().remove(BanCommand);
-                    }
-                }
+            if (event.getPlayer().hasPermission("MHDFTools.BanCommand.Bypass") && !MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.OpBypass")) {
+                removeCommandsFromList(event, MHDFTools.instance.getConfig().getStringList("BanCommandSettings.BanCommandList"));
             } else {
-                for (String BanCommand : MHDFTools.instance.getConfig().getStringList("BanCommandSettings.BanCommandList")) {
-                    event.getCommands().remove(BanCommand);
-                }
+                removeCommandsFromList(event, MHDFTools.instance.getConfig().getStringList("BanCommandSettings.BanCommandList"));
             }
         }
     }
 
+    private void removeCommandsFromList(PlayerCommandSendEvent event, List<String> banCommandList) {
+        List<String> commands = (List<String>) event.getCommands();
+        commands.removeIf(command -> banCommandList.contains("/" + command));
+    }
+
+
     @EventHandler
-    public void PlayerChatTabCompleteEvent(PlayerChatTabCompleteEvent event) {
+    public void onPlayerChatTabComplete(PlayerChatTabCompleteEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.Enable")) {
-            if (event.getPlayer().hasPermission("MHDFTools.BanCommand.Bypass")) {
-                if (!MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.OpBypass")) {
-                    for (String BanCommand : MHDFTools.instance.getConfig().getStringList("BanCommandSettings.BanCommandList")) {
-                        event.getTabCompletions().remove(BanCommand);
-                    }
-                }
+            if (event.getPlayer().hasPermission("MHDFTools.BanCommand.Bypass") && !MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.OpBypass")) {
+                removeTabCompletions(event, MHDFTools.instance.getConfig().getStringList("BanCommandSettings.BanCommandList"));
             } else {
-                for (String BanCommand : MHDFTools.instance.getConfig().getStringList("BanCommandSettings.BanCommandList")) {
-                    event.getTabCompletions().remove(BanCommand);
-                }
+                removeTabCompletions(event, MHDFTools.instance.getConfig().getStringList("BanCommandSettings.BanCommandList"));
             }
         }
+    }
+
+    private void removeTabCompletions(PlayerChatTabCompleteEvent event, List<String> banCommandList) {
+        List<String> tabCompletions = (List<String>) event.getTabCompletions();
+        tabCompletions.removeIf(banCommandList::contains);
     }
 }
