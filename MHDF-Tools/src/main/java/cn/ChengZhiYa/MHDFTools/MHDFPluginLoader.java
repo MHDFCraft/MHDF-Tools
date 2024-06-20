@@ -41,8 +41,8 @@ public enum MHDFPluginLoader {
 
     private void initManagers() {
         //Message
-        startDone = "&e[MHDFTools] &f插件启动完毕,您好我的朋友! &eQQ= &f1410521748 &7|&f 292200693 &7[&e主开发]";
-        stopDone = "&e[MHDFTools] &f插件卸载完毕,再见我的朋友! &eQQ= &f1410521748 &7|&f 292200693 &7[&e主开发]";
+        startDone = "&e[MHDFTools] &f插件启动完毕,您好我的朋友! &eQQ= &f129139830";
+        stopDone = "&e[MHDFTools] &f插件卸载完毕,再见我的朋友! &eQQ= &f129139830";
 
         //Instance
         config = new MHDFConfig();
