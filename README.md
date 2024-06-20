@@ -41,8 +41,8 @@ _ProtocolLib, PlaceholderAPI, Vault_
 
 ## 预计的实现
  (1). 不再对密码明文处理
- (2). 使用数据包方式获取tps,丢弃Paper依赖
- (3). 继续优化性能
+   (2). 使用数据包方式获取tps,丢弃Paper依赖
+   (3). 继续优化性能
 
 ## 贡献者
 
