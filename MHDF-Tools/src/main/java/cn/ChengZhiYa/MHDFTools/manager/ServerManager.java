@@ -1,7 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.manager;
 
-import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
-import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 
@@ -12,14 +10,14 @@ public class ServerManager {
     public ServerManager() {
         this.version = Bukkit.getVersion().split("MC: ")[1].replace(")", "");
     }
-    public void unSupportServer() {
-        if (!is1_16orAbove()) {
-            LogUtil.color("&e[MHDFTools] &c您的服务器版本不受我们的支持 -> " + getVersion());
-            MHDFPluginLoader.INSTANCE.disablePlugin();
-        } else {
-            LogUtil.color("&e[MHDFTools] &a您的服务器版本是受支持的 -> " + getVersion());
-        }
-    }
+//    public void unSupportServer() {
+//        if (!is1_16orAbove()) {
+//            LogUtil.color("&e[MHDFTools] &c您的服务器版本不受我们的支持 -> " + getVersion());
+//            MHDFPluginLoader.INSTANCE.disablePlugin();
+//        } else {
+//            LogUtil.color("&e[MHDFTools] &a您的服务器版本是受支持的 -> " + getVersion());
+//        }
+//    }
     public boolean is1_8() {
         return this.version.startsWith("1.8");
     }

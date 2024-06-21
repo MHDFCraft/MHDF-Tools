@@ -56,7 +56,7 @@ public enum MHDFPluginLoader {
 
     public void start() {
         LogUtil.color(getLogo());
-        serverManager.unSupportServer();
+//        serverManager.unSupportServer();
         config.loadConfig();
         initManager.start();
         LogUtil.color(startDone);
