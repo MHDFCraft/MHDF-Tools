@@ -1,8 +1,7 @@
-package cn.ChengZhiYa.MHDFTools.manager.init.start;
+package cn.ChengZhiYa.MHDFTools.task;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
-import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
 import cn.ChengZhiYa.MHDFTools.task.player.*;
 import cn.ChengZhiYa.MHDFTools.task.server.ServerScoreboardTask;
 import cn.ChengZhiYa.MHDFTools.task.server.ServerTimeTask;
@@ -10,10 +9,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public final class AsyncTask implements Invitable {
+public final class AsyncTask {
     FileConfiguration config;
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
-    @Override
     public void start() {
         config = MHDFTools.instance.getConfig();
 

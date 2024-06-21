@@ -3,6 +3,7 @@ package cn.ChengZhiYa.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.config.MHDFConfig;
 import cn.ChengZhiYa.MHDFTools.manager.InitManager;
 import cn.ChengZhiYa.MHDFTools.manager.ServerManager;
+import cn.ChengZhiYa.MHDFTools.task.AsyncTask;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,6 +23,7 @@ public enum PluginLoader {
     private JavaPlugin plugin;
     private InitManager initManager;
     private ServerManager serverManager;
+    private AsyncTask asyncTask;
 
     public void initialize_load(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -45,9 +47,10 @@ public enum PluginLoader {
         stopDone = "&e[MHDFTools] &f插件卸载完毕,再见我的朋友! &eQQ= &f129139830";
 
         //Instance
+        asyncTask = new AsyncTask();
         config = new MHDFConfig();
         initManager = new InitManager();
-        this.serverManager = new ServerManager();
+        serverManager = new ServerManager();
     }
 
     public void load() {
@@ -59,6 +62,7 @@ public enum PluginLoader {
 //        serverManager.unSupportServer();
         config.loadConfig();
         initManager.start();
+        asyncTask.start();
         LogUtil.color(startDone);
 
         LogUtil.color("&4开光!\n" +

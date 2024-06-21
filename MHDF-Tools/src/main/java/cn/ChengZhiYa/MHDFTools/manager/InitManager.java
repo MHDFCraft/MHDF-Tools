@@ -7,6 +7,7 @@ import cn.ChengZhiYa.MHDFTools.manager.init.start.*;
 import cn.ChengZhiYa.MHDFTools.manager.init.stop.stopChannel;
 import cn.ChengZhiYa.MHDFTools.manager.init.stop.stopPlaceholderAPI;
 import cn.ChengZhiYa.MHDFTools.manager.init.stop.stopVault;
+import cn.ChengZhiYa.MHDFTools.task.AsyncTask;
 import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.ImmutableClassToInstanceMap;
 
