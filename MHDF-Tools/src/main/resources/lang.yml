@@ -101,10 +101,10 @@ Home:
   TeleportDone: "&e[MHDFTools] &a已回到家!"
   RemoveDone: "&e[MHDFTools] &c删除成功!"
 Fly:
-  Enable: "&e[MHDFTools] 开启"
-  Disabled: "&e[MHDFTools] 关闭"
-  Done: "&e[MHDFTools] &6你的飞行模式已%1"
-  SetDone: "&e[MHDFTools] &6已将%1的飞行模式%2"
+  Enable: "&a开启"
+  Disabled: "&c关闭"
+  Done: "&e[MHDFTools] &6你的飞行模式已 %1"
+  SetDone: "&e[MHDFTools] &6已将%1的飞行模式 %2"
 FlyTime:
   GetTime: "&e[MHDFTools] &6您的飞行时间还有%1"
   SetDone: "&e[MHDFTools] &6已将%1的飞行时长设置为%2"
@@ -116,7 +116,7 @@ FlyTime:
 Vanish:
   Enable: "&e[MHDFTools] 开启"
   Disabled: "&e[MHDFTools] 关闭"
-  Done: "&e[MHDFTools] &f부 #7289da你的神隐模式已%1"
+  Done: "&e[MHDFTools] #7289da你的神隐模式已%1"
   SetDone: "&e[MHDFTools] #7289da已将%1的神隐模式%2"
   Bossbar: "&e[MHDFTools] &f神隐中"
 gameMode:
