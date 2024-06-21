@@ -159,9 +159,11 @@ public final class CommandRegister implements Invitable {
             }
         }
     }
+
     private void registerTrashCommands() {
         registerCommand(plugin, new Trash(), "垃圾桶", "MHDFTools.Command.Trash", "trash");
     }
+
     private void registerPluginVersionCommands() {
         registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "version");
         registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "mversion");

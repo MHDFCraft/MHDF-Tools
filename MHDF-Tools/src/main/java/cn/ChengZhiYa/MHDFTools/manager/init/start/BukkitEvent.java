@@ -11,7 +11,6 @@ import cn.ChengZhiYa.MHDFTools.listeners.server.ServerJoinLeaveMessageListener;
 import cn.ChengZhiYa.MHDFTools.listeners.server.ServerMOTDListener;
 import cn.ChengZhiYa.MHDFTools.listeners.server.menu.HomeMenu;
 import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
-import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -35,7 +35,7 @@ public class LogUtil {
         }
     }
 
-        public void console ( final String info){
-            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', info));
-        }
+    public void console(final String info) {
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', info));
     }
+}

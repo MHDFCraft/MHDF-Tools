@@ -9,6 +9,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 
 public final class ServerTimeTask extends BukkitRunnable {
     int a = 0;
+
     private void broadcastMessage(String message) {
         if (MHDFTools.instance.getConfig().getBoolean("TimeMessageSettings.ConsoleDisplayed")) {
             Bukkit.broadcastMessage(message);
