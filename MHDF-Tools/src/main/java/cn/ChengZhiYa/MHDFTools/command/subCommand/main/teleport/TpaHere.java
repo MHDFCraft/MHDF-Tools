@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.*;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class TpaHere implements TabExecutor {

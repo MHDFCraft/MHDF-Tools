@@ -1,6 +1,10 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.home;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
+import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
+import cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil;
+import cn.ChengZhiYa.MHDFTools.utils.menu.HomeMenuUtil;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,48 +15,36 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.TpPlayerHome;
-import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
-import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeLocation;
-import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getPlayerHomeList;
-import static cn.ChengZhiYa.MHDFTools.utils.menu.HomeMenuUtil.openHomeMenu;
-
 public final class Home implements TabExecutor {
-
-    @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(i18n("OnlyPlayer"));
-            return false;
-        }
-
-        Player player = (Player) sender;
-
-        if (args.length == 0) {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-                openHomeMenu(player, 1);
-                return true;
+        if (sender instanceof Player) {
+            if (args.length == 0 && Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                Player player = (Player)sender;
+                HomeMenuUtil.openHomeMenu(player, 1);
+                return false;
             }
-        } else if (args.length == 1) {
-            String homeName = args[0];
-            Location homeLocation = getHomeLocation(player.getName(), homeName);
-            if (homeLocation != null) {
-                TpPlayerHome(player.getName(), homeName);
-                player.sendMessage(i18n("Home.TeleportDone"));
-            } else {
-                player.sendMessage(i18n("Home.NotFound", homeName));
+            if (args.length == 1) {
+                Player player = (Player)sender;
+                String HomeName = args[0];
+                Location HomeLocation = HomeUtil.getHomeLocation(player.getName(), HomeName);
+                if (HomeLocation != null) {
+                    BungeeCordUtil.TpPlayerHome(player.getName(), HomeName);
+                    player.sendMessage(SpigotUtil.i18n("Home.TeleportDone"));
+                } else {
+                    player.sendMessage(SpigotUtil.i18n("Home.NotFound", HomeName));
+                }
+                return false;
             }
-            return true;
+            sender.sendMessage(SpigotUtil.i18n("Usage.Home", label));
+        } else {
+            sender.sendMessage(SpigotUtil.i18n("OnlyPlayer"));
         }
-
-        player.sendMessage(i18n("Usage.Home", label));
         return false;
     }
 
-    @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player && args.length == 1) {
-            return getPlayerHomeList(sender.getName());
+            return HomeUtil.getPlayerHomeList(sender.getName());
         }
         return null;
     }
