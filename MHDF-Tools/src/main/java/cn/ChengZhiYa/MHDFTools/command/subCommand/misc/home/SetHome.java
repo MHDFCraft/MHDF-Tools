@@ -11,7 +11,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
-import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.SetHome;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.*;
 
 public final class SetHome implements TabExecutor {
@@ -29,9 +28,9 @@ public final class SetHome implements TabExecutor {
                         sender.sendMessage(i18n("Home.HomeListFull", String.valueOf(getMaxHome(player))));
                         return false;
                     }
-                    AddHome(player.getName(), HomeName, player.getLocation());
+                    addHome(player.getName(), HomeName, player.getLocation());
                 } else {
-                    SetHome(player.getName(), HomeName, player.getLocation());
+                    setHome(player.getName(), HomeName, player.getLocation());
                 }
                 sender.sendMessage(i18n("Home.SetDone", label));
             } else {

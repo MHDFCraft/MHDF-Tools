@@ -178,7 +178,7 @@ public final class HomeMenuUtil {
     private static void handleDelHomeAction(Player player, ItemStack clickItem) {
         String homeName = getHomeName(clickItem);
         if (homeName != null) {
-            RemoveHome(player.getName(), homeName);
+            removeHome(player.getName(), homeName);
         }
     }
 

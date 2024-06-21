@@ -89,7 +89,7 @@ public final class Fly implements CommandExecutor {
         InFlyList.remove(player.getName());
         player.setAllowFlight(false);
         player.sendMessage(i18n("Fly.Done", i18n("Fly.Disabled")));
-        MapUtil.getStringHasMap().put(player.getName() + "_Fly", null);
+        MapUtil.getStringHashMap().put(player.getName() + "_Fly", null);
     }
 
     private void addFlyAndEnable(Player player) {
@@ -97,6 +97,6 @@ public final class Fly implements CommandExecutor {
         InFlyList.add(player.getName());
         player.setAllowFlight(true);
         player.sendMessage(i18n("Fly.Done", i18n("Fly.Enable")));
-        MapUtil.getStringHasMap().put(player.getName() + "_Fly", "已启用");
+        MapUtil.getStringHashMap().put(player.getName() + "_Fly", "已启用");
     }
 }

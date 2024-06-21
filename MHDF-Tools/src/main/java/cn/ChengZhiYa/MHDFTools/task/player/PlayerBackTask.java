@@ -13,7 +13,7 @@ public final class PlayerBackTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        for (Object key : MapUtil.getIntHasMap().keySet()) {
+        for (Object key : MapUtil.getIntHashMap().keySet()) {
             if (key.toString().contains("_BackDelay")) {
                 String playerName = key.toString().replace("_BackDelay", "");
                 Player player = Bukkit.getPlayer(playerName);
@@ -21,26 +21,26 @@ public final class PlayerBackTask extends BukkitRunnable {
                 if (player != null) {
                     handlePlayerBack(player, key.toString(), playerName);
                 } else {
-                    MapUtil.getIntHasMap().remove(key);
+                    MapUtil.getIntHashMap().remove(key);
                 }
             }
         }
     }
 
     private void handlePlayerBack(Player player, String key, String playerName) {
-        int teleportDelay = MapUtil.getIntHasMap().get(key);
+        int teleportDelay = MapUtil.getIntHashMap().get(key);
 
         sendTitle(player, i18n("TeleportDelay." + teleportDelay));
 
         if (teleportDelay > 0) {
             playSound(player, sound("TeleportDelay." + teleportDelay));
-            MapUtil.getIntHasMap().put(key, teleportDelay - 1);
+            MapUtil.getIntHashMap().put(key, teleportDelay - 1);
         } else {
             playSound(player, sound("TeleportSound"));
-            TpPlayerTo(playerName, ServerName, MapUtil.getLocationHasMap().get(playerName + "_DeathLocation"));
-            MapUtil.getLocationHasMap().put(playerName + "_UnBackLocation", player.getLocation());
+            TpPlayerTo(playerName, ServerName, MapUtil.getLocationHashMap().get(playerName + "_DeathLocation"));
+            MapUtil.getLocationHashMap().put(playerName + "_UnBackLocation", player.getLocation());
             player.sendMessage(i18n("Back.Done"));
-            MapUtil.getIntHasMap().remove(key);
+            MapUtil.getIntHashMap().remove(key);
         }
     }
 }

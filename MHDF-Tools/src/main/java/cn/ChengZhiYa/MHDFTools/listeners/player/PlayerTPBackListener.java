@@ -10,6 +10,6 @@ public final class PlayerTPBackListener implements Listener {
     @EventHandler
     public void PlayerTeleportEvent(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
-        MapUtil.getLocationHasMap().put(player.getName() + "_TpBackLocation", player.getLocation());
+        MapUtil.getLocationHashMap().put(player.getName() + "_TpBackLocation", player.getLocation());
     }
 }

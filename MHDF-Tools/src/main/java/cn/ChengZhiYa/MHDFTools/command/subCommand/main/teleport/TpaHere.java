@@ -30,7 +30,7 @@ public final class TpaHere implements TabExecutor {
                     sender.sendMessage(i18n("PlayerNotOnline"));
                     return false;
                 }
-                if (MapUtil.getIntHasMap().get(sender.getName() + "_TPAHereTime") != null && MapUtil.getIntHasMap().get(sender.getName() + "_TPAHereTime") >= 0) {
+                if (MapUtil.getIntHashMap().get(sender.getName() + "_TPAHereTime") != null && MapUtil.getIntHashMap().get(sender.getName() + "_TPAHereTime") >= 0) {
                     sender.sendMessage(i18n("TpaHere.RepectSend"));
                     return false;
                 }
@@ -40,8 +40,8 @@ public final class TpaHere implements TabExecutor {
             }
             if (args.length == 2) {
                 if (args[0].equals("accept")) {
-                    if (MapUtil.getStringHasMap().get(args[1] + "_TPAHerePlayerName") != null && MapUtil.getStringHasMap().get(args[1] + "_TPAHerePlayerName").equals(sender.getName())) {
-                        if (MapUtil.getIntHasMap().get(args[1] + "_TPAHereTime") != null && MapUtil.getIntHasMap().get(args[1] + "_TPAHereTime") >= 0) {
+                    if (MapUtil.getStringHashMap().get(args[1] + "_TPAHerePlayerName") != null && MapUtil.getStringHashMap().get(args[1] + "_TPAHerePlayerName").equals(sender.getName())) {
+                        if (MapUtil.getIntHashMap().get(args[1] + "_TPAHereTime") != null && MapUtil.getIntHashMap().get(args[1] + "_TPAHereTime") >= 0) {
                             CancelTpaHere(args[1]);
                             if (!ifPlayerOnline(args[1])) {
                                 sender.sendMessage(i18n("TpaHere.Offline", args[1]));
@@ -60,8 +60,8 @@ public final class TpaHere implements TabExecutor {
                     return false;
                 }
                 if (args[0].equals("defuse")) {
-                    if (MapUtil.getStringHasMap().get(args[1] + "_TPAHerePlayerName") != null && MapUtil.getStringHasMap().get(args[1] + "_TPAHerePlayerName").equals(sender.getName())) {
-                        if (MapUtil.getIntHasMap().get(args[1] + "_TPAHereTime") != null && MapUtil.getIntHasMap().get(args[1] + "_TPAHereTime") >= 0) {
+                    if (MapUtil.getStringHashMap().get(args[1] + "_TPAHerePlayerName") != null && MapUtil.getStringHashMap().get(args[1] + "_TPAHerePlayerName").equals(sender.getName())) {
+                        if (MapUtil.getIntHashMap().get(args[1] + "_TPAHereTime") != null && MapUtil.getIntHashMap().get(args[1] + "_TPAHereTime") >= 0) {
                             CancelTpaHere(args[1]);
                             if (!ifPlayerOnline(args[1])) {
                                 sender.sendMessage(i18n("TpaHere.Offline", args[1]));

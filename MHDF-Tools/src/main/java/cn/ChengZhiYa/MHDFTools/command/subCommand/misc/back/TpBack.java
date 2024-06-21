@@ -15,16 +15,16 @@ public final class TpBack implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (MapUtil.getLocationHasMap().get(player.getName() + "_TpBackLocation") != null) {
-                if (MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(MapUtil.getLocationHasMap().get(player.getName() + "_TpBackLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
+            if (MapUtil.getLocationHashMap().get(player.getName() + "_TpBackLocation") != null) {
+                if (MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_TpBackLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
-                if (MapUtil.getIntHasMap().get(player.getName() + "_BackDelay") != null
-                        || MapUtil.getIntHasMap().get(player.getName() + "_TpBackDelay") != null) {
+                if (MapUtil.getIntHashMap().get(player.getName() + "_BackDelay") != null
+                        || MapUtil.getIntHashMap().get(player.getName() + "_TpBackDelay") != null) {
                     player.sendMessage(i18n("TpBack.RepectSend"));
                     return false;
                 }
-                MapUtil.getIntHasMap().put(player.getName() + "_TpBackDelay", MHDFTools.instance.getConfig().getInt("TpBackSettings.Delay"));
+                MapUtil.getIntHashMap().put(player.getName() + "_TpBackDelay", MHDFTools.instance.getConfig().getInt("TpBackSettings.Delay"));
             } else {
                 sender.sendMessage(i18n("TpBack.NotFound"));
             }

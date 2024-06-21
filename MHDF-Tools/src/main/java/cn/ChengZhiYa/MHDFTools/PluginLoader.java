@@ -1,8 +1,9 @@
 package cn.ChengZhiYa.MHDFTools;
 
-import cn.ChengZhiYa.MHDFTools.command.AsyncCommand;
 import cn.ChengZhiYa.MHDFTools.config.MHDFConfig;
 import cn.ChengZhiYa.MHDFTools.manager.InitManager;
+import cn.ChengZhiYa.MHDFTools.manager.ServerManager;
+import cn.ChengZhiYa.MHDFTools.task.AsyncTask;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.closeDatabase;
 
 @Getter
-public enum MHDFPluginLoader {
+public enum PluginLoader {
     INSTANCE;
 
     public static boolean hasPlaceholderAPI = true;
@@ -21,7 +22,8 @@ public enum MHDFPluginLoader {
     private MHDFConfig config;
     private JavaPlugin plugin;
     private InitManager initManager;
-    private AsyncCommand asyncCommand;
+    private ServerManager serverManager;
+    private AsyncTask asyncTask;
 
     public void initialize_load(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -45,9 +47,10 @@ public enum MHDFPluginLoader {
         stopDone = "&e[MHDFTools] &f插件卸载完毕,再见我的朋友! &eQQ= &f129139830";
 
         //Instance
+        asyncTask = new AsyncTask();
         config = new MHDFConfig();
-        asyncCommand = new AsyncCommand();
         initManager = new InitManager();
+        serverManager = new ServerManager();
     }
 
     public void load() {
@@ -56,9 +59,10 @@ public enum MHDFPluginLoader {
 
     public void start() {
         LogUtil.color(getLogo());
+//        serverManager.unSupportServer();
         config.loadConfig();
         initManager.start();
-        asyncCommand.start();
+        asyncTask.start();
         LogUtil.color(startDone);
 
         LogUtil.color("&4开光!\n" +
@@ -115,13 +119,24 @@ public enum MHDFPluginLoader {
                 "&6        /:::/    /               /:::/    /              \\::::/    /                                \n" +
                 "&6        \\::/    /                \\::/    /                \\::/____/                                 \n" +
                 "&6         \\/____/                  \\/____/                  ~~                                       \n" +
-                "&6                                                                                                    ";
+                "&6                                                                                                    \n" +
+                "&eMHDFTools&7 ( Version= " + INSTANCE.getVersion() + " Build= " + INSTANCE.getBuild() + " &7)\n" +
+                "       &e开发者&7 ( &eChengZhiYa&7, &eDg32z_ &7)\n";
+
     }
     public String getVersion() {
-        return "1.4.12 (美化)";
+        return "1.4.121 (细节修复)";
     }
 
     public String getBuild() {
-        return "224621-1.30";
+        return "224621-13.26";
+    }
+
+    public void disablePlugin() {
+        if (plugin != null) {
+            plugin.getPluginLoader().disablePlugin(plugin);
+        } else {
+            LogUtil.color("&e[MHDFTools] &cPlugin Not Found!");
+        }
     }
 }

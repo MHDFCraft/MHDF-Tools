@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.utils.message;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -28,11 +29,13 @@ public class LogUtil {
 
     public void color(String Message) {
         CommandSender sender = Bukkit.getConsoleSender();
-        Message = MessageUtil.translateHexCodes(Message);
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
+        if (PluginLoader.INSTANCE.getServerManager().is1_16orAbove()) {
+            Message = MessageUtil.translateHexCodes(Message);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
+        }
     }
 
-    public void console(final String info) {
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', info));
+        public void console ( final String info){
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', info));
+        }
     }
-}

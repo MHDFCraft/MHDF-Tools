@@ -40,7 +40,7 @@ public final class Tpa implements TabExecutor {
                 return false;
             }
 
-            if (MapUtil.getIntHasMap().get(player.getName() + "_TPATime") != null && MapUtil.getIntHasMap().get(player.getName() + "_TPATime") >= 0) {
+            if (MapUtil.getIntHashMap().get(player.getName() + "_TPATime") != null && MapUtil.getIntHashMap().get(player.getName() + "_TPATime") >= 0) {
                 player.sendMessage(i18n("Tpa.RepectSend"));
                 return false;
             }
@@ -70,8 +70,8 @@ public final class Tpa implements TabExecutor {
     }
 
     private void handleAccept(Player player, String targetPlayer) {
-        if (MapUtil.getStringHasMap().get(targetPlayer + "_TPAPlayerName") != null && MapUtil.getStringHasMap().get(targetPlayer + "_TPAPlayerName").equals(player.getName())) {
-            if (MapUtil.getIntHasMap().get(targetPlayer + "_TPATime") != null && MapUtil.getIntHasMap().get(targetPlayer + "_TPATime") >= 0) {
+        if (MapUtil.getStringHashMap().get(targetPlayer + "_TPAPlayerName") != null && MapUtil.getStringHashMap().get(targetPlayer + "_TPAPlayerName").equals(player.getName())) {
+            if (MapUtil.getIntHashMap().get(targetPlayer + "_TPATime") != null && MapUtil.getIntHashMap().get(targetPlayer + "_TPATime") >= 0) {
                 CancelTpa(targetPlayer);
 
                 if (!ifPlayerOnline(targetPlayer)) {
@@ -93,8 +93,8 @@ public final class Tpa implements TabExecutor {
     }
 
     private void handleDefuse(Player player, String targetPlayer) {
-        if (MapUtil.getStringHasMap().get(targetPlayer + "_TPAPlayerName") != null && MapUtil.getStringHasMap().get(targetPlayer + "_TPAPlayerName").equals(player.getName())) {
-            if (MapUtil.getIntHasMap().get(targetPlayer + "_TPATime") != null && MapUtil.getIntHasMap().get(targetPlayer + "_TPATime") >= 0) {
+        if (MapUtil.getStringHashMap().get(targetPlayer + "_TPAPlayerName") != null && MapUtil.getStringHashMap().get(targetPlayer + "_TPAPlayerName").equals(player.getName())) {
+            if (MapUtil.getIntHashMap().get(targetPlayer + "_TPATime") != null && MapUtil.getIntHashMap().get(targetPlayer + "_TPATime") >= 0) {
                 CancelTpa(targetPlayer);
 
                 if (!ifPlayerOnline(targetPlayer)) {

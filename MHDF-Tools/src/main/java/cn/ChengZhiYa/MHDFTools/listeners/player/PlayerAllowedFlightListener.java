@@ -31,7 +31,7 @@ public final class PlayerAllowedFlightListener implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReSpawn") &&
-                MapUtil.getStringHasMap().containsKey(player.getName() + "_Fly")) {
+                MapUtil.getStringHashMap().containsKey(player.getName() + "_Fly")) {
             handleFlight(player);
         }
     }

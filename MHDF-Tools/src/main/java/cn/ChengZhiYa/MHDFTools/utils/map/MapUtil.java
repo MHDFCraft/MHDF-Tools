@@ -10,34 +10,34 @@ import java.util.Map;
 
 @UtilityClass
 public class MapUtil {
-    static HashMap<Object, Boolean> booleanHasMap = new HashMap<>();
-    static HashMap<Object, Integer> intHasMap = new HashMap<>();
-    static HashMap<Object, Location> locationHasMap = new HashMap<>();
-    static HashMap<Object, Objective> objectiveHasMap = new HashMap<>();
-    static HashMap<Object, Scoreboard> scoreboardHasMap = new HashMap<>();
-    static HashMap<Object, String> stringHasMap = new HashMap<>();
+    static HashMap<Object, Boolean> booleanHashMap = new HashMap<>();
+    static HashMap<Object, Integer> intHashMap = new HashMap<>();
+    static HashMap<Object, Location> locationHashMap = new HashMap<>();
+    static HashMap<Object, Objective> objectiveHashMap = new HashMap<>();
+    static HashMap<Object, Scoreboard> scoreboardHashMap = new HashMap<>();
+    static HashMap<Object, String> stringHashMap = new HashMap<>();
 
-    public static Map<Object, Boolean> getBooleanHasMap() {
-        return booleanHasMap;
+    public static Map<Object, Boolean> getBooleanHashMap() {
+        return booleanHashMap;
     }
 
-    public static Map<Object, Integer> getIntHasMap() {
-        return intHasMap;
+    public static Map<Object, Integer> getIntHashMap() {
+        return intHashMap;
     }
 
-    public static Map<Object, Location> getLocationHasMap() {
-        return locationHasMap;
+    public static Map<Object, Location> getLocationHashMap() {
+        return locationHashMap;
     }
 
-    public static Map<Object, Objective> getObjectiveHasMap() {
-        return objectiveHasMap;
+    public static Map<Object, Objective> getObjectiveHashMap() {
+        return objectiveHashMap;
     }
 
-    public static Map<Object, Scoreboard> getScoreboardHasMap() {
-        return scoreboardHasMap;
+    public static Map<Object, Scoreboard> getScoreboardHashMap() {
+        return scoreboardHashMap;
     }
 
-    public static Map<Object, String> getStringHasMap() {
-        return stringHasMap;
+    public static Map<Object, String> getStringHashMap() {
+        return stringHashMap;
     }
 }

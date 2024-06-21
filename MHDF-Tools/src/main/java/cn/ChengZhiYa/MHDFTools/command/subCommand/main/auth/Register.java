@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.main.auth;
 
-import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.Bukkit;
@@ -21,12 +21,14 @@ public final class Register implements CommandExecutor {
 
     JavaPlugin plugin;
     int maxPasswordLength;
+    int minPasswordLength;
     List<String> easyPasswords;
     boolean autoLogin;
 
     public Register() {
-        this.plugin = MHDFPluginLoader.INSTANCE.getPlugin();
-        this.maxPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MaxPasswordLength");
+        this.plugin = PluginLoader.INSTANCE.getPlugin();
+        this.maxPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MaxPaswordLength");
+        this.minPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MinPaswordLength");
         this.easyPasswords = plugin.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
         this.autoLogin = plugin.getConfig().getBoolean("LoginSystemSettings.AutoLogin");
     }
@@ -57,8 +59,12 @@ public final class Register implements CommandExecutor {
             return;
         }
 
+        if (password.length() < minPasswordLength) {
+            player.sendMessage(i18n("Login.LengthShort", String.valueOf(minPasswordLength)));
+            return;
+        }
         if (password.length() > maxPasswordLength) {
-            player.sendMessage(i18n("Login.LengthInvalid", String.valueOf(maxPasswordLength)));
+            player.sendMessage(i18n("Login.LengthLong", String.valueOf(maxPasswordLength)));
             return;
         }
 
@@ -72,12 +78,12 @@ public final class Register implements CommandExecutor {
             return;
         }
 
-        MapUtil.getStringHasMap().put(player.getName() + "_Login", "t");
+        MapUtil.getStringHashMap().put(player.getName() + "_Login", "t");
         LoginUtil.register(player.getName(), Sha256(password));
 
         if (autoLogin) {
             String ipAddress = Objects.requireNonNull(player.getAddress()).getHostName();
-            MapUtil.getStringHasMap().put(player.getName() + "_LoginIP", ipAddress);
+            MapUtil.getStringHashMap().put(player.getName() + "_LoginIP", ipAddress);
         }
 
         player.sendMessage(i18n("Login.RegisterDone"));

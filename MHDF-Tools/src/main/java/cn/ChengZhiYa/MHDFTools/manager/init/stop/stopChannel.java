@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.manager.init.stop;
 
-import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.listeners.server.ServerChannelListener;
 import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import static org.bukkit.Bukkit.getServer;
 
 public class stopChannel implements Invitable {
-    JavaPlugin plugin = MHDFPluginLoader.INSTANCE.getPlugin();
+    JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     @Override
     public void start() {

@@ -35,7 +35,7 @@ public final class DelHome implements TabExecutor {
             return true;
         }
 
-        RemoveHome(player.getName(), homeName);
+        removeHome(player.getName(), homeName);
         player.sendMessage(i18n("Home.RemoveDone"));
         return true;
     }

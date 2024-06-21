@@ -30,20 +30,20 @@ public final class ServerScoreboardTask extends BukkitRunnable {
         try {
             String playerName = player.getName();
             String scoreboardKey = playerName + "_Scoreboard";
-            MapUtil.getObjectiveHasMap().remove(playerName + "_Objective");
+            MapUtil.getObjectiveHashMap().remove(playerName + "_Objective");
 
-            if (!MapUtil.getScoreboardHasMap().containsKey(scoreboardKey)) {
-                MapUtil.getScoreboardHasMap().put(scoreboardKey, Bukkit.getScoreboardManager().getNewScoreboard());
+            if (!MapUtil.getScoreboardHashMap().containsKey(scoreboardKey)) {
+                MapUtil.getScoreboardHashMap().put(scoreboardKey, Bukkit.getScoreboardManager().getNewScoreboard());
             }
 
-            Objective objective = MapUtil.getScoreboardHasMap().get(scoreboardKey).registerNewObjective("sidebar", "dummy");
+            Objective objective = MapUtil.getScoreboardHashMap().get(scoreboardKey).registerNewObjective("sidebar", "dummy");
             objective.setDisplayName(Placeholder(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("ScoreboardSettings.Title"))));
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-            MapUtil.getObjectiveHasMap().put(playerName + "_Objective", objective);
+            MapUtil.getObjectiveHashMap().put(playerName + "_Objective", objective);
 
             updateScoreboardLines(player, objective);
 
-            player.setScoreboard(MapUtil.getScoreboardHasMap().get(scoreboardKey));
+            player.setScoreboard(MapUtil.getScoreboardHashMap().get(scoreboardKey));
         } catch (Exception ignored) {
         }
     }

@@ -251,7 +251,7 @@ public final class ConvertData {
 
                             for (String Datas : Objects.requireNonNull(Data.getConfigurationSection("")).getKeys(false)) {
                                 if (!ifHomeExists(PlayerName, Datas)) {
-                                    AddHome(PlayerName, Datas, new Location(
+                                    addHome(PlayerName, Datas, new Location(
                                             Bukkit.getWorld(Objects.requireNonNull(Data.getString(Datas + ".World"))),
                                             Data.getDouble(Datas + ".X"),
                                             Data.getDouble(Datas + ".Y"),
@@ -260,7 +260,7 @@ public final class ConvertData {
                                             (float) Data.getDouble(Datas + ".Pitch")
                                     ));
                                 } else {
-                                    SetHome(PlayerName, Datas, new Location(
+                                    setHome(PlayerName, Datas, new Location(
                                             Bukkit.getWorld(Objects.requireNonNull(Data.getString(Datas + ".World"))),
                                             Data.getDouble(Datas + ".X"),
                                             Data.getDouble(Datas + ".Y"),

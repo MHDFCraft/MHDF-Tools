@@ -17,15 +17,15 @@ public final class UnBack implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (MapUtil.getLocationHasMap().get(player.getName() + "_UnBackLocation") != null) {
-                if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(MapUtil.getLocationHasMap().get(player.getName() + "_UnBackLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
+            if (MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation") != null) {
+                if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
-                if (MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(MapUtil.getLocationHasMap().get(player.getName() + "_UnBackLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
+                if (MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
                 TpPlayerTo(player.getName(), ServerName,
-                        MapUtil.getLocationHasMap().get(player.getName() + "_UnBackLocation")
+                        MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation")
                 );
                 player.sendMessage(i18n("UnBack.Done"));
             } else {

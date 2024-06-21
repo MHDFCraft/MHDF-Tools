@@ -96,8 +96,8 @@ public final class BungeeCord {
             }
             Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).spigot().sendMessage(Message);
         }
-        MapUtil.getIntHasMap().put(SendPlayerName + "_TPATime", MHDFTools.instance.getConfig().getInt("Tpa.OutTime"));
-        MapUtil.getStringHasMap().put(SendPlayerName + "_TPAPlayerName", PlayerName);
+        MapUtil.getIntHashMap().put(SendPlayerName + "_TPATime", MHDFTools.instance.getConfig().getInt("Tpa.OutTime"));
+        MapUtil.getStringHashMap().put(SendPlayerName + "_TPAPlayerName", PlayerName);
     }
 
     public static void SendTpaHere(String PlayerName, String SendPlayerName) {
@@ -134,8 +134,8 @@ public final class BungeeCord {
             }
             Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).spigot().sendMessage(Message);
         }
-        MapUtil.getStringHasMap().put(SendPlayerName + "_TPAHerePlayerName", PlayerName);
-        MapUtil.getIntHasMap().put(SendPlayerName + "_TPAHereTime", MHDFTools.instance.getConfig().getInt("Tpa.OutTime"));
+        MapUtil.getStringHashMap().put(SendPlayerName + "_TPAHerePlayerName", PlayerName);
+        MapUtil.getIntHashMap().put(SendPlayerName + "_TPAHereTime", MHDFTools.instance.getConfig().getInt("Tpa.OutTime"));
     }
 
     public static void SendMessage(String PlayerName, String Message) {
@@ -242,8 +242,8 @@ public final class BungeeCord {
 
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         }
-        MapUtil.getIntHasMap().remove(PlayerName + "_TPATime");
-        MapUtil.getStringHasMap().remove(PlayerName + "_TPAPlayerName");
+        MapUtil.getIntHashMap().remove(PlayerName + "_TPATime");
+        MapUtil.getStringHashMap().remove(PlayerName + "_TPAPlayerName");
     }
 
     public static void CancelTpaHere(String PlayerName) {
@@ -261,8 +261,8 @@ public final class BungeeCord {
 
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         }
-        MapUtil.getIntHasMap().remove(PlayerName + "_TPAHereTime");
-        MapUtil.getStringHasMap().remove(PlayerName + "_TPAHerePlayerName");
+        MapUtil.getIntHashMap().remove(PlayerName + "_TPAHereTime");
+        MapUtil.getStringHashMap().remove(PlayerName + "_TPAHerePlayerName");
     }
 
     public static void SetSpawn(Location Location) {

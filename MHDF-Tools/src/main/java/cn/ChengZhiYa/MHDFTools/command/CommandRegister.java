@@ -1,7 +1,8 @@
 package cn.ChengZhiYa.MHDFTools.command;
 
-import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
+import cn.ChengZhiYa.MHDFTools.command.subCommand.main.MainCommand;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.auth.Login;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.auth.Register;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.flight.Fly;
@@ -42,12 +43,12 @@ import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.runAction;
 
 public final class CommandRegister implements Invitable {
     FileConfiguration config;
-    JavaPlugin plugin = MHDFPluginLoader.INSTANCE.getPlugin();
+    JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     @Override
     public void start() {
         config = MHDFTools.instance.getConfig();
-        registerCommand(plugin, new cn.ChengZhiYa.MHDFTools.command.subCommand.main.MHDFTools(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
+        registerCommand(plugin, new MainCommand(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
         for (String configKey : config.getKeys(false)) {
             boolean isEnabled = config.getBoolean(configKey + ".Enable", true);
             switch (configKey) {
@@ -132,12 +133,12 @@ public final class CommandRegister implements Invitable {
                     }
                     break;
                 case "CrashPlayerSettings":
-                    if (MHDFPluginLoader.hasProtocolLib) {
+                    if (PluginLoader.hasProtocolLib) {
                         registerCrashCommand();
                     }
                     break;
                 case "EconomySettings":
-                    if (isEnabled && MHDFPluginLoader.hasVault) {
+                    if (isEnabled && PluginLoader.hasVault) {
                         registerEconomy();
                     }
                     break;
@@ -176,7 +177,7 @@ public final class CommandRegister implements Invitable {
     }
 
     private void registerHomeCommands() {
-        registerCommand(plugin, new SetHome(), "设置家", "MHDFTools.Command.SetHome", "sethome");
+        registerCommand(plugin, new SetHome(), "设置家", "MHDFTools.Command.setHome", "sethome");
         registerCommand(plugin, new DelHome(), "删除家", "MHDFTools.Command.DelHome", "delhome");
         registerCommand(plugin, new Home(), "传送至家", "MHDFTools.Command.Home", "home");
     }
