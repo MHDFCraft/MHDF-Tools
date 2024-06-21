@@ -42,8 +42,8 @@ public final class ServerChannelListener implements PluginMessageListener {
                 String PlayerName = in.readUTF();
                 String SendPlayerName = in.readUTF();
 
-                MapUtil.getIntHasMap().put(SendPlayerName + "_TPATime", MHDFTools.instance.getConfig().getInt("Tpa.OutTime"));
-                MapUtil.getStringHasMap().put(SendPlayerName + "_TPAPlayerName", PlayerName);
+                MapUtil.getIntHashMap().put(SendPlayerName + "_TPATime", MHDFTools.instance.getConfig().getInt("Tpa.OutTime"));
+                MapUtil.getStringHashMap().put(SendPlayerName + "_TPAPlayerName", PlayerName);
 
                 TextComponent Message = new TextComponent();
                 for (String Messages : i18n("Tpa.Message").split("\\?")) {
@@ -69,8 +69,8 @@ public final class ServerChannelListener implements PluginMessageListener {
                 String PlayerName = in.readUTF();
                 String SendPlayerName = in.readUTF();
 
-                MapUtil.getIntHasMap().put(SendPlayerName + "_TPAHereTime", MHDFTools.instance.getConfig().getInt("Tpa.OutTime"));
-                MapUtil.getStringHasMap().put(SendPlayerName + "_TPAHerePlayerName", PlayerName);
+                MapUtil.getIntHashMap().put(SendPlayerName + "_TPAHereTime", MHDFTools.instance.getConfig().getInt("Tpa.OutTime"));
+                MapUtil.getStringHashMap().put(SendPlayerName + "_TPAHerePlayerName", PlayerName);
 
                 TextComponent Message = new TextComponent();
                 for (String Messages : i18n("TpaHere.Message").split("\\?")) {
@@ -123,20 +123,20 @@ public final class ServerChannelListener implements PluginMessageListener {
             }
             if (subchannel.equals("CancelTpa")) {
                 String PlayerName = in.readUTF();
-                MapUtil.getIntHasMap().remove(PlayerName + "_TPATime");
-                MapUtil.getStringHasMap().remove(PlayerName + "_TPAPlayerName");
+                MapUtil.getIntHashMap().remove(PlayerName + "_TPATime");
+                MapUtil.getStringHashMap().remove(PlayerName + "_TPAPlayerName");
             }
             if (subchannel.equals("CancelTpaHere")) {
                 String PlayerName = in.readUTF();
-                MapUtil.getIntHasMap().remove(PlayerName + "_TPAHereTime");
-                MapUtil.getStringHasMap().remove(PlayerName + "_TPAHerePlayerName");
+                MapUtil.getIntHashMap().remove(PlayerName + "_TPAHereTime");
+                MapUtil.getStringHashMap().remove(PlayerName + "_TPAHerePlayerName");
             }
             if (subchannel.equals("SaveLocation")) {
                 String Key = in.readUTF();
                 String Server = in.readUTF();
                 Location Location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble());
-                MapUtil.getLocationHasMap().put(Key, Location);
-                MapUtil.getStringHasMap().put(Key + "_Server", Server);
+                MapUtil.getLocationHashMap().put(Key, Location);
+                MapUtil.getStringHashMap().put(Key + "_Server", Server);
             }
             if (subchannel.equals("ServerName")) {
                 ServerName = in.readUTF();

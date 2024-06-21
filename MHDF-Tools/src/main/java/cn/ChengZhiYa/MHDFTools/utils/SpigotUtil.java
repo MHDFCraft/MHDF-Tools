@@ -69,18 +69,18 @@ public final class SpigotUtil {
 
             if (!NewVersionString.equals(Version)) {
                 LogUtil.color("&e[MHDFTools] &c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
-                MapUtil.getBooleanHasMap().put("IsLast", true);
+                MapUtil.getBooleanHashMap().put("IsLast", true);
             } else {
                 LogUtil.color("&e[MHDFTools] &a当前插件版本是最新版!");
             }
-            MapUtil.getBooleanHasMap().put("CheckVersionError", false);
+            MapUtil.getBooleanHashMap().put("CheckVersionError", false);
 
             in.close();
             conn.disconnect();
         } catch (Exception e) {
             LogUtil.color("&e[MHDFTools] 获取检测更新时出错!请检查网络连接!");
-            MapUtil.getBooleanHasMap().put("IsLast", false);
-            MapUtil.getBooleanHasMap().put("CheckVersionError", true);
+            MapUtil.getBooleanHashMap().put("IsLast", false);
+            MapUtil.getBooleanHashMap().put("CheckVersionError", true);
         }
     }
 
@@ -137,7 +137,7 @@ public final class SpigotUtil {
     }
 
     public static boolean ifLogin(Player player) {
-        return MapUtil.getStringHasMap().get(player.getName() + "_Login") != null;
+        return MapUtil.getStringHashMap().get(player.getName() + "_Login") != null;
     }
 
     public static void opperSenderMessage(String Message, String PlayerName) {

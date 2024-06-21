@@ -43,8 +43,8 @@ public final class PlayerJoinListener implements Listener {
             try {
                 Player player = event.getPlayer();
                 if (player.hasPermission("MHDFTools.Op")) {
-                    if (!MapUtil.getBooleanHasMap().get("CheckVersionError")) {
-                        if (!MapUtil.getBooleanHasMap().get("IsLast")) {
+                    if (!MapUtil.getBooleanHashMap().get("CheckVersionError")) {
+                        if (!MapUtil.getBooleanHashMap().get("IsLast")) {
                             player.sendMessage(MessageUtil.colorMessage("&cCheng-Tools不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/"));
                         }
                     } else {
@@ -66,7 +66,7 @@ public final class PlayerJoinListener implements Listener {
         }
         if (MHDFTools.instance.getConfig().getBoolean("ScoreboardSettings.Enable")) {
             Player player = event.getPlayer();
-            MapUtil.getScoreboardHasMap().put(player.getName() + "_Scoreboard", Bukkit.getScoreboardManager().getNewScoreboard());
+            MapUtil.getScoreboardHashMap().put(player.getName() + "_Scoreboard", Bukkit.getScoreboardManager().getNewScoreboard());
         }
         if (MHDFTools.instance.getConfig().getBoolean("WhiteList.Enable")) {
             if (!MHDFTools.instance.getConfig().getStringList("WhiteList.List").contains(event.getPlayer().getName()) || event.getPlayer().hasPermission(Objects.requireNonNull(MHDFTools.instance.getConfig().getString("WhiteList.Permission")))) {

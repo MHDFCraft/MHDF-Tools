@@ -14,8 +14,8 @@ public final class PlayerTpaHereTask extends BukkitRunnable {
     @Override
     public void run() {
         if (MHDFTools.instance.getConfig().getBoolean("TpaHereSettings.Enable")) {
-            Map<Object, String> stringMap = MapUtil.getStringHasMap();
-            Map<Object, Integer> intMap = MapUtil.getIntHasMap();
+            Map<Object, String> stringMap = MapUtil.getStringHashMap();
+            Map<Object, Integer> intMap = MapUtil.getIntHashMap();
 
             for (Object key : new HashSet<>(stringMap.keySet())) {
                 if (key.toString().contains("_TPAHerePlayerName")) {

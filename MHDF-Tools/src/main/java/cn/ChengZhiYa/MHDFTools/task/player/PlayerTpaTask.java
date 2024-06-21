@@ -14,16 +14,16 @@ public final class PlayerTpaTask extends BukkitRunnable {
             return;
         }
 
-        MapUtil.getStringHasMap().keySet().forEach(key -> {
+        MapUtil.getStringHashMap().keySet().forEach(key -> {
             if (key.toString().contains("_TPAPlayerName")) {
                 String playerName = key.toString().replaceAll("_TPAPlayerName", "");
-                String targetPlayerName = MapUtil.getStringHasMap().get(key);
-                int time = MapUtil.getIntHasMap().get(playerName + "_TPATime");
+                String targetPlayerName = MapUtil.getStringHashMap().get(key);
+                int time = MapUtil.getIntHashMap().get(playerName + "_TPATime");
 
                 if (ifPlayerOnline(playerName)) {
                     if (ifPlayerOnline(targetPlayerName)) {
                         if (time >= 0) {
-                            MapUtil.getIntHasMap().put(playerName + "_TPATime", time - 1);
+                            MapUtil.getIntHashMap().put(playerName + "_TPATime", time - 1);
                         } else {
                             SendMessage(playerName, i18n("Tpa.TimeOutDone", targetPlayerName));
                             SendMessage(targetPlayerName, i18n("Tpa.TimeOut", playerName));

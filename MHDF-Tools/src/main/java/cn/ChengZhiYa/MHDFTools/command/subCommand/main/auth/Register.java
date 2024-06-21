@@ -72,12 +72,12 @@ public final class Register implements CommandExecutor {
             return;
         }
 
-        MapUtil.getStringHasMap().put(player.getName() + "_Login", "t");
+        MapUtil.getStringHashMap().put(player.getName() + "_Login", "t");
         LoginUtil.register(player.getName(), Sha256(password));
 
         if (autoLogin) {
             String ipAddress = Objects.requireNonNull(player.getAddress()).getHostName();
-            MapUtil.getStringHasMap().put(player.getName() + "_LoginIP", ipAddress);
+            MapUtil.getStringHashMap().put(player.getName() + "_LoginIP", ipAddress);
         }
 
         player.sendMessage(i18n("Login.RegisterDone"));

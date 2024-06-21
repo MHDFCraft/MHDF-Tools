@@ -264,7 +264,7 @@ public final class MenuUtil {
             case "[console_args]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    MapUtil.getStringHasMap().put(sender.getName() + "_ArgsRunCommmand", "console|" + menuFileName + "|" + action[1] + "|" + action[2]);
+                    MapUtil.getStringHashMap().put(sender.getName() + "_ArgsRunCommmand", "console|" + menuFileName + "|" + action[1] + "|" + action[2]);
                     player.closeInventory();
                 }
                 break;
@@ -272,7 +272,7 @@ public final class MenuUtil {
             case "[player_args]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    MapUtil.getStringHasMap().put(sender.getName() + "_ArgsRunCommmand", "player|" + menuFileName + "|" + action[1] + "|" + action[2]);
+                    MapUtil.getStringHashMap().put(sender.getName() + "_ArgsRunCommmand", "player|" + menuFileName + "|" + action[1] + "|" + action[2]);
                     player.closeInventory();
                 }
                 break;

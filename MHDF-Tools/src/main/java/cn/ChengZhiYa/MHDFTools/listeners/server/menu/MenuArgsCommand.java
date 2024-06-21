@@ -18,8 +18,8 @@ public final class MenuArgsCommand implements Listener {
         Player player = event.getPlayer();
         String mapKey = player.getName() + "_ArgsRunCommand";
 
-        if (MapUtil.getStringHasMap().containsKey(mapKey)) {
-            String commandInfo = MapUtil.getStringHasMap().get(mapKey);
+        if (MapUtil.getStringHashMap().containsKey(mapKey)) {
+            String commandInfo = MapUtil.getStringHashMap().get(mapKey);
             String[] commandParts = commandInfo.split("\\|");
             String[] args = event.getMessage().split("\\|");
 
@@ -37,7 +37,7 @@ public final class MenuArgsCommand implements Listener {
                 openMenu(player, commandParts[1]);
             }
 
-            MapUtil.getStringHasMap().remove(mapKey);
+            MapUtil.getStringHashMap().remove(mapKey);
         }
     }
 }

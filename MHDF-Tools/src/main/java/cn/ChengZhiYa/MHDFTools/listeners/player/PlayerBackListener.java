@@ -14,14 +14,14 @@ public final class PlayerBackListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
-        MapUtil.getLocationHasMap().put(player.getName() + "_DeathLocation", player.getLocation());
+        MapUtil.getLocationHashMap().put(player.getName() + "_DeathLocation", player.getLocation());
     }
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        if (MapUtil.getLocationHasMap().containsKey(player.getName() + "_DeathLocation")) {
-            org.bukkit.Location diedLocation = MapUtil.getLocationHasMap().get(player.getName() + "_DeathLocation");
+        if (MapUtil.getLocationHashMap().containsKey(player.getName() + "_DeathLocation")) {
+            org.bukkit.Location diedLocation = MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation");
             int x = diedLocation.getBlockX();
             int y = diedLocation.getBlockY();
             int z = diedLocation.getBlockZ();

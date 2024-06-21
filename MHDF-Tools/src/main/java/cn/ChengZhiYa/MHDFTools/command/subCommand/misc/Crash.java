@@ -32,13 +32,13 @@ public final class Crash implements CommandExecutor {
             return false;
         }
 
-        if (MapUtil.getStringHasMap().get(playerName + "_Crash") != null) {
+        if (MapUtil.getStringHashMap().get(playerName + "_Crash") != null) {
             sender.sendMessage(i18n("Crash.RepeatExecution"));
             return false;
         }
 
         sender.sendMessage(i18n("Crash.Execution"));
-        MapUtil.getStringHasMap().put(player.getName() + "_Crash", "崩端ing");
+        MapUtil.getStringHashMap().put(player.getName() + "_Crash", "崩端ing");
 
         PacketContainer packetContainer = new PacketContainer(PacketType.Play.Server.EXPLOSION);
         packetContainer.getModifier().writeDefaults();
@@ -59,7 +59,7 @@ public final class Crash implements CommandExecutor {
             }
         }
 
-        MapUtil.getStringHasMap().put(player.getName() + "_Crash", null);
+        MapUtil.getStringHashMap().put(player.getName() + "_Crash", null);
         return true;
     }
 }

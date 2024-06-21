@@ -28,7 +28,7 @@ public final class Back implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        if (MapUtil.getBooleanHasMap().containsKey(player.getName() + "_DeathLocation")) {
+        if (MapUtil.getBooleanHashMap().containsKey(player.getName() + "_DeathLocation")) {
             if (isWorldDisabled(player)) {
                 return false;
             }
@@ -36,7 +36,7 @@ public final class Back implements CommandExecutor {
                 player.sendMessage(i18n("Back.RepectSend"));
                 return false;
             }
-            MapUtil.getIntHasMap().put(player.getName() + "_BackDelay", MHDFTools.instance.getConfig().getInt("BackSettings.Delay"));
+            MapUtil.getIntHashMap().put(player.getName() + "_BackDelay", MHDFTools.instance.getConfig().getInt("BackSettings.Delay"));
         } else {
             sender.sendMessage(i18n("Back.NotFound"));
         }
@@ -45,12 +45,12 @@ public final class Back implements CommandExecutor {
     }
 
     private boolean isWorldDisabled(Player player) {
-        String deathWorldName = MapUtil.getLocationHasMap().get(player.getName() + "_DeathLocation").getWorld().getName();
+        String deathWorldName = MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation").getWorld().getName();
         String currentWorldName = player.getLocation().getWorld().getName();
         return disableWorldList.contains(deathWorldName) || disableWorldList.contains(currentWorldName);
     }
 
     private boolean isBackDelayActive(Player player) {
-        return MapUtil.getIntHasMap().containsKey(player.getName() + "_BackDelay") || MapUtil.getIntHasMap().containsKey(player.getName() + "_TpBackDelay");
+        return MapUtil.getIntHashMap().containsKey(player.getName() + "_BackDelay") || MapUtil.getIntHashMap().containsKey(player.getName() + "_TpBackDelay");
     }
 }

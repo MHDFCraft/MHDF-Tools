@@ -12,26 +12,26 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 public final class PlayerTpBackTask extends BukkitRunnable {
     @Override
     public void run() {
-        for (Object key : MapUtil.getIntHasMap().keySet()) {
+        for (Object key : MapUtil.getIntHashMap().keySet()) {
             String keyString = key.toString();
             if (keyString.contains("_TpBackDelay")) {
                 String playerName = keyString.replaceAll("_TpBackDelay", "");
                 Player player = Bukkit.getPlayer(playerName);
                 if (player != null) {
-                    int delay = MapUtil.getIntHasMap().get(key);
+                    int delay = MapUtil.getIntHashMap().get(key);
                     sendTitle(player, i18n("TeleportDelay." + delay));
                     if (delay > 0) {
                         playSound(player, sound("TeleportDelay." + delay));
-                        MapUtil.getIntHasMap().put(key, delay - 1);
+                        MapUtil.getIntHashMap().put(key, delay - 1);
                     } else {
                         playSound(player, sound("TeleportSound"));
-                        TpPlayerTo(playerName, ServerName, MapUtil.getLocationHasMap().get(playerName + "_TpBackLocation"));
-                        MapUtil.getLocationHasMap().put(playerName + "_UnBackLocation", player.getLocation());
+                        TpPlayerTo(playerName, ServerName, MapUtil.getLocationHashMap().get(playerName + "_TpBackLocation"));
+                        MapUtil.getLocationHashMap().put(playerName + "_UnBackLocation", player.getLocation());
                         player.sendMessage(i18n("TpBack.Done"));
-                        MapUtil.getIntHasMap().remove(key);
+                        MapUtil.getIntHashMap().remove(key);
                     }
                 } else {
-                    MapUtil.getIntHasMap().remove(key);
+                    MapUtil.getIntHashMap().remove(key);
                 }
             }
         }

@@ -177,9 +177,9 @@ public final class PlayerLoginListener implements Listener {
     public void PlayerJoinEvent(PlayerJoinEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {
             Player player = event.getPlayer();
-            if (MapUtil.getStringHasMap().get(player.getName() + "_LoginIP") != null) {
-                if (MapUtil.getStringHasMap().get(player.getName() + "_LoginIP").equals(Objects.requireNonNull(player.getAddress()).getHostName())) {
-                    MapUtil.getStringHasMap().put(player.getName() + "_Login", "t");
+            if (MapUtil.getStringHashMap().get(player.getName() + "_LoginIP") != null) {
+                if (MapUtil.getStringHashMap().get(player.getName() + "_LoginIP").equals(Objects.requireNonNull(player.getAddress()).getHostName())) {
+                    MapUtil.getStringHashMap().put(player.getName() + "_Login", "t");
                     player.sendMessage(i18n("Login.AutoLogin"));
                 }
             }
@@ -190,7 +190,7 @@ public final class PlayerLoginListener implements Listener {
     public void PlayerQuitEvent(PlayerQuitEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
             Player player = event.getPlayer();
-            MapUtil.getStringHasMap().put(player.getName() + "_Login", null);
+            MapUtil.getStringHashMap().put(player.getName() + "_Login", null);
         }
     }
 }
