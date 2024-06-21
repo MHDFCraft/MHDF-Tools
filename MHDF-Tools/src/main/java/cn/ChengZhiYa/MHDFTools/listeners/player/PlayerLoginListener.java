@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +14,6 @@ import org.bukkit.event.player.*;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 
 public final class PlayerLoginListener implements Listener {
@@ -177,11 +177,9 @@ public final class PlayerLoginListener implements Listener {
     public void PlayerJoinEvent(PlayerJoinEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {
             Player player = event.getPlayer();
-            if (MapUtil.getStringHashMap().get(player.getName() + "_LoginIP") != null) {
-                if (MapUtil.getStringHashMap().get(player.getName() + "_LoginIP").equals(Objects.requireNonNull(player.getAddress()).getHostName())) {
-                    MapUtil.getStringHashMap().put(player.getName() + "_Login", "t");
-                    player.sendMessage(i18n("Login.AutoLogin"));
-                }
+            if (MapUtil.getStringHashMap().get(player.getName() + "_LoginIP") != null && MapUtil.getStringHashMap().get(player.getName() + "_LoginIP").equals(Objects.requireNonNull(player.getAddress()).getHostString())) {
+                MapUtil.getStringHashMap().put(player.getName() + "_Login", "t");
+                player.sendMessage(SpigotUtil.i18n("Login.AutoLogin"));
             }
         }
     }
