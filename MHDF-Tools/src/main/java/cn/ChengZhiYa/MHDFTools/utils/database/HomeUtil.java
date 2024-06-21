@@ -138,7 +138,7 @@ public final class HomeUtil {
     }
 
     public static String getHomeServer(String playerName, String homeName) {
-        String server = getHomeServerHashMap().get(playerName + "|" + homeName)!=null?getHomeServerHashMap().get(playerName + "|" + homeName).toString():"NONE";
+        String server = getHomeServerHashMap().get(playerName + "|" + homeName) != null ? getHomeServerHashMap().get(playerName + "|" + homeName).toString() : "NONE";
         if (server == null) {
             if (MHDFTools.instance.getConfig().getString("DataSettings.Type").equals("MySQL")) {
                 try (Connection connection = dataSource.getConnection();

@@ -14,7 +14,6 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 
 public final class ServerScoreboardTask extends BukkitRunnable {
-
     @Override
     public void run() {
         if (!MHDFTools.instance.getConfig().getBoolean("ScoreboardSettings.Enable")) {
@@ -47,7 +46,6 @@ public final class ServerScoreboardTask extends BukkitRunnable {
         } catch (Exception ignored) {
         }
     }
-
     private void updateScoreboardLines(Player player, Objective objective) {
         int size = MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").size();
         for (int i = 0; i < size; i++) {
