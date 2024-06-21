@@ -15,7 +15,6 @@ public enum PluginLoader {
     INSTANCE;
 
     public static boolean hasPlaceholderAPI = true;
-    public static boolean hasProtocolLib = true;
     public static boolean hasVault = true;
     private MHDFConfig config;
     private JavaPlugin plugin;

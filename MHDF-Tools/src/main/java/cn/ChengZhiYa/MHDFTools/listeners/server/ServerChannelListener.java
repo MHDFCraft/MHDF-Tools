@@ -18,8 +18,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.PlayerList;
-import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.ServerName;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.PlayerList;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.ServerName;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeLocation;
 

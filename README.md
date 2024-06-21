@@ -27,7 +27,7 @@ _✨轻量 便携 快捷 即装即用 可无前置运行✨_
 
 ## 前置插件
 
-_ProtocolLib, PlaceholderAPI, Vault_
+_PlaceholderAPI, Vault_
 
 <p align="center">
   <a href="https://github.com/Love-MHDF/MHDF-Tools/releases">下载</a>

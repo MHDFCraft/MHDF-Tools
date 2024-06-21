@@ -22,7 +22,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeLocation;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeServer;
 
 
-public final class BungeeCord {
+public final class BungeeCordUtil {
     public static String[] PlayerList;
     public static String ServerName = "无";
 

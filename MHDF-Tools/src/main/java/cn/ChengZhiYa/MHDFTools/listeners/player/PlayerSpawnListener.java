@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
-import cn.ChengZhiYa.MHDFTools.utils.BungeeCord;
+import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -23,7 +23,7 @@ public final class PlayerSpawnListener implements Listener {
         Location spawnLocation = getSpawnLocation();
 
         Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
-            BungeeCord.TpPlayerTo(player.getName(), getServerName(), spawnLocation);
+            BungeeCordUtil.TpPlayerTo(player.getName(), getServerName(), spawnLocation);
         }, 5);
     }
 

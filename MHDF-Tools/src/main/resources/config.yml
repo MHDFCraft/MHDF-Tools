@@ -368,11 +368,6 @@ HatSettings:
   #开关
   Enable: true
 
-#崩端系统设置
-CrashPlayerSettings:
-  #开关
-  Enable: true
-
 #快速晴天命令设置
 FastSunSettings:
   #开关

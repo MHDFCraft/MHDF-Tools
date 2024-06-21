@@ -7,7 +7,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashSet;
 import java.util.Map;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BungeeCord.*;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class PlayerTpaHereTask extends BukkitRunnable {
