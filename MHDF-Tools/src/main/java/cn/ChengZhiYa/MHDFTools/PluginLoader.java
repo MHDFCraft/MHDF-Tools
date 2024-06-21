@@ -17,8 +17,6 @@ public enum PluginLoader {
     public static boolean hasPlaceholderAPI = true;
     public static boolean hasProtocolLib = true;
     public static boolean hasVault = true;
-    String startDone;
-    String stopDone;
     private MHDFConfig config;
     private JavaPlugin plugin;
     private InitManager initManager;
@@ -42,10 +40,6 @@ public enum PluginLoader {
     }
 
     private void initManagers() {
-        //Message
-        startDone = "&e[MHDFTools] &f插件启动完毕,您好我的朋友! &eQQ= &f129139830";
-        stopDone = "&e[MHDFTools] &f插件卸载完毕,再见我的朋友! &eQQ= &f129139830";
-
         //Instance
         asyncTask = new AsyncTask();
         config = new MHDFConfig();
@@ -58,74 +52,34 @@ public enum PluginLoader {
     }
 
     public void start() {
-        LogUtil.color(getLogo());
+        printLogo("&f[MHDF-Tools] &d");
 //        serverManager.unSupportServer();
         config.loadConfig();
         initManager.start();
         asyncTask.start();
-        LogUtil.color(startDone);
-
-        LogUtil.color("&4开光!\n" +
-                "&e////////////////////////////////////////////////////////////////////\n" +
-                "&e//                          _ooOoo_                               //\n" +
-                "&e//                         o8888888o                              //\n" +
-                "&e//                         88\" . \"88                            //\n" +
-                "&e//                         (| ^_^ |)                              //\n" +
-                "&E//                         O\\  =  /O                             //\n" +
-                "&e//                      ____/`---'\\____                          //\n" +
-                "&e//                    .'  \\\\|     |//  `.                       //\n" +
-                "&e//                   /  \\\\|||  :  |||//  \\                     //\n" +
-                "&e//                  /  _||||| -:- |||||-  \\                      //\n" +
-                "&e//                  |   | \\\\\\  -  /// |   |                    //\n" +
-                "&e//                  | \\_|  ''\\---/''  |   |                     //\n" +
-                "&e//                  \\  .-\\__  `-`  ___/-. /                     //\n" +
-                "&e//                ___`. .'  /--.--\\  `. . ___                    //\n" +
-                "&e//              .\"\" '<  `.___\\_<|>_/___.'  >'\"\".             //\n" +
-                "&e//            | | :  `- \\`.;`\\ _ /`;.`/ - ` : | |               //\n" +
-                "&e//            \\  \\ `-.   \\_ __\\ /__ _/   .-` /  /             //\n" +
-                "&e//      ========`-.____`-.___\\_____/___.-`____.-'========        //\n" +
-                "&e//                           `=---='                              //\n" +
-                "&e//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        //\n" +
-                "&e//            &4佛祖保佑       &a永不宕机      &6永无BUG&e            //\n" +
-                "&e////////////////////////////////////////////////////////////////////");
-
+        LogUtil.color("&f[MHDF-Tools] &a插件加载完成!");
+        LogUtil.color("&f[MHDF-Tools] &a欢迎使用梦东系列插件 交流群号:129139830");
     }
 
     public void stop() {
+        printLogo("&f[MHDF-Tools] &d");
         initManager.stop();
         closeDatabase();
-        LogUtil.color(stopDone);
+        LogUtil.color("&f[MHDF-Tools] &9插件已卸载! 感谢您再次支持!");
+        LogUtil.color("&f[MHDF-Tools] &9梦东系列插件 交流群号:129139830");
     }
-    private String getLogo() {
-        return  "\n" +
-                "&6          _____                    _____                    _____                    _____          \n" +
-                "&6         /\\    \\                  /\\    \\                  /\\    \\                  /\\    \\         \n" +
-                "&6        /::\\____\\                /::\\____\\                /::\\    \\                /::\\    \\        \n" +
-                "&6       /::::|   |               /:::/    /               /::::\\    \\              /::::\\    \\       \n" +
-                "&6      /:::::|   |              /:::/    /               /::::::\\    \\            /::::::\\    \\      \n" +
-                "&6     /::::::|   |             /:::/    /               /:::/\\:::\\    \\          /:::/\\:::\\    \\     \n" +
-                "&6    /:::/|::|   |            /:::/____/               /:::/  \\:::\\    \\        /:::/__\\:::\\    \\    \n" +
-                "&6   /:::/ |::|   |           /::::\\    \\              /:::/    \\:::\\    \\      /::::\\   \\:::\\    \\   \n" +
-                "&6  /:::/  |::|___|______    /::::::\\    \\   _____    /:::/    / \\:::\\    \\    /::::::\\   \\:::\\    \\  \n" +
-                "&6 /:::/   |::::::::\\    \\  /:::/\\:::\\    \\ /\\    \\  /:::/    /   \\:::\\ ___\\  /:::/\\:::\\   \\:::\\    \\ \n" +
-                "&6/:::/    |:::::::::\\____\\/:::/  \\:::\\    /::\\____\\/:::/____/     \\:::|    |/:::/  \\:::\\   \\:::\\____\\\n" +
-                "&6\\::/    / ~~~~~/:::/    /\\::/    \\:::\\  /:::/    /\\:::\\    \\     /:::|____|\\::/    \\:::\\   \\::/    /\n" +
-                "&6 \\/____/      /:::/    /  \\/____/ \\:::\\/:::/    /  \\:::\\    \\   /:::/    /  \\/____/ \\:::\\   \\/____/ \n" +
-                "&6             /:::/    /            \\::::::/    /    \\:::\\    \\ /:::/    /            \\:::\\    \\     \n" +
-                "&6            /:::/    /              \\::::/    /      \\:::\\    /:::/    /              \\:::\\____\\    \n" +
-                "&6           /:::/    /               /:::/    /        \\:::\\  /:::/    /                \\::/    /    \n" +
-                "&6          /:::/    /               /:::/    /          \\:::\\/:::/    /                  \\/____/     \n" +
-                "&6         /:::/    /               /:::/    /            \\::::::/    /                               \n" +
-                "&6        /:::/    /               /:::/    /              \\::::/    /                                \n" +
-                "&6        \\::/    /                \\::/    /                \\::/____/                                 \n" +
-                "&6         \\/____/                  \\/____/                  ~~                                       \n" +
-                "&6                                                                                                    \n" +
-                "&eMHDFTools&7 ( Version= " + INSTANCE.getVersion() + " Build= " + INSTANCE.getBuild() + " &7)\n" +
-                "       &e开发者&7 ( &eChengZhiYa&7, &eDg32z_ &7)\n";
 
+    private void printLogo(String prefix) {
+        LogUtil.color(prefix + "  __  __ _    _ _____  ______ _______          _");
+        LogUtil.color(prefix + " |  \\/  | |  | |  __ \\|  ____|__   __|        | |");
+        LogUtil.color(prefix + " | \\  / | |__| | |  | | |__     | | ___   ___ | |___");
+        LogUtil.color(prefix + " | |\\/| |  __  | |  | |  __|    | |/ _ \\ / _ \\| / __|");
+        LogUtil.color(prefix + " | |  | | |  | | |__| | |       | | (_) | (_) | \\__ \\");
+        LogUtil.color(prefix + " |_|  |_|_|  |_|_____/|_|       |_|\\___/ \\___/|_|___/");
+        LogUtil.color(prefix);
     }
     public String getVersion() {
-        return "1.4.121 (细节修复)";
+        return "2.0.0";
     }
 
     public String getBuild() {

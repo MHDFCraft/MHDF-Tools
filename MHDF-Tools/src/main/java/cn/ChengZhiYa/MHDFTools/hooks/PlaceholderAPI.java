@@ -1,12 +1,12 @@
 package cn.ChengZhiYa.MHDFTools.hooks;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Version;
 import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.getMoney;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getMaxHome;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getPlayerHomeList;
@@ -25,7 +25,7 @@ public final class PlaceholderAPI extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return Version;
+        return PluginLoader.INSTANCE.getVersion();
     }
 
     @Override

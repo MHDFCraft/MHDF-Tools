@@ -4,18 +4,18 @@ PlayerNotOnline: "&e[MHDFTools] &6这个玩家不存在或不在线"
 FastSetDone: "&e[MHDFTools] &a完成!"
 HatNoItem: "&e[MHDFTools] &6你需要拿着一个物品才能使用这个命令!"
 AdminCommands:
-  Center: "&e[MHDFTools]  &7| "
+  Center: " &7| "
   convert:
-    Usage: "&e[MHDFTools] &e/{Command} convert <目标数据类型> [数据库地址] [数据库] [数据库账号] [数据库密码]"
-    Description: "&e[MHDFTools] &b将插件数据转换成其他存储方式"
+    Usage: "&e/{Command} convert <目标数据类型> [数据库地址] [数据库] [数据库账号] [数据库密码]"
+    Description: "&b将插件数据转换成其他存储方式"
     NotFoundType: "&e[MHDFTools] &c转换错误,目标类型不支持!"
     ConvertStart: "&e[MHDFTools] &a开始将数据转换为%1存储!"
     ConvertInvalid: "&e[MHDFTools] &c转换失败,你已经是%1存储了!"
     ConvertError: "&e[MHDFTools] &c转换错误,已紧急停止!"
     ConvertDone: "&e[MHDFTools] &a已将%1转换为%2存储!"
   import:
-    Usage: "&e[MHDFTools] &e/{Command} import <目标插件名字>"
-    Description: "&e[MHDFTools] &b导入其他插件的数据"
+    Usage: "&e/{Command} import <目标插件名字>"
+    Description: "&b导入其他插件的数据"
     NotImport: "&e[MHDFTools] &c导入绕过,%1功能未启用 已关闭对应数据导入!"
     PluginNotInstall: "&e[MHDFTools] &f붃 &c导入错误,插件%1未安装!"
     NotFoundPlugin: "&e[MHDFTools] &c导入错误,目标插件不支持!"
@@ -24,12 +24,12 @@ AdminCommands:
     ImportError: "&e[MHDFTools] &c导入错误,已紧急停止!"
     ImportDone: "&e[MHDFTools] &a已将%1的数据导入!"
   reload:
-    Usage: "&e[MHDFTools] &e/{Command} reload"
-    Description: "&e[MHDFTools] &b重载插件"
+    Usage: "&e/{Command} reload"
+    Description: "&b重载插件"
     ReloadDone: "&e[MHDFTools] &a重载成功!"
   help:
-    Usage: "&e[MHDFTools] &e/{Command} help"
-    Description: "&e[MHDFTools] &b帮助"
+    Usage: "&e/{Command} help"
+    Description: "&b帮助"
     Message: |-
       &f============&6梦之工具-管理系统&f============
       {help}

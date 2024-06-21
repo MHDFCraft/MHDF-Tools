@@ -41,7 +41,6 @@ public final class SpigotUtil {
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static final List<String> CommandLinkList = new ArrayList<>();
-    public static final String Version = "1.4.9"; //for github
     public static List<String> VanishList = new ArrayList<>();
     public static volatile BossBar VanishBossBar;
     public static YamlConfiguration LangFileData;
@@ -66,22 +65,19 @@ public final class SpigotUtil {
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             JSONObject Data = JSON.parseObject(in.readLine());
             String NewVersionString = Data.getString("data");
-            LogUtil.color("&e[MHDFTools] &f检查更新ing...");
-            if (!NewVersionString.equals(Version)) {
-                LogUtil.color("&e[MHDFTools] &f检查完毕!");
-                LogUtil.color("&e[MHDFTools] &c当前插件版本不是最新版!");
-                LogUtil.color("&e[MHDFTools] &f下载链接: &7https://github.com/Love-MHDF/MHDF-Tools/releases/");
+            if (!NewVersionString.equals(PluginLoader.INSTANCE.getVersion())) {
+                LogUtil.color("&f[MHDF-Tools] &c当前插件版本不是最新版!");
+                LogUtil.color("&f[MHDF-Tools] &c下载链接: &7https://github.com/Love-MHDF/MHDF-Tools/releases/");
                 MapUtil.getBooleanHashMap().put("IsLast", true);
             } else {
-                LogUtil.color("&e[MHDFTools] &f检查完毕!");
-                LogUtil.color("&e[MHDFTools] &a当前插件版本是最新版!");
+                LogUtil.color("&f[MHDF-Tools] &a当前插件版本是最新版!");
             }
             MapUtil.getBooleanHashMap().put("CheckVersionError", false);
 
             in.close();
             conn.disconnect();
         } catch (Exception e) {
-            LogUtil.color("&e[MHDFTools] &c获取检测更新时出错!请检查网络连接!");
+            LogUtil.color("&f[MHDF-Tools] &c获取检测更新时出错!请检查网络连接!");
             MapUtil.getBooleanHashMap().put("IsLast", false);
             MapUtil.getBooleanHashMap().put("CheckVersionError", true);
         }

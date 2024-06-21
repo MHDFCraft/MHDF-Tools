@@ -32,10 +32,6 @@ public class InitManager {
                 //BukkitEvent
                 .put(BukkitEvent.class, new BukkitEvent())
 
-                //Plugin Init
-                .put(PlaceholderAPI.class, new PlaceholderAPI())
-                .put(Vault.class, new Vault())
-
                 //BungeeCord
                 .put(bungeeCord.class, new bungeeCord())
 
@@ -43,8 +39,13 @@ public class InitManager {
                 .put(UpdateCheck.class, new UpdateCheck())
                 .put(TPSCheck.class, new TPSCheck())
                 .put(Menu.class, new Menu())
+
                 //Database
                 .put(Database.class, new Database())
+
+                //Plugin Init
+                .put(PlaceholderAPI.class, new PlaceholderAPI())
+                .put(Vault.class, new Vault())
                 .build();
 
         initializersOnStop = new ImmutableClassToInstanceMap.Builder<Invitable>()

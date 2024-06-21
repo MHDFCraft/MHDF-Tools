@@ -1,9 +1,6 @@
 #检查更新
 CheckVersion: true
 
-#自动更新
-AutoUpdate: false
-
 #bStats https://bstats.org/plugin/bukkit/Cheng-Tools-Reloaded/17154
 bStats: true
 

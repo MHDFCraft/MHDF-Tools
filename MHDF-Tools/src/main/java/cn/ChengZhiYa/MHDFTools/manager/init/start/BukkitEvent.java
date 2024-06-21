@@ -25,7 +25,6 @@ public class BukkitEvent implements Invitable {
 
     @Override
     public void start() {
-        LogUtil.color("&e[MHDFTools] &f事件注册ing...");
         registerEvent(new PlayerJoinListener());
         registerEvent(new ServerJoinLeaveMessageListener());
         registerEvent(new PlayerSpawnListener());
@@ -66,7 +65,6 @@ public class BukkitEvent implements Invitable {
         if (MHDFTools.instance.getConfig().getBoolean("FastUseShulkerBoxSettings.Enable")) {
             registerEvent(new ShulkerBox());
         }
-        LogUtil.color("&e[MHDFTools] &a事件注册完毕!");
     }
 
     private void registerEvent(Object listener) {
