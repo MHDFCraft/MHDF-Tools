@@ -21,12 +21,14 @@ public final class Register implements CommandExecutor {
 
     JavaPlugin plugin;
     int maxPasswordLength;
+    int minPasswordLength;
     List<String> easyPasswords;
     boolean autoLogin;
 
     public Register() {
         this.plugin = PluginLoader.INSTANCE.getPlugin();
-        this.maxPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MaxPasswordLength");
+        this.maxPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MaxPaswordLength");
+        this.minPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MinPaswordLength");
         this.easyPasswords = plugin.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
         this.autoLogin = plugin.getConfig().getBoolean("LoginSystemSettings.AutoLogin");
     }
@@ -57,6 +59,10 @@ public final class Register implements CommandExecutor {
             return;
         }
 
+        if (password.length() < minPasswordLength) {
+            player.sendMessage(i18n("Login.LengthShort", String.valueOf(minPasswordLength)));
+            return;
+        }
         if (password.length() > maxPasswordLength) {
             player.sendMessage(i18n("Login.LengthLong", String.valueOf(maxPasswordLength)));
             return;
