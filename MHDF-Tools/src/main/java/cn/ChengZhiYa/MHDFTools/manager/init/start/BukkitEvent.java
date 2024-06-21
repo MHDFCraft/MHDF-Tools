@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.manager.init.start;
 
-import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.listeners.player.*;
 import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.EnderChest;
 import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.ShulkerBox;
@@ -20,7 +20,7 @@ public class BukkitEvent implements Invitable {
     private final JavaPlugin plugin;
 
     public BukkitEvent() {
-        this.plugin = MHDFPluginLoader.INSTANCE.getPlugin();
+        this.plugin = PluginLoader.INSTANCE.getPlugin();
     }
 
     @Override

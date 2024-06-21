@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.main.auth;
 
-import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.Bukkit;
@@ -25,7 +25,7 @@ public final class Register implements CommandExecutor {
     boolean autoLogin;
 
     public Register() {
-        this.plugin = MHDFPluginLoader.INSTANCE.getPlugin();
+        this.plugin = PluginLoader.INSTANCE.getPlugin();
         this.maxPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MaxPasswordLength");
         this.easyPasswords = plugin.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
         this.autoLogin = plugin.getConfig().getBoolean("LoginSystemSettings.AutoLogin");

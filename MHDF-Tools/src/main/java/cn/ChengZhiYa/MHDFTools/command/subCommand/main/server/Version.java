@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.main.server;
 
-import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,9 +13,9 @@ public class Version implements CommandExecutor {
             return false;
         }
         sender.sendMessage("§f============§6梦之工具§f============");
-        sender.sendMessage("§7Version: §6" + MHDFPluginLoader.INSTANCE.getVersion());
-        sender.sendMessage("§7Built: §6" + MHDFPluginLoader.INSTANCE.getBuild());
-        sender.sendMessage("§7Server: §6" + MHDFPluginLoader.INSTANCE.getServerManager().getVersion());
+        sender.sendMessage("§7Version: §6" + PluginLoader.INSTANCE.getVersion());
+        sender.sendMessage("§7Built: §6" + PluginLoader.INSTANCE.getBuild());
+        sender.sendMessage("§7Server: §6" + PluginLoader.INSTANCE.getServerManager().getVersion());
         sender.sendMessage("§f============§6梦之工具§f============");
         return true;
     }

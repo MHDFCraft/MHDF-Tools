@@ -10,7 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.closeDatabase;
 
 @Getter
-public enum MHDFPluginLoader {
+public enum PluginLoader {
     INSTANCE;
 
     public static boolean hasPlaceholderAPI = true;

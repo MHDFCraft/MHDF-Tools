@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.message;
 
-import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
 
@@ -23,7 +23,7 @@ public class MessageUtil {
     }
 
     public static String colorMessage(String Message) {
-        if (MHDFPluginLoader.INSTANCE.getServerManager().is1_16orAbove()) {
+        if (PluginLoader.INSTANCE.getServerManager().is1_16orAbove()) {
             Message = translateHexCodes(Message);
         }
         return ChatColor.translateAlternateColorCodes('&', Message);

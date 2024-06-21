@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.command;
 
-import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.MainCommand;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.auth.Login;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.auth.Register;
@@ -43,7 +43,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.runAction;
 
 public final class CommandRegister implements Invitable {
     FileConfiguration config;
-    JavaPlugin plugin = MHDFPluginLoader.INSTANCE.getPlugin();
+    JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     @Override
     public void start() {
@@ -133,12 +133,12 @@ public final class CommandRegister implements Invitable {
                     }
                     break;
                 case "CrashPlayerSettings":
-                    if (MHDFPluginLoader.hasProtocolLib) {
+                    if (PluginLoader.hasProtocolLib) {
                         registerCrashCommand();
                     }
                     break;
                 case "EconomySettings":
-                    if (isEnabled && MHDFPluginLoader.hasVault) {
+                    if (isEnabled && PluginLoader.hasVault) {
                         registerEconomy();
                     }
                     break;

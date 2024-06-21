@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.manager.init.start;
 
-import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import org.bukkit.Bukkit;
@@ -17,15 +17,15 @@ public class PluginCheck implements Invitable {
 
         if (!hasPlaceholderAPI) {
             LogUtil.color("&e[MHDFTools] &c找不到PlaceholderAPI,已关闭PAPI变量解析系统!");
-            MHDFPluginLoader.hasPlaceholderAPI = false;
+            PluginLoader.hasPlaceholderAPI = false;
         }
         if (!hasProtocolLib) {
             LogUtil.color("&e[MHDFTools] &c找不到ProtocolLib,无法启用崩端系统!");
-            MHDFPluginLoader.hasProtocolLib = false;
+            PluginLoader.hasProtocolLib = false;
         }
         if (!hasVault) {
             LogUtil.color("&e[MHDFTools] &c找不到Vault,无法启用经济系统!");
-            MHDFPluginLoader.hasVault = false;
+            PluginLoader.hasVault = false;
         }
     }
 }

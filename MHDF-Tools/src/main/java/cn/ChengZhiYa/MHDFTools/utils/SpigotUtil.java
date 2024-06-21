@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.utils;
 
-import cn.ChengZhiYa.MHDFTools.MHDFPluginLoader;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
@@ -115,7 +115,7 @@ public final class SpigotUtil {
     }
 
     public static String Placeholder(OfflinePlayer Player, String Message) {
-        if (MHDFPluginLoader.hasPlaceholderAPI) {
+        if (PluginLoader.hasPlaceholderAPI) {
             Message = PlaceholderAPI.setPlaceholders(Player, Message);
         }
         return MessageUtil.colorMessage(Message);
