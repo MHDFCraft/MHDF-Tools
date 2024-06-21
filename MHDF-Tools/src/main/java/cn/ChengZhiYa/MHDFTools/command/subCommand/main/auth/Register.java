@@ -58,7 +58,7 @@ public final class Register implements CommandExecutor {
         }
 
         if (password.length() > maxPasswordLength) {
-            player.sendMessage(i18n("Login.LengthInvalid", String.valueOf(maxPasswordLength)));
+            player.sendMessage(i18n("Login.LengthLong", String.valueOf(maxPasswordLength)));
             return;
         }
 
