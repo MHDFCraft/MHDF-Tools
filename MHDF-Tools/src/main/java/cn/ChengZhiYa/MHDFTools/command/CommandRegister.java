@@ -132,11 +132,6 @@ public final class CommandRegister implements Invitable {
                         registerFastTimeCommands();
                     }
                     break;
-                case "CrashPlayerSettings":
-                    if (PluginLoader.hasProtocolLib) {
-                        registerCrashCommand();
-                    }
-                    break;
                 case "EconomySettings":
                     if (isEnabled && PluginLoader.hasVault) {
                         registerEconomy();
@@ -251,10 +246,6 @@ public final class CommandRegister implements Invitable {
     private void registerFastTimeCommands() {
         registerCommand(plugin, new Day(), "快速天亮命令", "MHDFTools.Command.Sun", "day");
         registerCommand(plugin, new Night(), "快速天黑命令", "MHDFTools.Command.Night", "night");
-    }
-
-    private void registerCrashCommand() {
-        registerCommand(plugin, new Crash(), "崩端系统", "MHDFTools.Command.Crash", "crash");
     }
 
     private void registerEconomy() {

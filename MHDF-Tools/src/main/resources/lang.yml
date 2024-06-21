@@ -56,7 +56,6 @@ Vault:
     &7-------&6经济系统&7-------
 Usage:
   Rotate: "&e[MHDFTools] &c用法错误,用法:/rotate <玩家ID>"
-  Crash: "&e[MHDFTools] &c用法错误,用法:/%1 <玩家ID>"
   Fly: "&e[MHDFTools] &c用法错误,用法:/fly [玩家ID]"
   FlyTime: "&e[MHDFTools] &c用法错误,用法:/flytime <玩家ID> <时长>"
   Vanish: "&e[MHDFTools] &c用法错误,用法:/%1 [玩家ID]"
@@ -91,9 +90,6 @@ UnBack:
 Spawn:
   SetDone: "&e[MHDFTools] #7289da设置主城成功!"
   TeleportDone: "&e[MHDFTools] &a已将你传送至主城!"
-Crash:
-  RepeatExecution: "&e[MHDFTools] #7289da请不要重复崩端!"
-  Execution: "&e[MHDFTools] #7289da已执行崩端,请自行判断是否崩端成功!"
 Home:
   NotFound: "&e[MHDFTools] &6你没有名为%1的家!"
   HomeListFull: "&e[MHDFTools] &6你已经创建了%1个家了!不能再创建了!"
