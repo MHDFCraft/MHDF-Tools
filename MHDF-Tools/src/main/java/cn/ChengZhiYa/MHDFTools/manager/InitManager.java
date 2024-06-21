@@ -7,7 +7,6 @@ import cn.ChengZhiYa.MHDFTools.manager.init.start.*;
 import cn.ChengZhiYa.MHDFTools.manager.init.stop.stopChannel;
 import cn.ChengZhiYa.MHDFTools.manager.init.stop.stopPlaceholderAPI;
 import cn.ChengZhiYa.MHDFTools.manager.init.stop.stopVault;
-import cn.ChengZhiYa.MHDFTools.task.AsyncTask;
 import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.ImmutableClassToInstanceMap;
 
@@ -26,9 +25,6 @@ public class InitManager {
 
                 //CommandRegister
                 .put(CommandRegister.class, new CommandRegister())
-
-                //Task Async
-                .put(AsyncTask.class, new AsyncTask())
 
                 //BStats
                 .put(bStats.class, new bStats())
