@@ -66,11 +66,14 @@ public final class SpigotUtil {
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             JSONObject Data = JSON.parseObject(in.readLine());
             String NewVersionString = Data.getString("data");
-
+            LogUtil.color("&e[MHDFTools] &f检查更新ing...");
             if (!NewVersionString.equals(Version)) {
-                LogUtil.color("&e[MHDFTools] &c当前插件版本不是最新版! 下载链接:https://github.com/Love-MHDF/MHDF-Tools/releases/");
+                LogUtil.color("&e[MHDFTools] &f检查完毕!");
+                LogUtil.color("&e[MHDFTools] &c当前插件版本不是最新版!");
+                LogUtil.color("&e[MHDFTools] &f下载链接: &7https://github.com/Love-MHDF/MHDF-Tools/releases/");
                 MapUtil.getBooleanHashMap().put("IsLast", true);
             } else {
+                LogUtil.color("&e[MHDFTools] &f检查完毕!");
                 LogUtil.color("&e[MHDFTools] &a当前插件版本是最新版!");
             }
             MapUtil.getBooleanHashMap().put("CheckVersionError", false);
@@ -78,7 +81,7 @@ public final class SpigotUtil {
             in.close();
             conn.disconnect();
         } catch (Exception e) {
-            LogUtil.color("&e[MHDFTools] 获取检测更新时出错!请检查网络连接!");
+            LogUtil.color("&e[MHDFTools] &c获取检测更新时出错!请检查网络连接!");
             MapUtil.getBooleanHashMap().put("IsLast", false);
             MapUtil.getBooleanHashMap().put("CheckVersionError", true);
         }

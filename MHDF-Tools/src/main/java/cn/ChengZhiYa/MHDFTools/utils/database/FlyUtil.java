@@ -100,7 +100,7 @@ public final class FlyUtil {
     }
 
     private static int fetchFlyTimeFromDatabase(String playerName) {
-        int time = -1; // Default value or error handling
+        int time = -1;
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Fly WHERE PlayerName = ? LIMIT 1");

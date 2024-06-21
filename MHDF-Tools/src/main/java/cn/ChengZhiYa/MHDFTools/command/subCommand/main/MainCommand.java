@@ -20,7 +20,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.ConvertData.YAMLToMySQL;
 import static cn.ChengZhiYa.MHDFTools.utils.database.ImportUtil.importCMIData;
 import static cn.ChengZhiYa.MHDFTools.utils.database.ImportUtil.importHuskHomesData;
 
-public final class MHDFTools implements TabExecutor {
+public final class MainCommand implements TabExecutor {
     private static final String DATA_FOLDER = "data.yml";
     private static final String YAML_TYPE = "YAML";
     private static final String MYSQL_TYPE = "MySQL";

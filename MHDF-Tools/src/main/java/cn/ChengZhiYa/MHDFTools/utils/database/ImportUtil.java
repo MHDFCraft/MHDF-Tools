@@ -81,7 +81,7 @@ public final class ImportUtil {
 
                                     if (rs3.next()) {
                                         if (!ifHomeExists(PlayerName, HomeName)) {
-                                            AddHome(rs3.getString("server_name"), PlayerName, HomeName, new Location(
+                                            addHome(rs3.getString("server_name"), PlayerName, HomeName, new Location(
                                                     Bukkit.getWorld(rs3.getString("world_name")),
                                                     rs3.getDouble("x"),
                                                     rs3.getDouble("y"),
@@ -90,7 +90,7 @@ public final class ImportUtil {
                                                     rs3.getFloat("pitch")
                                             ));
                                         } else {
-                                            SetHome(rs3.getString("server_name"), PlayerName, HomeName, new Location(
+                                            HomeUtil.setHome(rs3.getString("server_name"), PlayerName, HomeName, new Location(
                                                     Bukkit.getWorld(rs3.getString("world_name")),
                                                     rs3.getDouble("x"),
                                                     rs3.getDouble("y"),
@@ -130,85 +130,88 @@ public final class ImportUtil {
 
     public static void importCMIData(CommandSender sender) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            sender.sendMessage(i18n("AdminCommands.import.ImportStart", "CMI"));
-            if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
-                try {
-                    File HuskHomesPluginDataHome = new File(MHDFTools.instance.getDataFolder().getAbsoluteFile().getParent() + "\\CMI\\");
-                    if (HuskHomesPluginDataHome.exists()) {
-                        YamlConfiguration HuskHomesConfig = YamlConfiguration.loadConfiguration(new File(HuskHomesPluginDataHome, "Settings/DataBaseInfo.yml"));
-                        HikariConfig config = new HikariConfig();
-                        DataSource dataSource;
-                        {
-                            switch (Objects.requireNonNull(HuskHomesConfig.getString("storage.method")).toLowerCase(Locale.ROOT)) {
-                                case "mysql":
-                                    config.setJdbcUrl("jdbc:mysql://" + HuskHomesConfig.getString("mysql.hostname") + "/" + HuskHomesConfig.getString("mysql.database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
-                                    config.setUsername(HuskHomesConfig.getString("mysql.username"));
-                                    config.setPassword(HuskHomesConfig.getString("mysql.password"));
-                                    break;
-                                case "sqlite":
-                                    config.setJdbcUrl("jdbc:sqlite:" + MHDFTools.instance.getDataFolder().getAbsoluteFile().getParent() + "\\CMI\\cmi.sqlite.db");
-                                    config.setDriverClassName("org.sqlite.JDBC");
-                                    break;
-                                default:
-                                    sender.sendMessage(i18n("AdminCommands.import.NotFoundDataType"));
-                                    return;
-                            }
-                            config.addDataSourceProperty("useUnicode", "true");
-                            config.addDataSourceProperty("characterEncoding", "utf8");
-                            config.addDataSourceProperty("cachePrepStmts", "true");
-                            config.addDataSourceProperty("prepStmtCacheSize", "250");
-                            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-                            dataSource = new HikariDataSource(config);
-                        }
+            String pluginName = "CMI";
+            String importStartMsg = i18n("AdminCommands.import.ImportStart", pluginName);
+            String pluginNotInstallMsg = i18n("AdminCommands.import.PluginNotInstall", pluginName);
+            String importErrorMsg = i18n("AdminCommands.import.ImportError");
+            String notImportMsg = i18n("AdminCommands.import.NotImport", "Home");
+            String importDoneMsg = i18n("AdminCommands.import.ImportDone", pluginName);
 
-                        {
-                            Connection connection = dataSource.getConnection();
-                            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users");
-                            ResultSet rs = ps.executeQuery();
-                            while (rs.next()) {
-                                String PlayerName = rs.getString("username");
-                                if (rs.getString("Homes") != null) {
-                                    String[] HomeDatas = rs.getString("Homes").replaceAll("\\$-0%%", ":").split(";");
-                                    for (String HomeData : HomeDatas) {
-                                        String[] Data = HomeData.split(":");
-                                        if (!ifHomeExists(PlayerName, Data[0])) {
-                                            AddHome(PlayerName, Data[0], new Location(
-                                                    Bukkit.getWorld(Data[1]),
-                                                    Double.parseDouble(Data[2]),
-                                                    Double.parseDouble(Data[3]),
-                                                    Double.parseDouble(Data[4]),
-                                                    Float.parseFloat(Data[5]),
-                                                    Float.parseFloat(Data[6])
-                                            ));
-                                        } else {
-                                            SetHome(PlayerName, Data[0], new Location(
-                                                    Bukkit.getWorld(Data[1]),
-                                                    Double.parseDouble(Data[2]),
-                                                    Double.parseDouble(Data[3]),
-                                                    Double.parseDouble(Data[4]),
-                                                    Float.parseFloat(Data[5]),
-                                                    Float.parseFloat(Data[6])
-                                            ));
-                                        }
-                                    }
+            sender.sendMessage(importStartMsg);
+
+            if (!MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+                sender.sendMessage(notImportMsg);
+                return;
+            }
+
+            File huskHomesPluginDataHome = new File(MHDFTools.instance.getDataFolder().getParent(), "CMI");
+            if (!huskHomesPluginDataHome.exists()) {
+                sender.sendMessage(pluginNotInstallMsg);
+                return;
+            }
+
+            try {
+                YamlConfiguration huskHomesConfig = YamlConfiguration.loadConfiguration(new File(huskHomesPluginDataHome, "Settings/DataBaseInfo.yml"));
+                String storageMethod = huskHomesConfig.getString("storage.method", "").toLowerCase(Locale.ROOT);
+
+                HikariConfig config = new HikariConfig();
+                DataSource dataSource;
+
+                switch (storageMethod) {
+                    case "mysql":
+                        config.setJdbcUrl("jdbc:mysql://" + huskHomesConfig.getString("mysql.hostname") + "/" + huskHomesConfig.getString("mysql.database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
+                        config.setUsername(huskHomesConfig.getString("mysql.username"));
+                        config.setPassword(huskHomesConfig.getString("mysql.password"));
+                        break;
+                    case "sqlite":
+                        config.setJdbcUrl("jdbc:sqlite:" + huskHomesPluginDataHome + "/cmi.sqlite.db");
+                        config.setDriverClassName("org.sqlite.JDBC");
+                        break;
+                    default:
+                        sender.sendMessage(i18n("AdminCommands.import.NotFoundDataType"));
+                        return;
+                }
+
+                config.addDataSourceProperty("useUnicode", "true");
+                config.addDataSourceProperty("characterEncoding", "utf8");
+                config.addDataSourceProperty("cachePrepStmts", "true");
+                config.addDataSourceProperty("prepStmtCacheSize", "250");
+                config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+                dataSource = new HikariDataSource(config);
+
+                try (Connection connection = dataSource.getConnection();
+                     PreparedStatement ps = connection.prepareStatement("SELECT * FROM users");
+                     ResultSet rs = ps.executeQuery()) {
+
+                    while (rs.next()) {
+                        String playerName = rs.getString("username");
+                        if (rs.getString("Homes") != null) {
+                            String[] homeDatas = rs.getString("Homes").replaceAll("\\$-0%%", ":").split(";");
+                            for (String homeData : homeDatas) {
+                                String[] data = homeData.split(":");
+                                Location location = new Location(
+                                        Bukkit.getWorld(data[1]),
+                                        Double.parseDouble(data[2]),
+                                        Double.parseDouble(data[3]),
+                                        Double.parseDouble(data[4]),
+                                        Float.parseFloat(data[5]),
+                                        Float.parseFloat(data[6])
+                                );
+                                if (!ifHomeExists(playerName, data[0])) {
+                                    addHome(playerName, data[0], location);
+                                } else {
+                                    setHome(playerName, data[0], location);
                                 }
                             }
-
-                            rs.close();
-                            ps.close();
-                            connection.close();
                         }
-                    } else {
-                        sender.sendMessage(i18n("AdminCommands.import.PluginNotInstall", "CMI"));
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    sender.sendMessage(i18n("AdminCommands.import.ImportError"));
                 }
-            } else {
-                sender.sendMessage(i18n("AdminCommands.import.NotImport", "Home"));
+
+                sender.sendMessage(importDoneMsg);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                sender.sendMessage(importErrorMsg);
             }
-            sender.sendMessage(i18n("AdminCommands.import.ImportDone", "CMI"));
         });
     }
 }

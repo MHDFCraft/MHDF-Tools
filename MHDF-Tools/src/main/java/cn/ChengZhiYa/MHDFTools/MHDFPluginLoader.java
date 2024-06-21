@@ -2,6 +2,7 @@ package cn.ChengZhiYa.MHDFTools;
 
 import cn.ChengZhiYa.MHDFTools.config.MHDFConfig;
 import cn.ChengZhiYa.MHDFTools.manager.InitManager;
+import cn.ChengZhiYa.MHDFTools.manager.ServerManager;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,6 +21,7 @@ public enum MHDFPluginLoader {
     private MHDFConfig config;
     private JavaPlugin plugin;
     private InitManager initManager;
+    private ServerManager serverManager;
 
     public void initialize_load(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -45,6 +47,7 @@ public enum MHDFPluginLoader {
         //Instance
         config = new MHDFConfig();
         initManager = new InitManager();
+        this.serverManager = new ServerManager();
     }
 
     public void load() {
@@ -53,6 +56,7 @@ public enum MHDFPluginLoader {
 
     public void start() {
         LogUtil.color(getLogo());
+        serverManager.unSupportServer();
         config.loadConfig();
         initManager.start();
         LogUtil.color(startDone);
@@ -111,13 +115,24 @@ public enum MHDFPluginLoader {
                 "&6        /:::/    /               /:::/    /              \\::::/    /                                \n" +
                 "&6        \\::/    /                \\::/    /                \\::/____/                                 \n" +
                 "&6         \\/____/                  \\/____/                  ~~                                       \n" +
-                "&6                                                                                                    ";
+                "&6                                                                                                    \n" +
+                "&eMHDFTools&7 ( Version= " + INSTANCE.getVersion() + " Build= " + INSTANCE.getBuild() + " &7)\n" +
+                "       &e开发者&7 ( &eChengZhiYa&7, &eDg32z_ &7)\n";
+
     }
     public String getVersion() {
-        return "1.4.12 (美化)";
+        return "1.4.121 (细节修复)";
     }
 
     public String getBuild() {
-        return "224621-1.30";
+        return "224621-13.26";
+    }
+
+    public void disablePlugin() {
+        if (plugin != null) {
+            plugin.getPluginLoader().disablePlugin(plugin);
+        } else {
+            LogUtil.color("&e[MHDFTools] &cPlugin Not Found!");
+        }
     }
 }
