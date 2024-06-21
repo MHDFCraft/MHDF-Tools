@@ -37,8 +37,8 @@ public final class Login implements CommandExecutor {
                 return;
             }
 
-            int minPasswordLength = MHDFTools.instance.getConfig().getInt("LoginSystemSettings.MinPasswordLength");
-            int maxPasswordLength = MHDFTools.instance.getConfig().getInt("LoginSystemSettings.MaxPasswordLength");
+            int maxPasswordLength = MHDFTools.instance.getConfig().getInt("LoginSystemSettings.MaxPaswordLength");
+            int minPasswordLength = MHDFTools.instance.getConfig().getInt("LoginSystemSettings.MinPaswordLength");
             List<String> easyPasswords = MHDFTools.instance.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
 
             if (password.length() < minPasswordLength) {
