@@ -26,6 +26,9 @@ public class InitManager {
                 //CommandRegister
                 .put(CommandRegister.class, new CommandRegister())
 
+                //Task Async
+                .put(AsyncTask.class, new AsyncTask())
+
                 //BStats
                 .put(bStats.class, new bStats())
 

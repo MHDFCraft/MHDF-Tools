@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools;
 
-import cn.ChengZhiYa.MHDFTools.command.AsyncCommand;
 import cn.ChengZhiYa.MHDFTools.config.MHDFConfig;
 import cn.ChengZhiYa.MHDFTools.manager.InitManager;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
@@ -21,7 +20,6 @@ public enum MHDFPluginLoader {
     private MHDFConfig config;
     private JavaPlugin plugin;
     private InitManager initManager;
-    private AsyncCommand asyncCommand;
 
     public void initialize_load(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -46,7 +44,6 @@ public enum MHDFPluginLoader {
 
         //Instance
         config = new MHDFConfig();
-        asyncCommand = new AsyncCommand();
         initManager = new InitManager();
     }
 
@@ -58,7 +55,6 @@ public enum MHDFPluginLoader {
         LogUtil.color(getLogo());
         config.loadConfig();
         initManager.start();
-        asyncCommand.start();
         LogUtil.color(startDone);
 
         LogUtil.color("&4开光!\n" +
