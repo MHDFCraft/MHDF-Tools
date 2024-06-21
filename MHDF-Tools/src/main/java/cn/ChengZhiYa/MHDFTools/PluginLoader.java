@@ -77,6 +77,7 @@ public enum PluginLoader {
         LogUtil.color(prefix + " |_|  |_|_|  |_|_____/|_|       |_|\\___/ \\___/|_|___/");
         LogUtil.color(prefix);
     }
+
     public String getVersion() {
         return "2.0.0";
     }

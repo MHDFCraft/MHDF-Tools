@@ -46,9 +46,9 @@ public final class HomeUtil {
             }
         } else {
             YamlConfiguration homeData = YamlConfiguration.loadConfiguration(getPlayerFile(playerName));
-            return homeData.getStringList(playerName + "_HomeList").contains(homeName);
+            return homeData.getKeys(false).contains(homeName);
         }
-    } //XD
+    }
 
     public static int getPlayerHomeTime(String playerName) {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
@@ -138,7 +138,7 @@ public final class HomeUtil {
     }
 
     public static String getHomeServer(String playerName, String homeName) {
-        String server = getHomeServerHashMap().get(playerName + "|" + homeName).toString();
+        String server = getHomeServerHashMap().get(playerName + "|" + homeName)!=null?getHomeServerHashMap().get(playerName + "|" + homeName).toString():"NONE";
         if (server == null) {
             if (MHDFTools.instance.getConfig().getString("DataSettings.Type").equals("MySQL")) {
                 try (Connection connection = dataSource.getConnection();
@@ -156,7 +156,7 @@ public final class HomeUtil {
                 }
             }
         }
-        return server != null ? server : "NONE"; //别用中文了行不行
+        return server; //别用中文了行不行
     }
 
     public static Location getHomeLocation(String playerName, String homeName) {

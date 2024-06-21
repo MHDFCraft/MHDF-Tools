@@ -19,12 +19,12 @@ public final class Home implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             if (args.length == 0 && Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-                Player player = (Player)sender;
+                Player player = (Player) sender;
                 HomeMenuUtil.openHomeMenu(player, 1);
                 return false;
             }
             if (args.length == 1) {
-                Player player = (Player)sender;
+                Player player = (Player) sender;
                 String HomeName = args[0];
                 Location HomeLocation = HomeUtil.getHomeLocation(player.getName(), HomeName);
                 if (HomeLocation != null) {

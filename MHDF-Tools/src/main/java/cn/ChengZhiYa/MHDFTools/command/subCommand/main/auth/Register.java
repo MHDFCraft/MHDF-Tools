@@ -34,7 +34,7 @@ public final class Register implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender,@NotNull Command command,@NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(i18n("OnlyPlayer"));
             return false;

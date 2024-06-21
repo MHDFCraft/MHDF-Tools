@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Menu implements Invitable {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
     @Override
     public void start() {
         if (MHDFTools.instance.getConfig().getBoolean("MenuEnable")) { //menu Window Event (:

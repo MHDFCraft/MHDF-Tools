@@ -12,6 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public final class AsyncTask {
     FileConfiguration config;
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
     public void start() {
         config = MHDFTools.instance.getConfig();
 
