@@ -128,7 +128,7 @@ public final class CommandRegister implements Invitable {
                         registerHatCommand();
                     }
                     break;
-                case "TpahereSettings":
+                case "TpaHereSettings":
                     if (isEnabled) {
                         registerTpaHereCommand();
                     }

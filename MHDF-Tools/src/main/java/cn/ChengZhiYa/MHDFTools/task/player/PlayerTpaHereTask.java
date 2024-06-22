@@ -4,9 +4,6 @@ import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashSet;
-import java.util.Map;
-
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
@@ -14,35 +11,33 @@ public final class PlayerTpaHereTask extends BukkitRunnable {
     @Override
     public void run() {
         if (MHDFTools.instance.getConfig().getBoolean("TpaHereSettings.Enable")) {
-            Map<Object, String> stringMap = MapUtil.getStringHashMap();
-            Map<Object, Integer> intMap = MapUtil.getIntHashMap();
+            return;
+        }
+        for (Object Tpa : MapUtil.getStringHashMap().keySet()) {
+            if (!Tpa.toString().contains("_TPAHerePlayerName")) continue;
 
-            for (Object key : new HashSet<>(stringMap.keySet())) {
-                if (key.toString().contains("_TPAHerePlayerName")) {
-                    String playerName = key.toString().replace("_TPAHerePlayerName", "");
-                    String targetPlayerName = stringMap.get(key);
+            String playerName = Tpa.toString().replaceAll("_TPAHerePlayerName", "");
+            String targetPlayerName = MapUtil.getStringHashMap().get(Tpa);
 
-                    if (!ifPlayerOnline(playerName)) {
-                        CancelTpaHere(playerName);
-                        continue;
-                    }
+            if (!ifPlayerOnline(playerName)) {
+                CancelTpaHere(playerName);
+                continue;
+            }
 
-                    if (!ifPlayerOnline(targetPlayerName)) {
-                        SendMessage(playerName, i18n("TpaHere.Offline", targetPlayerName));
-                        CancelTpaHere(playerName);
-                        continue;
-                    }
+            if (!ifPlayerOnline(targetPlayerName)) {
+                SendMessage(playerName, i18n("TpaHere.Offline", targetPlayerName));
+                CancelTpaHere(playerName);
+                continue;
+            }
 
-                    int time = intMap.getOrDefault(playerName + "_TPAHereTime", 0);
+            int time = MapUtil.getIntHashMap().getOrDefault(playerName + "_TPAHereTime", 0);
 
-                    if (time >= 0) {
-                        intMap.put(playerName + "_TPAHereTime", time - 1);
-                    } else {
-                        SendMessage(playerName, i18n("TpaHere.TimeOutDone", targetPlayerName));
-                        SendMessage(targetPlayerName, i18n("TpaHere.TimeOut", playerName));
-                        CancelTpaHere(playerName);
-                    }
-                }
+            if (time >= 0) {
+                MapUtil.getIntHashMap().put(playerName + "_TPAHereTime", time - 1);
+            } else {
+                SendMessage(playerName, i18n("TpaHere.TimeOutDone", targetPlayerName));
+                SendMessage(targetPlayerName, i18n("TpaHere.TimeOut", playerName));
+                CancelTpaHere(playerName);
             }
         }
     }

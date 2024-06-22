@@ -42,10 +42,10 @@ public enum PluginLoader {
 
     private void initManagers() {
         //Instance
+        serverManager = new ServerManager();
         asyncTask = new AsyncTask();
         config = new MHDFConfig();
         initManager = new InitManager();
-        serverManager = new ServerManager();
         serverScoreboardTask = new ServerScoreboardTask();
     }
 
@@ -55,7 +55,6 @@ public enum PluginLoader {
 
     public void start() {
         printLogo("&f[MHDF-Tools] &d");
-//        serverManager.unSupportServer();
         config.loadConfig();
         initManager.start();
         asyncTask.start();
@@ -91,7 +90,7 @@ public enum PluginLoader {
 
     public void disablePlugin() {
         if (plugin != null) {
-            plugin.getPluginLoader().disablePlugin(plugin);
+            MHDFTools.instance.getPluginLoader().disablePlugin(plugin);
         } else {
             LogUtil.color("&e[MHDFTools] &cPlugin Not Found!");
         }
