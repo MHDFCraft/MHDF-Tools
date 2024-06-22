@@ -140,7 +140,7 @@ public final class HomeUtil {
     public static String getHomeServer(String playerName, String homeName) {
         String server = getHomeServerHashMap().get(playerName + "|" + homeName) != null ? getHomeServerHashMap().get(playerName + "|" + homeName).toString() : "NONE";
         if (server == null) {
-            if (MHDFTools.instance.getConfig().getString("DataSettings.Type").equals("MySQL")) {
+            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement("SELECT Server FROM mhdftools.mhdftools_home WHERE Home = ? AND Owner = ? LIMIT 1")) {
                     ps.setString(1, homeName);
@@ -161,59 +161,58 @@ public final class HomeUtil {
 
     public static Location getHomeLocation(String playerName, String homeName) {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-            try (Connection connection = dataSource.getConnection()) {
-                //如果缓存则继续执行
-                Location cachedLocation = getHomeLocationHashMap().get(playerName + "|" + homeName);
-                if (cachedLocation != null) {
-                    return cachedLocation;
-                }
+            Location cachedLocation = HomeUtil.getHomeLocationHashMap().get(playerName + "|" + homeName);
+            if (cachedLocation != null) { //如果有缓存那就执行
+                return cachedLocation;
+            }
 
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_home WHERE Home = ? AND Owner = ? LIMIT 1");
+            try (Connection connection = DatabaseUtil.dataSource.getConnection();
+                 PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_home WHERE Home = ? AND Owner = ? LIMIT 1")) {
                 ps.setString(1, homeName);
                 ps.setString(2, playerName);
-                ResultSet rs = ps.executeQuery();
-
-                Location homeLocation = null;
-                if (rs.next()) {
-                    homeLocation = new Location(
-                            Bukkit.getWorld(Objects.requireNonNull(rs.getString("World"))),
-                            rs.getDouble("X"),
-                            rs.getDouble("Y"),
-                            rs.getDouble("Z"),
-                            (float) rs.getDouble("Yaw"),
-                            (float) rs.getDouble("Pitch")
-                    );
-                    getHomeLocationHashMap().put(playerName + "|" + homeName, homeLocation); //缓存
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        Location homeLocation = new Location(
+                                Bukkit.getWorld(Objects.requireNonNull(rs.getString("World"))),
+                                rs.getDouble("X"),
+                                rs.getDouble("Y"),
+                                rs.getDouble("Z"),
+                                (float) rs.getDouble("Yaw"),
+                                (float) rs.getDouble("Pitch")
+                        );
+                        HomeUtil.getHomeLocationHashMap().put(playerName + "|" + homeName, homeLocation);
+                        return homeLocation;
+                    }
                 }
-
-                rs.close();
-                ps.close();
-
-                return homeLocation;
             } catch (SQLException e) {
                 e.printStackTrace();
+                return null;
             }
         } else {
             try {
-                File homeDataFile = new File(MHDFTools.instance.getDataFolder() + "/HomeData", playerName + ".yml"); //YML存储
-                if (!homeDataFile.exists()) {
-                    homeDataFile.createNewFile();
-                }
-                YamlConfiguration playerHomeData = YamlConfiguration.loadConfiguration(homeDataFile);
+                File homeData = new File(MHDFTools.instance.getDataFolder(), "HomeData");
+                File playerHomeFile = new File(homeData, playerName + ".yml");
 
-                return new Location(
-                        Bukkit.getWorld(Objects.requireNonNull(playerHomeData.getString(homeName + ".World"))),
-                        playerHomeData.getDouble(homeName + ".X"),
-                        playerHomeData.getDouble(homeName + ".Y"),
-                        playerHomeData.getDouble(homeName + ".Z"),
-                        (float) playerHomeData.getDouble(homeName + ".Yaw"),
-                        (float) playerHomeData.getDouble(homeName + ".Pitch")
-                );
-            } catch (IOException ignored) {
+                if (!playerHomeFile.exists()) {
+                    playerHomeFile.createNewFile();
+                }
+
+                YamlConfiguration playerHomeData = YamlConfiguration.loadConfiguration(playerHomeFile);
+                if (playerHomeData.contains(homeName + ".World")) {
+                    return new Location(
+                            Bukkit.getWorld(Objects.requireNonNull(playerHomeData.getString(homeName + ".World"))),
+                            playerHomeData.getDouble(homeName + ".X"),
+                            playerHomeData.getDouble(homeName + ".Y"),
+                            playerHomeData.getDouble(homeName + ".Z"),
+                            (float) playerHomeData.getDouble(homeName + ".Yaw"),
+                            (float) playerHomeData.getDouble(homeName + ".Pitch")
+                    );
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-
-        return null; // Return null if location not found or any exceptions occur
+        return null;
     }
 
     public static void addHome(String playerName, String homeName, Location homeLocation) {

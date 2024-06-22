@@ -46,9 +46,11 @@ import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.runAction;
 public final class CommandRegister implements Invitable {
     FileConfiguration config;
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+    boolean canRegister;
 
     @Override
     public void start() {
+        canRegister = false;
         config = MHDFTools.instance.getConfig();
         registerCommand(plugin, new MainCommand(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
         for (String configKey : config.getKeys(false)) {
@@ -86,18 +88,15 @@ public final class CommandRegister implements Invitable {
                     break;
                 case "BackSettings":
                     if (isEnabled) {
+                        canRegister = true;
                         registerBackCommands();
                     }
                     break;
                 case "TpBackSettings":
                     if (isEnabled) {
+                        canRegister = true;
                         registerTpBackCommands();
                 }
-                    break;
-                case "TpBackSettings.Enable":
-                case "BackSettings.Enable": {
-                        registerUnBackCommands();
-                    }
                     break;
                 case "VanishSettings":
                     if (isEnabled) {
@@ -129,7 +128,7 @@ public final class CommandRegister implements Invitable {
                         registerHatCommand();
                     }
                     break;
-                case "TpahereSettings":
+                case "TpaHereSettings":
                     if (isEnabled) {
                         registerTpaHereCommand();
                     }
@@ -170,7 +169,11 @@ public final class CommandRegister implements Invitable {
                     break;
             }
         }
+        if (canRegister) {
+            registerUnBackCommands();
+        }
     }
+
 
     private void registerTrashCommands() {
         registerCommand(plugin, new Trash(), "垃圾桶", "MHDFTools.Command.Trash", "trash");

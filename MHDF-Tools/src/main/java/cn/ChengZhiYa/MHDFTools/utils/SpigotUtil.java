@@ -359,34 +359,30 @@ public final class SpigotUtil {
 
         StringBuilder sb = new StringBuilder();
 
-        //年
-        if (years != 0) {
+        if (years > 0) {
             sb.append(years).append("年");
         }
 
-        //天
-        if (months != 0) {
+        if (months > 0) {
             sb.append(months).append("月");
         }
 
-        //天
-        if (days != 0) {
+        if (days > 0) {
             sb.append(days).append("日");
         }
 
-        //小时
-        if (hours != 0) {
+        if (hours > 0) {
             sb.append(hours).append("时");
         }
 
-        //分钟
-        if (minutes != 0) {
+        if (minutes > 0) {
             sb.append(minutes).append("分");
         }
 
-        //秒
-        if (seconds != 0) {
+        if (time > 0) {
             sb.append(seconds).append("秒");
+        } else if (sb.length() == 0) {
+            sb.append("0秒");
         }
 
         return sb.toString();
