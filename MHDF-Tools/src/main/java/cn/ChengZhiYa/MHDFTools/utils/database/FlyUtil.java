@@ -15,7 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.*;
+import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataExists;
+import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataSource;
 
 public final class FlyUtil {
     public static final List<String> InFlyList = new ArrayList<>();
@@ -46,7 +47,6 @@ public final class FlyUtil {
             if (getFlyTimeHashMap().containsKey(playerName)) {
                 return getFlyTimeHashMap().get(playerName);
             } else {
-                // Fetch from database
                 int time = fetchFlyTimeFromDatabase(playerName);
                 getFlyTimeHashMap().put(playerName, time);
                 return time;
@@ -55,19 +55,6 @@ public final class FlyUtil {
             YamlConfiguration data = loadFlyCache();
             return data.getInt(playerName);
         }
-    }
-
-    public static void deductFlyTime(String playerName, int takeTime) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
-                getFlyTimeHashMap().put(playerName, getFlyTime(playerName) - takeTime);
-                take("MHDFTools_Fly", "PlayerName", playerName, "Time", takeTime);
-            } else {
-                YamlConfiguration data = loadFlyCache();
-                data.set(playerName, getFlyTime(playerName) - takeTime);
-                saveFlyCache(data);
-            }
-        });
     }
 
     public static void addFlyTime(String playerName, int time) {
@@ -101,23 +88,23 @@ public final class FlyUtil {
 
     private static int fetchFlyTimeFromDatabase(String playerName) {
         int time = -1;
-        try {
-            Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Fly WHERE PlayerName = ? LIMIT 1");
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT Time FROM MHDFTools_Fly WHERE PlayerName = ? LIMIT 1")) {
+
             ps.setString(1, playerName);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                time = rs.getInt("Time");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    time = rs.getInt("Time");
+                }
             }
-            rs.close();
-            ps.close();
-            connection.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return time;
     }
-
     private static void insertIntoDatabase(String playerName, int time) {
         try {
             Connection connection = dataSource.getConnection();

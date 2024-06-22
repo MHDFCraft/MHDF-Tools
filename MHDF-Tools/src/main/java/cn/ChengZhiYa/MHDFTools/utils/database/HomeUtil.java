@@ -138,7 +138,7 @@ public final class HomeUtil {
     }
 
     public static String getHomeServer(String playerName, String homeName) {
-        String server = getHomeServerHashMap().get(playerName + "|" + homeName)!=null?getHomeServerHashMap().get(playerName + "|" + homeName).toString():"NONE";
+        String server = getHomeServerHashMap().get(playerName + "|" + homeName) != null ? getHomeServerHashMap().get(playerName + "|" + homeName).toString() : "NONE";
         if (server == null) {
             if (MHDFTools.instance.getConfig().getString("DataSettings.Type").equals("MySQL")) {
                 try (Connection connection = dataSource.getConnection();
@@ -201,7 +201,7 @@ public final class HomeUtil {
                 }
                 YamlConfiguration playerHomeData = YamlConfiguration.loadConfiguration(homeDataFile);
 
-                Location homeLocation = new Location(
+                return new Location(
                         Bukkit.getWorld(Objects.requireNonNull(playerHomeData.getString(homeName + ".World"))),
                         playerHomeData.getDouble(homeName + ".X"),
                         playerHomeData.getDouble(homeName + ".Y"),
@@ -209,8 +209,6 @@ public final class HomeUtil {
                         (float) playerHomeData.getDouble(homeName + ".Yaw"),
                         (float) playerHomeData.getDouble(homeName + ".Pitch")
                 );
-
-                return homeLocation;
             } catch (IOException ignored) {
             }
         }

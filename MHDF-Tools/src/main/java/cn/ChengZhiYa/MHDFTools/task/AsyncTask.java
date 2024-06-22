@@ -3,7 +3,6 @@ package cn.ChengZhiYa.MHDFTools.task;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.task.player.*;
-import cn.ChengZhiYa.MHDFTools.task.server.ServerScoreboardTask;
 import cn.ChengZhiYa.MHDFTools.task.server.ServerTimeTask;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,7 +15,7 @@ public final class AsyncTask {
     public void start() {
         config = MHDFTools.instance.getConfig();
 
-        asyncCommand(new ServerScoreboardTask(), "ScoreboardSettings.Enable");
+//        asyncCommand(new ServerScoreboardTask(), "ScoreboardSettings.Enable");
         asyncCommand(new PlayerLoginTask(), "LoginSystemSettings.Enable");
         asyncCommand(new PlayerFlightTask(), "FlySettings.Enable");
         asyncCommand(new PlayerBackTask(), "BackSettings.Enable");

@@ -4,6 +4,7 @@ import cn.ChengZhiYa.MHDFTools.config.MHDFConfig;
 import cn.ChengZhiYa.MHDFTools.manager.InitManager;
 import cn.ChengZhiYa.MHDFTools.manager.ServerManager;
 import cn.ChengZhiYa.MHDFTools.task.AsyncTask;
+import cn.ChengZhiYa.MHDFTools.task.server.ServerScoreboardTask;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +22,7 @@ public enum PluginLoader {
     private InitManager initManager;
     private ServerManager serverManager;
     private AsyncTask asyncTask;
+    private ServerScoreboardTask serverScoreboardTask;
 
     public void initialize_load(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -44,6 +46,7 @@ public enum PluginLoader {
         config = new MHDFConfig();
         initManager = new InitManager();
         serverManager = new ServerManager();
+        serverScoreboardTask = new ServerScoreboardTask();
     }
 
     public void load() {
