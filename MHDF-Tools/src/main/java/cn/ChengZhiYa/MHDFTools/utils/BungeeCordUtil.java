@@ -200,32 +200,31 @@ public final class BungeeCordUtil {
         }
     }
 
-    public static void TpPlayerTo(String PlayerName, String Server, Location Location) {
-        if (!ServerName.equals(Server) && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
-            final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
+    public static void TpPlayerTo(String PlayerName, String Server2, Location Location2) {
+        if (!ServerName.equals(Server2) && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+            Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
             }
-
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("TpPlayerTo");
             out.writeUTF(PlayerName);
-            out.writeUTF(Server);
-            out.writeUTF(Location.getWorld().getName());
-            out.writeDouble(Location.getX());
-            out.writeDouble(Location.getY());
-            out.writeDouble(Location.getZ());
-            out.writeDouble(Location.getYaw());
-            out.writeDouble(Location.getPitch());
-
+            out.writeUTF(Server2);
+            out.writeUTF(Location2.getWorld().getName());
+            out.writeDouble(Location2.getX());
+            out.writeDouble(Location2.getY());
+            out.writeDouble(Location2.getZ());
+            out.writeDouble(Location2.getYaw());
+            out.writeDouble(Location2.getPitch());
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {
             Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
-                Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location);
-                playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location2);
+                SpigotUtil.playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), SpigotUtil.sound("TeleportSound"));
             });
         }
     }
+
 
     public static void CancelTpa(String PlayerName) {
         if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
