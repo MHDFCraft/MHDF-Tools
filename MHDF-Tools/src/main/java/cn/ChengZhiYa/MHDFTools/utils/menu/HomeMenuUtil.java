@@ -39,7 +39,7 @@ public final class HomeMenuUtil {
         List<String> playerHomeList = new ArrayList<>();
         try {
             Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_home WHERE Owner = ? LIMIT " + size + " OFFSET ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_home WHERE Owner = ? LIMIT " + size + " OFFSET ?");
             ps.setString(1, playerName);
             ps.setInt(2, offset);
             ResultSet rs = ps.executeQuery();
@@ -76,7 +76,7 @@ public final class HomeMenuUtil {
                 if (getMenu("HomeMenu.yml").getString("menu.ItemList." + itemID + ".Slot") != null) {
                     slotList.add(getMenu("HomeMenu.yml").getString("menu.ItemList." + itemID + ".Slot"));
                 } else {
-                    slotList.addAll(getMenu("HomeMenu.yml").getStringList("menu.ItemList." + itemID + ".Slot"));
+                    slotList.addAll(getMenu("HomeMenu.yml").getStringList("menu.ItemList." + itemID + ".Slots"));
                 }
 
                 if (itemType != null) {
@@ -85,10 +85,11 @@ public final class HomeMenuUtil {
                             int i = 0;
                             if (!playerHomeList.isEmpty()) {
                                 for (String home : playerHomeList) {
-                                    lore.clear();
+                                    String homeDisplayName = null;
+                                    List<String> homeLore = new ArrayList<>();
 
                                     if (displayName != null) {
-                                        displayName = displayName
+                                        homeDisplayName = displayName
                                                 .replaceAll("\\{HomeName}", home)
                                                 .replaceAll("\\{Server}", getHomeServer(player.getName(), home))
                                                 .replaceAll("\\{World}", Objects.requireNonNull(getHomeLocation(player.getName(), home)).getWorld().getName())
@@ -98,7 +99,7 @@ public final class HomeMenuUtil {
                                     }
 
                                     getMenu(homeMenuFile).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s ->
-                                            lore.add(
+                                            homeLore.add(
                                                     Placeholder(player, s)
                                                             .replaceAll("\\{HomeName}", home)
                                                             .replaceAll("\\{Server}", getHomeServer(player.getName(), home))
@@ -109,7 +110,7 @@ public final class HomeMenuUtil {
                                             )
                                     );
 
-                                    ItemStack item = getMenuItem(homeMenuFile, itemID, type, displayName, lore, customModelData, amount);
+                                    ItemStack item = getMenuItem(homeMenuFile, itemID, type, homeDisplayName, homeLore, customModelData, amount);
 
                                     if (!slotList.isEmpty()) {
                                         menu.setItem(getSlot(slotList).get(i), item);
@@ -134,6 +135,9 @@ public final class HomeMenuUtil {
                     }
                 }
 
+                if (displayName != null) {
+                    displayName = displayName.replaceAll("\\{Page}", String.valueOf(page));
+                }
                 getMenu(homeMenuFile).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s ->
                         lore.add(Placeholder(player, s).replaceAll("\\{Page}", String.valueOf(page)))
                 );

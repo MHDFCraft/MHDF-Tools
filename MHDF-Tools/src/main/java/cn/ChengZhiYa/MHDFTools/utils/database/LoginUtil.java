@@ -17,7 +17,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataSource;
 
 public final class LoginUtil {
 
-    private static final String LOGIN_TABLE = "mhdftools.mhdftools_login";
+    private static final String LOGIN_TABLE = "mhdftools_login";
 
     public static boolean loginExists(String playerName) {
         if (isUsingMySQL()) {

@@ -96,7 +96,7 @@ public final class BungeeCordUtil {
             }
             Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).spigot().sendMessage(Message);
         }
-        MapUtil.getIntHashMap().put(SendPlayerName + "_TPATime", MHDFTools.instance.getConfig().getInt("Tpa.OutTime"));
+        MapUtil.getIntHashMap().put(SendPlayerName + "_TPATime", MHDFTools.instance.getConfig().getInt("TpaSettings.OutTime"));
         MapUtil.getStringHashMap().put(SendPlayerName + "_TPAPlayerName", PlayerName);
     }
 
@@ -135,7 +135,7 @@ public final class BungeeCordUtil {
             Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).spigot().sendMessage(Message);
         }
         MapUtil.getStringHashMap().put(SendPlayerName + "_TPAHerePlayerName", PlayerName);
-        MapUtil.getIntHashMap().put(SendPlayerName + "_TPAHereTime", MHDFTools.instance.getConfig().getInt("Tpa.OutTime"));
+        MapUtil.getIntHashMap().put(SendPlayerName + "_TPAHereTime", MHDFTools.instance.getConfig().getInt("TpaHereSettings.OutTime"));
     }
 
     public static void SendMessage(String PlayerName, String Message) {
@@ -192,7 +192,6 @@ public final class BungeeCordUtil {
 
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {
-
             Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
                 Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(getHomeLocation(PlayerName, HomeName)));
                 playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));

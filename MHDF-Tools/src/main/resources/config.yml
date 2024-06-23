@@ -47,7 +47,7 @@ FastUseShulkerBoxSettings:
   #开关
   Enable: true
   #潜影盒菜单标题
-  MenuTitle: "&b快速使用-倩影盒"
+  MenuTitle: "&b快速使用-潜影盒"
 
 #右键打开末影箱设置
 FastUseCraftingTableSettings:
@@ -314,7 +314,6 @@ CommandLinkSettings:
         #默认操作
         Default:
           - "[message]|&c命令错误,正确格式:/添加权限 <玩家ID> <权限>"
-
 
 #Back系统设置
 BackSettings:
