@@ -51,7 +51,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>[梦之工具-BC连接器]${project.artifactId}-${project.version}</finalName>
+        <finalName>[BungeeCord]${project.artifactId}-${project.version}</finalName>
     </build>
 
     <repositories>
