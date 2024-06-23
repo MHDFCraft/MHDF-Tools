@@ -27,7 +27,7 @@ public final class ShulkerBox implements Listener {
                         ItemMeta meta = player.getInventory().getItemInMainHand().getItemMeta();
                         BlockStateMeta blockMate = (BlockStateMeta) meta;
                         org.bukkit.block.ShulkerBox box = (org.bukkit.block.ShulkerBox) blockMate.getBlockState();
-                        Inventory inv = Bukkit.createInventory(player, InventoryType.SHULKER_BOX, MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("FastUsShulkerBoxSettings.EnableMenuTitle")));
+                        Inventory inv = Bukkit.createInventory(player, InventoryType.SHULKER_BOX, MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("FastUseShulkerBoxSettings.MenuTitle")));
                         inv.setContents(box.getInventory().getContents());
                         player.openInventory(inv);
                     }

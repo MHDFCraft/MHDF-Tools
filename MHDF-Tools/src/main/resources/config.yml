@@ -54,7 +54,6 @@ FastUseCraftingTableSettings:
   #开关
   Enable: true
 
-
 #隐身系统设置
 VanishSettings:
   #开关
