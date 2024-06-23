@@ -51,8 +51,6 @@ _PlaceholderAPI, Vault_
   <img src="https://stg.contrib.rocks/image?repo=Love-MHDF/MHDF-Tools" />
 </a>
 
-Made with [contrib.rocks](https://stg.contrib.rocks)
-
 ## Star
 
 [![Stargazers over time](https://starchart.cc/Love-MHDF/MHDF-Tools.svg?variant=adaptive)](https://starchart.cc/Love-MHDF/MHDF-Tools)
