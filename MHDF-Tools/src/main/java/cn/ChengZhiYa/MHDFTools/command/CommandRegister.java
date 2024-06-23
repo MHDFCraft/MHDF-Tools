@@ -96,7 +96,7 @@ public final class CommandRegister implements Invitable {
                     if (isEnabled) {
                         canRegister = true;
                         registerTpBackCommands();
-                }
+                    }
                     break;
                 case "VanishSettings":
                     if (isEnabled) {
@@ -183,9 +183,11 @@ public final class CommandRegister implements Invitable {
         registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "version");
         registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "mversion");
     }
+
     private void registerUnBackCommands() {
         registerCommand(plugin, new UnBack(), "Back系统", "MHDFTools.Command.UnBack", "unback");
     }
+
     private void registerTpBackCommands() {
         registerCommand(plugin, new TpBack(), "TpBack系统", "MHDFTools.Command.TpBack", "tpback");
     }

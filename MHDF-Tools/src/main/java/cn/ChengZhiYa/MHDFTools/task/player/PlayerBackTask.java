@@ -12,7 +12,6 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.ServerName;
 
 public final class PlayerBackTask extends BukkitRunnable {
-
     @Override
     public void run() {
         for (Object Key : MapUtil.getIntHashMap().keySet()) {
