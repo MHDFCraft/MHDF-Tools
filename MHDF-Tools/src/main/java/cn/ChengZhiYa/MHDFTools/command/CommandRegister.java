@@ -10,7 +10,6 @@ import cn.ChengZhiYa.MHDFTools.command.subCommand.main.flight.FlyTime;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.gamemode.GameMode;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.server.List;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.server.Stop;
-import cn.ChengZhiYa.MHDFTools.command.subCommand.main.server.Version;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.teleport.Tpa;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.teleport.TpaHere;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.*;
@@ -162,11 +161,6 @@ public final class CommandRegister implements Invitable {
                         registerRotateCommands();
                     }
                     break;
-                case "VersionSettings":
-                    if (isEnabled) {
-                        registerPluginVersionCommands();
-                    }
-                    break;
             }
         }
         if (canRegister) {
@@ -177,11 +171,6 @@ public final class CommandRegister implements Invitable {
 
     private void registerTrashCommands() {
         registerCommand(plugin, new Trash(), "垃圾桶", "MHDFTools.Command.Trash", "trash");
-    }
-
-    private void registerPluginVersionCommands() {
-        registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "version");
-        registerCommand(plugin, new Version(), "查看插件版本", "MHDFTools.Command.Version", "mversion");
     }
 
     private void registerUnBackCommands() {
