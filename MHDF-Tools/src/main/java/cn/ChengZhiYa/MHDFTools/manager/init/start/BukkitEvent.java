@@ -3,10 +3,10 @@ package cn.ChengZhiYa.MHDFTools.manager.init.start;
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.listeners.player.*;
+import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.CraftingTable;
 import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.EnderChest;
 import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.ShulkerBox;
 import cn.ChengZhiYa.MHDFTools.listeners.server.ServerCommandListener;
-import cn.ChengZhiYa.MHDFTools.listeners.server.ServerInteractListener;
 import cn.ChengZhiYa.MHDFTools.listeners.server.ServerJoinLeaveMessageListener;
 import cn.ChengZhiYa.MHDFTools.listeners.server.ServerMOTDListener;
 import cn.ChengZhiYa.MHDFTools.listeners.server.menu.HomeMenu;
@@ -29,7 +29,7 @@ public class BukkitEvent implements Invitable {
         registerEvent(new PlayerSpawnListener());
 
         if (MHDFTools.instance.getConfig().getBoolean("FastUseCraftingTableSettings.Enable")) {
-            registerEvent(new ServerInteractListener());
+            registerEvent(new CraftingTable());
         }
         if (MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.Enable")) {
             registerEvent(new ServerCommandListener());
@@ -47,7 +47,7 @@ public class BukkitEvent implements Invitable {
             registerEvent(new PlayerBackListener());
         }
         if (MHDFTools.instance.getConfig().getBoolean("TpBackSettings.Enable")) {
-            registerEvent(new PlayerTPBackListener());
+            registerEvent(new PlayerTpBackListener());
         }
         if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
             registerEvent(new PlayerVanishListener());

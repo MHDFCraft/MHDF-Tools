@@ -14,7 +14,7 @@ public final class Back implements CommandExecutor {
 
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
-            Player player = (Player)sender;
+            Player player = (Player) sender;
             if (MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation") != null) {
                 if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;

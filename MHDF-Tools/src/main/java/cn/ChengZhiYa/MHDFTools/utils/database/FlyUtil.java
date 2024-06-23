@@ -105,6 +105,7 @@ public final class FlyUtil {
 
         return time;
     }
+
     private static void insertIntoDatabase(String playerName, int time) {
         try {
             Connection connection = dataSource.getConnection();

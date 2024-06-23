@@ -8,7 +8,6 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.*;
 
 public final class PlayerFlightTask extends BukkitRunnable {
-
     @Override
     public void run() {
         for (Player player : Bukkit.getOnlinePlayers()) {

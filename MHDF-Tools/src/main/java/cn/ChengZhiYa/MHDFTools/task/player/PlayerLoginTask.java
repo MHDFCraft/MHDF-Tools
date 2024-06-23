@@ -10,7 +10,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 import static cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil.loginExists;
 
 public final class PlayerLoginTask extends BukkitRunnable {
-
+    @Override
     public void run() {
         if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
             for (Player player : Bukkit.getOnlinePlayers()) {
