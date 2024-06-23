@@ -12,7 +12,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.getQuitMessage;
 
 public final class ServerJoinLeaveMessageListener implements Listener {
     @EventHandler
-    public void PlayerJoinEvent(PlayerJoinEvent event) {
+    public void onPlayerJoinEvent(PlayerJoinEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("CustomJoinServerMessageSettings.Enable")) {
             Player player = event.getPlayer();
             if (player.hasPermission("MHDFTools.JoinMessage")) {
@@ -22,7 +22,7 @@ public final class ServerJoinLeaveMessageListener implements Listener {
     }
 
     @EventHandler
-    public void PlayerQuitEvent(PlayerQuitEvent event) {
+    public void onPlayerQuitEvent(PlayerQuitEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("CustomQuitServerMessageSettings.Enable")) {
             Player player = event.getPlayer();
             if (player.hasPermission("MHDFTools.QuitMessage")) {

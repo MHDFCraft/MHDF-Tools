@@ -13,7 +13,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 
 public final class ServerCommandListener implements Listener {
     @EventHandler
-    public void PlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
+    public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
             if (!ifLogin(event.getPlayer())) {
                 String Command = event.getMessage().split(" ")[0];
@@ -40,7 +40,7 @@ public final class ServerCommandListener implements Listener {
     }
 
     @EventHandler
-    public void PlayerCommandSendEvent(PlayerCommandSendEvent event) {
+    public void onPlayerCommandSendEvent(PlayerCommandSendEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.Enable")) {
             if (event.getPlayer().hasPermission("MHDFTools.BanCommand.Bypass")) {
                 if (!MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.OpBypass")) {
@@ -57,7 +57,7 @@ public final class ServerCommandListener implements Listener {
     }
 
     @EventHandler
-    public void PlayerChatTabCompleteEvent(PlayerChatTabCompleteEvent event) {
+    public void onPlayerChatTabCompleteEvent(PlayerChatTabCompleteEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.Enable")) {
             if (event.getPlayer().hasPermission("MHDFTools.BanCommand.Bypass")) {
                 if (!MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.OpBypass")) {

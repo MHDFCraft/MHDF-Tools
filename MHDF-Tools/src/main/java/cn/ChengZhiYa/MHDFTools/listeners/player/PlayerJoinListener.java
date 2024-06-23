@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,25 +23,26 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.initializationP
 import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.getFlyTimeHashMap;
 
 public final class PlayerJoinListener implements Listener {
+    JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
     @EventHandler
-    public void On_Event(PlayerJoinEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("FlySettings.Enable")) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, () -> {
+    public void onPlayerJoinEvent(PlayerJoinEvent event) {
+        if (plugin.getConfig().getBoolean("FlySettings.Enable")) {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
                 getFlyTimeHashMap().remove(event.getPlayer().getName());
                 FlyUtil.getFlyTime(event.getPlayer().getName());
             }, 20);
         }
-        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (plugin.getConfig().getBoolean("BungeecordSettings.Enable")) {
             getServerName();
         }
-        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BungeeCordUtil::getPlayerList, 20);
-            Bukkit.getScheduler().runTaskLaterAsynchronously(MHDFTools.instance, BungeeCordUtil::getServerName, 20);
+        if (plugin.getConfig().getBoolean("BungeecordSettings.Enable")) {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, BungeeCordUtil::getPlayerList, 20);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, BungeeCordUtil::getServerName, 20);
         }
-        if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
+        if (plugin.getConfig().getBoolean("EconomySettings.Enable")) {
             initializationPlayerData(event.getPlayer().getName());
         }
-        if (MHDFTools.instance.getConfig().getBoolean("CheckVersion")) {
+        if (plugin.getConfig().getBoolean("CheckVersion")) {
             try {
                 Player player = event.getPlayer();
                 if (player.hasPermission("MHDFTools.Op")) {
@@ -54,27 +57,27 @@ public final class PlayerJoinListener implements Listener {
             } catch (Exception ignored) {
             }
         }
-        if (MHDFTools.instance.getConfig().getBoolean("TpaSetting.Enable")) {
+        if (plugin.getConfig().getBoolean("TpaSetting.Enable")) {
             Player player = event.getPlayer();
             File TpaData = new File(MHDFTools.getPlugin(MHDFTools.class).getDataFolder(), "TpaData.yml");
             YamlConfiguration Tpa_Data = YamlConfiguration.loadConfiguration(TpaData);
-            Tpa_Data.set(player.getName() + "_TpaPromptMode", MHDFTools.instance.getConfig().getBoolean("TpaSetting.DefaultMode"));
+            Tpa_Data.set(player.getName() + "_TpaPromptMode", plugin.getConfig().getBoolean("TpaSetting.DefaultMode"));
             try {
                 Tpa_Data.save(TpaData);
             } catch (IOException ignored) {
             }
         }
-        if (MHDFTools.instance.getConfig().getBoolean("ScoreboardSettings.Enable")) {
+        if (plugin.getConfig().getBoolean("ScoreboardSettings.Enable")) {
             Player player = event.getPlayer();
             MapUtil.getScoreboardHashMap().put(player.getName() + "_Scoreboard", Bukkit.getScoreboardManager().getNewScoreboard());
         }
-        if (MHDFTools.instance.getConfig().getBoolean("WhiteList.Enable")) {
-            if (!MHDFTools.instance.getConfig().getStringList("WhiteList.List").contains(event.getPlayer().getName()) || event.getPlayer().hasPermission(Objects.requireNonNull(MHDFTools.instance.getConfig().getString("WhiteList.Permission")))) {
-                event.getPlayer().kickPlayer(MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("WhiteList.KickMessage")));
+        if (plugin.getConfig().getBoolean("WhiteList.Enable")) {
+            if (!plugin.getConfig().getStringList("WhiteList.List").contains(event.getPlayer().getName()) || event.getPlayer().hasPermission(Objects.requireNonNull(plugin.getConfig().getString("WhiteList.Permission")))) {
+                event.getPlayer().kickPlayer(MessageUtil.colorMessage(plugin.getConfig().getString("WhiteList.KickMessage")));
             }
         }
-        if (MHDFTools.instance.getConfig().getBoolean("PlayerJoinSendMessageSettings.Enable")) {
-            event.getPlayer().sendMessage(MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("PlayerJoinSendMessageSettings.Message"))
+        if (plugin.getConfig().getBoolean("PlayerJoinSendMessageSettings.Enable")) {
+            event.getPlayer().sendMessage(MessageUtil.colorMessage(plugin.getConfig().getString("PlayerJoinSendMessageSettings.Message"))
                     .replaceAll("%PlayerName%", event.getPlayer().getName())
             );
         }
