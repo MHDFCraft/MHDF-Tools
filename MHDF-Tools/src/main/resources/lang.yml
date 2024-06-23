@@ -5,6 +5,15 @@ FastSetDone: "&e[MHDFTools] &a完成!"
 HatNoItem: "&e[MHDFTools] &6你需要拿着一个物品才能使用这个命令!"
 AdminCommands:
   Center: " &7| "
+  version:
+    Usage: "&e/{Command} version"
+    Description: "&b查询MHDF-Tools信息"
+    Message: |-
+      &f============&6梦之工具&f============
+      &7插件版本: &6{Version}
+      &7插件构建号: &6{Build}
+      &7服务器版本: &6{ServerVersion}
+      &f============&6梦之工具&f============
   convert:
     Usage: "&e/{Command} convert <目标数据类型> [数据库地址] [数据库] [数据库账号] [数据库密码]"
     Description: "&b将插件数据转换成其他存储方式"
@@ -33,6 +42,7 @@ AdminCommands:
     Message: |-
       &f============&6梦之工具-管理系统&f============
       {help}
+      {version}
       {convert}
       {import}
       {reload}
