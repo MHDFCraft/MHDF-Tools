@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.main;
 
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
@@ -29,6 +30,16 @@ public final class MainCommand implements TabExecutor {
         if (args.length == 1 && "reload".equals(args[0])) {
             loadConfigurations();
             sender.sendMessage(i18n("AdminCommands.reload.ReloadDone"));
+            return true;
+        }
+
+        if (args.length == 1 && "version".equals(args[0])) {
+            sender.sendMessage(
+                    i18n("AdminCommands.version.Message")
+                            .replaceAll("\\{Version}", PluginLoader.INSTANCE.getVersion())
+                            .replaceAll("\\{Build}", PluginLoader.INSTANCE.getBuild())
+                            .replaceAll("\\{ServerVersion}", PluginLoader.INSTANCE.getServerManager().getVersion())
+            );
             return true;
         }
 
@@ -86,10 +97,11 @@ public final class MainCommand implements TabExecutor {
 
     private void sendHelpMessage(CommandSender sender, String label) {
         sender.sendMessage(i18n("AdminCommands.help.Message")
-                .replaceAll("\\{help\\}", CommandHelp("help", label))
-                .replaceAll("\\{convert\\}", CommandHelp("convert", label))
-                .replaceAll("\\{import\\}", CommandHelp("import", label))
-                .replaceAll("\\{reload\\}", CommandHelp("reload", label)));
+                .replaceAll("\\{help}", CommandHelp("help", label))
+                .replaceAll("\\{version}", CommandHelp("version", label))
+                .replaceAll("\\{convert}", CommandHelp("convert", label))
+                .replaceAll("\\{import}", CommandHelp("import", label))
+                .replaceAll("\\{reload}", CommandHelp("reload", label)));
     }
 
     private void loadConfigurations() {
@@ -107,7 +119,7 @@ public final class MainCommand implements TabExecutor {
     @Override
     public @NotNull List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("help", "convert", "import", "reload");
+            return Arrays.asList("help", "version", "convert", "import", "reload");
         }
         if (args.length == 2) {
             switch (args[0]) {
