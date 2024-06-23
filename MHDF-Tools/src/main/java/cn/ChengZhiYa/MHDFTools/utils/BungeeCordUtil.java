@@ -192,7 +192,6 @@ public final class BungeeCordUtil {
 
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {
-
             Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
                 Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(getHomeLocation(PlayerName, HomeName)));
                 playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));

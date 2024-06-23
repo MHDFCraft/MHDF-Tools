@@ -50,14 +50,14 @@ public final class DatabaseUtil {
             statement = dataSource.getConnection().createStatement();
 
             initializeTable("EconomySettings",
-                    "CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_economy` (" +
+                    "CREATE TABLE IF NOT EXISTS `mhdftools_economy` (" +
                             "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                             "`Money` DECIMAL(20,4) NOT NULL DEFAULT 0," +
                             "PRIMARY KEY (`PlayerName`)) " +
                             "COLLATE='utf8mb4_general_ci';");
 
             initializeTable("HomeSystemSettings",
-                    "CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_home` (" +
+                    "CREATE TABLE IF NOT EXISTS `mhdftools_home` (" +
                             "`ID` BIGINT NOT NULL AUTO_INCREMENT," +
                             "`Home` VARCHAR(100) NOT NULL DEFAULT ''," +
                             "`Owner` VARCHAR(50) NOT NULL DEFAULT ''," +
@@ -74,7 +74,7 @@ public final class DatabaseUtil {
                             "COLLATE='utf8mb4_general_ci';");
 
             initializeTable("LoginSystemSettings",
-                    "CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_login` (" +
+                    "CREATE TABLE IF NOT EXISTS `mhdftools_login` (" +
                             "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                             "`Password` VARCHAR(200) NOT NULL DEFAULT ''," +
                             "PRIMARY KEY (`PlayerName`)) " +

@@ -47,7 +47,7 @@ public final class ConvertData {
                 {
                     if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_login");
+                        PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_login");
                         ResultSet rs = ps.executeQuery();
                         while (rs.next()) {
                             File DataFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
@@ -67,7 +67,7 @@ public final class ConvertData {
                     if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
                         if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
                             Connection connection = dataSource.getConnection();
-                            PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_economy");
+                            PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_economy");
                             ResultSet rs = ps.executeQuery();
                             while (rs.next()) {
                                 File DataFile = EconomyUtil.getPlayerFile(rs.getString("PlayerName"));
@@ -90,7 +90,7 @@ public final class ConvertData {
                 {
                     if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools.mhdftools_home");
+                        PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_home");
                         ResultSet rs = ps.executeQuery();
                         while (rs.next()) {
                             String HomeName = rs.getString("Home");
@@ -147,7 +147,7 @@ public final class ConvertData {
                 {
                     if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_economy` (" +
+                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools_economy` (" +
                                 "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                                 "`Money` DECIMAL(20,4) NOT NULL DEFAULT 0," +
                                 "PRIMARY KEY (`PlayerName`)) " +
@@ -160,7 +160,7 @@ public final class ConvertData {
                 {
                     if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_home` (" +
+                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools_home` (" +
                                 "`ID` BIGINT NOT NULL AUTO_INCREMENT," +
                                 "`Home` VARCHAR(100) NOT NULL DEFAULT ''," +
                                 "`Owner` VARCHAR(50) NOT NULL DEFAULT ''," +
@@ -183,7 +183,7 @@ public final class ConvertData {
                 {
                     if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools.mhdftools_login` (" +
+                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools_login` (" +
                                 "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                                 "`Password` VARCHAR(200) NOT NULL DEFAULT ''," +
                                 "PRIMARY KEY (`PlayerName`)) " +
@@ -203,7 +203,7 @@ public final class ConvertData {
                             if (!loginExists(sender.getName())) {
                                 register(Datas.replaceAll("_Password", ""), Data.getString(Datas));
                             } else {
-                                set("mhdftools.mhdftools_login", "PlayerName", sender.getName(), "Password", Data.getString(Datas));
+                                set("mhdftools_login", "PlayerName", sender.getName(), "Password", Data.getString(Datas));
                             }
                         }
                     }
@@ -223,7 +223,7 @@ public final class ConvertData {
                             YamlConfiguration Data = YamlConfiguration.loadConfiguration(EconomyUtil.getPlayerFile(PlayerName));
                             if (!ifPlayerFileExists(PlayerName)) {
                                 Connection connection = dataSource.getConnection();
-                                PreparedStatement ps = connection.prepareStatement("INSERT INTO mhdftools.mhdftools_economy (PlayerName, Money) VALUES (?,?)");
+                                PreparedStatement ps = connection.prepareStatement("INSERT INTO mhdftools_economy (PlayerName, Money) VALUES (?,?)");
                                 ps.setString(1, PlayerName);
                                 ps.setDouble(2, Data.getDouble("money"));
                                 ps.executeUpdate();
