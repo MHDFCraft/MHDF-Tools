@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -25,11 +26,13 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.getVanishBossBar;
 
 public final class PlayerVanishListener implements Listener {
 
-    private static final String VANISH_OPEN_PREFIX = "&b无动画打开|";
+    static String VANISH_OPEN_PREFIX = "&b无动画打开|";
+    JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
+        if (plugin.getConfig().getBoolean("VanishSettings.Enable")) {
             Player player = event.getPlayer();
             if (VanishList.contains(player.getName())) {
                 hidePlayerFromOthers(player);
@@ -39,7 +42,7 @@ public final class PlayerVanishListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
+        if (plugin.getConfig().getBoolean("VanishSettings.Enable")) {
             if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null) {
                 Player player = event.getPlayer();
                 if (VanishList.contains(player.getName())) {
@@ -51,7 +54,7 @@ public final class PlayerVanishListener implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
+        if (plugin.getConfig().getBoolean("VanishSettings.Enable")) {
             if (event.getView().getTitle().contains(VANISH_OPEN_PREFIX)) {
                 handleVanishInventoryClose(event);
             }
@@ -62,7 +65,7 @@ public final class PlayerVanishListener implements Listener {
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             try {
                 Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
-                onlinePlayer.hidePlayer(MHDFTools.instance, player);
+                onlinePlayer.hidePlayer(plugin, player);
             } catch (NoSuchMethodException e) {
                 onlinePlayer.hidePlayer(player);
             }

@@ -12,7 +12,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.*;
 
 public final class OpenMenu implements Listener {
     @EventHandler
-    public void onEvent(PlayerCommandPreprocessEvent event) {
+    public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
         if (MHDFTools.instance.getConfig().getBoolean("MenuSettings.Enable")) {
             String Command = event.getMessage().replaceAll("/", "").split(" ")[0];
             for (String MenuFileName : getCustomMenuList()) {

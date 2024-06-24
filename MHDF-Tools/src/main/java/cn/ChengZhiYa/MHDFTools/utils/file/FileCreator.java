@@ -6,25 +6,29 @@ import java.io.File;
 import java.io.IOException;
 
 public final class FileCreator {
-    public static void createDir(File file) {
-        if (!file.exists()) {
-            file.mkdirs();
+
+    private static File getDataFile(String path) {
+        return new File(MHDFTools.instance.getDataFolder(), path);
+    }
+
+    public static void createDir(File directory) {
+        if (!directory.exists()) {
+            directory.mkdirs();
         }
     }
 
     public static void createDir(String path) {
-        File file = new File(MHDFTools.instance.getDataFolder(), path);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
+        File directory = getDataFile(path);
+        createDir(directory);
     }
 
     public static void createFile(String path) {
-        File file = new File(MHDFTools.instance.getDataFolder(), path);
+        File file = getDataFile(path);
         if (!file.exists()) {
             try {
                 file.createNewFile();
-            } catch (IOException ignored) {
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

@@ -126,36 +126,36 @@ public final class HomeUtil {
             if (perm.startsWith("mhdftools.home.")) {
                 try {
                     int value = Integer.parseInt(perm.substring("mhdftools.home.".length()));
-                    if (value > maxHome) {
-                        maxHome = value;
-                    }
-                } catch (NumberFormatException ignored) { //不是正常的数就执行
+                    maxHome = Math.max(maxHome, value); //用Math.max代替if
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
             }
         }
 
         return maxHome;
     }
-
     public static String getHomeServer(String playerName, String homeName) {
-        String server = getHomeServerHashMap().get(playerName + "|" + homeName) != null ? getHomeServerHashMap().get(playerName + "|" + homeName).toString() : "NONE";
-        if (server.equals("NONE")) {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-                try (Connection connection = dataSource.getConnection();
-                     PreparedStatement ps = connection.prepareStatement("SELECT Server FROM mhdftools_home WHERE Home = ? AND Owner = ? LIMIT 1")) {
-                    ps.setString(1, homeName);
-                    ps.setString(2, playerName);
-                    try (ResultSet rs = ps.executeQuery()) {
-                        if (rs.next()) {
-                            server = rs.getString("Server");
-                            getHomeServerHashMap().put(playerName + "|" + homeName, server);
-                        }
+        String server = getHomeServerHashMap().get(playerName + "|" + homeName) != null
+                ? getHomeServerHashMap().get(playerName + "|" + homeName).toString() : "NONE";
+
+        if (server.equals("NONE") && "MySQL".equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"))) {
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement ps = connection.prepareStatement("SELECT Server FROM mhdftools_home WHERE Home = ? AND Owner = ? LIMIT 1")) {
+                ps.setString(1, homeName);
+                ps.setString(2, playerName);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        server = rs.getString("Server");
+                        getHomeServerHashMap().put(playerName + "|" + homeName, server);
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
+
         return server;
     }
 
@@ -355,34 +355,66 @@ public final class HomeUtil {
         }
     }
 
-    public static void setHome(String ServerName, String PlayerName, String HomeName, Location HomeLocation) {
-        if (ifHomeExists(PlayerName, HomeName)) {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-                Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+    public static void setHome(String serverName, String playerName, String homeName, Location homeLocation) {
+        if (!ifHomeExists(playerName, homeName)) {
+            return;
+        }
+
+        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+            Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+                try {
+                    //定义
+                    String worldName = homeLocation.getWorld().getName();
+                    double x = homeLocation.getX();
+                    double y = homeLocation.getY();
+                    double z = homeLocation.getZ();
+                    double yaw = homeLocation.getYaw();
+                    double pitch = homeLocation.getPitch();
+                    String homeServerName = getHomeServerName();
+
+                    //更新
+                    Connection connection = null;
+                    PreparedStatement ps = null;
                     try {
-                        getHomeLocationHashMap().put(PlayerName + "|" + HomeName, HomeLocation);
-                        getHomeServerHashMap().put(PlayerName + "|" + HomeName, getHomeServerName());
-                        Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("UPDATE mhdftools_home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?");
-                        ps.setString(1, ServerName);
-                        ps.setString(2, HomeLocation.getWorld().getName());
-                        ps.setDouble(3, HomeLocation.getX());
-                        ps.setDouble(4, HomeLocation.getY());
-                        ps.setDouble(5, HomeLocation.getZ());
-                        ps.setDouble(6, HomeLocation.getYaw());
-                        ps.setDouble(7, HomeLocation.getPitch());
-                        ps.setString(8, HomeName);
-                        ps.setString(9, PlayerName);
+                        connection = dataSource.getConnection();
+                        ps = connection.prepareStatement("UPDATE mhdftools_home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?");
+                        ps.setString(1, serverName);
+                        ps.setString(2, worldName);
+                        ps.setDouble(3, x);
+                        ps.setDouble(4, y);
+                        ps.setDouble(5, z);
+                        ps.setDouble(6, yaw);
+                        ps.setDouble(7, pitch);
+                        ps.setString(8, homeName);
+                        ps.setString(9, playerName);
                         ps.executeUpdate();
-                        ps.close();
-                        connection.close();
                     } catch (SQLException e) {
                         e.printStackTrace();
+                    } finally {
+                        if (ps != null) {
+                            try {
+                                ps.close();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (connection != null) {
+                            try {
+                                connection.close();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
-                });
-            } else {
-                HomeUtil.setHome(PlayerName, HomeName, HomeLocation);
-            }
+
+                    getHomeLocationHashMap().put(playerName + "|" + homeName, homeLocation); //在内存中更新
+                    getHomeServerHashMap().put(playerName + "|" + homeName, homeServerName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } else {
+            HomeUtil.setHome(playerName, homeName, homeLocation);
         }
     }
 

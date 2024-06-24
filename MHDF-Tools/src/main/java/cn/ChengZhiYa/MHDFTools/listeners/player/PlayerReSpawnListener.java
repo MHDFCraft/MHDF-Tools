@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -9,12 +9,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.TpPlayerTo;
 
 public final class PlayerReSpawnListener implements Listener {
+    JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
@@ -23,7 +25,7 @@ public final class PlayerReSpawnListener implements Listener {
         Player player = event.getPlayer();
         Location spawnLocation = getSpawnLocation();
 
-        Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () ->
+        Bukkit.getScheduler().runTaskLater(plugin, () ->
                 TpPlayerTo(player.getName(), getServerName(), spawnLocation), 5);
     }
 
@@ -49,6 +51,6 @@ public final class PlayerReSpawnListener implements Listener {
     }
 
     private FileConfiguration getConfig() {
-        return MHDFTools.instance.getConfig();
+        return plugin.getConfig();
     }
 }

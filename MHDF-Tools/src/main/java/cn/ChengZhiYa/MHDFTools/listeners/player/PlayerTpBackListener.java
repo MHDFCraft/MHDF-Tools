@@ -12,13 +12,13 @@ import java.util.Objects;
 
 public final class PlayerTpBackListener implements Listener {
     @EventHandler
-    public void PlayerTeleportEvent(PlayerTeleportEvent event) {
+    public void playerTeleportEvent(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
         MapUtil.getLocationHashMap().put(player.getName() + "_TpBackLocation", player.getLocation());
     }
 
     @EventHandler
-    public void PlayerMoveEvent(PlayerMoveEvent event) {
+    public void playerMoveEvent(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         if (player.getLocation().getX() != event.getTo().getX() || player.getLocation().getZ() != event.getTo().getZ() || player.getLocation().getY() != event.getTo().getY()) {
             if (MapUtil.getIntHashMap().get(player.getName() + "_TpBackDelay") != null) {

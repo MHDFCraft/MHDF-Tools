@@ -14,7 +14,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.openMenu;
 public final class MenuArgsCommand implements Listener {
 
     @EventHandler
-    public void onEvent(AsyncPlayerChatEvent event) {
+    public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         String mapKey = player.getName() + "_ArgsRunCommand";
 

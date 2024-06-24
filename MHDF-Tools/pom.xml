@@ -57,7 +57,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>[梦之工具]${project.artifactId}-${project.version}</finalName>
+        <finalName>[Spigot]${project.artifactId}-${project.version}</finalName>
     </build>
 
     <repositories>

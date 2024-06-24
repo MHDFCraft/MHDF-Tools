@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.server;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -10,6 +10,7 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,6 +26,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeLocation;
 
 @SuppressWarnings("ALL")
 public final class ServerChannelListener implements PluginMessageListener {
+    JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
     @Override
     public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte @NotNull [] message) {
         if (!channel.equals("BungeeCord")) {
@@ -100,7 +102,7 @@ public final class ServerChannelListener implements PluginMessageListener {
             if (subchannel.equals("TpPlayer")) {
                 String PlayerName = in.readUTF();
                 String TargetPlayerName = in.readUTF();
-                Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
                     Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(Bukkit.getPlayer(TargetPlayerName)).getLocation());
                     playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                 }, 20);
@@ -108,7 +110,7 @@ public final class ServerChannelListener implements PluginMessageListener {
             if (subchannel.equals("TpPlayerHome")) {
                 String PlayerName = in.readUTF();
                 String HomeName = in.readUTF();
-                Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
                     Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(getHomeLocation(PlayerName, HomeName)));
                     playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                 }, 20);
@@ -116,7 +118,7 @@ public final class ServerChannelListener implements PluginMessageListener {
             if (subchannel.equals("TpPlayerTo")) {
                 String PlayerName = in.readUTF();
                 Location Location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble(), (float) in.readDouble(), (float) in.readDouble());
-                Bukkit.getScheduler().runTaskLater(MHDFTools.instance, () -> {
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
                     Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location);
                     playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                 }, 20);
@@ -142,15 +144,15 @@ public final class ServerChannelListener implements PluginMessageListener {
                 ServerName = in.readUTF();
             }
             if (subchannel.equals("SetSpawn")) {
-                MHDFTools.instance.getConfig().set("SpawnSettings.Server", in.readUTF());
-                MHDFTools.instance.getConfig().set("SpawnSettings.World", in.readUTF());
-                MHDFTools.instance.getConfig().set("SpawnSettings.X", in.readDouble());
-                MHDFTools.instance.getConfig().set("SpawnSettings.Y", in.readDouble());
-                MHDFTools.instance.getConfig().set("SpawnSettings.Z", in.readDouble());
-                MHDFTools.instance.getConfig().set("SpawnSettings.Yaw", in.readDouble());
-                MHDFTools.instance.getConfig().set("SpawnSettings.Pitch", in.readDouble());
-                MHDFTools.instance.saveConfig();
-                MHDFTools.instance.reloadConfig();
+                plugin.getConfig().set("SpawnSettings.Server", in.readUTF());
+                plugin.getConfig().set("SpawnSettings.World", in.readUTF());
+                plugin.getConfig().set("SpawnSettings.X", in.readDouble());
+                plugin.getConfig().set("SpawnSettings.Y", in.readDouble());
+                plugin.getConfig().set("SpawnSettings.Z", in.readDouble());
+                plugin.getConfig().set("SpawnSettings.Yaw", in.readDouble());
+                plugin.getConfig().set("SpawnSettings.Pitch", in.readDouble());
+                plugin.saveConfig();
+                plugin.reloadConfig();
             }
         } catch (IOException ignored) {
         }

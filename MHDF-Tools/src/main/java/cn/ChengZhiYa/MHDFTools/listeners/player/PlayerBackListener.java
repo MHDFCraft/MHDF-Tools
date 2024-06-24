@@ -15,13 +15,13 @@ import java.util.Objects;
 public final class PlayerBackListener implements Listener {
 
     @EventHandler
-    public void PlayerDeathEvent(PlayerDeathEvent event) {
+    public void onPlayerDeathEvent(PlayerDeathEvent event) {
         Player player = event.getEntity();
         MapUtil.getLocationHashMap().put(player.getName() + "_DeathLocation", player.getLocation());
     }
 
     @EventHandler
-    public void PlayerRespawnEvent(PlayerRespawnEvent event) {
+    public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         if (MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation") != null) {
             Location DiedLocation = MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation");
@@ -33,7 +33,7 @@ public final class PlayerBackListener implements Listener {
     }
 
     @EventHandler
-    public void PlayerMoveEvent(PlayerMoveEvent event) {
+    public void onPlayerMoveEvent(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         if (player.getLocation().getX() != event.getTo().getX() || player.getLocation().getZ() != event.getTo().getZ() || player.getLocation().getY() != event.getTo().getY()) {
             if (MapUtil.getIntHashMap().get(player.getName() + "_BackDelay") != null) {

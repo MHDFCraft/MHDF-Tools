@@ -6,7 +6,7 @@
 
     <groupId>cn.ChengZhiYa</groupId>
     <artifactId>MHDF-Tools-BungeecordHook</artifactId>
-    <version>1.0.1</version>
+    <version>2.0.1</version>
     <packaging>jar</packaging>
 
     <name>MHDF-Tools-BungeecordHook</name>
@@ -51,7 +51,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>[梦之工具-BC连接器]${project.artifactId}-${project.version}</finalName>
+        <finalName>[BungeeCord]${project.artifactId}-${project.version}</finalName>
     </build>
 
     <repositories>

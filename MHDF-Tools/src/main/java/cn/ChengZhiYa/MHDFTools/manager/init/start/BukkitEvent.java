@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.manager.init.start;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.listeners.player.*;
 import cn.ChengZhiYa.MHDFTools.listeners.player.fastuse.CraftingTable;
@@ -24,49 +23,27 @@ public class BukkitEvent implements Invitable {
 
     @Override
     public void start() {
-        registerEvent(new PlayerJoinListener());
-        registerEvent(new ServerJoinLeaveMessageListener());
-        registerEvent(new PlayerSpawnListener());
-
-        if (MHDFTools.instance.getConfig().getBoolean("FastUseCraftingTableSettings.Enable")) {
-            registerEvent(new CraftingTable());
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("BanCommandSettings.Enable")) {
-            registerEvent(new ServerCommandListener());
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
-            registerEvent(new PlayerLoginListener());
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("SpawnSettings.Enable")) {
-            registerEvent(new PlayerReSpawnListener());
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("FlySettings.Enable")) {
-            registerEvent(new PlayerAllowedFlightListener());
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("BackSettings.Enable")) {
-            registerEvent(new PlayerBackListener());
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("TpBackSettings.Enable")) {
-            registerEvent(new PlayerTpBackListener());
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
-            registerEvent(new PlayerVanishListener());
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("MOTDSettings.Enable")) {
-            registerEvent(new ServerMOTDListener());
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
-            registerEvent(new HomeMenu());
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("FastUseEnderChestSettings.Enable")) {
-            registerEvent(new EnderChest());
-        }
-        if (MHDFTools.instance.getConfig().getBoolean("FastUseShulkerBoxSettings.Enable")) {
-            registerEvent(new ShulkerBox());
-        }
+        registerEvent(new PlayerJoinListener(), null);
+        registerEvent(new ServerJoinLeaveMessageListener(), null);
+//        registerEvent(new PlayerActionListener(), null);
+        registerEvent(new PlayerSpawnListener(), null);
+        registerEvent(new ServerCommandListener(), "BanCommandSettings.Enable");
+        registerEvent(new PlayerLoginListener(), "LoginSystemSettings.Enable");
+        registerEvent(new PlayerReSpawnListener(), "SpawnSettings.Enable");
+        registerEvent(new PlayerAllowedFlightListener(), "FlySettings.Enable");
+        registerEvent(new PlayerBackListener(), "BackSettings.Enable");
+        registerEvent(new PlayerTpBackListener(), "TpBackSettings.Enable");
+        registerEvent(new PlayerVanishListener(), "VanishSettings.Enable");
+        registerEvent(new ServerMOTDListener(), "MOTDSettings.Enable");
+        registerEvent(new HomeMenu(), "HomeSystemSettings.Enable");
+        registerEvent(new EnderChest(), "FastUseEnderChestSettings.Enable");
+        registerEvent(new ShulkerBox(), "FastUseShulkerBoxSettings.Enable");
+        registerEvent(new CraftingTable(), "FastUseCraftingTableSettings.Enable");
     }
 
-    private void registerEvent(Object listener) {
-        Bukkit.getPluginManager().registerEvents((Listener) listener, plugin);
+    private void registerEvent(Listener listener, String configPath) {
+        if (configPath == null || plugin.getConfig().getBoolean(configPath)) {
+            Bukkit.getPluginManager().registerEvents(listener, plugin);
+        }
     }
 }

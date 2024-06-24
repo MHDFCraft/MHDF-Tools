@@ -17,7 +17,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.*;
 
 public final class HomeMenu implements Listener {
     @EventHandler
-    public void InventoryClickEvent(InventoryClickEvent event) {
+    public void onInventoryClickEvent(InventoryClickEvent event) {
         if (event.getView().getTitle().contains(MessageUtil.colorMessage(Objects.requireNonNull(getMenu(homeMenuFile).getString("menu.Title")).split("\\{Page}")[0]))) {
             if (event.getCurrentItem() != null) {
                 event.setCancelled(true);
