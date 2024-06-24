@@ -27,8 +27,8 @@ public final class PlayerTpaTask extends BukkitRunnable {
 
                     if (BungeeCordUtil.ifPlayerOnline(playerName)) {
                         if (BungeeCordUtil.ifPlayerOnline(targetPlayerName)) {
-                            BungeeCordUtil.SendMessage(playerName, SpigotUtil.i18n("Tpa.TimeOutDone", targetPlayerName));
-                            BungeeCordUtil.SendMessage(targetPlayerName, SpigotUtil.i18n("Tpa.TimeOut", playerName));
+                            BungeeCordUtil.SendMessage(playerName, SpigotUtil.i18n("TpaSettings.TimeOutDone", targetPlayerName));
+                            BungeeCordUtil.SendMessage(targetPlayerName, SpigotUtil.i18n("TpaSettings.TimeOut", playerName));
                         } else {
                             BungeeCordUtil.SendMessage(playerName, SpigotUtil.i18n("Tpa.Offline", targetPlayerName));
                         }
