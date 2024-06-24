@@ -58,8 +58,6 @@ FastUseCraftingTableSettings:
 VanishSettings:
   #开关
   Enable: true
-  #保存隐身数据
-  SaveVanishData: true
 
 #Spawn系统设置
 SpawnSettings:

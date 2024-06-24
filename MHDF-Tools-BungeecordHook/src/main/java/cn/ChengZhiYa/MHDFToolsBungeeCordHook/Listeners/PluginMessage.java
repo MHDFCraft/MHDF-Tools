@@ -49,6 +49,7 @@ public final class PluginMessage implements Listener {
 
         try {
             String subchannel = in.readUTF();
+            System.out.println(subchannel);
 
             switch (subchannel) {
                 case "ServerName":
@@ -118,6 +119,7 @@ public final class PluginMessage implements Listener {
         out.writeUTF(sendPlayerName);
 
         server.sendData("BungeeCord", out.toByteArray());
+        System.out.println(1);
     }
 
     private void handleSendMessage(DataInputStream in, PluginMessageEvent event) throws IOException {

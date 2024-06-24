@@ -24,6 +24,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.getFlyTimeHashMap;
 
 public final class PlayerJoinListener implements Listener {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         if (plugin.getConfig().getBoolean("FlySettings.Enable")) {

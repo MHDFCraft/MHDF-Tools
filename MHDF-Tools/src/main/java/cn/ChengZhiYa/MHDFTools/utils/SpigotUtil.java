@@ -2,6 +2,7 @@ package cn.ChengZhiYa.MHDFTools.utils;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
+import cn.ChengZhiYa.MHDFTools.utils.database.VanishUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
@@ -41,7 +42,6 @@ public final class SpigotUtil {
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static final List<String> CommandLinkList = new ArrayList<>();
-    public static List<String> VanishList = new ArrayList<>();
     public static volatile BossBar VanishBossBar;
     public static YamlConfiguration LangFileData;
     public static YamlConfiguration SoundFileData;
@@ -328,7 +328,7 @@ public final class SpigotUtil {
         } else {
             onlinePlayerList = Bukkit.getOnlinePlayers().stream()
                     .map(Player::getName)
-                    .filter(name -> !VanishList.contains(name))
+                    .filter(name -> !VanishUtil.getVanishList().contains(name))
                     .collect(Collectors.toList());
         }
 

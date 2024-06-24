@@ -16,6 +16,7 @@ import java.util.Objects;
 
 public final class PlayerSpawnListener implements Listener {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!isEnabled()) {

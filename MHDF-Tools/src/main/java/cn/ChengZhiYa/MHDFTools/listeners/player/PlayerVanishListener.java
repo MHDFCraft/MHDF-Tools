@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
+import cn.ChengZhiYa.MHDFTools.utils.database.VanishUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -21,7 +22,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.VanishList;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.getVanishBossBar;
 
 public final class PlayerVanishListener implements Listener {
@@ -34,7 +34,7 @@ public final class PlayerVanishListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (plugin.getConfig().getBoolean("VanishSettings.Enable")) {
             Player player = event.getPlayer();
-            if (VanishList.contains(player.getName())) {
+            if (VanishUtil.getVanishList().contains(player.getName())) {
                 hidePlayerFromOthers(player);
             }
         }
@@ -45,7 +45,7 @@ public final class PlayerVanishListener implements Listener {
         if (plugin.getConfig().getBoolean("VanishSettings.Enable")) {
             if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock() != null) {
                 Player player = event.getPlayer();
-                if (VanishList.contains(player.getName())) {
+                if (VanishUtil.getVanishList().contains(player.getName())) {
                     handleVanishInteract(event, player);
                 }
             }
