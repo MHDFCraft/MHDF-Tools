@@ -37,7 +37,6 @@ public final class ServerChannelListener implements PluginMessageListener {
 
         try {
             String subchannel = in.readUTF();
-            System.out.println(subchannel);
             if (subchannel.equals("PlayerList")) {
                 in.readUTF();
                 PlayerList = in.readUTF().split(", ");
