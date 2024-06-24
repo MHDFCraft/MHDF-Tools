@@ -10,7 +10,6 @@ import static org.bukkit.Bukkit.getServer;
 
 public class stopChannel implements Invitable {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
-
     @Override
     public void start() {
         if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {

@@ -45,7 +45,7 @@ public final class ServerChannelListener implements PluginMessageListener {
                 String PlayerName = in.readUTF();
                 String SendPlayerName = in.readUTF();
 
-                MapUtil.getIntHashMap().put(SendPlayerName + "_TPATime", MHDFTools.instance.getConfig().getInt("TpaSettings.OutTime"));
+                MapUtil.getIntHashMap().put(SendPlayerName + "_TPATime", plugin.getConfig().getInt("TpaSettings.OutTime"));
                 MapUtil.getStringHashMap().put(SendPlayerName + "_TPAPlayerName", PlayerName);
 
                 TextComponent Message = new TextComponent();
@@ -72,7 +72,7 @@ public final class ServerChannelListener implements PluginMessageListener {
                 String PlayerName = in.readUTF();
                 String SendPlayerName = in.readUTF();
 
-                MapUtil.getIntHashMap().put(SendPlayerName + "_TPAHereTime", MHDFTools.instance.getConfig().getInt("TpaHereSettings.OutTime"));
+                MapUtil.getIntHashMap().put(SendPlayerName + "_TPAHereTime", plugin.getConfig().getInt("TpaHereSettings.OutTime"));
                 MapUtil.getStringHashMap().put(SendPlayerName + "_TPAHerePlayerName", PlayerName);
 
                 TextComponent Message = new TextComponent();
