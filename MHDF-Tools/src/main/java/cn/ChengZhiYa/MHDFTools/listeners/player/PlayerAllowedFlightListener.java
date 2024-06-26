@@ -10,8 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.InFlyList;
-import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.removeFlyTime;
+import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.*;
 
 public final class PlayerAllowedFlightListener implements Listener {
     @EventHandler
@@ -49,11 +48,19 @@ public final class PlayerAllowedFlightListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         if (!MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReJoin")) {
             Player player = event.getPlayer();
+            removeFlyTime(player.getName());
             InFlyList.remove(player.getName());
         }
     }
 
     private void handleFlight(Player player) {
+        if (getFlyTime(player.getName()) != -999) {
+            if (getFlyTime(player.getName()) >= 0) {
+                return;
+            }
+        }
+
         player.setAllowFlight(true);
+        InFlyList.add(player.getName());
     }
 }

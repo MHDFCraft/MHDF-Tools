@@ -53,7 +53,7 @@ public final class FlyUtil {
             }
         } else {
             YamlConfiguration data = loadFlyCache();
-            return data.getInt(playerName);
+            return data.getString(playerName)!=null ? data.getInt(playerName) : 0;
         }
     }
 
@@ -87,7 +87,7 @@ public final class FlyUtil {
     }
 
     private static int fetchFlyTimeFromDatabase(String playerName) {
-        int time = -1;
+        int time = 0;
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT Time FROM MHDFTools_Fly WHERE PlayerName = ? LIMIT 1")) {
