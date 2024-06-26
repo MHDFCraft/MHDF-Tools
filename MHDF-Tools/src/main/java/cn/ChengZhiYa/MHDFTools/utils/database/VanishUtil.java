@@ -43,7 +43,7 @@ public final class VanishUtil {
         if (Objects.equals(MHDFTools.instance.getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
             vanishList.clear();
             try (Connection connection = dataSource.getConnection()) {
-                try (PreparedStatement ps = connection.prepareStatement("SELECT PlayerName FROM MHDFTools_Vanish");) {
+                try (PreparedStatement ps = connection.prepareStatement("SELECT PlayerName FROM MHDFTools_Vanish")) {
                     try (ResultSet rs = ps.executeQuery()) {
                         while (rs.next()) {
                             vanishList.add(rs.getString("PlayerName"));
@@ -64,7 +64,7 @@ public final class VanishUtil {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
             if (Objects.equals(MHDFTools.instance.getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
                 try (Connection connection = dataSource.getConnection()) {
-                    try (PreparedStatement ps = connection.prepareStatement("INSERT INTO " + "MHDFTools_Vanish" + " (PlayerName) VALUES (?)");) {
+                    try (PreparedStatement ps = connection.prepareStatement("INSERT INTO " + "MHDFTools_Vanish" + " (PlayerName) VALUES (?)")) {
                         ps.setString(1, playerName);
                         ps.executeUpdate();
                     }
@@ -85,7 +85,7 @@ public final class VanishUtil {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
             if (Objects.equals(MHDFTools.instance.getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
                 try (Connection connection = dataSource.getConnection()) {
-                    try (PreparedStatement ps = connection.prepareStatement("DELETE FROM MHDFTools_Vanish WHERE PlayerName = ?");) {
+                    try (PreparedStatement ps = connection.prepareStatement("DELETE FROM MHDFTools_Vanish WHERE PlayerName = ?")) {
                         ps.setString(1, playerName);
                         ps.executeUpdate();
                     }

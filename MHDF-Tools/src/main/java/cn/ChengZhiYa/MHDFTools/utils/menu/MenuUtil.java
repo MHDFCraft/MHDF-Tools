@@ -113,7 +113,8 @@ public final class MenuUtil {
         List<String> MenuList = new ArrayList<>();
         try (Stream<Path> File = Files.walk(new File(MHDFTools.instance.getDataFolder(), "Menus").toPath())) {
             MenuList = File.filter(Files::isRegularFile).map(Path::toString).map(FileName -> FileName.replaceAll("plugins\\\\MHDF-Tools\\\\Menus\\\\", "")).collect(Collectors.toList());
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
         MenuList.remove("HomeMenu.yml");
         return MenuList;
     }
