@@ -23,7 +23,7 @@ public final class AsyncTask {
         asyncCommand(new PlayerTpBackTask(), "TpBackSettings.Enable");
         asyncCommand(new PlayerVanishTask(), "VanishSettings.Enable");
         asyncCommand(new PlayerTpaTask(), "TpaSettings.Enable");
-        asyncCommand(new PlayerTpaHereTask(), "TpahereSettings.Enable");
+        asyncCommand(new PlayerTpaHereTask(), "TpaHereSettings.Enable");
 
         if (config.getBoolean("TimeMessageSettings.Enable")) {
             int delay = config.getInt("TimeMessageSettings.Delay"); //这个是例外 (:

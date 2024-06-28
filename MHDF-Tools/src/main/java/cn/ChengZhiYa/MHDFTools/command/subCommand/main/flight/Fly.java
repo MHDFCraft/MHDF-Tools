@@ -9,6 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.addFly;
 import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.flyList;
@@ -27,7 +29,7 @@ public final class Fly implements CommandExecutor {
                 player = Bukkit.getPlayer(args[0]);
             }
         }
-        if (player != null) {
+        if (player != null){
             if (!MHDFTools.instance.getConfig().getStringList("FlySettings.AntiFlyWorldList").contains(player.getLocation().getWorld().getName())) {
                 if (sender.hasPermission("MHDFTools.Command.Fly.Infinite")) {
                     if (flyList.contains(player.getName())) {
@@ -50,7 +52,7 @@ public final class Fly implements CommandExecutor {
                 }
                 sender.sendMessage(i18n("NoPermission"));
             }
-        } else {
+        }else {
             sender.sendMessage(i18n("Usage.Fly"));
         }
         return false;
