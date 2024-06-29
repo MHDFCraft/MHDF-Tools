@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -15,137 +16,135 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataExists;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataSource;
 
 public final class FlyUtil {
-    public static final List<String> InFlyList = new ArrayList<>();
+    public static final List<String> flyList = new ArrayList<>();
+    @Getter
     static final HashMap<String, Integer> FlyTimeHashMap = new HashMap<>();
-    private static final String DATA_TYPE_CONFIG_KEY = "DataSettings.Type";
-    private static final String MYSQL_DATA_TYPE = "MySQL";
-    private static final String CACHE_FILE_PATH = "Cache/FlyCache.yml";
 
-    private static YamlConfiguration loadFlyCache() {
-        return loadYamlConfiguration();
-    }
-
-    private static void saveFlyCache(YamlConfiguration config) {
-        saveYamlConfiguration(config, new File(MHDFTools.instance.getDataFolder(), CACHE_FILE_PATH));
-    }
-
-    public static boolean allowFly(String playerName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
-            return getFlyTimeHashMap().get(playerName) == null || dataExists("MHDFTools_Fly", "PlayerName", playerName);
-        } else {
-            YamlConfiguration data = loadFlyCache();
-            return data.get(playerName) != null;
-        }
-    }
-
-    public static int getFlyTime(String playerName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
-            if (getFlyTimeHashMap().containsKey(playerName)) {
-                return getFlyTimeHashMap().get(playerName);
+    public static boolean AllowFly(String PlayerName) {
+        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+            if (getFlyTimeHashMap().get(PlayerName) == null) {
+                return DatabaseUtil.dataExists("MHDFTools_Fly", "PlayerName", PlayerName);
             } else {
-                int time = fetchFlyTimeFromDatabase(playerName);
-                getFlyTimeHashMap().put(playerName, time);
-                return time;
+                return true;
             }
         } else {
-            YamlConfiguration data = loadFlyCache();
-            return data.getInt(playerName);
+            File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
+            YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);
+            return Data.get(PlayerName) != null;
         }
     }
 
-    public static void addFlyTime(String playerName, int time) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
-                if (allowFly(playerName)) {
-                    removeFlyTime(playerName);
+    public static int getFlyTime(String PlayerName) {
+        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+            if (getFlyTimeHashMap().get(PlayerName) == null) {
+                try (Connection connection = dataSource.getConnection()) {
+                    try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Fly WHERE PlayerName = ? LIMIT 1")) {
+                        ps.setString(1, PlayerName);
+                        try (ResultSet rs = ps.executeQuery()) {
+                            if (rs.next()) {
+                                int Time = rs.getInt("Time");
+                                getFlyTimeHashMap().put(PlayerName, Time);
+                                return Time;
+                            }
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-                FlyTimeHashMap.put(playerName, time);
-                insertIntoDatabase(playerName, time);
             } else {
-                YamlConfiguration data = loadFlyCache();
-                data.set(playerName, time);
-                saveFlyCache(data);
+                return getFlyTimeHashMap().get(PlayerName);
+            }
+        } else {
+            File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
+            YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);
+            return Data.getInt(PlayerName);
+        }
+        return -1;
+    }
+
+    public static void takeFlyTime(String PlayerName, int TakeTime) {
+        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                getFlyTimeHashMap().put(PlayerName, getFlyTimeHashMap().get(PlayerName) - TakeTime);
+                DatabaseUtil.take("MHDFTools_Fly", "PlayerName", PlayerName, "Time", TakeTime);
+            } else {
+                File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
+                YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);
+                Data.set(PlayerName, getFlyTime(PlayerName) - TakeTime);
+                try {
+                    Data.save(File);
+                } catch (IOException ignored) {
+                }
             }
         });
     }
 
-    public static void removeFlyTime(String playerName) {
+    public static void addFly(String PlayerName, int Time) {
         Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
-                getFlyTimeHashMap().remove(playerName);
-                deleteFromDatabase(playerName);
+            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                if (AllowFly(PlayerName)) {
+                    getFlyTimeHashMap().remove(PlayerName);
+                    try {
+                        Connection connection = dataSource.getConnection();
+                        PreparedStatement ps = connection.prepareStatement("DELETE FROM MHDFTools_Fly WHERE PlayerName = ?");
+                        ps.setString(1, PlayerName);
+                        ps.executeUpdate();
+                        ps.close();
+                        connection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                FlyTimeHashMap.put(PlayerName, Time);
+                try {
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("INSERT INTO MHDFTools_Fly (PlayerName, Time) VALUES (?,?)");
+                    ps.setString(1, PlayerName);
+                    ps.setInt(2, Time);
+                    ps.executeUpdate();
+                    ps.close();
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             } else {
-                YamlConfiguration data = loadFlyCache();
-                data.set(playerName, null);
-                saveFlyCache(data);
+                File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
+                YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);
+                Data.set(PlayerName, Time);
+                try {
+                    Data.save(File);
+                } catch (IOException ignored) {
+                }
             }
         });
     }
 
-    private static int fetchFlyTimeFromDatabase(String playerName) {
-        int time = -1;
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT Time FROM MHDFTools_Fly WHERE PlayerName = ? LIMIT 1")) {
-
-            ps.setString(1, playerName);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    time = rs.getInt("Time");
+    public static void removeFly(String PlayerName) {
+        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                getFlyTimeHashMap().remove(PlayerName);
+                try {
+                    Connection connection = dataSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement("DELETE FROM MHDFTools_Fly WHERE PlayerName = ?");
+                    ps.setString(1, PlayerName);
+                    ps.executeUpdate();
+                    ps.close();
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
+                YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);
+                Data.set(PlayerName, null);
+                try {
+                    Data.save(File);
+                } catch (IOException ignored) {
                 }
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return time;
-    }
-
-    private static void insertIntoDatabase(String playerName, int time) {
-        try {
-            Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO " + "MHDFTools_Fly" + " (PlayerName, Time) VALUES (?,?)");
-            ps.setString(1, playerName);
-            ps.setInt(2, time);
-            ps.executeUpdate();
-            ps.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void deleteFromDatabase(String keyValue) {
-        try {
-            Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM " + "MHDFTools_Fly" + " WHERE " + "PlayerName" + " = ?");
-            ps.setString(1, keyValue);
-            ps.executeUpdate();
-            ps.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static YamlConfiguration loadYamlConfiguration() {
-        File file = new File(MHDFTools.instance.getDataFolder(), FlyUtil.CACHE_FILE_PATH);
-        return YamlConfiguration.loadConfiguration(file);
-    }
-
-    private static void saveYamlConfiguration(YamlConfiguration config, File file) {
-        try {
-            config.save(file);
-        } catch (IOException ignored) {
-        }
-    }
-
-    public static HashMap<String, Integer> getFlyTimeHashMap() {
-        return FlyUtil.FlyTimeHashMap;
+        });
     }
 }

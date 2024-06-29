@@ -27,7 +27,7 @@ public final class Money implements CommandExecutor {
                 if (target != null) {
                     sender.sendMessage(i18n("Vault.GetMoney", target.getName(), String.valueOf(getMoney(target.getName())), MHDFTools.instance.getConfig().getString("EconomySettings.MoneyName")));
                 } else {
-                    sender.sendMessage(i18n("PlayerNotFound", args[0]));
+                    sender.sendMessage(i18n("PlayerNotOnline"));
                 }
                 break;
             default:

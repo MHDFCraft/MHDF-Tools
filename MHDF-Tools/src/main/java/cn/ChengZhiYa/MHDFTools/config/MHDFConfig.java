@@ -7,7 +7,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 
 import static cn.ChengZhiYa.MHDFTools.api.ResourceAPI.saveResource;
-import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.LangFileData;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.SoundFileData;
 import static cn.ChengZhiYa.MHDFTools.utils.file.FileCreator.createDir;
 
 public class MHDFConfig {
@@ -15,7 +16,6 @@ public class MHDFConfig {
 
     public void loadConfig() {
         createFile();
-        createVanishCache();
     }
 
     public void createFile() {
@@ -48,22 +48,6 @@ public class MHDFConfig {
             if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")
                     && MHDFTools.instance.getConfig().getBoolean("VanishSettings.SaveVanishData")) {
                 FileCreator.createFile("Cache/VanishCache.yml");
-            }
-        }
-    }
-
-
-    public void createVanishCache() {
-        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.SaveVanishData")) {
-
-            File VanishCacheFile = new File(getDataFolder, "Cache/VanishCache.yml");
-
-            if (VanishCacheFile.exists()) {
-                YamlConfiguration VanishCache = YamlConfiguration.loadConfiguration(VanishCacheFile);
-
-                if (VanishCache.get("VanishList") != null) {
-                    VanishList = VanishCache.getStringList("VanishList");
-                }
             }
         }
     }

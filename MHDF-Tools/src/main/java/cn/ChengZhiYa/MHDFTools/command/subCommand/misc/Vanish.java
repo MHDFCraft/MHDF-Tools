@@ -1,22 +1,21 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.utils.database.VanishUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.getVanishBossBar;
+import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class Vanish implements CommandExecutor {
     @Override
@@ -32,7 +31,7 @@ public final class Vanish implements CommandExecutor {
                     player = Bukkit.getPlayer(args[0]);
                 }
             }
-            if (!VanishList.contains(Objects.requireNonNull(player).getName())) {
+            if (!VanishUtil.getVanishList().contains(Objects.requireNonNull(player).getName())) {
                 for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
                     try {
                         Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
@@ -48,14 +47,14 @@ public final class Vanish implements CommandExecutor {
                 if (!player.getName().equals(sender.getName())) {
                     sender.sendMessage(i18n("Vanish.SetDone", player.getName(), i18n("Vanish.Enable")));
                 }
-                VanishList.add(player.getName());
+                VanishUtil.addVanish(player.getName());
             } else {
                 for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
                     try {
                         Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
-                        OnlinePlayer.hidePlayer(MHDFTools.instance, player);
+                        OnlinePlayer.showPlayer(MHDFTools.instance, player);
                     } catch (NoSuchMethodException e) {
-                        OnlinePlayer.hidePlayer(player);
+                        OnlinePlayer.showPlayer(player);
                     }
                 }
                 player.removePotionEffect(PotionEffectType.INVISIBILITY);
@@ -64,14 +63,7 @@ public final class Vanish implements CommandExecutor {
                 if (!player.getName().equals(sender.getName())) {
                     sender.sendMessage(i18n("Vanish.SetDone", player.getName(), i18n("Vanish.Disabled")));
                 }
-                VanishList.remove(player.getName());
-            }
-            File VanishCacheFile = new File(MHDFTools.instance.getDataFolder(), "Cache/VanishCache.yml");
-            YamlConfiguration VanishCache = YamlConfiguration.loadConfiguration(VanishCacheFile);
-            VanishCache.set("VanishList", VanishList);
-            try {
-                VanishCache.save(VanishCacheFile);
-            } catch (IOException ignored) {
+                VanishUtil.removeVanish(player.getName());
             }
         }
         return false;

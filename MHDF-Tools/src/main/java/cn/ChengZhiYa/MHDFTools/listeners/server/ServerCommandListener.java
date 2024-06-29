@@ -14,6 +14,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 
 public final class ServerCommandListener implements Listener {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
     @EventHandler
     public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
         if (plugin.getConfig().getBoolean("LoginSystemSettings.Enable")) {

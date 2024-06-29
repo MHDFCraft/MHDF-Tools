@@ -13,11 +13,10 @@ public final class PlayerFlightTask extends BukkitRunnable {
         for (Player player : Bukkit.getOnlinePlayers()) {
             String playerName = player.getName();
 
-            if (InFlyList.contains(playerName)) {
+            if (flyList.contains(playerName)) {
                 int flyTime = getFlyTime(playerName);
-
                 if (flyTime != -999) {
-                    addFlyTime(playerName, 1);
+                    takeFlyTime(playerName, 1);
 
                     String titleKey = "FlyTime.CountTime." + flyTime;
                     if (LangFileData.getString(titleKey) != null) {
@@ -30,8 +29,8 @@ public final class PlayerFlightTask extends BukkitRunnable {
                     }
 
                     if (flyTime <= 0) {
-                        InFlyList.remove(playerName);
-                        removeFlyTime(playerName);
+                        flyList.remove(playerName);
+                        removeFly(playerName);
                         player.setAllowFlight(false);
                     }
                 }

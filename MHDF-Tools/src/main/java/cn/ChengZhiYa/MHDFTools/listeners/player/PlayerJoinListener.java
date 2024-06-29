@@ -20,15 +20,15 @@ import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.getServerName;
 import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.initializationPlayerData;
-import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.getFlyTimeHashMap;
 
 public final class PlayerJoinListener implements Listener {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         if (plugin.getConfig().getBoolean("FlySettings.Enable")) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
-                getFlyTimeHashMap().remove(event.getPlayer().getName());
+                FlyUtil.getFlyTimeHashMap().remove(event.getPlayer().getName());
                 FlyUtil.getFlyTime(event.getPlayer().getName());
             }, 20);
         }

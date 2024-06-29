@@ -25,7 +25,7 @@ public class BukkitEvent implements Invitable {
     public void start() {
         registerEvent(new PlayerJoinListener(), null);
         registerEvent(new ServerJoinLeaveMessageListener(), null);
- //       registerEvent(new PlayerActionListener(), null);
+        //       registerEvent(new PlayerActionListener(), null);
         registerEvent(new PlayerSpawnListener(), null);
         registerEvent(new ServerCommandListener(), "BanCommandSettings.Enable");
         registerEvent(new PlayerLoginListener(), "LoginSystemSettings.Enable");

@@ -135,6 +135,7 @@ public final class HomeUtil {
 
         return maxHome;
     }
+
     public static String getHomeServer(String playerName, String homeName) {
         String server = getHomeServerHashMap().get(playerName + "|" + homeName) != null
                 ? getHomeServerHashMap().get(playerName + "|" + homeName).toString() : "NONE";

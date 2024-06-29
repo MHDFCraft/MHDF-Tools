@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.listeners.server;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
@@ -28,6 +27,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeLocation;
 @SuppressWarnings("ALL")
 public final class ServerChannelListener implements PluginMessageListener {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
     @Override
     public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte @NotNull [] message) {
         if (!channel.equals("BungeeCord")) {

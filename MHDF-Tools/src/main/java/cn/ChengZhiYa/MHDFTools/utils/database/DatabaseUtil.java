@@ -32,6 +32,10 @@ public final class DatabaseUtil {
         if (MHDFTools.instance.getConfig().getBoolean("FlySettings.Enable")) {
             createFile("Cache/FlyCache.yml");
         }
+        //隐身系统
+        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
+            createFile("Cache/VanishCache.yml");
+        }
     }
 
     public static void initializationDatabaseData() {
@@ -84,6 +88,12 @@ public final class DatabaseUtil {
                     "CREATE TABLE IF NOT EXISTS `MHDFTools_Fly` (" +
                             "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                             "`Time` INT NOT NULL DEFAULT 0," +
+                            "PRIMARY KEY (`PlayerName`)) " +
+                            "COLLATE='utf8mb4_general_ci';");
+
+            initializeTable("VanishSettings",
+                    "CREATE TABLE IF NOT EXISTS `MHDFTools_Vanish` (" +
+                            "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                             "PRIMARY KEY (`PlayerName`)) " +
                             "COLLATE='utf8mb4_general_ci';");
 

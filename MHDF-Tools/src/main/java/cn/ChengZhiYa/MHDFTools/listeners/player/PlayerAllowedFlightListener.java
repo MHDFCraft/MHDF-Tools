@@ -10,8 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.InFlyList;
-import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.removeFlyTime;
+import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.*;
 
 public final class PlayerAllowedFlightListener implements Listener {
     @EventHandler
@@ -19,8 +18,8 @@ public final class PlayerAllowedFlightListener implements Listener {
         Player player = event.getPlayer();
         String worldName = player.getLocation().getWorld().getName();
         if (MHDFTools.instance.getConfig().getStringList("FlySettings.AntiFlyWorldList").contains(worldName)) {
-            removeFlyTime(player.getName());
-            InFlyList.remove(player.getName());
+            flyList.remove(player.getName());
+            removeFly(player.getName());
             player.setAllowFlight(false);
         } else if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ChangeWorld")) {
             handleFlight(player);
@@ -40,20 +39,28 @@ public final class PlayerAllowedFlightListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReJoin") &&
-                InFlyList.contains(player.getName())) {
+                flyList.contains(player.getName())) {
             handleFlight(player);
         }
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        if (!MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReJoin")) {
-            Player player = event.getPlayer();
-            InFlyList.remove(player.getName());
+        if (!MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReJoin") &&
+                flyList.contains(event.getPlayer().getName())) {
+            flyList.remove(event.getPlayer().getName());
+            removeFly(event.getPlayer().getName());
         }
     }
 
     private void handleFlight(Player player) {
+        if (getFlyTime(player.getName()) != -999) {
+            if (getFlyTime(player.getName()) >= 0) {
+                return;
+            }
+        }
+
         player.setAllowFlight(true);
+        flyList.add(player.getName());
     }
 }
