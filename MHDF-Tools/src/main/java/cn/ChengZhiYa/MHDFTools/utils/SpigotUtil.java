@@ -61,6 +61,8 @@ public final class SpigotUtil {
             HttpURLConnection conn = (HttpURLConnection) new URL("https://mhdf.love:8888/plugin/version/MHDF-Tools").openConnection();
 
             conn.setRequestMethod("GET");
+            conn.setConnectTimeout(1000);
+            conn.setReadTimeout(1000);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             JSONObject Data = JSON.parseObject(in.readLine());

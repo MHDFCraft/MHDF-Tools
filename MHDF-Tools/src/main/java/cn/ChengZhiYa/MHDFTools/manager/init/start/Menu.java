@@ -14,7 +14,7 @@ public class Menu implements Invitable {
 
     @Override
     public void start() {
-        if (MHDFTools.instance.getConfig().getBoolean("MenuEnable")) { //menu Window Event (:
+        if (MHDFTools.instance.getConfig().getBoolean("MenuSettings.Enable")) { //menu Window Event (:
             Bukkit.getPluginManager().registerEvents(new OpenMenu(), plugin);
             Bukkit.getPluginManager().registerEvents(new ClickCustomMenu(), plugin);
             Bukkit.getPluginManager().registerEvents(new MenuArgsCommand(), plugin);
