@@ -8,11 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
+import java.util.Set;
 
 public final class PlayerTpBackTask extends BukkitRunnable {
     @Override
     public void run() {
-        for (Object Key : MapUtil.getIntHashMap().keySet()) {
+        Set<Object> keySet = MapUtil.getIntHashMap().keySet();
+        for (Object Key : keySet) {
             if (!Key.toString().contains("_TpBackDelay")) continue;
             String PlayerName = Key.toString().replaceAll("_TpBackDelay", "");
             if (Bukkit.getPlayer(PlayerName) != null) {
