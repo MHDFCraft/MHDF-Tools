@@ -7,7 +7,8 @@ import org.jetbrains.annotations.NotNull;
 
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.getTimeString;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
-import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.*;
+import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.addFly;
+import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.getFlyTime;
 
 public final class FlyTime implements CommandExecutor {
     @Override
