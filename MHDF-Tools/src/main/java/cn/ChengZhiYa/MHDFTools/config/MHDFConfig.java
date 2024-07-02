@@ -36,19 +36,22 @@ public class MHDFConfig {
         //家系统菜单与菜单系统
         if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")
                 || MHDFTools.instance.getConfig().getBoolean("MenuSettings.Enable")) {
-            createDir(new File(getDataFolder, "Menus"));
-            if (MHDFTools.instance.getConfig().getBoolean("MenuSettings.Enable")) {
-                saveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", false);
+            if (!new File(getDataFolder, "Menus").exists()) {
+                createDir(new File(getDataFolder, "Menus"));
+                if (MHDFTools.instance.getConfig().getBoolean("MenuSettings.Enable")) {
+                    saveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", false);
+                }
             }
             //家系统
             if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
                 saveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", false);
             }
-            //隐身系统
-            if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")
-                    && MHDFTools.instance.getConfig().getBoolean("VanishSettings.SaveVanishData")) {
-                FileCreator.createFile("Cache/VanishCache.yml");
-            }
+        }
+
+        //隐身系统
+        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")
+                && MHDFTools.instance.getConfig().getBoolean("VanishSettings.SaveVanishData")) {
+            FileCreator.createFile("Cache/VanishCache.yml");
         }
     }
 }

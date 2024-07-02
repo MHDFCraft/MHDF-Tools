@@ -21,7 +21,7 @@ public final class ClickCustomMenu implements Listener {
                     String menuFileName = getMenuFromItem(event.getCurrentItem());
                     String item = getItemNameFromItem(event.getCurrentItem());
 
-                    if (event.getClick() == ClickType.LEFT && event.getClick() == ClickType.RIGHT) {
+                    if (event.getClick() == ClickType.LEFT || event.getClick() == ClickType.RIGHT) {
                         List<String> DenyActionList = ifAllowClick(player, menuFileName, item, false);
                         if (DenyActionList.isEmpty()) {
                             runAction(player, menuFileName, getMenu(menuFileName).getStringList("menu.ItemList." + item + ".ClickAction"));
@@ -29,7 +29,7 @@ public final class ClickCustomMenu implements Listener {
                             runAction(player, menuFileName, DenyActionList);
                         }
                     }
-                    if (event.getClick() == ClickType.SHIFT_LEFT && event.getClick() == ClickType.SHIFT_RIGHT) {
+                    if (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT) {
                         List<String> DenyActionList = ifAllowClick(player, menuFileName, item, true);
                         if (DenyActionList.isEmpty()) {
                             runAction(player, menuFileName, getMenu(menuFileName).getStringList("menu.ItemList." + item + ".ShiftClickAction"));
