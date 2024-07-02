@@ -19,6 +19,8 @@ public final class MenuArgsCommand implements Listener {
         String mapKey = player.getName() + "_ArgsRunCommand";
 
         if (MapUtil.getStringHashMap().containsKey(mapKey)) {
+            event.setCancelled(true);
+
             String commandInfo = MapUtil.getStringHashMap().get(mapKey);
             String[] commandParts = commandInfo.split("\\|");
             String[] args = event.getMessage().split("\\|");

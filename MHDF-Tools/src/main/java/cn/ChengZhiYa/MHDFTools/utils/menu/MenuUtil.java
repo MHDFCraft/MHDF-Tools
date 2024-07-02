@@ -264,7 +264,7 @@ public final class MenuUtil {
             case "[console_args]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    MapUtil.getStringHashMap().put(sender.getName() + "_ArgsRunCommmand", "console|" + menuFileName + "|" + action[1] + "|" + action[2]);
+                    MapUtil.getStringHashMap().put(sender.getName() + "_ArgsRunCommand", "console|" + menuFileName + "|" + action[1] + "|" + action[2]);
                     player.closeInventory();
                 }
                 break;
@@ -272,7 +272,7 @@ public final class MenuUtil {
             case "[player_args]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    MapUtil.getStringHashMap().put(sender.getName() + "_ArgsRunCommmand", "player|" + menuFileName + "|" + action[1] + "|" + action[2]);
+                    MapUtil.getStringHashMap().put(player.getName() + "_ArgsRunCommand", "player|" + menuFileName + "|" + action[1] + "|" + action[2]);
                     player.closeInventory();
                 }
                 break;
@@ -366,7 +366,7 @@ public final class MenuUtil {
                 if (getMenu(menuFileName).getString("menu.ItemList." + itemID + ".Slot") != null) {
                     slotList.add(getMenu(menuFileName).getString("menu.ItemList." + itemID + ".Slot"));
                 } else {
-                    slotList.addAll(getMenu(menuFileName).getStringList("menu.ItemList." + itemID + ".Slot"));
+                    slotList.addAll(getMenu(menuFileName).getStringList("menu.ItemList." + itemID + ".Slots"));
                 }
 
                 setMenuItem(menu, menuFileName, itemID, type, displayName, lore, customModelData, amount, slotList);

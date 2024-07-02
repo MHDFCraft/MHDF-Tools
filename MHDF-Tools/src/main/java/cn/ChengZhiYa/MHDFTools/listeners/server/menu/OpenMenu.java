@@ -19,7 +19,7 @@ public final class OpenMenu implements Listener {
 
                 YamlConfiguration Menu = getMenu(MenuFileName);
 
-                if (Menu.getString("menu.Command") != null) return;
+                if (Menu.getString("menu.Command") == null) return;
 
                 if (Objects.equals(Menu.getString("menu.Command"), Command)) {
                     event.setCancelled(true);
