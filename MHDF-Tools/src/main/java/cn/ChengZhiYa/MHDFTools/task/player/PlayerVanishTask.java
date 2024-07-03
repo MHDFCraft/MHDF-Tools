@@ -17,9 +17,9 @@ public final class PlayerVanishTask extends BukkitRunnable {
                     for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                         try {
                             Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
-                            onlinePlayer.hidePlayer(MHDFTools.instance, player);
+                            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> onlinePlayer.hidePlayer(MHDFTools.instance, player));
                         } catch (NoSuchMethodException e) {
-                            onlinePlayer.hidePlayer(player);
+                            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> onlinePlayer.hidePlayer(player));
                         }
                     }
                 }
