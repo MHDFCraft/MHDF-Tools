@@ -16,19 +16,19 @@ public final class PlayerFlightTask extends BukkitRunnable {
             if (flyList.contains(playerName)) {
                 int flyTime = getFlyTime(playerName);
                 if (flyTime != -999) {
-                    takeFlyTime(playerName, 1);
+                    if (flyTime > 0) {
+                        takeFlyTime(playerName, 1);
 
-                    String titleKey = "FlyTime.CountTime." + flyTime;
-                    if (LangFileData.getString(titleKey) != null) {
-                        sendTitle(player, i18n(titleKey));
-                    }
+                        String titleKey = "FlyTime.CountTime." + flyTime;
+                        if (LangFileData.getString(titleKey) != null) {
+                            sendTitle(player, i18n(titleKey));
+                        }
 
-                    String soundKey = "FlyOffCountTime." + flyTime;
-                    if (sound(soundKey) != null) {
-                        playSound(player, sound(soundKey));
-                    }
-
-                    if (flyTime <= 0) {
+                        String soundKey = "FlyOffCountTime." + flyTime;
+                        if (sound(soundKey) != null) {
+                            playSound(player, sound(soundKey));
+                        }
+                    }else {
                         flyList.remove(playerName);
                         removeFly(playerName);
                         player.setAllowFlight(false);
