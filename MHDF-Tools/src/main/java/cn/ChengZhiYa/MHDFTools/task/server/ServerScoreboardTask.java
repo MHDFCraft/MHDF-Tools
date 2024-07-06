@@ -1,9 +1,10 @@
 package cn.ChengZhiYa.MHDFTools.task.server;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -14,9 +15,10 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 
 public final class ServerScoreboardTask extends BukkitRunnable {
+    JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
     @Override
     public void run() {
-        if (!MHDFTools.instance.getConfig().getBoolean("ScoreboardSettings.Enable")) {
+        if (!plugin.getConfig().getBoolean("ScoreboardSettings.Enable")) {
             return;
         }
 
@@ -36,7 +38,7 @@ public final class ServerScoreboardTask extends BukkitRunnable {
             }
 
             Objective objective = MapUtil.getScoreboardHashMap().get(scoreboardKey).registerNewObjective("sidebar", "dummy");
-            objective.setDisplayName(Placeholder(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("ScoreboardSettings.Title"))));
+            objective.setDisplayName(Placeholder(player, Objects.requireNonNull(plugin.getConfig().getString("ScoreboardSettings.Title"))));
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
             MapUtil.getObjectiveHashMap().put(playerName + "_Objective", objective);
 
@@ -48,9 +50,9 @@ public final class ServerScoreboardTask extends BukkitRunnable {
     }
 
     private void updateScoreboardLines(Player player, Objective objective) {
-        int size = MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").size();
+        int size = plugin.getConfig().getStringList("ScoreboardSettings.Lines").size();
         for (int i = 0; i < size; i++) {
-            String line = MHDFTools.instance.getConfig().getStringList("ScoreboardSettings.Lines").get(i);
+            String line = plugin.getConfig().getStringList("ScoreboardSettings.Lines").get(i);
 
             if (line == null || line.isEmpty()) {
                 line = " ";

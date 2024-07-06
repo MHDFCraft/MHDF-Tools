@@ -17,53 +17,58 @@ public final class GameMode implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         String RunSender = i18n("gameMode.Server");
-        String GameModeName = null;
-        Player player = null;
+        Player player;
 
-        if (args.length == 1) {
-            GameModeName = args[0];
-            player = (Player) sender;
-        }
-        if (args.length == 2) {
-            GameModeName = args[0];
-            if (Bukkit.getPlayer(args[1]) == null) {
-                sender.sendMessage(i18n("PlayerNotOnline"));
-                return false;
+        if (args.length == 1 || args.length == 2) {
+            if (args.length == 2) {
+                if (Bukkit.getPlayer(args[1]) == null) {
+                    sender.sendMessage(i18n("PlayerNotOnline"));
+                    return false;
+                }
+                player = Bukkit.getPlayer(args[1]);
+            } else {
+                player = (Player) sender;
             }
-            player = Bukkit.getPlayer(args[1]);
 
+           if (player != null)
+
+            switch (args[0].toLowerCase()) {
+                case "生存":
+                case "0":
+                case "survival":
+                    setGameMode(player, 0, RunSender);
+                    break;
+                case "冒险":
+                case "2":
+                case "adventure":
+                    setGameMode(player, 2, RunSender);
+                    break;
+                case "创造":
+                case "1":
+                case "creative":
+                    setGameMode(player, 1, RunSender);
+                    break;
+                case "旁观":
+                case "3":
+                case "spectator":
+                    setGameMode(player, 3, RunSender);
+                    break;
+                default:
+                    sender.sendMessage(i18n("Usage.gameMode"), label);
+                    return false;
+            }
+
+           return true;
         }
-        if (player != null) {
-            if (GameModeName.equals("生存") || GameModeName.equals("0") || GameModeName.equalsIgnoreCase("survival")) {
-                player.setGameMode(Objects.requireNonNull(getGamemode(0)));
-                player.sendMessage(i18n("gameMode.Done", getGamemodeString(0)));
-                opperSenderMessage(i18n("gameMode.OtherOpDone", RunSender, player.getName(), getGamemodeString(0)), sender.getName());
-            }
-            if (GameModeName.equals("冒险")
-                    || GameModeName.equals("2")
-                    || GameModeName.equalsIgnoreCase("adventure")) {
-                player.setGameMode(Objects.requireNonNull(getGamemode(2)));
-                player.sendMessage(i18n("gameMode.Done", getGamemodeString(2)));
-                opperSenderMessage(i18n("gameMode.OtherOpDone", RunSender, player.getName(), getGamemodeString(2)), sender.getName());
-            }
-            if (GameModeName.equals("创造")
-                    || GameModeName.equals("1")
-                    || GameModeName.equalsIgnoreCase("creative")) {
-                player.setGameMode(Objects.requireNonNull(getGamemode(1)));
-                player.sendMessage(i18n("gameMode.Done", getGamemodeString(1)));
-                opperSenderMessage(i18n("gameMode.OtherOpDone", RunSender, player.getName(), getGamemodeString(1)), sender.getName());
-            }
-            if (GameModeName.equals("旁观")
-                    || GameModeName.equals("3")
-                    || GameModeName.equalsIgnoreCase("spectator")) {
-                player.setGameMode(Objects.requireNonNull(getGamemode(3)));
-                player.sendMessage(i18n("gameMode.Done", getGamemodeString(3)));
-                opperSenderMessage(i18n("gameMode.OtherOpDone", RunSender, player.getName(), getGamemodeString(3)), sender.getName());
-            }
-            return true;
-        }
+
         sender.sendMessage(i18n("Usage.gameMode"), label);
         return false;
+    }
+
+    private void setGameMode(Player player, int gameMode, String runSender) {
+        player.setGameMode(Objects.requireNonNull(getGamemode(gameMode)));
+        player.sendMessage(i18n("gameMode.Done", getGamemodeString(gameMode)));
+        opperSenderMessage(i18n("gameMode.OtherOpDone", runSender, player.getName(), getGamemodeString(gameMode)), player.getName());
     }
 
     @Override

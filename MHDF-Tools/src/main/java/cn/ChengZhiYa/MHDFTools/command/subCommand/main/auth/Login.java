@@ -58,7 +58,7 @@ public final class Login implements CommandExecutor {
                 return;
             }
 
-            if (checkPassword(player.getName(), Sha256(password))) {
+            if (checkPassword(player.getName(), sha256(password))) {
                 MapUtil.getStringHashMap().put(player.getName() + "_Login", "t");
                 if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {
                     String playerIP = Objects.requireNonNull(player.getAddress()).getHostString();
