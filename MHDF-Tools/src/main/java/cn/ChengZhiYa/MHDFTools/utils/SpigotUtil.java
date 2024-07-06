@@ -7,6 +7,7 @@ import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.bossbar.BossBar;
@@ -33,6 +34,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -58,48 +60,59 @@ public final class SpigotUtil {
 
     public static void checkUpdate() {
         try {
-            HttpURLConnection conn = (HttpURLConnection) new URL("https://mhdf.love:8888/plugin/version/MHDF-Tools").openConnection();
-
+            URL url = new URL("https://mhdf.love:8888/plugin/version/MHDF-Tools");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setConnectTimeout(1000);
             conn.setReadTimeout(1000);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            JSONObject Data = JSON.parseObject(in.readLine());
-            String NewVersionString = Data.getString("data");
-            if (!NewVersionString.equals(PluginLoader.INSTANCE.getVersion())) {
-                LogUtil.color("&f[MHDF-Tools] &c当前插件版本不是最新版!");
-                LogUtil.color("&f[MHDF-Tools] &c下载链接: &7https://github.com/Love-MHDF/MHDF-Tools/releases/");
-                MapUtil.getBooleanHashMap().put("IsLast", true);
-            } else {
-                LogUtil.color("&f[MHDF-Tools] &a当前插件版本是最新版!");
-            }
-            MapUtil.getBooleanHashMap().put("CheckVersionError", false);
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                String response = in.readLine();
+                JSONObject data = JSON.parseObject(response);
+                String newVersionString = data.getString("data");
 
-            in.close();
-            conn.disconnect();
-        } catch (Exception e) {
+                if (!newVersionString.equals(PluginLoader.INSTANCE.getVersion())) {
+                    LogUtil.color("&f[MHDF-Tools] &c当前插件版本不是最新版!");
+                    LogUtil.color("&f[MHDF-Tools] &c下载链接: &7https://github.com/Love-MHDF/MHDF-Tools/releases/");
+                    MapUtil.getBooleanHashMap().put("IsLast", true);
+                } else {
+                    LogUtil.color("&f[MHDF-Tools] &a当前插件版本是最新版!");
+                }
+                MapUtil.getBooleanHashMap().put("CheckVersionError", false);
+            } catch (IOException e) {
+                LogUtil.color("&f[MHDF-Tools] &c获取检测更新时出错!请检查网络连接!");
+                MapUtil.getBooleanHashMap().put("IsLast", false);
+                MapUtil.getBooleanHashMap().put("CheckVersionError", true);
+            } finally {
+                conn.disconnect();
+            }
+        } catch (IOException e) {
             LogUtil.color("&f[MHDF-Tools] &c获取检测更新时出错!请检查网络连接!");
             MapUtil.getBooleanHashMap().put("IsLast", false);
             MapUtil.getBooleanHashMap().put("CheckVersionError", true);
         }
     }
 
-    public static String getIpLocation(String Ip) {
+    public static String getIpLocation(String ip) {
         try {
-            if (Ip.startsWith("127.")) {
+            if (ip.startsWith("127.")) {
                 return "local";
             }
-            URL url = new URL(
-                    "https://opendata.baidu.com/api.php?query=" + Ip
-                            + "&co=&resource_id=6006&t=1433920989928&ie=utf8&oe=utf-8&format=json");
+
+            URL url = new URL("https://opendata.baidu.com/api.php?query=" + ip +
+                    "&co=&resource_id=6006&t=1433920989928&ie=utf8&oe=utf-8&format=json");
             URLConnection conn = url.openConnection();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
-            JSONObject Json = JSONObject.parseObject(reader.readLine());
-            JSONObject DataJson = JSONObject.parseObject(JSON.parseArray(Json.getString("data"), String.class).get(0));
-            return DataJson.getString("location");
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
+                JSONObject json = JSONObject.parseObject(reader.readLine());
+                JSONArray dataArray = json.getJSONArray("data");
+                JSONObject dataJson = dataArray.getJSONObject(0);
+                return dataJson.getString("location");
+            } catch (IOException e) {
+                return "Failed to get data";
+            }
         } catch (IOException e) {
-            return "Failed get data";
+            return "Failed to connect";
         }
     }
 
@@ -119,21 +132,24 @@ public final class SpigotUtil {
         return MessageUtil.colorMessage(Message);
     }
 
-    public static String Sha256(String Message) {
+    public static String sha256(String message) {
         try {
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-            messageDigest.update(Message.getBytes(StandardCharsets.UTF_8));
-            StringBuilder stringBuffer = new StringBuilder();
-            for (final byte aByte : messageDigest.digest()) {
-                final String temp = Integer.toHexString(aByte & 0xFF);
-                if (temp.length() == 1) {
-                    stringBuffer.append("0");
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(message.getBytes(StandardCharsets.UTF_8));
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
                 }
-                stringBuffer.append(temp);
+                hexString.append(hex);
             }
-            return stringBuffer.toString().toUpperCase();
-        } catch (Exception ignored) {
-            return "";
+
+            return hexString.toString().toUpperCase();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

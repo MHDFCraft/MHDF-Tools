@@ -8,8 +8,6 @@ description: qwq
 permissions:
   MHDFTools.Command.Back:
     default: true
-  MHDFTools.Command.Crash:
-    default: op
   MHDFTools.Command.Day:
     default: true
   MHDFTools.Command.DelHome:
