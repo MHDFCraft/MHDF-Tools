@@ -111,7 +111,6 @@ menu:
       #点击事件
       ClickAction:
         - "[Home]"
-        - "[playsound]|ENTITY_GENERIC_EXPLODE|25|2.0"
       #蹲下点击条件
       ShiftClickRequirements: { }
       #蹲下点击操作
