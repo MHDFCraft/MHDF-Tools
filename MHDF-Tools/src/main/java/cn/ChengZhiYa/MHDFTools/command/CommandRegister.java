@@ -27,7 +27,9 @@ import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.spawn.Spawn;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.time.Day;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.time.Night;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.weather.Sun;
+import cn.ChengZhiYa.MHDFTools.listeners.player.PlayerNickListener;
 import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -102,7 +104,7 @@ public final class CommandRegister implements Invitable {
                         registerVanishCommands();
                     }
                     break;
-                case "IpCommandSettings":
+                case "IpSettings":
                     if (isEnabled) {
                         registerIPCommand();
                     }
@@ -128,7 +130,6 @@ public final class CommandRegister implements Invitable {
                     }
                     break;
                 case "TpaHereSettings":
-                    System.out.println(1);
                     if (isEnabled) {
                         registerTpaHereCommand();
                     }
@@ -157,9 +158,20 @@ public final class CommandRegister implements Invitable {
                     if (isEnabled) {
                         registerTrashCommands();
                     }
+                    break;
                 case "RotateSettings":
                     if (isEnabled) {
                         registerRotateCommands();
+                    }
+                    break;
+                case "BedSettings":
+                    if (isEnabled) {
+                        registerBedCommands();
+                    }
+                    break;
+                case "NickSettings":
+                    if (isEnabled) {
+                        registerNickCommands();
                     }
                     break;
             }
@@ -169,6 +181,14 @@ public final class CommandRegister implements Invitable {
         }
     }
 
+    public void registerBedCommands() {
+        registerCommand(plugin, new Bed(), "返回床位置", "MHDFTools.Command.Bed", "bed");
+    }
+
+    public void registerNickCommands() {
+        registerCommand(plugin, new Nick(), "改名系统", "MHDFTools.Command.Nick", "nick");
+        Bukkit.getPluginManager().registerEvents(new PlayerNickListener(), plugin);
+    }
 
     private void registerTrashCommands() {
         registerCommand(plugin, new Trash(), "垃圾桶", "MHDFTools.Command.Trash", "trash");
@@ -268,7 +288,6 @@ public final class CommandRegister implements Invitable {
         registerCommand(plugin, new Pay(), "转账", "MHDFTools.Command.Pay", "pay");
         registerCommand(plugin, new MoneyAdmin(), "管理员管理", "MHDFTools.Command.MoneyAdmin", "moneyadmin");
     }
-
 
     private void registerLinkCommands() {
         for (String Command : Objects.requireNonNull(config.getConfigurationSection("CommandLinkSettings.CommandList")).getKeys(false)) {

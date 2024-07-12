@@ -80,6 +80,7 @@ Usage:
   Pay: "&e[MHDFTools] &c用法错误,用法:/pay <玩家ID> <金额>"
   Login: "&e[MHDFTools] &c用法错误,用法:/%1 <密码>"
   Register: "&e[MHDFTools] &c用法错误,用法:/%1 <密码>"
+  Nick: "&e[MHDFTools] &c用法错误,用法:/nick <名称>"
 Rotate:
   NotFound: "&e[MHDFTools] &c找不到目标玩家!"
   Done: "&e[MHDFTools] &a成功让目标进行转头"
@@ -186,6 +187,11 @@ IPMessage: |-
   #7289da玩家: %1
   #7289daIP: %2
   #7289daIP归属地: %3
+Bed:
+  NotFound: "&e[MHDFTools] &c无法找到床位置!"
+  TeleportDone: "&e[MHDFTools] &a传送成功!"
+Nick:
+  SetDone: "&e[MHDFTools] &a你现在的名字是:%1"
 TeleportDelay:
   5: "&e[MHDFTools] &6距离传送还有&b5&6秒|&f请不要移动!|10|70|20"
   4: "&e[MHDFTools] &6距离传送还有&b4&6秒|&f请不要移动!|10|70|20"

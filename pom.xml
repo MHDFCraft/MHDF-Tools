@@ -6,8 +6,8 @@
 
     <groupId>cn.chengzhiya</groupId>
     <artifactId>MHDF-ToolsPlugins</artifactId>
-    <packaging>pom</packaging>
     <version>1.0.0</version>
+    <packaging>pom</packaging>
 
     <name>MHDF-ToolsPlugins</name>
 

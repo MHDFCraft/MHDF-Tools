@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.sql.Time;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.PlayerList;
@@ -70,20 +69,20 @@ public final class ServerChannelListener implements PluginMessageListener {
                     public void run() {
                         int i = 0;
                         if (Bukkit.getPlayer(PlayerName) != null && Bukkit.getPlayer(TargetPlayerName) != null) {
-                            Bukkit.getScheduler().runTask(MHDFTools.instance,() -> {
+                            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
                                 Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Bukkit.getPlayer(TargetPlayerName));
                                 playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                             });
                             this.cancel();
-                        }else {
+                        } else {
                             i++;
-                            if (i>10) {
+                            if (i > 10) {
                                 this.cancel();
                             }
                         }
                     }
                 };
-                runnable.runTaskTimerAsynchronously(MHDFTools.instance,0,10L);
+                runnable.runTaskTimerAsynchronously(MHDFTools.instance, 0, 10L);
             }
             if (subchannel.equals("TpPlayerHome")) {
                 String PlayerName = in.readUTF();

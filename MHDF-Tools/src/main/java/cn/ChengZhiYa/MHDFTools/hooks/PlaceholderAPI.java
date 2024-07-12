@@ -2,6 +2,7 @@ package cn.ChengZhiYa.MHDFTools.hooks;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
+import cn.ChengZhiYa.MHDFTools.utils.database.NickUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -42,6 +43,9 @@ public final class PlaceholderAPI extends PlaceholderExpansion {
             if (params.equalsIgnoreCase("MaxHomeAmount")) {
                 return String.valueOf(getMaxHome((Player) player));
             }
+        }
+        if (params.equalsIgnoreCase("Nick")) {
+            return NickUtil.getNickName(player.getName());
         }
         return null;
     }

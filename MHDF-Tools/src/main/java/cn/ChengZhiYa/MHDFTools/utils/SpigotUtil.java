@@ -2,6 +2,7 @@ package cn.ChengZhiYa.MHDFTools.utils;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
+import cn.ChengZhiYa.MHDFTools.utils.database.NickUtil;
 import cn.ChengZhiYa.MHDFTools.utils.database.VanishUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
@@ -320,11 +321,11 @@ public final class SpigotUtil {
         if (!messageList.isEmpty()) {
             weightList.sort(Collections.reverseOrder());
             return Placeholder(player, MHDFTools.instance.getConfig().getString(settingType + "." + messageList.get(weightList.get(0)) + "." + messageType))
-                    .replaceAll("%PlayerName%", player.getName());
+                    .replaceAll("%PlayerName%", NickUtil.getNickName(player.getName()));
         }
 
         return Placeholder(player, MHDFTools.instance.getConfig().getString(settingType + ".Default." + messageType))
-                .replaceAll("%PlayerName%", player.getName());
+                .replaceAll("%PlayerName%", NickUtil.getNickName(player.getName()));
     }
 
     public static BossBar getVanishBossBar() {

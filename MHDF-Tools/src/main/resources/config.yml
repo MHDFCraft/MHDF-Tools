@@ -182,6 +182,10 @@ TimeMessageSettings:
   Delay: 60
   #后台显示公告
   ConsoleDisplayed: true
+  #随机模式
+  RandomMode: false
+  #最少多少人才发送公告
+  MinPlayer: 5
   #公告内容
   Message:
     - "欢迎使用梦回东方-工具!"
@@ -213,7 +217,9 @@ WhiteListSettings:
   #拥有指定权限即可进入
   Permission: "MHDFTools.Whitelist"
   #踢出提示
-  KickMessage: "&b梦回东方-工具\n\n&c您没有白名单"
+  KickMessage: |-
+    &b梦回东方-工具
+    &c您没有白名单
   #白名单列表
   List:
     - "qwq"
@@ -386,5 +392,16 @@ MenuSettings:
 
 #让玩家转头系统的开关设置
 RotateSettings:
+  #开关
+  Enable: true
+
+#返回床位置设置
+BedSettings:
+  #开关
+  Enable: true
+
+#改名系统设置
+#PAPI变量: %MHDFTools_Nick%
+NickSettings:
   #开关
   Enable: true

@@ -76,10 +76,5 @@ public final class PlayerJoinListener implements Listener {
                 event.getPlayer().kickPlayer(MessageUtil.colorMessage(plugin.getConfig().getString("WhiteList.KickMessage")));
             }
         }
-        if (plugin.getConfig().getBoolean("PlayerJoinSendMessageSettings.Enable")) {
-            event.getPlayer().sendMessage(MessageUtil.colorMessage(plugin.getConfig().getString("PlayerJoinSendMessageSettings.Message"))
-                    .replaceAll("%PlayerName%", event.getPlayer().getName())
-            );
-        }
     }
 }

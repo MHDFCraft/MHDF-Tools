@@ -4,7 +4,7 @@ import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.task.player.*;
 import cn.ChengZhiYa.MHDFTools.task.server.ServerScoreboardTask;
-import cn.ChengZhiYa.MHDFTools.task.server.ServerTimeTask;
+import cn.ChengZhiYa.MHDFTools.task.server.ServerTimeMessageTask;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -27,7 +27,7 @@ public final class AsyncTask {
 
         if (config.getBoolean("TimeMessageSettings.Enable")) {
             int delay = config.getInt("TimeMessageSettings.Delay"); //这个是例外 (:
-            new ServerTimeTask().runTaskTimerAsynchronously(plugin, 0L, delay * 20L);
+            new ServerTimeMessageTask().runTaskTimerAsynchronously(plugin, 0L, delay * 20L);
         }
     }
 

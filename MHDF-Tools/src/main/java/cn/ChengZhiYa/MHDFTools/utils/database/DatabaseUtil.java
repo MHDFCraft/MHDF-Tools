@@ -36,6 +36,10 @@ public final class DatabaseUtil {
         if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
             createFile("Cache/VanishCache.yml");
         }
+        //改名系统
+        if (MHDFTools.instance.getConfig().getBoolean("NickSettings.Enable")) {
+            createFile("NickData.yml");
+        }
     }
 
     public static void initializationDatabaseData() {
@@ -94,6 +98,13 @@ public final class DatabaseUtil {
             initializeTable("VanishSettings",
                     "CREATE TABLE IF NOT EXISTS `MHDFTools_Vanish` (" +
                             "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "PRIMARY KEY (`PlayerName`)) " +
+                            "COLLATE='utf8mb4_general_ci';");
+
+            initializeTable("NickSettings",
+                    "CREATE TABLE IF NOT EXISTS `MHDFTools_Nick` (" +
+                            "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "`NickName` VARCHAR(50) NOT NULL DEFAULT ''," +
                             "PRIMARY KEY (`PlayerName`)) " +
                             "COLLATE='utf8mb4_general_ci';");
 

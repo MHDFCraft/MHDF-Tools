@@ -70,7 +70,9 @@ permissions:
     default: op
   MHDFTools.Command.Rotate:
     default: op
-  MHDFTools.Command.Version:
+  MHDFTools.Command.Bed:
+    default: true
+  MHDFTools.Command.Nick:
     default: op
   MHDFTools.FastUse.EnderChest:
     default: true
@@ -83,4 +85,6 @@ permissions:
   MHDFTools.JoinMessage:
     default: true
   MHDFTools.QuitMessage:
+    default: true
+  MHDFTools.TimeMessage:
     default: true
