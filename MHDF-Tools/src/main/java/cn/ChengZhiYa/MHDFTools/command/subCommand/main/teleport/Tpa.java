@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.main.teleport;
 
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
@@ -103,8 +104,12 @@ public final class Tpa implements TabExecutor {
     }
 
     @Override
-    public @NotNull List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        BungeeCordUtil.getPlayerList();
-        return new ArrayList<>(Arrays.asList(BungeeCordUtil.PlayerList));
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+            BungeeCordUtil.getPlayerList();
+            return new ArrayList<>(Arrays.asList(BungeeCordUtil.PlayerList));
+        }else {
+            return null;
+        }
     }
 }
