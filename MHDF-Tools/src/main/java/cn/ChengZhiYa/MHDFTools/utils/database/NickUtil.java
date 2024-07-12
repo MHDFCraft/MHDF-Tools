@@ -27,7 +27,7 @@ public final class NickUtil {
     public static String getNickName(String playerName) {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
             Object nickName = getData("mhdftools_nick", "PlayerName", playerName, "NickName");
-            return nickName != null ? nickName.toString() : playerName;
+            return nickName != "" ? nickName.toString() : playerName;
         } else {
             File file = new File(MHDFTools.instance.getDataFolder(), "NickData.yml");
             YamlConfiguration data = YamlConfiguration.loadConfiguration(file);
