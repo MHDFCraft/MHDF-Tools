@@ -92,7 +92,7 @@ public enum PluginLoader {
         if (plugin != null) {
             MHDFTools.instance.getPluginLoader().disablePlugin(plugin);
         } else {
-            LogUtil.color("&e[MHDFTools] &cPlugin Not Found!");
+            LogUtil.color("&f[MHDF-Tools] &cPlugin Not Found!");
         }
     }
 }

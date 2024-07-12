@@ -29,8 +29,8 @@ public final class ServerTimeMessageTask extends BukkitRunnable {
 
     public void run() {
         if (plugin.getConfig().getBoolean("TimeMessageSettings.Enable")) {
-            String message = "";
             if (Bukkit.getOnlinePlayers().size() >= plugin.getConfig().getInt("TimeMessageSettings.MinPlayer")) {
+                String message;
                 List<String> messageList = plugin.getConfig().getStringList("TimeMessageSettings.Message");
                 if (plugin.getConfig().getBoolean("TimeMessageSettings.RandomMode")) {
                     Random random = new Random();
@@ -39,8 +39,8 @@ public final class ServerTimeMessageTask extends BukkitRunnable {
                     message = messageList.get(a);
                     a = (a + 1) % messageList.size();
                 }
+                broadcastMessage(Placeholder(null, message));
             }
-            broadcastMessage(Placeholder(null, message));
         }
     }
 }
