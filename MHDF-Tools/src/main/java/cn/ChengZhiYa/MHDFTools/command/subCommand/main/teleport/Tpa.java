@@ -1,83 +1,100 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.main.teleport;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
-import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
+import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
+import cn.ChengZhiYa.MHDFTools.utils.command.TpaUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class Tpa implements TabExecutor {
-
-    @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
-            if (args.length == 1) {
-                String PlayerName = args[0];
-                if (PlayerName.equals(sender.getName())) {
-                    sender.sendMessage(i18n("Tpa.SendMe"));
-                    return false;
-                }
-                if (!BungeeCordUtil.ifPlayerOnline(PlayerName)) {
-                    sender.sendMessage(i18n("PlayerNotOnline"));
-                    return false;
-                }
-                if (MapUtil.getIntHashMap().get(sender.getName() + "_TPATime") != null && MapUtil.getIntHashMap().get(sender.getName() + "_TPATime") >= 0) {
-                    sender.sendMessage(i18n("Tpa.RepectSend"));
-                    return false;
-                }
-                BungeeCordUtil.SendTpa(PlayerName, sender.getName());
-                sender.sendMessage(MessageUtil.colorMessage(i18n("Tpa.SendDone")));
-                return false;
-            }
-            if (args.length == 2) {
-                if (args[0].equals("accept")) {
-                    if (MapUtil.getStringHashMap().get(args[1] + "_TPAPlayerName") != null && MapUtil.getStringHashMap().get(args[1] + "_TPAPlayerName").equals(sender.getName())) {
-                        if (MapUtil.getIntHashMap().get(args[1] + "_TPATime") != null && MapUtil.getIntHashMap().get(args[1] + "_TPATime") >= 0) {
-                            BungeeCordUtil.CancelTpa(args[1]);
-                            if (!BungeeCordUtil.ifPlayerOnline(args[1])) {
-                                sender.sendMessage(i18n("Tpa.Offline", args[1]));
-                                return false;
+            if (args.length >= 1) {
+                Player player = (Player) sender;
+                switch (args[0]) {
+                    case "accept": {
+                        if (args.length == 2) {
+                            TpaData tpaData = TpaUtil.getTpaHashMap().get(args[1]);
+                            if (tpaData != null && tpaData.getTargetPlayerName().equals(player.getName())) {
+                                if (BungeeCordUtil.ifPlayerOnline(args[1])) {
+                                    if (tpaData.getTpaOutTime() > 0) {
+                                        BungeeCordUtil.tpPlayer(args[1], player.getName());
+                                        BungeeCordUtil.sendMessage(args[1], i18n("Tpa.TeleportDone", args[1]));
+                                        BungeeCordUtil.sendMessage(player.getName(), i18n("Tpa.AcceptDone", args[1]));
+
+                                        BungeeCordUtil.cancelTpa(args[1]);
+                                    } else {
+                                        BungeeCordUtil.sendMessage(args[1], SpigotUtil.i18n("Tpa.TimeOutDone", player.getName()));
+                                        BungeeCordUtil.sendMessage(player.getName(), SpigotUtil.i18n("Tpa.TimeOut", args[1]));
+                                        BungeeCordUtil.cancelTpa(args[1]);
+                                    }
+                                } else {
+                                    player.sendMessage(i18n("PlayerNotOnline"));
+                                    BungeeCordUtil.cancelTpa(args[1]);
+                                }
+                            } else {
+                                player.sendMessage(i18n("Tpa.NotSendTeleport"));
                             }
-                            BungeeCordUtil.TpPlayer(args[1], sender.getName());
-                            BungeeCordUtil.SendMessage(args[1], i18n("Tpa.TeleportDone", sender.getName()));
-                            sender.sendMessage(i18n("Tpa.AcceptDone", args[1]));
-                        } else {
-                            BungeeCordUtil.CancelTpa(args[1]);
-                            sender.sendMessage(i18n("Tpa.NotSendTeleport"));
+                            return false;
                         }
-                    } else {
-                        sender.sendMessage(i18n("Tpa.NotSendTeleport"));
+                        break;
                     }
-                    return false;
-                }
-                if (args[0].equals("defuse")) {
-                    if (MapUtil.getStringHashMap().get(args[1] + "_TPAPlayerName") != null && MapUtil.getStringHashMap().get(args[1] + "_TPAPlayerName").equals(sender.getName())) {
-                        if (MapUtil.getIntHashMap().get(args[1] + "_TPATime") != null && MapUtil.getIntHashMap().get(args[1] + "_TPATime") >= 0) {
-                            BungeeCordUtil.CancelTpa(args[1]);
-                            if (!BungeeCordUtil.ifPlayerOnline(args[1])) {
-                                sender.sendMessage(i18n("Tpa.Offline", args[1]));
-                                return false;
+                    case "defuse": {
+                        if (args.length == 2) {
+                            TpaData tpaData = TpaUtil.getTpaHashMap().get(args[1]);
+                            if (tpaData != null && tpaData.getTargetPlayerName().equals(player.getName())) {
+                                if (BungeeCordUtil.ifPlayerOnline(args[1])) {
+                                    if (tpaData.getTpaOutTime() > 0) {
+                                        BungeeCordUtil.sendMessage(args[1], i18n("Tpa.Defuse", player.getName()));
+                                        BungeeCordUtil.sendMessage(player.getName(), i18n("Tpa.DefuseDone", args[1]));
+
+                                        BungeeCordUtil.cancelTpa(args[1]);
+                                    } else {
+                                        BungeeCordUtil.sendMessage(args[1], SpigotUtil.i18n("Tpa.TimeOutDone", player.getName()));
+                                        BungeeCordUtil.sendMessage(player.getName(), SpigotUtil.i18n("Tpa.TimeOut", args[1]));
+                                        BungeeCordUtil.cancelTpa(args[1]);
+                                    }
+                                } else {
+                                    player.sendMessage(i18n("PlayerNotOnline"));
+                                    BungeeCordUtil.cancelTpa(args[1]);
+                                }
+                            } else {
+                                player.sendMessage(i18n("Tpa.NotSendTeleport"));
                             }
-                            BungeeCordUtil.SendMessage(args[1], i18n("Tpa.Defuse", sender.getName()));
-                            sender.sendMessage(i18n("Tpa.DefuseDone", args[1]));
-                        } else {
-                            BungeeCordUtil.CancelTpa(args[1]);
-                            sender.sendMessage(i18n("Tpa.NotSendTeleport"));
+                            return false;
                         }
-                    } else {
-                        sender.sendMessage(i18n("Tpa.NotSendTeleport"));
+                        break;
                     }
-                    return false;
+                    default: {
+                        if (BungeeCordUtil.ifPlayerOnline(args[0])) {
+                            if (!args[0].equals(sender.getName())) {
+                                if (TpaUtil.getTpaHashMap().get(player.getName()) != null && TpaUtil.getTpaHashMap().get(player.getName()).getTpaOutTime() > 0) {
+                                    sender.sendMessage(i18n("Tpa.RepectSend"));
+                                    return false;
+                                }
+                                BungeeCordUtil.sendTpa(player.getName(), args[0]);
+                                sender.sendMessage(MessageUtil.colorMessage(i18n("Tpa.SendDone")));
+                            } else {
+                                sender.sendMessage(i18n("Tpa.SendMe"));
+                            }
+                        } else {
+                            sender.sendMessage(i18n("PlayerNotOnline"));
+                        }
+                        return false;
+                    }
                 }
             }
             sender.sendMessage(i18n("Usage.Tpa"));
@@ -87,12 +104,9 @@ public final class Tpa implements TabExecutor {
         return false;
     }
 
-    @Nullable
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 1 && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
-            BungeeCordUtil.getPlayerList();
-            return Arrays.asList(BungeeCordUtil.PlayerList);
-        }
-        return null;
+    @Override
+    public @NotNull List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        BungeeCordUtil.getPlayerList();
+        return new ArrayList<>(Arrays.asList(BungeeCordUtil.PlayerList));
     }
 }

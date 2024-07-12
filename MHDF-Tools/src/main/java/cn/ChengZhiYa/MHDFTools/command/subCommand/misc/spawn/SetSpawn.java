@@ -14,7 +14,7 @@ public final class SetSpawn implements CommandExecutor {
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            BungeeCordUtil.SetSpawn(player.getLocation());
+            BungeeCordUtil.setSpawn(player.getLocation());
             sender.sendMessage(i18n("Spawn.SetDone"));
         } else {
             sender.sendMessage(i18n("OnlyPlayer"));

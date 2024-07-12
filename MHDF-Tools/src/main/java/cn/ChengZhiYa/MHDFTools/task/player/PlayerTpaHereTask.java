@@ -1,43 +1,37 @@
 package cn.ChengZhiYa.MHDFTools.task.player;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
-import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
+import cn.ChengZhiYa.MHDFTools.entity.TpaData;
+import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
+import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
+import cn.ChengZhiYa.MHDFTools.utils.command.TpaHereUtil;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.*;
-import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class PlayerTpaHereTask extends BukkitRunnable {
     @Override
     public void run() {
         if (MHDFTools.instance.getConfig().getBoolean("TpaHereSettings.Enable")) {
-            return;
-        }
-        for (Object Tpa : MapUtil.getStringHashMap().keySet()) {
-            if (!Tpa.toString().contains("_TPAHerePlayerName")) continue;
+            for (String playerName : TpaHereUtil.getTpahereHashMap().keySet()) {
+                TpaData tpaData = TpaHereUtil.getTpahereHashMap().get(playerName);
+                String targetPlayerName = tpaData.getTargetPlayerName();
+                Integer time = tpaData.getTpaOutTime();
 
-            String playerName = Tpa.toString().replaceAll("_TPAHerePlayerName", "");
-            String targetPlayerName = MapUtil.getStringHashMap().get(Tpa);
+                if (time != null && time >= 0) {
+                    tpaData.takeTime(1);
+                    continue;
+                }
 
-            if (!ifPlayerOnline(playerName)) {
-                CancelTpaHere(playerName);
-                continue;
-            }
-
-            if (!ifPlayerOnline(targetPlayerName)) {
-                SendMessage(playerName, i18n("TpaHere.Offline", targetPlayerName));
-                CancelTpaHere(playerName);
-                continue;
-            }
-
-            int time = MapUtil.getIntHashMap().getOrDefault(playerName + "_TPAHereTime", 0);
-
-            if (time >= 0) {
-                MapUtil.getIntHashMap().put(playerName + "_TPAHereTime", time - 1);
-            } else {
-                SendMessage(playerName, i18n("TpaHere.TimeOutDone", targetPlayerName));
-                SendMessage(targetPlayerName, i18n("TpaHere.TimeOut", playerName));
-                CancelTpaHere(playerName);
+                if (BungeeCordUtil.ifPlayerOnline(playerName)) {
+                    if (BungeeCordUtil.ifPlayerOnline(targetPlayerName)) {
+                        BungeeCordUtil.sendMessage(playerName, SpigotUtil.i18n("Tpa.TimeOutDone", targetPlayerName));
+                        BungeeCordUtil.sendMessage(targetPlayerName, SpigotUtil.i18n("Tpa.TimeOut", playerName));
+                    } else {
+                        BungeeCordUtil.sendMessage(playerName, SpigotUtil.i18n("Tpa.Offline", targetPlayerName));
+                    }
+                    BungeeCordUtil.cancelTpaHere(playerName);
+                } else {
+                    BungeeCordUtil.cancelTpaHere(playerName);
+                }
             }
         }
     }

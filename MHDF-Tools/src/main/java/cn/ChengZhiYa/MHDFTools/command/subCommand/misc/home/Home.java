@@ -28,7 +28,7 @@ public final class Home implements TabExecutor {
                 String HomeName = args[0];
                 Location HomeLocation = HomeUtil.getHomeLocation(player.getName(), HomeName);
                 if (HomeLocation != null) {
-                    BungeeCordUtil.TpPlayerHome(player.getName(), HomeName);
+                    BungeeCordUtil.tpPlayerHome(player.getName(), HomeName);
                     player.sendMessage(SpigotUtil.i18n("Home.TeleportDone"));
                 } else {
                     player.sendMessage(SpigotUtil.i18n("Home.NotFound", HomeName));

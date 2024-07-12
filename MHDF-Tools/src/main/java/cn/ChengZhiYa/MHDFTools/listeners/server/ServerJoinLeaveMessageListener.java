@@ -13,6 +13,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.getQuitMessage;
 
 public final class ServerJoinLeaveMessageListener implements Listener {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         if (plugin.getConfig().getBoolean("CustomJoinServerMessageSettings.Enable")) {

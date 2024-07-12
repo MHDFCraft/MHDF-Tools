@@ -96,26 +96,26 @@ public final class PluginMessage implements Listener {
 
     private void handleSendTpa(DataInputStream in, PluginMessageEvent event) throws IOException {
         String playerName = in.readUTF();
-        String sendPlayerName = in.readUTF();
-        ServerInfo server = Main.main.getProxy().getPlayer(playerName).getServer().getInfo();
+        String targetPlayerName = in.readUTF();
+        ServerInfo server = Main.main.getProxy().getPlayer(targetPlayerName).getServer().getInfo();
 
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("SendTpa");
         out.writeUTF(playerName);
-        out.writeUTF(sendPlayerName);
+        out.writeUTF(targetPlayerName);
 
         server.sendData("BungeeCord", out.toByteArray());
     }
 
     private void handleSendTpaHere(DataInputStream in, PluginMessageEvent event) throws IOException {
         String playerName = in.readUTF();
-        String sendPlayerName = in.readUTF();
-        ServerInfo server = Main.main.getProxy().getPlayer(playerName).getServer().getInfo();
+        String targetPlayerName = in.readUTF();
+        ServerInfo server = Main.main.getProxy().getPlayer(targetPlayerName).getServer().getInfo();
 
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("SendTpaHere");
         out.writeUTF(playerName);
-        out.writeUTF(sendPlayerName);
+        out.writeUTF(targetPlayerName);
 
         server.sendData("BungeeCord", out.toByteArray());
     }

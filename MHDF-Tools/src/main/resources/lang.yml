@@ -147,41 +147,41 @@ Login:
   PasswordError: "&e[MHDFTools] &c密码错误!"
   AutoLogin: "&e[MHDFTools] &e欢迎回来! 已自动登录!"
 Tpa:
-  AccentMessage: "&a同意"
+  AcceptMessage: "&a同意"
   DefuseMessage: "&c不同意"
-  AccentHoverMesasge: "&e[MHDFTools] &a接受%1的传送请求"
+  AcceptHoverMesasge: "&e[MHDFTools] &a接受%1的传送请求"
   DefuseHoverMesasge: "&e[MHDFTools] &c%1的传送请求"
   SendDone: "&e[MHDFTools] &a传送请求已发送,对方有60s来同意你的请求"
   RepectSend: "&e[MHDFTools] &6请不要重复发送Tpa!"
   NotSendTeleport: "&e[MHDFTools] &c这个玩家没有给你发传送请求"
   Offline: "&e[MHDFTools] &c错误,那个玩家突然下线了,传送已取消!"
-  DefuseDone: "&e[MHDFTools] &c你拒绝了对方的传送请求!"
-  Defuse: "&e[MHDFTools] &c对方拒绝了你的请求!"
+  DefuseDone: "&e[MHDFTools] &c你拒绝了%1的传送请求!"
+  Defuse: "&e[MHDFTools] &c%1拒绝了你的请求!"
   AcceptDone: "&e[MHDFTools] &a%1传送到了你这里!"
-  TeleportDone: "&e[MHDFTools] &a传送成功!"
+  TeleportDone: "&e[MHDFTools] &c你传送到了%1那里!"
   TimeOutDone: "&e[MHDFTools] &6你发给%1的传送请求已超时!"
   TimeOut: "&e[MHDFTools] &6%1给你发的传送请求已超时!"
   SendMe: "&e[MHDFTools] &6不能给自己发送传送请求!"
   Message: |-
-    &a%1申请传送到你这里&r ?Accent?  ?Defuse?
+    &a%1申请传送到你这里&r ?Accept?  ?Defuse?
 TpaHere:
-  AccentMessage: "&a同意"
+  AcceptMessage: "&a同意"
   DefuseMessage: "&c不同意"
-  AccentHoverMesasge: "&e[MHDFTools] &a接受%1的传送请求"
+  AcceptHoverMesasge: "&e[MHDFTools] &a接受%1的传送请求"
   DefuseHoverMesasge: "&e[MHDFTools] &f붃 &c拒绝%1的传送请求"
   SendDone: "&e[MHDFTools] &a传送请求已发送,对方有60s来同意你的请求"
   RepectSend: "&e[MHDFTools] &6请不要重复发送Tpa!"
   NotSendTeleport: "&e[MHDFTools] &c这个玩家没有给你发传送请求"
   Offline: "&e[MHDFTools] &c错误,那个玩家突然下线了,传送已取消!"
-  DefuseDone: "&e[MHDFTools] &c你拒绝了对方的传送请求!"
-  Defuse: "&e[MHDFTools] &&c对方拒绝了你的请求!"
+  DefuseDone: "&e[MHDFTools] &c你拒绝了%1的传送请求!"
+  Defuse: "&e[MHDFTools] &c%1拒绝了你的请求!"
   AcceptDone: "&e[MHDFTools] &a你传送到了%1那里!"
   TeleportDone: "&e[MHDFTools] &a%1传送到了你这里!"
   TimeOutDone: "&e[MHDFTools] &c你发给%1的传送请求已超时!"
   TimeOut: "&e[MHDFTools] &6%1给你发的传送请求已超时!"
   SendMe: "&e[MHDFTools] &6不能给自己发送传送请求!"
   Message: |-
-    &a%1请求你传送到他身边 ?Accent?  ?Defuse?
+    &a%1请求你传送到他身边 ?Accept?  ?Defuse?
 IPMessage: |-
   #7289da玩家: %1
   #7289daIP: %2

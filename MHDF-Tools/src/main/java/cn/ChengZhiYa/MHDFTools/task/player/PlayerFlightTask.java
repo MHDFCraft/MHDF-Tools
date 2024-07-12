@@ -28,7 +28,7 @@ public final class PlayerFlightTask extends BukkitRunnable {
                         if (sound(soundKey) != null) {
                             playSound(player, sound(soundKey));
                         }
-                    }else {
+                    } else {
                         flyList.remove(playerName);
                         removeFly(playerName);
                         player.setAllowFlight(false);

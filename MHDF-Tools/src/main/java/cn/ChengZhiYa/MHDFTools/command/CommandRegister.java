@@ -128,6 +128,7 @@ public final class CommandRegister implements Invitable {
                     }
                     break;
                 case "TpaHereSettings":
+                    System.out.println(1);
                     if (isEnabled) {
                         registerTpaHereCommand();
                     }

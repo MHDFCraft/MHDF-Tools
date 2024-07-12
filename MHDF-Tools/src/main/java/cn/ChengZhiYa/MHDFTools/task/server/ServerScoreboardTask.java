@@ -16,6 +16,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 
 public final class ServerScoreboardTask extends BukkitRunnable {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
     @Override
     public void run() {
         if (!plugin.getConfig().getBoolean("ScoreboardSettings.Enable")) {

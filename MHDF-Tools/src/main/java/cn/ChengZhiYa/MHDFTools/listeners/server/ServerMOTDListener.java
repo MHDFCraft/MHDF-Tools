@@ -13,6 +13,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 
 public final class ServerMOTDListener implements Listener {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
     @EventHandler
     public void onServerListPing(ServerListPingEvent event) {
         event.setMotd(Placeholder(null, Objects.requireNonNull(plugin.getConfig().getString("MOTDSettings.Line1"))) + "\n" +

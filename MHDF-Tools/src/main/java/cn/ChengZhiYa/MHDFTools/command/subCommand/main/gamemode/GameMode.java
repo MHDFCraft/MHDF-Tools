@@ -30,35 +30,35 @@ public final class GameMode implements TabExecutor {
                 player = (Player) sender;
             }
 
-           if (player != null)
+            if (player != null)
 
-            switch (args[0].toLowerCase()) {
-                case "生存":
-                case "0":
-                case "survival":
-                    setGameMode(player, 0, RunSender);
-                    break;
-                case "冒险":
-                case "2":
-                case "adventure":
-                    setGameMode(player, 2, RunSender);
-                    break;
-                case "创造":
-                case "1":
-                case "creative":
-                    setGameMode(player, 1, RunSender);
-                    break;
-                case "旁观":
-                case "3":
-                case "spectator":
-                    setGameMode(player, 3, RunSender);
-                    break;
-                default:
-                    sender.sendMessage(i18n("Usage.gameMode"), label);
-                    return false;
-            }
+                switch (args[0].toLowerCase()) {
+                    case "生存":
+                    case "0":
+                    case "survival":
+                        setGameMode(player, 0, RunSender);
+                        break;
+                    case "冒险":
+                    case "2":
+                    case "adventure":
+                        setGameMode(player, 2, RunSender);
+                        break;
+                    case "创造":
+                    case "1":
+                    case "creative":
+                        setGameMode(player, 1, RunSender);
+                        break;
+                    case "旁观":
+                    case "3":
+                    case "spectator":
+                        setGameMode(player, 3, RunSender);
+                        break;
+                    default:
+                        sender.sendMessage(i18n("Usage.gameMode"), label);
+                        return false;
+                }
 
-           return true;
+            return true;
         }
 
         sender.sendMessage(i18n("Usage.gameMode"), label);

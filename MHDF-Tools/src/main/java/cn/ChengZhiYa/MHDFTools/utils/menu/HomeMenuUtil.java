@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.TpPlayerHome;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.tpPlayerHome;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataSource;
 import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.*;
@@ -175,7 +175,7 @@ public final class HomeMenuUtil {
     private static void handleHomeAction(Player player, ItemStack clickItem) {
         String homeName = getHomeName(clickItem);
         if (homeName != null) {
-            TpPlayerHome(player.getName(), homeName);
+            tpPlayerHome(player.getName(), homeName);
         }
     }
 
