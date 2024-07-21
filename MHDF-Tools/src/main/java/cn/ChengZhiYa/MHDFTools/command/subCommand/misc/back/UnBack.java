@@ -18,15 +18,13 @@ public final class UnBack implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation") != null) {
-                if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
+                if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation").getWorldName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
-                if (MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
+                if (MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation").getWorldName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
-                TpPlayerTo(player.getName(), ServerName,
-                        MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation")
-                );
+                TpPlayerTo(player.getName(), ServerName, MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation"));
                 player.sendMessage(i18n("UnBack.Done"));
             } else {
                 sender.sendMessage(i18n("UnBack.NotFound"));

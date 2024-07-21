@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.spawn;
 
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,7 +15,7 @@ public final class SetSpawn implements CommandExecutor {
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            BungeeCordUtil.setSpawn(player.getLocation());
+            BungeeCordUtil.setSpawn(new SuperLocation(player.getLocation()));
             sender.sendMessage(i18n("Spawn.SetDone"));
         } else {
             sender.sendMessage(i18n("OnlyPlayer"));

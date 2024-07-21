@@ -1,56 +1,35 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
+import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
+import cn.ChengZhiYa.MHDFTools.utils.command.SpawnUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Objects;
-
-import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.TpPlayerTo;
-
 public final class PlayerReSpawnListener implements Listener {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        if (!isEnabled()) return;
+        if (!isEnabled()) {
+            return;
+        }
 
         Player player = event.getPlayer();
-        Location spawnLocation = getSpawnLocation();
+        SuperLocation spawnLocation = SpawnUtil.getSpawnLocation();
 
-        Bukkit.getScheduler().runTaskLater(plugin, () ->
-                TpPlayerTo(player.getName(), getServerName(), spawnLocation), 5);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            BungeeCordUtil.TpPlayerTo(player.getName(), SpawnUtil.getServerName(), spawnLocation);
+        }, 5);
     }
 
     private boolean isEnabled() {
-        return getConfig().getBoolean("SpawnSettings.Enable", false)
-                && getConfig().getBoolean("SpawnSettings.ReSpawnTeleport", false);
-    }
-
-    private Location getSpawnLocation() {
-        World world = Bukkit.getWorld(Objects.requireNonNull(getConfig().getString("SpawnSettings.World")));
-
-        double x = getConfig().getDouble("SpawnSettings.X");
-        double y = getConfig().getDouble("SpawnSettings.Y");
-        double z = getConfig().getDouble("SpawnSettings.Z");
-        float yaw = (float) getConfig().getDouble("SpawnSettings.Yaw");
-        float pitch = (float) getConfig().getDouble("SpawnSettings.Pitch");
-
-        return new Location(world, x, y, z, yaw, pitch);
-    }
-
-    private String getServerName() {
-        return getConfig().getString("SpawnSettings.Server");
-    }
-
-    private FileConfiguration getConfig() {
-        return plugin.getConfig();
+        return MHDFTools.instance.getConfig().getBoolean("SpawnSettings.Enable", false) && MHDFTools.instance.getConfig().getBoolean("SpawnSettings.ReSpawnTeleport", false);
     }
 }

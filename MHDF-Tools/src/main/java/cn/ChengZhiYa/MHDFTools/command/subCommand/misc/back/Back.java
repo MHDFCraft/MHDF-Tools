@@ -16,7 +16,7 @@ public final class Back implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation") != null) {
-                if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation").getWorld().getName()) || MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
+                if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation").getWorldName()) || MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
                 if (MapUtil.getIntHashMap().get(player.getName() + "_BackDelay") != null || MapUtil.getIntHashMap().get(player.getName() + "_TpBackDelay") != null) {

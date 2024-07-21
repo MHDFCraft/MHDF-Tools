@@ -1,10 +1,10 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -251,8 +251,8 @@ public final class ConvertData {
 
                             for (String Datas : Objects.requireNonNull(Data.getConfigurationSection("")).getKeys(false)) {
                                 if (!ifHomeExists(PlayerName, Datas)) {
-                                    addHome(PlayerName, Datas, new Location(
-                                            Bukkit.getWorld(Objects.requireNonNull(Data.getString(Datas + ".World"))),
+                                    addHome(PlayerName, Datas, new SuperLocation(
+                                            Data.getString(Datas + ".World"),
                                             Data.getDouble(Datas + ".X"),
                                             Data.getDouble(Datas + ".Y"),
                                             Data.getDouble(Datas + ".Z"),
@@ -260,8 +260,8 @@ public final class ConvertData {
                                             (float) Data.getDouble(Datas + ".Pitch")
                                     ));
                                 } else {
-                                    setHome(PlayerName, Datas, new Location(
-                                            Bukkit.getWorld(Objects.requireNonNull(Data.getString(Datas + ".World"))),
+                                    setHome(PlayerName, Datas, new SuperLocation(
+                                            Data.getString(Datas + ".World"),
                                             Data.getDouble(Datas + ".X"),
                                             Data.getDouble(Datas + ".Y"),
                                             Data.getDouble(Datas + ".Z"),

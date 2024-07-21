@@ -1,11 +1,11 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.home;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil;
 import cn.ChengZhiYa.MHDFTools.utils.menu.HomeMenuUtil;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -26,7 +26,7 @@ public final class Home implements TabExecutor {
             if (args.length == 1) {
                 Player player = (Player) sender;
                 String HomeName = args[0];
-                Location HomeLocation = HomeUtil.getHomeLocation(player.getName(), HomeName);
+                SuperLocation HomeLocation = HomeUtil.getHomeLocation(player.getName(), HomeName);
                 if (HomeLocation != null) {
                     BungeeCordUtil.tpPlayerHome(player.getName(), HomeName);
                     player.sendMessage(SpigotUtil.i18n("Home.TeleportDone"));

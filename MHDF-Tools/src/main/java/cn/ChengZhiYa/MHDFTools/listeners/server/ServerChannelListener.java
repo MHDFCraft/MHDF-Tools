@@ -2,6 +2,7 @@ package cn.ChengZhiYa.MHDFTools.listeners.server;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaHereUtil;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaUtil;
@@ -88,7 +89,7 @@ public final class ServerChannelListener implements PluginMessageListener {
                 String PlayerName = in.readUTF();
                 String HomeName = in.readUTF();
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Objects.requireNonNull(getHomeLocation(PlayerName, HomeName)));
+                    Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(getHomeLocation(PlayerName, HomeName).getLocation());
                     playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                 }, 20);
             }
@@ -111,8 +112,7 @@ public final class ServerChannelListener implements PluginMessageListener {
             if (subchannel.equals("SaveLocation")) {
                 String Key = in.readUTF();
                 String Server = in.readUTF();
-                Location Location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble());
-                MapUtil.getLocationHashMap().put(Key, Location);
+                MapUtil.getLocationHashMap().put(Key, new SuperLocation(in.readUTF(), in.readDouble(), in.readDouble(), in.readDouble()));
                 MapUtil.getStringHashMap().put(Key + "_Server", Server);
             }
             if (subchannel.equals("ServerName")) {

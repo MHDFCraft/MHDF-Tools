@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.utils.menu;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -87,15 +88,16 @@ public final class HomeMenuUtil {
                                 for (String home : playerHomeList) {
                                     String homeDisplayName = null;
                                     List<String> homeLore = new ArrayList<>();
+                                    SuperLocation homeLocation = getHomeLocation(player.getName(), home);
 
                                     if (displayName != null) {
                                         homeDisplayName = displayName
                                                 .replaceAll("\\{HomeName}", home)
                                                 .replaceAll("\\{Server}", getHomeServer(player.getName(), home))
-                                                .replaceAll("\\{World}", Objects.requireNonNull(getHomeLocation(player.getName(), home)).getWorld().getName())
-                                                .replaceAll("\\{X}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), home)).getBlockX()))
-                                                .replaceAll("\\{Y}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), home)).getBlockY()))
-                                                .replaceAll("\\{Z}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), home)).getBlockZ()));
+                                                .replaceAll("\\{World}", Objects.requireNonNull(homeLocation).getWorldName())
+                                                .replaceAll("\\{X}", String.valueOf(homeLocation.getX()))
+                                                .replaceAll("\\{Y}", String.valueOf(homeLocation.getBlockY()))
+                                                .replaceAll("\\{Z}", String.valueOf(homeLocation.getBlockZ()));
                                     }
 
                                     getMenu(homeMenuFile).getStringList("menu.ItemList." + itemID + ".Lore").forEach(s ->
@@ -103,10 +105,10 @@ public final class HomeMenuUtil {
                                                     Placeholder(player, s)
                                                             .replaceAll("\\{HomeName}", home)
                                                             .replaceAll("\\{Server}", getHomeServer(player.getName(), home))
-                                                            .replaceAll("\\{World}", Objects.requireNonNull(getHomeLocation(player.getName(), home)).getWorld().getName())
-                                                            .replaceAll("\\{X}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), home)).getBlockX()))
-                                                            .replaceAll("\\{Y}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), home)).getBlockY()))
-                                                            .replaceAll("\\{Z}", String.valueOf(Objects.requireNonNull(getHomeLocation(player.getName(), home)).getBlockZ()))
+                                                            .replaceAll("\\{World}", Objects.requireNonNull(homeLocation).getWorldName())
+                                                            .replaceAll("\\{X}", String.valueOf(homeLocation.getBlockX()))
+                                                            .replaceAll("\\{Y}", String.valueOf(homeLocation.getBlockY()))
+                                                            .replaceAll("\\{Z}", String.valueOf(homeLocation.getBlockZ()))
                                             )
                                     );
 

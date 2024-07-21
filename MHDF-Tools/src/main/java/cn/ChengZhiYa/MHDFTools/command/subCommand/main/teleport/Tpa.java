@@ -108,7 +108,7 @@ public final class Tpa implements TabExecutor {
         if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
             BungeeCordUtil.getPlayerList();
             return new ArrayList<>(Arrays.asList(BungeeCordUtil.PlayerList));
-        }else {
+        } else {
             return null;
         }
     }

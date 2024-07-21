@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.utils.map;
 
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import lombok.experimental.UtilityClass;
-import org.bukkit.Location;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -12,7 +12,7 @@ import java.util.Map;
 public class MapUtil {
     static HashMap<Object, Boolean> booleanHashMap = new HashMap<>();
     static HashMap<Object, Integer> intHashMap = new HashMap<>();
-    static HashMap<Object, Location> locationHashMap = new HashMap<>();
+    static HashMap<Object, SuperLocation> locationHashMap = new HashMap<>();
     static HashMap<Object, Objective> objectiveHashMap = new HashMap<>();
     static HashMap<Object, Scoreboard> scoreboardHashMap = new HashMap<>();
     static HashMap<Object, String> stringHashMap = new HashMap<>();
@@ -25,7 +25,7 @@ public class MapUtil {
         return intHashMap;
     }
 
-    public static Map<Object, Location> getLocationHashMap() {
+    public static Map<Object, SuperLocation> getLocationHashMap() {
         return locationHashMap;
     }
 

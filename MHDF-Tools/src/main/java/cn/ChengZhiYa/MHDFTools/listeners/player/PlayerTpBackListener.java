@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ public final class PlayerTpBackListener implements Listener {
     @EventHandler
     public void playerTeleportEvent(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
-        MapUtil.getLocationHashMap().put(player.getName() + "_TpBackLocation", player.getLocation());
+        MapUtil.getLocationHashMap().put(player.getName() + "_TpBackLocation", new SuperLocation(player.getLocation()));
     }
 
     @EventHandler

@@ -32,4 +32,14 @@ public final class FileCreator {
             }
         }
     }
+
+    public static void createFile(File file) {
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

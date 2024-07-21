@@ -17,7 +17,7 @@ public final class ServerTimeMessageTask extends BukkitRunnable {
 
     private void broadcastMessage(String message) {
         if (plugin.getConfig().getBoolean("TimeMessageSettings.ConsoleDisplayed")) {
-            Bukkit.broadcast(message,"MHDFTools.TimeMessage");
+            Bukkit.broadcast(message, "MHDFTools.TimeMessage");
         } else {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission("MHDFTools.TimeMessage")) {

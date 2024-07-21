@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.utils;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaHereUtil;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaUtil;
@@ -8,7 +9,6 @@ import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
@@ -151,14 +151,14 @@ public final class BungeeCordUtil {
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {
             Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
-                Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(Objects.requireNonNull(getHomeLocation(playerName, homeName)));
+                Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(Objects.requireNonNull(getHomeLocation(playerName, homeName)).getLocation());
                 playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), sound("TeleportSound"));
             });
         }
     }
 
-    public static void TpPlayerTo(String playerName, String Server2, Location location2) {
-        if (!ServerName.equals(Server2) && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+    public static void TpPlayerTo(String playerName, String serverName, SuperLocation location) {
+        if (!ServerName.equals(serverName) && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
             Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -166,17 +166,17 @@ public final class BungeeCordUtil {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("TpPlayerTo");
             out.writeUTF(playerName);
-            out.writeUTF(Server2);
-            out.writeUTF(location2.getWorld().getName());
-            out.writeDouble(location2.getX());
-            out.writeDouble(location2.getY());
-            out.writeDouble(location2.getZ());
-            out.writeDouble(location2.getYaw());
-            out.writeDouble(location2.getPitch());
+            out.writeUTF(serverName);
+            out.writeUTF(location.getWorldName());
+            out.writeDouble(location.getX());
+            out.writeDouble(location.getY());
+            out.writeDouble(location.getZ());
+            out.writeDouble(location.getYaw());
+            out.writeDouble(location.getPitch());
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {
             Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
-                Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(location2);
+                Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(location.getLocation());
                 SpigotUtil.playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), SpigotUtil.sound("TeleportSound"));
             });
         }
@@ -218,7 +218,7 @@ public final class BungeeCordUtil {
         TpaHereUtil.getTpahereHashMap().remove(playerName);
     }
 
-    public static void setSpawn(Location location) {
+    public static void setSpawn(SuperLocation location) {
         if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
@@ -228,7 +228,7 @@ public final class BungeeCordUtil {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("SetSpawn");
             out.writeUTF(ServerName);
-            out.writeUTF(location.getWorld().getName());
+            out.writeUTF(location.getWorldName());
             out.writeDouble(location.getX());
             out.writeDouble(location.getY());
             out.writeDouble(location.getZ());
@@ -238,7 +238,7 @@ public final class BungeeCordUtil {
             player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
         } else {
             MHDFTools.instance.getConfig().set("SpawnSettings.Server", ServerName);
-            MHDFTools.instance.getConfig().set("SpawnSettings.World", location.getWorld().getName());
+            MHDFTools.instance.getConfig().set("SpawnSettings.World", location.getWorldName());
             MHDFTools.instance.getConfig().set("SpawnSettings.X", location.getX());
             MHDFTools.instance.getConfig().set("SpawnSettings.Y", location.getY());
             MHDFTools.instance.getConfig().set("SpawnSettings.Z", location.getZ());

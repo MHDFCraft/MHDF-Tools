@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.task.player;
 
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
@@ -27,7 +28,7 @@ public final class PlayerTpBackTask extends BukkitRunnable {
                 }
                 SpigotUtil.playSound(Objects.requireNonNull(player), SpigotUtil.sound("TeleportSound"));
                 BungeeCordUtil.TpPlayerTo(PlayerName, BungeeCordUtil.ServerName, MapUtil.getLocationHashMap().get(PlayerName + "_TpBackLocation"));
-                MapUtil.getLocationHashMap().put(PlayerName + "_UnBackLocation", Objects.requireNonNull(player).getLocation());
+                MapUtil.getLocationHashMap().put(PlayerName + "_UnBackLocation", new SuperLocation(Objects.requireNonNull(player).getLocation()));
                 player.sendMessage(SpigotUtil.i18n("TpBack.Done"));
                 MapUtil.getIntHashMap().remove(Key);
                 continue;

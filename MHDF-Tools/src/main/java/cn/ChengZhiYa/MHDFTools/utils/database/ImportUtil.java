@@ -1,10 +1,10 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -81,8 +81,8 @@ public final class ImportUtil {
 
                                     if (rs3.next()) {
                                         if (!ifHomeExists(PlayerName, HomeName)) {
-                                            addHome(rs3.getString("server_name"), PlayerName, HomeName, new Location(
-                                                    Bukkit.getWorld(rs3.getString("world_name")),
+                                            addHome(rs3.getString("server_name"), PlayerName, HomeName, new SuperLocation(
+                                                    rs3.getString("world_name"),
                                                     rs3.getDouble("x"),
                                                     rs3.getDouble("y"),
                                                     rs3.getDouble("z"),
@@ -90,8 +90,8 @@ public final class ImportUtil {
                                                     rs3.getFloat("pitch")
                                             ));
                                         } else {
-                                            HomeUtil.setHome(rs3.getString("server_name"), PlayerName, HomeName, new Location(
-                                                    Bukkit.getWorld(rs3.getString("world_name")),
+                                            HomeUtil.setHome(rs3.getString("server_name"), PlayerName, HomeName, new SuperLocation(
+                                                    rs3.getString("world_name"),
                                                     rs3.getDouble("x"),
                                                     rs3.getDouble("y"),
                                                     rs3.getDouble("z"),
@@ -189,8 +189,8 @@ public final class ImportUtil {
                             String[] homeDatas = rs.getString("Homes").replaceAll("\\$-0%%", ":").split(";");
                             for (String homeData : homeDatas) {
                                 String[] data = homeData.split(":");
-                                Location location = new Location(
-                                        Bukkit.getWorld(data[1]),
+                                SuperLocation location = new SuperLocation(
+                                        data[1],
                                         Double.parseDouble(data[2]),
                                         Double.parseDouble(data[3]),
                                         Double.parseDouble(data[4]),

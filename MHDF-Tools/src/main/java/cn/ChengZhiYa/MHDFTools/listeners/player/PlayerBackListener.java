@@ -1,8 +1,8 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,14 +17,14 @@ public final class PlayerBackListener implements Listener {
     @EventHandler
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
         Player player = event.getEntity();
-        MapUtil.getLocationHashMap().put(player.getName() + "_DeathLocation", player.getLocation());
+        MapUtil.getLocationHashMap().put(player.getName() + "_DeathLocation", new SuperLocation(player.getLocation()));
     }
 
     @EventHandler
     public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         if (MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation") != null) {
-            Location DiedLocation = MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation");
+            SuperLocation DiedLocation = MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation");
             int X = DiedLocation.getBlockX();
             int Y = DiedLocation.getBlockY();
             int Z = DiedLocation.getBlockZ();

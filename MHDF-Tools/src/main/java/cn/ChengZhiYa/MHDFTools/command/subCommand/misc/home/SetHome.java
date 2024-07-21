@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.home;
 
 import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -28,9 +29,9 @@ public final class SetHome implements TabExecutor {
                         sender.sendMessage(i18n("Home.HomeListFull", String.valueOf(getMaxHome(player))));
                         return false;
                     }
-                    addHome(player.getName(), HomeName, player.getLocation());
+                    addHome(player.getName(), HomeName, new SuperLocation(player.getLocation()));
                 } else {
-                    setHome(player.getName(), HomeName, player.getLocation());
+                    setHome(player.getName(), HomeName, new SuperLocation(player.getLocation()));
                 }
                 sender.sendMessage(i18n("Home.SetDone", label));
             } else {
