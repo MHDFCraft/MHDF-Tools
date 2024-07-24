@@ -112,7 +112,10 @@ public final class MenuUtil {
     public static List<String> getCustomMenuList() {
         List<String> MenuList = new ArrayList<>();
         try (Stream<Path> File = Files.walk(new File(MHDFTools.instance.getDataFolder(), "Menus").toPath())) {
-            MenuList = File.filter(Files::isRegularFile).map(Path::toString).map(FileName -> FileName.replaceAll("plugins\\\\MHDF-Tools\\\\Menus\\\\", "")).collect(Collectors.toList());
+            MenuList = File.filter(Files::isRegularFile).map(Path::toString).map(FileName -> FileName
+                    .replaceAll("plugins\\\\MHDF-Tools\\\\Menus\\\\", "")
+                    .replaceAll("plugins/MHDF-Tools/Menus/", "")
+            ).collect(Collectors.toList());
         } catch (IOException ignored) {
         }
         MenuList.remove("HomeMenu.yml");
