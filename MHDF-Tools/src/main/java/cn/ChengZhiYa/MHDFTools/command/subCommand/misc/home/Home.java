@@ -18,24 +18,26 @@ import java.util.Objects;
 public final class Home implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
-            if (args.length == 0 && Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-                Player player = (Player) sender;
-                HomeMenuUtil.openHomeMenu(player, 1);
-                return false;
-            }
-            if (args.length == 1) {
-                Player player = (Player) sender;
-                String HomeName = args[0];
-                SuperLocation HomeLocation = HomeUtil.getHomeLocation(player.getName(), HomeName);
-                if (HomeLocation != null) {
-                    BungeeCordUtil.tpPlayerHome(player.getName(), HomeName);
-                    player.sendMessage(SpigotUtil.i18n("Home.TeleportDone"));
-                } else {
-                    player.sendMessage(SpigotUtil.i18n("Home.NotFound", HomeName));
+            if (!MHDFTools.instance.getConfig().getStringList("HomeSystemSettings.DisableWorldList").contains(((Player) sender).getLocation().getWorld().getName())) {
+                if (args.length == 0 && Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+                    Player player = (Player) sender;
+                    HomeMenuUtil.openHomeMenu(player, 1);
+                    return false;
                 }
-                return false;
+                if (args.length == 1) {
+                    Player player = (Player) sender;
+                    String HomeName = args[0];
+                    SuperLocation HomeLocation = HomeUtil.getHomeLocation(player.getName(), HomeName);
+                    if (HomeLocation != null) {
+                        BungeeCordUtil.tpPlayerHome(player.getName(), HomeName);
+                        player.sendMessage(SpigotUtil.i18n("Home.TeleportDone"));
+                    } else {
+                        player.sendMessage(SpigotUtil.i18n("Home.NotFound", HomeName));
+                    }
+                    return false;
+                }
+                sender.sendMessage(SpigotUtil.i18n("Usage.Home", label));
             }
-            sender.sendMessage(SpigotUtil.i18n("Usage.Home", label));
         } else {
             sender.sendMessage(SpigotUtil.i18n("OnlyPlayer"));
         }

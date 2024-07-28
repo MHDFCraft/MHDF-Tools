@@ -37,7 +37,6 @@ public final class MainCommand implements TabExecutor {
             sender.sendMessage(
                     i18n("AdminCommands.version.Message")
                             .replaceAll("\\{Version}", PluginLoader.INSTANCE.getVersion())
-                            .replaceAll("\\{Build}", PluginLoader.INSTANCE.getBuild())
                             .replaceAll("\\{ServerVersion}", PluginLoader.INSTANCE.getServerManager().getVersion())
             );
             return true;

@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.home;
 
+import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -16,28 +17,25 @@ public final class DelHome implements TabExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (sender instanceof Player) {
+            if (!MHDFTools.instance.getConfig().getStringList("HomeSystemSettings.DisableWorldList").contains(((Player) sender).getLocation().getWorld().getName())) {
+                Player player = (Player) sender;
+                if (args.length == 1) {
+                    String homeName = args[0];
+                    if (ifHomeExists(player.getName(), homeName)) {
+                        removeHome(player.getName(), homeName);
+                        player.sendMessage(i18n("Home.RemoveDone"));
+                    } else {
+                        player.sendMessage(i18n("Home.NotFound", homeName));
+                    }
+                } else {
+                    sender.sendMessage(i18n("Usage.Home", label));
+                }
+            }
+        } else {
             sender.sendMessage(i18n("OnlyPlayer"));
-            return true;
         }
-
-        Player player = (Player) sender;
-
-        if (args.length != 1) {
-            sender.sendMessage(i18n("Usage.Home", label));
-            return true;
-        }
-
-        String homeName = args[0];
-
-        if (!ifHomeExists(player.getName(), homeName)) {
-            player.sendMessage(i18n("Home.NotFound", homeName));
-            return true;
-        }
-
-        removeHome(player.getName(), homeName);
-        player.sendMessage(i18n("Home.RemoveDone"));
-        return true;
+        return false;
     }
 
     @Override

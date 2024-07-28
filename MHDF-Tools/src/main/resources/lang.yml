@@ -11,7 +11,6 @@ AdminCommands:
     Message: |-
       &f============&6梦之工具&f============
       &7插件版本: &6{Version}
-      &7插件构建号: &6{Build}
       &7服务器版本: &6{ServerVersion}
       &f============&6梦之工具&f============
   convert:

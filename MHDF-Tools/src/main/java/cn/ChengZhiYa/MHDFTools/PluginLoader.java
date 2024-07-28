@@ -81,11 +81,7 @@ public enum PluginLoader {
     }
 
     public String getVersion() {
-        return "2.0.1";
-    }
-
-    public String getBuild() {
-        return "224624-18.26";
+        return getPlugin().getDescription().getVersion();
     }
 
     public void disablePlugin() {

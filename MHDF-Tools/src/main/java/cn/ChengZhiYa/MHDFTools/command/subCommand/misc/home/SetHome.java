@@ -18,24 +18,23 @@ public final class SetHome implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
-            if (args.length == 1) {
-                if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(((Player) sender).getLocation().getWorld().getName())) {
-                    return false;
-                }
-                Player player = (Player) sender;
-                String HomeName = args[0];
-                if (!ifHomeExists(player.getName(), HomeName)) {
-                    if (getMaxHome(player) <= getPlayerHomeTime(player.getName())) {
-                        sender.sendMessage(i18n("Home.HomeListFull", String.valueOf(getMaxHome(player))));
-                        return false;
+            if (!MHDFTools.instance.getConfig().getStringList("HomeSystemSettings.DisableWorldList").contains(((Player) sender).getLocation().getWorld().getName())) {
+                if (args.length == 1) {
+                    Player player = (Player) sender;
+                    String HomeName = args[0];
+                    if (!ifHomeExists(player.getName(), HomeName)) {
+                        if (getMaxHome(player) <= getPlayerHomeTime(player.getName())) {
+                            sender.sendMessage(i18n("Home.HomeListFull", String.valueOf(getMaxHome(player))));
+                            return false;
+                        }
+                        addHome(player.getName(), HomeName, new SuperLocation(player.getLocation()));
+                    } else {
+                        setHome(player.getName(), HomeName, new SuperLocation(player.getLocation()));
                     }
-                    addHome(player.getName(), HomeName, new SuperLocation(player.getLocation()));
+                    sender.sendMessage(i18n("Home.SetDone", label));
                 } else {
-                    setHome(player.getName(), HomeName, new SuperLocation(player.getLocation()));
+                    sender.sendMessage(i18n("Usage.Home", label));
                 }
-                sender.sendMessage(i18n("Home.SetDone", label));
-            } else {
-                sender.sendMessage(i18n("Usage.Home", label));
             }
         } else {
             sender.sendMessage(i18n("OnlyPlayer"));

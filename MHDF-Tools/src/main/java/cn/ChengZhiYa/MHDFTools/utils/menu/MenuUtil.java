@@ -8,6 +8,7 @@ import de.tr7zw.changeme.nbtapi.NBTItem;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -340,6 +341,21 @@ public final class MenuUtil {
                     openMenu(player, menuFileName);
                 }
                 break;
+            }
+            case "[teleport]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    player.teleport(
+                            new Location(
+                                    Bukkit.getWorld(action[1]),
+                                    Double.parseDouble(action[2]),
+                                    Double.parseDouble(action[3]),
+                                    Double.parseDouble(action[4]),
+                                    Float.parseFloat(action[5]),
+                                    Float.parseFloat(action[6])
+                            )
+                    );
+                }
             }
             default:
                 MessageUtil.colorMessage("&c[MHDF-Tools]不存在" + action[0] + "这个操作");
