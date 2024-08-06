@@ -1,3 +1,6 @@
+#调试模式
+Debug: false
+
 #检查更新
 CheckVersion: true
 
@@ -336,6 +339,9 @@ EventActionSettings:
       #玩家死亡
       #玩家复活
       #玩家移动
+      #玩家传送
+      #玩家破坏方块
+      #玩家放置方块
       #============================================
       Event: "玩家加入服务器"
       #仅限指定世界可用列表(仅 玩家切换世界 事件)
@@ -353,7 +359,7 @@ EventActionSettings:
       #[teleport]|<World>|<X>|<Y>|<Z>|<Yaw>|<Pitch> #传送玩家至指定坐标
       #============================================
       ActionList:
-        - "[message]&e你知道吗,事件操作系统很好用的!"
+        - "[message]|&e你知道吗,事件操作系统很好用的!"
 
 #Back系统设置
 BackSettings:
@@ -441,3 +447,36 @@ BedSettings:
 NickSettings:
   #开关
   Enable: true
+  #最小长度
+  MinLength: 3
+  #最大长度
+  MaxLength: 16
+  #禁止包含的词汇
+  BlackWordList:
+    - "BaiShenYao_Dog"
+    - "Xiao_Yu_Ge_Ge"
+
+#聊天颜色
+ChatColorSettings:
+  #开关
+  Enable: true
+  #分组管理
+  Group:
+    #默认设置
+    Default:
+      #权重
+      Weight: 0
+      #聊天颜色
+      ChatColor: "&7"
+    #拥有 MHDFTools.ChatColor.<名字> 权限的组的颜色
+    #例: MHDFTools.ChatColor.admin
+    #组名字必须小写!
+    admin:
+      #权重
+      Weight: 1
+      #聊天颜色
+      ChatColor: "&c"
+  #指定玩家
+  Player:
+    #玩家ID对应的颜色
+    BaiShenYao_Dog: "#fdbdcf"

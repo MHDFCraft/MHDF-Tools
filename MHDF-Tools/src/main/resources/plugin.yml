@@ -73,6 +73,10 @@ permissions:
     default: true
   MHDFTools.Command.Nick:
     default: op
+  MHDFTools.Command.Nick.BypassCheck:
+    default: op
+  MHDFTools.Command.Nick.SetOther:
+    default: op
   MHDFTools.FastUse.EnderChest:
     default: true
   MHDFTools.FastUse.ShulkerBox:

@@ -296,6 +296,12 @@ public final class SpigotUtil {
         return MessageUtil.colorMessage(message);
     }
 
+    public static String getChatColor(Player player) {
+        return MHDFTools.instance.getConfig().getString("ChatColorSettings.Player." + player.getName()) != null ?
+                Placeholder(player,MHDFTools.instance.getConfig().getString("ChatColorSettings.Player." + player.getName())) :
+                getCustomMessage(player, "ChatColorSettings.Group", "ChatColor");
+    }
+
     public static String getJoinMessage(Player player) {
         return getCustomMessage(player, "CustomJoinServerMessageSettings", "JoinMessage");
     }
@@ -310,8 +316,8 @@ public final class SpigotUtil {
 
         for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
             String perm = permInfo.getPermission();
-            if (perm.startsWith("mhdftools." + settingType)) {
-                String group = perm.substring(("mhdftools." + settingType).length());
+            if (perm.startsWith("mhdftools." + messageType)) {
+                String group = perm.substring(("mhdftools." + messageType).length());
                 int weight = MHDFTools.instance.getConfig().getInt(settingType + "." + group + ".Weight");
                 messageList.put(weight, group);
                 weightList.add(weight);
