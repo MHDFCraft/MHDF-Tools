@@ -4,16 +4,14 @@ import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.database.NickUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
@@ -24,13 +22,21 @@ public final class Nick implements TabExecutor {
             case 1: {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    boolean setNick = args[0].equals("off");
+                    boolean setNick = !args[0].equals("off");
                     String nickName = setNick ? player.getName() : args[0];
-                    if (player.hasPermission("MHDFTools.Command.Nick.BypassCheck")) {
+                    if (player.hasPermission("MHDFTools.Command.Nick.BypassCheck") && setNick) {
                         for (String blackWord : MHDFTools.instance.getConfig().getStringList("NickSettings.BlackWordList")) {
-                            if (nickName.contains(blackWord)) {
+                            if (nickName.toLowerCase(Locale.ROOT).contains(blackWord.toLowerCase(Locale.ROOT))) {
                                 player.sendMessage(i18n("Nick.BlackWord", blackWord));
                                 return false;
+                            }
+                        }
+                        if (MHDFTools.instance.getConfig().getBoolean("NickSettings.AntiSetPlayerName")) {
+                            for (OfflinePlayer players : Bukkit.getOfflinePlayers()) {
+                                if (Objects.equals(players.getName(), nickName)) {
+                                    player.sendMessage(i18n("Nick.AntiSetPlayerName"));
+                                 return false;
+                                }
                             }
                         }
                         if (nickName.length() < MHDFTools.instance.getConfig().getInt("NickSettings.MinLength")) {
@@ -59,7 +65,7 @@ public final class Nick implements TabExecutor {
             }
             case 2: {
                 if (sender.hasPermission("MHDFTools.Command.Nick.SetOther")) {
-                    boolean setNick = args[0].equals("off");
+                    boolean setNick = !args[0].equals("off");
                     String nickName = setNick ? args[1] : args[0];
                     if (setNick) {
                         NickUtil.setNickName(args[1], nickName);

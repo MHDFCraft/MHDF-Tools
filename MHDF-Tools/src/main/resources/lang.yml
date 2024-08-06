@@ -190,9 +190,10 @@ Bed:
   NotFound: "&e[MHDFTools] &c无法找到床位置!"
   TeleportDone: "&e[MHDFTools] &a传送成功!"
 Nick:
-  MinLength: "&e[MHDFTools] &c昵称最小长度为%1"
-  MaxLength: "&e[MHDFTools] &c昵称最大长度为%1"
-  BlackWord: "&e[MHDFTools] &c昵称中不能包含%1"
+  MinLength: "&e[MHDFTools] &c昵称最小长度为%1!"
+  MaxLength: "&e[MHDFTools] &c昵称最大长度为%1!"
+  BlackWord: "&e[MHDFTools] &c昵称中不能包含%1!"
+  AntiSetPlayerName: "&e[MHDFTools] &c昵称不能为其他玩家的游戏ID!"
   SetDone: "&e[MHDFTools] &a你现在的名字是:%1"
   SetOtherDone: "&e[MHDFTools] &a%1现在的名字是%2"
 TeleportDelay:

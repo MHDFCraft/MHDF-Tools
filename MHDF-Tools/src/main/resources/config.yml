@@ -451,10 +451,15 @@ NickSettings:
   MinLength: 3
   #最大长度
   MaxLength: 16
+  #禁止设置服务器玩家内的名字
+  AntiSetPlayerName: true
   #禁止包含的词汇
   BlackWordList:
-    - "BaiShenYao_Dog"
-    - "Xiao_Yu_Ge_Ge"
+    - "腐竹"
+    - "服主"
+    - "管理"
+    - "傻逼"
+    - "sb"
 
 #聊天颜色
 ChatColorSettings:
