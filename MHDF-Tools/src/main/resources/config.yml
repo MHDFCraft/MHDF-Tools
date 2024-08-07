@@ -481,7 +481,3 @@ ChatColorSettings:
       Weight: 1
       #聊天颜色
       ChatColor: "&c"
-  #指定玩家
-  Player:
-    #玩家ID对应的颜色
-    BaiShenYao_Dog: "#fdbdcf"

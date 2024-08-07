@@ -296,12 +296,6 @@ public final class SpigotUtil {
         return MessageUtil.colorMessage(message);
     }
 
-    public static String getChatColor(Player player) {
-        return MHDFTools.instance.getConfig().getString("ChatColorSettings.Player." + player.getName()) != null ?
-                Placeholder(player,MHDFTools.instance.getConfig().getString("ChatColorSettings.Player." + player.getName())) :
-                getCustomMessage(player, "ChatColorSettings.Group", "ChatColor");
-    }
-
     public static String getJoinMessage(Player player) {
         return getCustomMessage(player, "CustomJoinServerMessageSettings", "JoinMessage");
     }
@@ -310,7 +304,7 @@ public final class SpigotUtil {
         return getCustomMessage(player, "CustomQuitServerMessageSettings", "QuitMessage");
     }
 
-    private static String getCustomMessage(Player player, String settingType, String messageType) {
+    public static String getCustomMessage(Player player, String settingType, String messageType) {
         Map<Integer, String> messageList = new HashMap<>();
         List<Integer> weightList = new ArrayList<>();
 
