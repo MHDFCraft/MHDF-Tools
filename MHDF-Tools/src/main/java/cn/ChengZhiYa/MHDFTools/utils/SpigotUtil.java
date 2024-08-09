@@ -302,14 +302,14 @@ public final class SpigotUtil {
         return getCustomMessage(player, "CustomQuitServerMessageSettings", "QuitMessage");
     }
 
-    private static String getCustomMessage(Player player, String settingType, String messageType) {
+    public static String getCustomMessage(Player player, String settingType, String messageType) {
         Map<Integer, String> messageList = new HashMap<>();
         List<Integer> weightList = new ArrayList<>();
 
         for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
             String perm = permInfo.getPermission();
-            if (perm.startsWith("mhdftools." + settingType)) {
-                String group = perm.substring(("mhdftools." + settingType).length());
+            if (perm.startsWith("mhdftools." + messageType)) {
+                String group = perm.substring(("mhdftools." + messageType).length());
                 int weight = MHDFTools.instance.getConfig().getInt(settingType + "." + group + ".Weight");
                 messageList.put(weight, group);
                 weightList.add(weight);

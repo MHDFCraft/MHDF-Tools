@@ -41,6 +41,7 @@ public class BukkitEvent implements Invitable {
         registerEvent(new ShulkerBox(), "FastUseShulkerBoxSettings.Enable");
         registerEvent(new CraftingTable(), "FastUseCraftingTableSettings.Enable");
         registerEvent(new ServerEventActionListener(), "EventActionSettings.Enable");
+        registerEvent(new PlayerChatColorListener(),"ChatColorSettings.Enable");
     }
 
     private void registerEvent(Listener listener, String configPath) {

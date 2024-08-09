@@ -16,20 +16,17 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.flyList;
 public final class Fly implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        Player player = null;
-        if (args.length == 0) {
-            if (sender instanceof Player) {
-                player = (Player) sender;
-            }
-        }
+        Player player = sender instanceof Player ? (Player) sender : null;
         if (args.length == 1) {
-            if (Bukkit.getPlayer(args[0]) != null) {
-                player = Bukkit.getPlayer(args[0]);
+            if (sender.hasPermission("MHDFTools.Command.Fly.Give")) {
+                player = Bukkit.getPlayer(args[0]) != null ? Bukkit.getPlayer(args[0]) : null;
+            } else {
+                sender.sendMessage(i18n("NoPermission"));
             }
         }
         if (player != null) {
             if (!MHDFTools.instance.getConfig().getStringList("FlySettings.AntiFlyWorldList").contains(player.getLocation().getWorld().getName())) {
-                if (sender.hasPermission("MHDFTools.Command.Fly.Infinite")) {
+                if (player.hasPermission("MHDFTools.Command.Fly.Infinite")) {
                     if (flyList.contains(player.getName())) {
                         FlyUtil.removeFly(player.getName());
                         disableFly(player);

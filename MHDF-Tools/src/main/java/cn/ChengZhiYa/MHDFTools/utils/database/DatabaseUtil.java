@@ -40,6 +40,10 @@ public final class DatabaseUtil {
         if (MHDFTools.instance.getConfig().getBoolean("NickSettings.Enable")) {
             createFile("NickData.yml");
         }
+        //聊天颜色
+        if (MHDFTools.instance.getConfig().getBoolean("ChatColorSettings.Enable")) {
+            createFile("ChatColorData.yml");
+        }
     }
 
     public static void initializationDatabaseData() {
@@ -105,6 +109,13 @@ public final class DatabaseUtil {
                     "CREATE TABLE IF NOT EXISTS `MHDFTools_Nick` (" +
                             "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                             "`NickName` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "PRIMARY KEY (`PlayerName`)) " +
+                            "COLLATE='utf8mb4_general_ci';");
+
+            initializeTable("ChatColorSettings",
+                    "CREATE TABLE IF NOT EXISTS `MHDFTools_ChatColor` (" +
+                            "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "`ChatColor` VARCHAR(50) NOT NULL DEFAULT ''," +
                             "PRIMARY KEY (`PlayerName`)) " +
                             "COLLATE='utf8mb4_general_ci';");
 
