@@ -18,8 +18,7 @@ import java.util.Objects;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.database.ConvertData.MySQLToYAML;
 import static cn.ChengZhiYa.MHDFTools.utils.database.ConvertData.YAMLToMySQL;
-import static cn.ChengZhiYa.MHDFTools.utils.database.ImportUtil.importCMIData;
-import static cn.ChengZhiYa.MHDFTools.utils.database.ImportUtil.importHuskHomesData;
+import static cn.ChengZhiYa.MHDFTools.utils.database.ImportUtil.*;
 
 public final class MainCommand implements TabExecutor {
     private static final String YAML_TYPE = "YAML";
@@ -64,6 +63,9 @@ public final class MainCommand implements TabExecutor {
                     break;
                 case "CMI":
                     importCMIData(sender);
+                    break;
+                case "Essentials":
+                    importEssentialsData(sender);
                     break;
                 default:
                     sender.sendMessage(i18n("AdminCommands.import.NotFoundPlugin"));
@@ -125,7 +127,7 @@ public final class MainCommand implements TabExecutor {
                 case "convert":
                     return Arrays.asList("YAML", "MySQL");
                 case "import":
-                    return Arrays.asList("HuskHomes", "CMI");
+                    return Arrays.asList("HuskHomes", "CMI", "Essentials");
             }
         }
         return new ArrayList<>();

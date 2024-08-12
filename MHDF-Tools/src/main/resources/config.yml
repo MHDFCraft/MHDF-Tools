@@ -24,8 +24,6 @@ DataSettings:
 BungeecordSettings:
   #开关
   Enable: false
-  #如果数据中没有存储家对应的服务器从这里读取
-  HomeDefaultServer: "无"
 
 #垃圾桶设置
 TrashSettings:
@@ -461,7 +459,7 @@ NickSettings:
     - "傻逼"
     - "sb"
 
-#聊天颜色
+#聊天颜色设置
 ChatColorSettings:
   #开关
   Enable: true
@@ -481,3 +479,11 @@ ChatColorSettings:
       Weight: 1
       #聊天颜色
       ChatColor: "&c"
+
+#地标设置
+WarpSettings:
+  #开关
+  Enable: true
+  #关闭世界列表
+  DisableWorldList:
+    - "pvp"

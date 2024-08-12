@@ -85,6 +85,19 @@ public final class DatabaseUtil {
                             "INDEX `Owner` (`Owner`)) " +
                             "COLLATE='utf8mb4_general_ci';");
 
+            initializeTable("WarpSettings",
+                    "CREATE TABLE IF NOT EXISTS `mhdftools_warp` (" +
+                            "`Name` VARCHAR(100) NOT NULL DEFAULT ''," +
+                            "`Server` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "`World` VARCHAR(50) NOT NULL DEFAULT ''," +
+                            "`X` DOUBLE NOT NULL DEFAULT 0," +
+                            "`Y` DOUBLE NOT NULL DEFAULT 0," +
+                            "`Z` DOUBLE NOT NULL DEFAULT 0," +
+                            "`Yaw` DOUBLE NOT NULL DEFAULT 0," +
+                            "`Pitch` DOUBLE NOT NULL DEFAULT 0," +
+                            "PRIMARY KEY (`Name`))" +
+                            "COLLATE='utf8mb4_general_ci';");
+
             initializeTable("LoginSystemSettings",
                     "CREATE TABLE IF NOT EXISTS `mhdftools_login` (" +
                             "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +

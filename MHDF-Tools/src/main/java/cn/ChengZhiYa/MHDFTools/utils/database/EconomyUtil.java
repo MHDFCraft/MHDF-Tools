@@ -33,7 +33,7 @@ public final class EconomyUtil {
         return getPlayerFile(PlayerName).exists();
     }
 
-    public static void initializationPlayerData(String PlayerName) {
+    public static void initializationPlayerData(String PlayerName, Double money) {
         if (!ifPlayerFileExists(PlayerName)) {
             if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
                 Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
@@ -41,7 +41,7 @@ public final class EconomyUtil {
                         Connection connection = dataSource.getConnection();
                         PreparedStatement ps = connection.prepareStatement("INSERT INTO mhdftools_economy (PlayerName, Money) VALUES (?,?)");
                         ps.setString(1, PlayerName);
-                        ps.setDouble(2, MHDFTools.instance.getConfig().getDouble("EconomySettings.InitialMoney"));
+                        ps.setDouble(2, money);
                         ps.executeUpdate();
                         ps.close();
                         connection.close();

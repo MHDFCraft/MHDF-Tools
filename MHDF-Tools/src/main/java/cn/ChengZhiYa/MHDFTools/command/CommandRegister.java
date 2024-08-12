@@ -12,6 +12,9 @@ import cn.ChengZhiYa.MHDFTools.command.subCommand.main.server.List;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.server.Stop;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.teleport.Tpa;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.teleport.TpaHere;
+import cn.ChengZhiYa.MHDFTools.command.subCommand.main.warp.DelWarp;
+import cn.ChengZhiYa.MHDFTools.command.subCommand.main.warp.SetWarp;
+import cn.ChengZhiYa.MHDFTools.command.subCommand.main.warp.Warp;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.*;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.back.Back;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.back.TpBack;
@@ -174,11 +177,22 @@ public final class CommandRegister implements Invitable {
                         registerNickCommands();
                     }
                     break;
+                case "WarpSettings":
+                    if (isEnabled) {
+                        registerWarpCommands();
+                    }
+                    break;
             }
         }
         if (canRegister) {
             registerUnBackCommands();
         }
+    }
+
+    public void registerWarpCommands() {
+        registerCommand(plugin, new SetWarp(), "设置地标", "MHDFTools.Command.SetWarp", "setwarp");
+        registerCommand(plugin, new DelWarp(), "删除地标", "MHDFTools.Command.DelWarp", "delwarp");
+        registerCommand(plugin, new Warp(), "传送至地标", "MHDFTools.Command.Warp", "warp");
     }
 
     public void registerBedCommands() {
@@ -207,7 +221,7 @@ public final class CommandRegister implements Invitable {
     }
 
     private void registerHomeCommands() {
-        registerCommand(plugin, new SetHome(), "设置家", "MHDFTools.Command.setHome", "sethome");
+        registerCommand(plugin, new SetHome(), "设置家", "MHDFTools.Command.SetHome", "sethome");
         registerCommand(plugin, new DelHome(), "删除家", "MHDFTools.Command.DelHome", "delhome");
         registerCommand(plugin, new Home(), "传送至家", "MHDFTools.Command.Home", "home");
     }
