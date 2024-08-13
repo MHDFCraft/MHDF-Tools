@@ -313,8 +313,9 @@ public final class ImportUtil {
                         for (Path path : pathStream.filter(Files::isRegularFile).collect(Collectors.toList())) {
                             YamlConfiguration warpData = YamlConfiguration.loadConfiguration(path.toFile());
                             String warpName = warpData.getString("name");
+                            String worldName = warpData.getString("world-name") != null ? warpData.getString("world-name") : warpData.getString("world");
                             SuperLocation location = new SuperLocation(
-                                    warpData.getString("world-name"),
+                                    worldName,
                                     warpData.getDouble("x"),
                                     warpData.getDouble("y"),
                                     warpData.getDouble("z"),

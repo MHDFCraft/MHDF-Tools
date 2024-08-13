@@ -182,11 +182,65 @@ public final class CommandRegister implements Invitable {
                         registerWarpCommands();
                     }
                     break;
+                case "FeedSettings":
+                    if (isEnabled) {
+                        registerFeedCommands();
+                    }
+                    break;
+                case "HealSettings":
+                    if (isEnabled) {
+                        registerHealCommands();
+                    }
+                    break;
+                case "RepairSettings":
+                    if (isEnabled) {
+                        registerRepairCommands();
+                    }
+                    break;
+                case "SuicideSettings":
+                    if (isEnabled) {
+                        registerSuicideCommands();
+                    }
+                    break;
+                case "SudoSettings":
+                    if (isEnabled) {
+                        registerSudoCommands();
+                    }
+                    break;
+                case "SaySettings":
+                    if (isEnabled) {
+                        registerSayCommands();
+                    }
+                    break;
             }
         }
         if (canRegister) {
             registerUnBackCommands();
         }
+    }
+
+    public void registerFeedCommands() {
+        registerCommand(plugin, new Feed(), "回复饱食度", "MHDFTools.Command.Feed", "feed");
+    }
+
+    public void registerHealCommands() {
+        registerCommand(plugin, new Heal(), "治疗", "MHDFTools.Command.Feed", "heal");
+    }
+
+    public void registerRepairCommands() {
+        registerCommand(plugin, new Repair(), "修复手上物品", "MHDFTools.Command.Repair", "repair");
+    }
+
+    public void registerSuicideCommands() {
+        registerCommand(plugin, new Suicide(), "自杀", "MHDFTools.Command.Suicide", "suicide");
+    }
+
+    public void registerSudoCommands() {
+        registerCommand(plugin, new Sudo(), "强制执行命令", "MHDFTools.Command.Sudo", "sudo");
+    }
+
+    public void registerSayCommands() {
+        registerCommand(plugin, new Say(), "全服消息", "MHDFTools.Command.Say", "say");
     }
 
     public void registerWarpCommands() {
