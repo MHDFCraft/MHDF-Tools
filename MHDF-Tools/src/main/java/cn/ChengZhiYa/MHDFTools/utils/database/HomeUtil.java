@@ -17,7 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.getHomeServerName;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.ServerName;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.getServerName;
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.dataSource;
 
 public final class HomeUtil {
@@ -203,19 +204,19 @@ public final class HomeUtil {
     public static void addHome(String playerName, String homeName, SuperLocation homeLocation) {
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
             Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+                getServerName();
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
                              "INSERT INTO mhdftools_home (Home, Owner, Server, World, X, Y, Z, Yaw, Pitch) VALUES (?,?,?,?,?,?,?,?,?)")) {
-
                     List<String> homeList = getPlayerHomeList(playerName);
                     homeList.add(homeName);
                     getHomeListHashMap().put(playerName, homeList);
                     getHomeLocationHashMap().put(playerName + "|" + homeName, homeLocation);
-                    getHomeServerHashMap().put(playerName + "|" + homeName, getHomeServerName());
+                    getHomeServerHashMap().put(playerName + "|" + homeName, ServerName);
 
                     ps.setString(1, homeName);
                     ps.setString(2, playerName);
-                    ps.setString(3, getHomeServerName());
+                    ps.setString(3, ServerName);
                     ps.setString(4, homeLocation.getWorldName());
                     ps.setDouble(5, homeLocation.getX());
                     ps.setDouble(6, homeLocation.getY());
@@ -281,10 +282,11 @@ public final class HomeUtil {
 
         if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
             Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+                getServerName();
                 try (Connection connection = dataSource.getConnection()) {
                     String updateQuery = "UPDATE mhdftools_home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?";
                     try (PreparedStatement ps = connection.prepareStatement(updateQuery)) {
-                        ps.setString(1, getHomeServerName());
+                        ps.setString(1, ServerName);
                         ps.setString(2, homeLocation.getWorldName());
                         ps.setDouble(3, homeLocation.getX());
                         ps.setDouble(4, homeLocation.getY());
@@ -324,7 +326,6 @@ public final class HomeUtil {
                     double z = homeLocation.getZ();
                     double yaw = homeLocation.getYaw();
                     double pitch = homeLocation.getPitch();
-                    String homeServerName = getHomeServerName();
 
                     //更新
                     try (Connection connection = dataSource.getConnection()) {
@@ -345,7 +346,7 @@ public final class HomeUtil {
                     }
 
                     getHomeLocationHashMap().put(playerName + "|" + homeName, homeLocation); //在内存中更新
-                    getHomeServerHashMap().put(playerName + "|" + homeName, homeServerName);
+                    getHomeServerHashMap().put(playerName + "|" + homeName, serverName);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

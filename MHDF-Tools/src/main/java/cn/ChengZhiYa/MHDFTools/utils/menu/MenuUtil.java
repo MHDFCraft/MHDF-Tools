@@ -314,6 +314,15 @@ public final class MenuUtil {
                 }
                 break;
             }
+            case "[broadcast]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    Bukkit.broadcast(Placeholder(player, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"),"MHDFTools.Broadcast");
+                } else {
+                    Bukkit.broadcast(Placeholder(null, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"),"MHDFTools.Broadcast");
+                }
+                break;
+            }
             case "[title]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;

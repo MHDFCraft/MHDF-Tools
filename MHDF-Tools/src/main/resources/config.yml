@@ -24,8 +24,6 @@ DataSettings:
 BungeecordSettings:
   #开关
   Enable: false
-  #如果数据中没有存储家对应的服务器从这里读取
-  HomeDefaultServer: "无"
 
 #垃圾桶设置
 TrashSettings:
@@ -177,22 +175,6 @@ HomeSystemSettings:
   DisableWorldList:
     - "pvp"
 
-#公告系统设置
-TimeMessageSettings:
-  #开关
-  Enable: true
-  #公告延时(单位:秒)
-  Delay: 60
-  #后台显示公告
-  ConsoleDisplayed: true
-  #随机模式
-  RandomMode: false
-  #最少多少人才发送公告
-  MinPlayer: 5
-  #公告内容
-  Message:
-    - "欢迎使用梦回东方-工具!"
-
 #登录系统设置
 LoginSystemSettings:
   #开关
@@ -311,6 +293,7 @@ CommandLinkSettings:
       #[playsound]|<音频>|<音量|<音效> #播放音频
       #[playsound_pack]|<音频>|<音量|<音效> #播放资源包音频
       #[message]|<消息第一行>|<消息第二行> #发送消息
+      #[broadcast]|<消息第一行>|<消息第二行> #发送所有人可见的消息
       #[title]|<消息第一行>|<消息第二行>|淡出时间|停留时间|淡出时间 #发送标题消息
       #[actionbar]|<消息> #发送ActionBar消息
       #============================================
@@ -354,12 +337,68 @@ EventActionSettings:
       #[playsound]|<音频>|<音量|<音效> #播放音频
       #[playsound_pack]|<音频>|<音量|<音效> #播放资源包音频
       #[message]|<消息第一行>|<消息第二行> #发送消息
+      #[broadcast]|<消息第一行>|<消息第二行> #发送所有人可见的消息
       #[title]|<消息第一行>|<消息第二行>|淡出时间|停留时间|淡出时间 #发送标题消息
       #[actionbar]|<消息> #发送ActionBar消息
       #[teleport]|<World>|<X>|<Y>|<Z>|<Yaw>|<Pitch> #传送玩家至指定坐标
       #============================================
       ActionList:
         - "[message]|&e你知道吗,事件操作系统很好用的!"
+
+#时间操作
+TimeActionSettings:
+  #开关
+  Enable: true
+  #定时任务
+  ActionList:
+    #自定义命名
+    定时操作:
+      #============================================
+      #时间类型
+      #定时操作 #每多久操作一次
+      #定点操作 #指定时间操作一次
+      #============================================
+      Type: "定时操作"
+      #时间设置 (格式: 时:分:秒)
+      Time: "0:0:15"
+      #============================================
+      #操作列表
+      #[player]|<命令> #玩家执行命令
+      #[console]|<命令> #后台执行命令
+      #[playsound]|<音频>|<音量|<音效> #播放音频
+      #[playsound_pack]|<音频>|<音量|<音效> #播放资源包音频
+      #[message]|<消息第一行>|<消息第二行> #发送消息
+      #[broadcast]|<消息第一行>|<消息第二行> #发送所有人可见的消息
+      #[title]|<消息第一行>|<消息第二行>|淡出时间|停留时间|淡出时间 #发送标题消息
+      #[actionbar]|<消息> #发送ActionBar消息
+      #[teleport]|<World>|<X>|<Y>|<Z>|<Yaw>|<Pitch> #传送玩家至指定坐标
+      #============================================
+      ActionList:
+        - "[broadcast]|&e感谢您使用MHDF-Tools!"
+    #自定义命名
+    定点操作:
+      #============================================
+      #时间类型
+      #定时操作 #每多久操作一次
+      #定点操作 #指定时间操作一次
+      #============================================
+      Type: "定点操作"
+      #时间设置 (格式: 时:分:秒)
+      Time: "12:0:0"
+      #============================================
+      #操作列表
+      #[player]|<命令> #玩家执行命令
+      #[console]|<命令> #后台执行命令
+      #[playsound]|<音频>|<音量|<音效> #播放音频
+      #[playsound_pack]|<音频>|<音量|<音效> #播放资源包音频
+      #[message]|<消息第一行>|<消息第二行> #发送消息
+      #[broadcast]|<消息第一行>|<消息第二行> #发送所有人可见的消息
+      #[title]|<消息第一行>|<消息第二行>|淡出时间|停留时间|淡出时间 #发送标题消息
+      #[actionbar]|<消息> #发送ActionBar消息
+      #[teleport]|<World>|<X>|<Y>|<Z>|<Yaw>|<Pitch> #传送玩家至指定坐标
+      #============================================
+      ActionList:
+        - "[broadcast]|&e中午12点啦!快去吃饭,不吃饭我就生气了,哼!"
 
 #Back系统设置
 BackSettings:
@@ -461,7 +500,7 @@ NickSettings:
     - "傻逼"
     - "sb"
 
-#聊天颜色
+#聊天颜色设置
 ChatColorSettings:
   #开关
   Enable: true
@@ -481,3 +520,41 @@ ChatColorSettings:
       Weight: 1
       #聊天颜色
       ChatColor: "&c"
+
+#地标设置
+WarpSettings:
+  #开关
+  Enable: true
+  #关闭世界列表
+  DisableWorldList:
+    - "pvp"
+
+#回复饱食度设置
+FeedSettings:
+  #开关
+  Enable: true
+
+#治疗设置
+HealSettings:
+  #开关
+  Enable: true
+
+#修复手上物品设置
+RepairSettings:
+  #开关
+  Enable: true
+
+#自杀设置
+SuicideSettings:
+  #开关
+  Enable: true
+
+#强制执行命令设置
+SudoSettings:
+  #开关
+  Enable: true
+
+#全服消息命令设置
+SaySettings:
+  #开关
+  Enable: true

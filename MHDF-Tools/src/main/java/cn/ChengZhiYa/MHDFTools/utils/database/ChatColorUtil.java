@@ -26,11 +26,11 @@ public final class ChatColorUtil {
     public static String getChatColor(Player player) {
         if (ifPlayerChatColorExists(player)) {
             if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-                return Placeholder(player,(String) getData("mhdftools_chatcolor", "PlayerName", player.getName(), "ChatColor"));
+                return Placeholder(player, (String) getData("mhdftools_chatcolor", "PlayerName", player.getName(), "ChatColor"));
             } else {
                 File file = new File(MHDFTools.instance.getDataFolder(), "ChatColorData.yml");
                 YamlConfiguration data = YamlConfiguration.loadConfiguration(file);
-                return Placeholder(player,data.getString(player.getName()));
+                return Placeholder(player, data.getString(player.getName()));
             }
         } else {
             return getCustomMessage(player, "ChatColorSettings.Group", "ChatColor");

@@ -40,7 +40,7 @@ public final class PlayerJoinListener implements Listener {
             Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, BungeeCordUtil::getServerName, 20);
         }
         if (plugin.getConfig().getBoolean("EconomySettings.Enable")) {
-            initializationPlayerData(event.getPlayer().getName());
+            initializationPlayerData(event.getPlayer().getName(), plugin.getConfig().getDouble("EconomySettings.InitialMoney"));
         }
         if (plugin.getConfig().getBoolean("CheckVersion")) {
             try {

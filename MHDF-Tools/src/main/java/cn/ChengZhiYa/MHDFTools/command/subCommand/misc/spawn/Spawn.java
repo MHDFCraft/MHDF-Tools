@@ -37,7 +37,7 @@ public final class Spawn implements CommandExecutor {
         float spawnPitch = (float) MHDFTools.instance.getConfig().getDouble(PITCH_CONFIG_KEY);
         SuperLocation spawnLocation = new SuperLocation(worldName, spawnX, spawnY, spawnZ, spawnYaw, spawnPitch);
 
-        BungeeCordUtil.TpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString(SERVER_CONFIG_KEY), spawnLocation);
+        BungeeCordUtil.tpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString(SERVER_CONFIG_KEY), spawnLocation);
         sender.sendMessage(i18n("Spawn.TeleportDone"));
 
         return true;

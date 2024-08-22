@@ -28,9 +28,9 @@ AdminCommands:
     PluginNotInstall: "&e[MHDFTools] &f붃 &c导入错误,插件%1未安装!"
     NotFoundPlugin: "&e[MHDFTools] &c导入错误,目标插件不支持!"
     NotFoundDataType: "&e[MHDFTools] &c导入错误,目标数据类型不支持!"
-    ImportStart: "&e[MHDFTools] &a开始导入%1的数据!"
-    ImportError: "&e[MHDFTools] &c导入错误,已紧急停止!"
-    ImportDone: "&e[MHDFTools] &a已将%1的数据导入!"
+    ImportStart: "&e[MHDFTools] &a开始导入%1的%2数据!"
+    ImportError: "&e[MHDFTools] &c导入%1的%2数据时错误,已紧急停止!"
+    ImportDone: "&e[MHDFTools] &a已将%1的%2数据导入!"
   reload:
     Usage: "&e/{Command} reload"
     Description: "&b重载插件"
@@ -69,8 +69,9 @@ Usage:
   FlyTime: "&e[MHDFTools] &c用法错误,用法:/flytime <玩家ID> <时长>"
   Vanish: "&e[MHDFTools] &c用法错误,用法:/%1 [玩家ID]"
   Home: "&e[MHDFTools] &c用法错误,用法:/%1 <家名称>"
+  Warp: "&e[MHDFTools] &c用法错误,用法:/%1 <地标名称> [玩家ID]"
   Freeze: "&e[MHDFTools] &c用法错误,用法:/freeze <玩家ID>"
-  gameMode: "&e[MHDFTools] &c用法错误,用法:/%1 <游戏模式> [玩家ID]"
+  GameMode: "&e[MHDFTools] &c用法错误,用法:/%1 <游戏模式> [玩家ID]"
   Invsee: "&e[MHDFTools] &c用法错误,用法:/invsee <玩家ID>"
   Ip: "&e[MHDFTools] &c用法错误,用法:/ip <玩家ID>"
   Tpa: "&e[MHDFTools] &c用法错误,用法:/tpa <玩家ID>"
@@ -80,6 +81,22 @@ Usage:
   Login: "&e[MHDFTools] &c用法错误,用法:/%1 <密码>"
   Register: "&e[MHDFTools] &c用法错误,用法:/%1 <密码>"
   Nick: "&e[MHDFTools] &c用法错误,用法:/nick <名称> [玩家ID]"
+  Heal: "&e[MHDFTools] &c用法错误,用法:/heal [玩家ID]"
+  Feed: "&e[MHDFTools] &c用法错误,用法:/feed [玩家ID]"
+  Repair: "&e[MHDFTools] &c用法错误,用法:/repair [玩家ID]"
+  Suicide: "&e[MHDFTools] &c用法错误,用法:/suicide"
+  Sudo: "&e[MHDFTools] &c用法错误,用法:/repair <玩家ID> <指令>"
+  Say: "&e[MHDFTools] &c用法错误,用法:/say <消息>"
+Heal:
+  Done: "&e[MHDFTools] &a成功治疗!"
+Feed:
+  Done: "&e[MHDFTools] &a成功恢复饱食度!"
+Repair:
+  Done: "&e[MHDFTools] &a成功修复!"
+Suicide:
+  Done: "&e[MHDFTools] &a自杀成功!"
+Sudo:
+  Done: "&e[MHDFTools] &a执行成功!"
 Rotate:
   NotFound: "&e[MHDFTools] &c找不到目标玩家!"
   Done: "&e[MHDFTools] &a成功让目标进行转头"
@@ -125,7 +142,7 @@ Vanish:
   Done: "&e[MHDFTools] #7289da你的神隐模式已%1"
   SetDone: "&e[MHDFTools] #7289da已将%1的神隐模式%2"
   Bossbar: "&e[MHDFTools] &f神隐中"
-gameMode:
+GameMode:
   Survival: "生存模式"
   Adventure: "冒险模式"
   Creative: "创造模式"
@@ -204,3 +221,8 @@ TeleportDelay:
   1: "&e[MHDFTools] &6距离传送还有&b1&6秒|&f请不要移动!|10|70|20"
   0: "&e[MHDFTools] &a传送成功!|&f快看看传送到了哪里!|10|70|20"
 TeleportMove: "&c传送取消!|&f你移动了,请重新传送!|10|70|20"
+Warp:
+  NotFound: "&e[MHDFTools] &6没有名为%1的地标!"
+  SetDone: "&e[MHDFTools] &a设置地标成功!"
+  TeleportDone: "&e[MHDFTools] &a你来到了%1地标!"
+  RemoveDone: "&e[MHDFTools] &c删除地标成功!"

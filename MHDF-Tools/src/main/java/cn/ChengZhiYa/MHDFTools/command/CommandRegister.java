@@ -12,6 +12,9 @@ import cn.ChengZhiYa.MHDFTools.command.subCommand.main.server.List;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.server.Stop;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.teleport.Tpa;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.teleport.TpaHere;
+import cn.ChengZhiYa.MHDFTools.command.subCommand.main.warp.DelWarp;
+import cn.ChengZhiYa.MHDFTools.command.subCommand.main.warp.SetWarp;
+import cn.ChengZhiYa.MHDFTools.command.subCommand.main.warp.Warp;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.*;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.back.Back;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.back.TpBack;
@@ -174,11 +177,76 @@ public final class CommandRegister implements Invitable {
                         registerNickCommands();
                     }
                     break;
+                case "WarpSettings":
+                    if (isEnabled) {
+                        registerWarpCommands();
+                    }
+                    break;
+                case "FeedSettings":
+                    if (isEnabled) {
+                        registerFeedCommands();
+                    }
+                    break;
+                case "HealSettings":
+                    if (isEnabled) {
+                        registerHealCommands();
+                    }
+                    break;
+                case "RepairSettings":
+                    if (isEnabled) {
+                        registerRepairCommands();
+                    }
+                    break;
+                case "SuicideSettings":
+                    if (isEnabled) {
+                        registerSuicideCommands();
+                    }
+                    break;
+                case "SudoSettings":
+                    if (isEnabled) {
+                        registerSudoCommands();
+                    }
+                    break;
+                case "SaySettings":
+                    if (isEnabled) {
+                        registerSayCommands();
+                    }
+                    break;
             }
         }
         if (canRegister) {
             registerUnBackCommands();
         }
+    }
+
+    public void registerFeedCommands() {
+        registerCommand(plugin, new Feed(), "回复饱食度", "MHDFTools.Command.Feed", "feed");
+    }
+
+    public void registerHealCommands() {
+        registerCommand(plugin, new Heal(), "治疗", "MHDFTools.Command.Feed", "heal");
+    }
+
+    public void registerRepairCommands() {
+        registerCommand(plugin, new Repair(), "修复手上物品", "MHDFTools.Command.Repair", "repair");
+    }
+
+    public void registerSuicideCommands() {
+        registerCommand(plugin, new Suicide(), "自杀", "MHDFTools.Command.Suicide", "suicide");
+    }
+
+    public void registerSudoCommands() {
+        registerCommand(plugin, new Sudo(), "强制执行命令", "MHDFTools.Command.Sudo", "sudo");
+    }
+
+    public void registerSayCommands() {
+        registerCommand(plugin, new Say(), "全服消息", "MHDFTools.Command.Say", "say");
+    }
+
+    public void registerWarpCommands() {
+        registerCommand(plugin, new SetWarp(), "设置地标", "MHDFTools.Command.SetWarp", "setwarp");
+        registerCommand(plugin, new DelWarp(), "删除地标", "MHDFTools.Command.DelWarp", "delwarp");
+        registerCommand(plugin, new Warp(), "传送至地标", "MHDFTools.Command.Warp", "warp");
     }
 
     public void registerBedCommands() {
@@ -207,7 +275,7 @@ public final class CommandRegister implements Invitable {
     }
 
     private void registerHomeCommands() {
-        registerCommand(plugin, new SetHome(), "设置家", "MHDFTools.Command.setHome", "sethome");
+        registerCommand(plugin, new SetHome(), "设置家", "MHDFTools.Command.SetHome", "sethome");
         registerCommand(plugin, new DelHome(), "删除家", "MHDFTools.Command.DelHome", "delhome");
         registerCommand(plugin, new Home(), "传送至家", "MHDFTools.Command.Home", "home");
     }

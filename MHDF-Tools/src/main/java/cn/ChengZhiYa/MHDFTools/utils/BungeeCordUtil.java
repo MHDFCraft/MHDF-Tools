@@ -53,13 +53,6 @@ public final class BungeeCordUtil {
         }
     }
 
-    public static String getHomeServerName() {
-        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
-            getServerName();
-        }
-        return ServerName;
-    }
-
     public static void sendTpa(String playerName, String targetPlayerName) {
         if (Bukkit.getPlayer(playerName) != null) {
             Player player = Bukkit.getPlayer(playerName);
@@ -157,14 +150,14 @@ public final class BungeeCordUtil {
         }
     }
 
-    public static void TpPlayerTo(String playerName, String serverName, SuperLocation location) {
+    public static void tpPlayerTo(String playerName, String serverName, SuperLocation location) {
         if (!ServerName.equals(serverName) && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
             Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
             }
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("TpPlayerTo");
+            out.writeUTF("tpPlayerTo");
             out.writeUTF(playerName);
             out.writeUTF(serverName);
             out.writeUTF(location.getWorldName());

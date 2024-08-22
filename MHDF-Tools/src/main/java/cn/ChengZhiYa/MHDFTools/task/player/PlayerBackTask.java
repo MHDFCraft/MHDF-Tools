@@ -29,7 +29,7 @@ public final class PlayerBackTask extends BukkitRunnable {
                     continue;
                 }
                 SpigotUtil.playSound(Objects.requireNonNull(player), SpigotUtil.sound("TeleportSound"));
-                BungeeCordUtil.TpPlayerTo(PlayerName, ServerName, MapUtil.getLocationHashMap().get(PlayerName + "_DeathLocation"));
+                BungeeCordUtil.tpPlayerTo(PlayerName, ServerName, MapUtil.getLocationHashMap().get(PlayerName + "_DeathLocation"));
                 MapUtil.getLocationHashMap().put(PlayerName + "_UnBackLocation", new SuperLocation(Objects.requireNonNull(player).getLocation()));
                 player.sendMessage(SpigotUtil.i18n("Back.Done"));
                 MapUtil.getIntHashMap().remove(Key);

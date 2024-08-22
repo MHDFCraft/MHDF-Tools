@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.ServerName;
-import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.TpPlayerTo;
+import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.tpPlayerTo;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class UnBack implements CommandExecutor {
@@ -24,7 +24,7 @@ public final class UnBack implements CommandExecutor {
                 if (MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation").getWorldName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
-                TpPlayerTo(player.getName(), ServerName, MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation"));
+                tpPlayerTo(player.getName(), ServerName, MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation"));
                 player.sendMessage(i18n("UnBack.Done"));
             } else {
                 sender.sendMessage(i18n("UnBack.NotFound"));

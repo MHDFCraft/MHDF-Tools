@@ -16,7 +16,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 public final class GameMode implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        String RunSender = i18n("gameMode.Server");
+        String RunSender = i18n("GameMode.Server");
         Player player;
 
         if (args.length == 1 || args.length == 2) {
@@ -54,21 +54,21 @@ public final class GameMode implements TabExecutor {
                         setGameMode(player, 3, RunSender);
                         break;
                     default:
-                        sender.sendMessage(i18n("Usage.gameMode"), label);
+                        sender.sendMessage(i18n("Usage.GameMode"), label);
                         return false;
                 }
 
             return true;
         }
 
-        sender.sendMessage(i18n("Usage.gameMode"), label);
+        sender.sendMessage(i18n("Usage.GameMode"), label);
         return false;
     }
 
     private void setGameMode(Player player, int gameMode, String runSender) {
         player.setGameMode(Objects.requireNonNull(getGamemode(gameMode)));
-        player.sendMessage(i18n("gameMode.Done", getGamemodeString(gameMode)));
-        opperSenderMessage(i18n("gameMode.OtherOpDone", runSender, player.getName(), getGamemodeString(gameMode)), player.getName());
+        player.sendMessage(i18n("GameMode.Done", getGamemodeString(gameMode)));
+        opperSenderMessage(i18n("GameMode.OtherOpDone", runSender, player.getName(), getGamemodeString(gameMode)), player.getName());
     }
 
     @Override

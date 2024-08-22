@@ -25,7 +25,7 @@ public final class PlayerSpawnListener implements Listener {
         SuperLocation spawnLocation = SpawnUtil.getSpawnLocation();
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            BungeeCordUtil.TpPlayerTo(player.getName(), SpawnUtil.getServerName(), spawnLocation);
+            BungeeCordUtil.tpPlayerTo(player.getName(), SpawnUtil.getServerName(), spawnLocation);
         }, 5);
     }
 

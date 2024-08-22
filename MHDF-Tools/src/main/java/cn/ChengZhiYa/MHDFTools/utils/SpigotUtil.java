@@ -186,16 +186,16 @@ public final class SpigotUtil {
 
     public static String getGamemodeString(int GameModeID) {
         if (GameModeID == 0) {
-            return i18n("gameMode.Survival");
+            return i18n("GameMode.Survival");
         }
         if (GameModeID == 1) {
-            return i18n("gameMode.Creative");
+            return i18n("GameMode.Creative");
         }
         if (GameModeID == 2) {
-            return i18n("gameMode.Adventure");
+            return i18n("GameMode.Adventure");
         }
         if (GameModeID == 3) {
-            return i18n("gameMode.Spectator");
+            return i18n("GameMode.Spectator");
         }
         return null;
     }
