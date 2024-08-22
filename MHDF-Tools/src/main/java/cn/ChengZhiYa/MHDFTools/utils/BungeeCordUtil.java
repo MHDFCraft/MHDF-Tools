@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaHereUtil;
@@ -34,11 +34,11 @@ public final class BungeeCordUtil {
         out.writeUTF("PlayerList");
         out.writeUTF("ALL");
 
-        player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
+        player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
     }
 
     public static void getServerName() {
-        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -47,9 +47,9 @@ public final class BungeeCordUtil {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("ServerName");
 
-            player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
+            player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            ServerName = MHDFTools.instance.getConfig().getString("BungeecordSettings.HomeDefaultServer");
+            ServerName = PluginLoader.INSTANCE.getPlugin().getConfig().getString("BungeecordSettings.HomeDefaultServer");
         }
     }
 
@@ -57,17 +57,17 @@ public final class BungeeCordUtil {
         if (Bukkit.getPlayer(playerName) != null) {
             Player player = Bukkit.getPlayer(playerName);
 
-            if (Bukkit.getPlayer(targetPlayerName) == null && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+            if (Bukkit.getPlayer(targetPlayerName) == null && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("SendTpa");
                 out.writeUTF(playerName);
                 out.writeUTF(targetPlayerName);
 
-                Objects.requireNonNull(player).sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
+                Objects.requireNonNull(player).sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
             } else {
                 Objects.requireNonNull(Bukkit.getPlayer(targetPlayerName)).spigot().sendMessage(TpaUtil.getTpaRequestMessage(playerName));
             }
-            TpaUtil.getTpaHashMap().put(playerName, new TpaData(targetPlayerName, MHDFTools.instance.getConfig().getInt("TpaSettings.OutTime")));
+            TpaUtil.getTpaHashMap().put(playerName, new TpaData(targetPlayerName, PluginLoader.INSTANCE.getPlugin().getConfig().getInt("TpaSettings.OutTime")));
         }
     }
 
@@ -75,22 +75,22 @@ public final class BungeeCordUtil {
         if (Bukkit.getPlayer(playerName) != null) {
             Player player = Bukkit.getPlayer(playerName);
 
-            if (Bukkit.getPlayer(targetPlayerName) == null && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+            if (Bukkit.getPlayer(targetPlayerName) == null && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("SendTpaHere");
                 out.writeUTF(playerName);
                 out.writeUTF(targetPlayerName);
 
-                Objects.requireNonNull(player).sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
+                Objects.requireNonNull(player).sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
             } else {
                 Objects.requireNonNull(Bukkit.getPlayer(targetPlayerName)).spigot().sendMessage(TpaHereUtil.getTpaHereRequestMessage(playerName));
             }
-            TpaHereUtil.getTpahereHashMap().put(playerName, new TpaData(targetPlayerName, MHDFTools.instance.getConfig().getInt("TpaHereSettings.OutTime")));
+            TpaHereUtil.getTpahereHashMap().put(playerName, new TpaData(targetPlayerName, PluginLoader.INSTANCE.getPlugin().getConfig().getInt("TpaHereSettings.OutTime")));
         }
     }
 
     public static void sendMessage(String playerName, String Message) {
-        if (Bukkit.getPlayer(playerName) == null && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (Bukkit.getPlayer(playerName) == null && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -101,14 +101,14 @@ public final class BungeeCordUtil {
             out.writeUTF(playerName);
             out.writeUTF(Message);
 
-            player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
+            player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
             Objects.requireNonNull(Bukkit.getPlayer(playerName)).sendMessage(Message);
         }
     }
 
     public static void tpPlayer(String playerName, String targetPlayerName) {
-        if ((Bukkit.getPlayer(playerName) == null || Bukkit.getPlayer(targetPlayerName) == null) && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if ((Bukkit.getPlayer(playerName) == null || Bukkit.getPlayer(targetPlayerName) == null) && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -119,9 +119,9 @@ public final class BungeeCordUtil {
             out.writeUTF(playerName);
             out.writeUTF(targetPlayerName);
 
-            Objects.requireNonNull(player).sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
+            Objects.requireNonNull(player).sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
+            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> {
                 Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(Objects.requireNonNull(Bukkit.getPlayer(targetPlayerName)));
                 playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), sound("TeleportSound"));
             });
@@ -129,7 +129,7 @@ public final class BungeeCordUtil {
     }
 
     public static void tpPlayerHome(String playerName, String homeName) {
-        if (!getHomeServer(playerName, homeName).equals(ServerName) && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (!getHomeServer(playerName, homeName).equals(ServerName) && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -141,9 +141,9 @@ public final class BungeeCordUtil {
             out.writeUTF(getHomeServer(playerName, homeName));
             out.writeUTF(homeName);
 
-            player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
+            player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
+            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> {
                 Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(Objects.requireNonNull(getHomeLocation(playerName, homeName)).getLocation());
                 playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), sound("TeleportSound"));
             });
@@ -151,7 +151,7 @@ public final class BungeeCordUtil {
     }
 
     public static void tpPlayerTo(String playerName, String serverName, SuperLocation location) {
-        if (!ServerName.equals(serverName) && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (!ServerName.equals(serverName) && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -166,9 +166,9 @@ public final class BungeeCordUtil {
             out.writeDouble(location.getZ());
             out.writeDouble(location.getYaw());
             out.writeDouble(location.getPitch());
-            player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
+            player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
+            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> {
                 Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(location.getLocation());
                 SpigotUtil.playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), SpigotUtil.sound("TeleportSound"));
             });
@@ -176,7 +176,7 @@ public final class BungeeCordUtil {
     }
 
     public static void cancelTpa(String playerName) {
-        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -188,13 +188,13 @@ public final class BungeeCordUtil {
             out.writeUTF("CancelTpa");
             out.writeUTF(playerName);
 
-            player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
+            player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         }
         TpaUtil.getTpaHashMap().remove(playerName);
     }
 
     public static void cancelTpaHere(String playerName) {
-        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -206,13 +206,13 @@ public final class BungeeCordUtil {
             out.writeUTF("CancelTpaHere");
             out.writeUTF(playerName);
 
-            player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
+            player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         }
         TpaHereUtil.getTpahereHashMap().remove(playerName);
     }
 
     public static void setSpawn(SuperLocation location) {
-        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -228,22 +228,22 @@ public final class BungeeCordUtil {
             out.writeDouble(location.getYaw());
             out.writeDouble(location.getPitch());
 
-            player.sendPluginMessage(MHDFTools.instance, "BungeeCord", out.toByteArray());
+            player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            MHDFTools.instance.getConfig().set("SpawnSettings.Server", ServerName);
-            MHDFTools.instance.getConfig().set("SpawnSettings.World", location.getWorldName());
-            MHDFTools.instance.getConfig().set("SpawnSettings.X", location.getX());
-            MHDFTools.instance.getConfig().set("SpawnSettings.Y", location.getY());
-            MHDFTools.instance.getConfig().set("SpawnSettings.Z", location.getZ());
-            MHDFTools.instance.getConfig().set("SpawnSettings.Yaw", location.getYaw());
-            MHDFTools.instance.getConfig().set("SpawnSettings.Pitch", location.getPitch());
-            MHDFTools.instance.saveConfig();
-            MHDFTools.instance.reloadConfig();
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.Server", ServerName);
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.World", location.getWorldName());
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.X", location.getX());
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.Y", location.getY());
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.Z", location.getZ());
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.Yaw", location.getYaw());
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.Pitch", location.getPitch());
+            PluginLoader.INSTANCE.getPlugin().saveConfig();
+            PluginLoader.INSTANCE.getPlugin().reloadConfig();
         }
     }
 
     public static boolean ifPlayerOnline(String playerName) {
-        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             getPlayerList();
             return Arrays.asList(PlayerList).contains(playerName);
         } else {

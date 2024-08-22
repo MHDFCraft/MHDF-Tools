@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.menu;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
@@ -97,7 +97,7 @@ public final class MenuUtil {
     }
 
     public static YamlConfiguration getMenu(String MenuFile) {
-        return YamlConfiguration.loadConfiguration(new File(MHDFTools.instance.getDataFolder(), "Menus/" + MenuFile));
+        return YamlConfiguration.loadConfiguration(new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "Menus/" + MenuFile));
     }
 
     public static String getMenuFromItem(ItemStack item) {
@@ -112,7 +112,7 @@ public final class MenuUtil {
 
     public static List<String> getCustomMenuList() {
         List<String> MenuList = new ArrayList<>();
-        try (Stream<Path> File = Files.walk(new File(MHDFTools.instance.getDataFolder(), "Menus").toPath())) {
+        try (Stream<Path> File = Files.walk(new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "Menus").toPath())) {
             MenuList = File.filter(Files::isRegularFile).map(Path::toString).map(FileName -> FileName
                     .replaceAll("plugins\\\\MHDF-Tools\\\\Menus\\\\", "")
                     .replaceAll("plugins/MHDF-Tools/Menus/", "")
@@ -284,14 +284,14 @@ public final class MenuUtil {
             case "[player]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.chat("/" + Placeholder(player, action[1])));
+                    Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> player.chat("/" + Placeholder(player, action[1])));
                 } else {
-                    Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
+                    Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
                 }
                 break;
             }
             case "[console]": {
-                Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
+                Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
                 break;
             }
             case "[playsound]": {
@@ -378,7 +378,7 @@ public final class MenuUtil {
     }
 
     public static void openMenu(Player player, String menuFileName) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             String title = Placeholder(player, getMenu(menuFileName).getString("menu.Title"));
             Inventory menu = Bukkit.createInventory(player, getMenu(menuFileName).getInt("menu.Size"), title);
 
@@ -399,7 +399,7 @@ public final class MenuUtil {
 
                 setMenuItem(menu, menuFileName, itemID, type, displayName, lore, customModelData, amount, slotList);
             }
-            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.openInventory(menu));
+            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> player.openInventory(menu));
         });
     }
 }

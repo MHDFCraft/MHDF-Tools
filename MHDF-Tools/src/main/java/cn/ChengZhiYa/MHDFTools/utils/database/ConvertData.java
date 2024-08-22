@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -35,22 +35,22 @@ public final class ConvertData {
     public static void MySQLToYAML(CommandSender sender) {
         sender.sendMessage(i18n("AdminCommands.convert.ConvertStart", "YAML"));
         {
-            MHDFTools.instance.getConfig().set("DataSettings.Type", "YAML");
-            MHDFTools.instance.saveConfig();
-            MHDFTools.instance.reloadConfig();
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("DataSettings.Type", "YAML");
+            PluginLoader.INSTANCE.getPlugin().saveConfig();
+            PluginLoader.INSTANCE.getPlugin().reloadConfig();
         }
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             initializationYamlData();
 
             try {
                 //转换登录数据
                 {
-                    if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
+                    if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("LoginSystemSettings.Enable")) {
                         Connection connection = dataSource.getConnection();
                         PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_login");
                         ResultSet rs = ps.executeQuery();
                         while (rs.next()) {
-                            File DataFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
+                            File DataFile = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "LoginData.yml");
                             YamlConfiguration Data = YamlConfiguration.loadConfiguration(DataFile);
                             Data.set(rs.getString("PlayerName") + "_Password", rs.getString("Password"));
                             Data.save(DataFile);
@@ -64,8 +64,8 @@ public final class ConvertData {
 
                 //转换经济数据
                 {
-                    if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
-                        if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
+                    if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
+                        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
                             Connection connection = dataSource.getConnection();
                             PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_economy");
                             ResultSet rs = ps.executeQuery();
@@ -88,7 +88,7 @@ public final class ConvertData {
 
                 //转换家数据
                 {
-                    if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+                    if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
                         Connection connection = dataSource.getConnection();
                         PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_home");
                         ResultSet rs = ps.executeQuery();
@@ -122,20 +122,20 @@ public final class ConvertData {
     public static void YAMLToMySQL(CommandSender sender, String DatabaseHost, String Database, String User, String Password) {
         sender.sendMessage(i18n("AdminCommands.convert.ConvertStart", "MySQL"));
         {
-            MHDFTools.instance.getConfig().set("DataSettings.Type", "MySQL");
-            MHDFTools.instance.getConfig().set("DataSettings.Host", DatabaseHost);
-            MHDFTools.instance.getConfig().set("DataSettings.Database", Database);
-            MHDFTools.instance.getConfig().set("DataSettings.User", User);
-            MHDFTools.instance.getConfig().set("DataSettings.Password", Password);
-            MHDFTools.instance.saveConfig();
-            MHDFTools.instance.reloadConfig();
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("DataSettings.Type", "MySQL");
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("DataSettings.Host", DatabaseHost);
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("DataSettings.Database", Database);
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("DataSettings.User", User);
+            PluginLoader.INSTANCE.getPlugin().getConfig().set("DataSettings.Password", Password);
+            PluginLoader.INSTANCE.getPlugin().saveConfig();
+            PluginLoader.INSTANCE.getPlugin().reloadConfig();
         }
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             try {
                 HikariConfig config = new HikariConfig();
-                config.setJdbcUrl("jdbc:mysql://" + MHDFTools.instance.getConfig().getString("DataSettings.Host") + "/" + MHDFTools.instance.getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
-                config.setUsername(MHDFTools.instance.getConfig().getString("DataSettings.User"));
-                config.setPassword(MHDFTools.instance.getConfig().getString("DataSettings.Password"));
+                config.setJdbcUrl("jdbc:mysql://" + PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Host") + "/" + PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
+                config.setUsername(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.User"));
+                config.setPassword(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Password"));
                 config.addDataSourceProperty("useUnicode", "true");
                 config.addDataSourceProperty("characterEncoding", "utf8");
                 config.addDataSourceProperty("cachePrepStmts", "true");
@@ -145,7 +145,7 @@ public final class ConvertData {
                 statement = dataSource.getConnection().createStatement();
 
                 {
-                    if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
+                    if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
                         Connection connection = dataSource.getConnection();
                         PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools_economy` (" +
                                 "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
@@ -158,7 +158,7 @@ public final class ConvertData {
                     }
                 }
                 {
-                    if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+                    if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
                         Connection connection = dataSource.getConnection();
                         PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools_home` (" +
                                 "`ID` BIGINT NOT NULL AUTO_INCREMENT," +
@@ -181,7 +181,7 @@ public final class ConvertData {
                     }
                 }
                 {
-                    if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
+                    if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("LoginSystemSettings.Enable")) {
                         Connection connection = dataSource.getConnection();
                         PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools_login` (" +
                                 "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
@@ -196,8 +196,8 @@ public final class ConvertData {
 
                 //转换登录数据
                 {
-                    if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
-                        File File = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
+                    if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("LoginSystemSettings.Enable")) {
+                        File File = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "LoginData.yml");
                         YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);
                         for (String Datas : Objects.requireNonNull(Data.getConfigurationSection("")).getKeys(false)) {
                             if (!loginExists(sender.getName())) {
@@ -212,9 +212,9 @@ public final class ConvertData {
 
                 //转换经济数据
                 {
-                    if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
+                    if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
                         List<String> VaultDataList = new ArrayList<>();
-                        try (Stream<Path> File = Files.walk(new File(MHDFTools.instance.getDataFolder(), "VaultData").toPath())) {
+                        try (Stream<Path> File = Files.walk(new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "VaultData").toPath())) {
                             VaultDataList = File.filter(Files::isRegularFile).map(Path::toString).map(FileName -> FileName.replaceAll("plugins\\\\MHDF-Tools\\\\VaultData\\\\", "")).collect(Collectors.toList());
                         } catch (IOException ignored) {
                         }
@@ -239,9 +239,9 @@ public final class ConvertData {
 
                 //转换家数据
                 {
-                    if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+                    if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
                         List<String> HomeDataList = new ArrayList<>();
-                        try (Stream<Path> File = Files.walk(new File(MHDFTools.instance.getDataFolder(), "HomeData").toPath())) {
+                        try (Stream<Path> File = Files.walk(new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "HomeData").toPath())) {
                             HomeDataList = File.filter(Files::isRegularFile).map(Path::toString).map(FileName -> FileName.replaceAll("plugins\\\\MHDF-Tools\\\\HomeData\\\\", "")).collect(Collectors.toList());
                         } catch (IOException ignored) {
                         }

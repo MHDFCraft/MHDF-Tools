@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player.fastuse;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public final class ShulkerBox implements Listener {
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("FastUseShulkerBoxSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("FastUseShulkerBoxSettings.Enable")) {
             if (event.getAction() == Action.RIGHT_CLICK_AIR) {
                 Player player = event.getPlayer();
                 if (player.hasPermission("MHDFTools.FastUse.ShulkerBox")) {
@@ -27,7 +27,7 @@ public final class ShulkerBox implements Listener {
                         ItemMeta meta = player.getInventory().getItemInMainHand().getItemMeta();
                         BlockStateMeta blockMate = (BlockStateMeta) meta;
                         org.bukkit.block.ShulkerBox box = (org.bukkit.block.ShulkerBox) blockMate.getBlockState();
-                        Inventory inv = Bukkit.createInventory(player, InventoryType.SHULKER_BOX, MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("FastUseShulkerBoxSettings.MenuTitle")));
+                        Inventory inv = Bukkit.createInventory(player, InventoryType.SHULKER_BOX, MessageUtil.colorMessage(PluginLoader.INSTANCE.getPlugin().getConfig().getString("FastUseShulkerBoxSettings.MenuTitle")));
                         inv.setContents(box.getInventory().getContents());
                         player.openInventory(inv);
                     }
@@ -38,8 +38,8 @@ public final class ShulkerBox implements Listener {
 
     @EventHandler
     public void onClickInventoryEvent(InventoryClickEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("FastUseShulkerBoxSettings.Enable")) {
-            if (event.getView().getTitle().equals(MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("FastUseShulkerBoxSettings.MenuTitle")))) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("FastUseShulkerBoxSettings.Enable")) {
+            if (event.getView().getTitle().equals(MessageUtil.colorMessage(PluginLoader.INSTANCE.getPlugin().getConfig().getString("FastUseShulkerBoxSettings.MenuTitle")))) {
                 if (event.getCurrentItem() != null) {
                     event.setCancelled(event.getCurrentItem().getType().toString().contains("SHULKER_BOX"));
                 }
@@ -51,8 +51,8 @@ public final class ShulkerBox implements Listener {
 
     @EventHandler
     public void onCloseInventoryEvent(InventoryCloseEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("FastUseShulkerBoxSettings.Enable")) {
-            if (event.getView().getTitle().equals(MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("FastUseShulkerBoxSettings.MenuTitle")))) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("FastUseShulkerBoxSettings.Enable")) {
+            if (event.getView().getTitle().equals(MessageUtil.colorMessage(PluginLoader.INSTANCE.getPlugin().getConfig().getString("FastUseShulkerBoxSettings.MenuTitle")))) {
                 Player player = (Player) event.getPlayer();
                 updateShulker(player, event.getInventory());
             }

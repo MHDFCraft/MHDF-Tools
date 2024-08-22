@@ -11,14 +11,6 @@ public class ServerManager {
         this.version = Bukkit.getVersion().split("MC: ")[1].replace(")", "");
     }
 
-    //        public void unSupportServer() {
-//        if (!is1_16orAbove()) {
-//            LogUtil.color("&f[MHDF-Tools] &c您的服务器版本不受我们的支持 -> " + getVersion());
-//            MHDFTools.instance.getPluginLoader().disablePlugin(MHDFTools.instance);
-//        } else {
-//            LogUtil.color("&f[MHDF-Tools] &a您的服务器版本是受支持的 -> " + getVersion());
-//        }
-//    }
     public boolean is1_8() {
         return this.version.startsWith("1.8");
     }

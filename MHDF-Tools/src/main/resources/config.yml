@@ -159,9 +159,9 @@ SuperListSettings:
     - "&7-----------&6List系统&7-----------"
     - "&eTPS: %TPS_1% %TPS_5% %TPS_15%"
     - "&e内存占用: %mem_used%&7/&e%mem_max%"
-    - "&e在线玩家: %Online%/%Max_Online%"
+    - "&e在线玩家: %online%/%max_online%"
     - "&e玩家列表:"
-    - "&e%PlayerList%"
+    - "&e%playerlist%"
     - "&7-----------&6List系统&7-----------"
 
 #家系统设置

@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -26,8 +26,8 @@ public final class WarpUtil {
     private static final List<String> warpList = new ArrayList<>();
 
     public static void updateWarpList() {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_warp");
                      ResultSet rs = ps.executeQuery()) {
@@ -43,17 +43,17 @@ public final class WarpUtil {
     }
 
     public static List<String> getWarpList() {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             updateWarpList();
             return warpList;
         } else {
-            YamlConfiguration warpData = YamlConfiguration.loadConfiguration(new File(MHDFTools.instance.getDataFolder(), "WarpData.yml"));
+            YamlConfiguration warpData = YamlConfiguration.loadConfiguration(new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "WarpData.yml"));
             return new ArrayList<>(warpData.getKeys(false));
         }
     }
 
     public static boolean ifWarpExists(String warpName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             try (Connection connection = dataSource.getConnection();
                  PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_warp WHERE Name = ? LIMIT 1")) {
                 ps.setString(1, warpName);
@@ -64,14 +64,14 @@ public final class WarpUtil {
                 throw new RuntimeException(e);
             }
         } else {
-            YamlConfiguration warpData = YamlConfiguration.loadConfiguration(new File(MHDFTools.instance.getDataFolder(), "WarpData.yml"));
+            YamlConfiguration warpData = YamlConfiguration.loadConfiguration(new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "WarpData.yml"));
             return warpData.getKeys(false).contains(warpName);
         }
     }
 
     public static String getWarpServer(String warpName) {
         String server = getWarpServerHashMap().get(warpName) != null ? getWarpServerHashMap().get(warpName) : "NONE";
-        if (server.equals("NONE") && Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (server.equals("NONE") && Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             try (Connection connection = dataSource.getConnection();
                  PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_warp WHERE Name = ? LIMIT 1")) {
                 ps.setString(1, warpName);
@@ -90,7 +90,7 @@ public final class WarpUtil {
     }
 
     public static SuperLocation getWarp(String warpName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             if (getWarpLocationHashMap().get(warpName) == null) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_warp WHERE Name = ? LIMIT 1")) {
@@ -116,7 +116,7 @@ public final class WarpUtil {
                 return getWarpLocationHashMap().get(warpName);
             }
         } else {
-            YamlConfiguration warpData = YamlConfiguration.loadConfiguration(new File(MHDFTools.instance.getDataFolder(), "WarpData.yml"));
+            YamlConfiguration warpData = YamlConfiguration.loadConfiguration(new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "WarpData.yml"));
             return new SuperLocation(
                     warpData.getString(warpName + ".World"),
                     warpData.getDouble(warpName + ".X"),
@@ -130,8 +130,8 @@ public final class WarpUtil {
     }
 
     public static void addWarp(String warpName, SuperLocation location) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getServerName();
                 getWarpLocationHashMap().put(warpName, location);
                 getWarpServerHashMap().put(warpName, ServerName);
@@ -153,7 +153,7 @@ public final class WarpUtil {
                     throw new RuntimeException(e);
                 }
             } else {
-                File warpDataFile = new File(MHDFTools.instance.getDataFolder(), "WarpData.yml");
+                File warpDataFile = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "WarpData.yml");
                 YamlConfiguration warpData = YamlConfiguration.loadConfiguration(warpDataFile);
                 warpData.set(warpName + ".World", location.getWorldName());
                 warpData.set(warpName + ".X", location.getX());
@@ -171,8 +171,8 @@ public final class WarpUtil {
     }
 
     public static void setWarp(String warpName, SuperLocation location) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getServerName();
                 getWarpLocationHashMap().put(warpName, location);
                 getWarpServerHashMap().put(warpName, ServerName);
@@ -194,7 +194,7 @@ public final class WarpUtil {
                     throw new RuntimeException(e);
                 }
             } else {
-                File warpDataFile = new File(MHDFTools.instance.getDataFolder(), "WarpData.yml");
+                File warpDataFile = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "WarpData.yml");
                 YamlConfiguration warpData = YamlConfiguration.loadConfiguration(warpDataFile);
                 warpData.set(warpName + ".World", location.getWorldName());
                 warpData.set(warpName + ".X", location.getX());
@@ -212,8 +212,8 @@ public final class WarpUtil {
     }
 
     public static void removeWarp(String warpName) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getWarpLocationHashMap().remove(warpName);
                 getWarpServerHashMap().remove(warpName);
                 try (Connection connection = dataSource.getConnection();
@@ -226,7 +226,7 @@ public final class WarpUtil {
                     throw new RuntimeException(e);
                 }
             } else {
-                File warpDataFile = new File(MHDFTools.instance.getDataFolder(), "WarpData.yml");
+                File warpDataFile = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "WarpData.yml");
                 YamlConfiguration warpData = YamlConfiguration.loadConfiguration(warpDataFile);
                 warpData.set(warpName, null);
                 try {

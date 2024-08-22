@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.config;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.file.FileCreator;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -12,7 +12,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.SoundFileData;
 import static cn.ChengZhiYa.MHDFTools.utils.file.FileCreator.createDir;
 
 public class MHDFConfig {
-    final File getDataFolder = MHDFTools.instance.getDataFolder();
+    final File getDataFolder = PluginLoader.INSTANCE.getPlugin().getDataFolder();
 
     public void loadConfig() {
         createFile();
@@ -21,7 +21,7 @@ public class MHDFConfig {
     public void createFile() {
         createDir(getDataFolder);
         saveResource(getDataFolder.getPath(), "config.yml", "config.yml", false);
-        MHDFTools.instance.reloadConfig(); //配置
+        PluginLoader.INSTANCE.getPlugin().reloadConfig(); //配置
 
         File Lang_File = new File(getDataFolder, "lang.yml");
         saveResource(getDataFolder.getPath(), "lang.yml", "lang.yml", false);
@@ -34,23 +34,23 @@ public class MHDFConfig {
         createDir(new File(getDataFolder, "Cache")); //缓存
 
         //家系统菜单与菜单系统
-        if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")
-                || MHDFTools.instance.getConfig().getBoolean("MenuSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")
+                || PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("MenuSettings.Enable")) {
             if (!new File(getDataFolder, "Menus").exists()) {
                 createDir(new File(getDataFolder, "Menus"));
-                if (MHDFTools.instance.getConfig().getBoolean("MenuSettings.Enable")) {
-                    saveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", false);
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("MenuSettings.Enable")) {
+                    saveResource(PluginLoader.INSTANCE.getPlugin().getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", false);
                 }
             }
             //家系统
-            if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
-                saveResource(MHDFTools.instance.getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", false);
+            if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
+                saveResource(PluginLoader.INSTANCE.getPlugin().getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", false);
             }
         }
 
         //隐身系统
-        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")
-                && MHDFTools.instance.getConfig().getBoolean("VanishSettings.SaveVanishData")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("VanishSettings.Enable")
+                && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("VanishSettings.SaveVanishData")) {
             FileCreator.createFile("Cache/VanishCache.yml");
         }
     }

@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.task;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.task.player.*;
 import cn.ChengZhiYa.MHDFTools.task.server.ServerScoreboardTask;
@@ -14,7 +13,7 @@ public final class AsyncTask {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     public void start() {
-        config = MHDFTools.instance.getConfig();
+        config = PluginLoader.INSTANCE.getPlugin().getConfig();
 
         asyncCommand(new ServerScoreboardTask(), "ScoreboardSettings.Enable");
         asyncCommand(new ServerTimeActionTask(), "TimeActionSettings.Enable");

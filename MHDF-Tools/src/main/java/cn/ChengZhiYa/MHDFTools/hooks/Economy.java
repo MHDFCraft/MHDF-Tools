@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.hooks;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -38,11 +38,11 @@ public final class Economy extends AbstractEconomy {
     }
 
     public String currencyNameSingular() {
-        return MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("EconomySettings.MoneyName"));
+        return MessageUtil.colorMessage(PluginLoader.INSTANCE.getPlugin().getConfig().getString("EconomySettings.MoneyName"));
     }
 
     public boolean hasAccount(String playerName) {
-        return (new File(MHDFTools.instance.getDataFolder() + "/VaultData", playerName + ".yml")).exists();
+        return (new File(PluginLoader.INSTANCE.getPlugin().getDataFolder() + "/VaultData", playerName + ".yml")).exists();
     }
 
     public boolean hasAccount(OfflinePlayer player) {

@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.main.flight;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -25,7 +25,7 @@ public final class Fly implements CommandExecutor {
             }
         }
         if (player != null) {
-            if (!MHDFTools.instance.getConfig().getStringList("FlySettings.AntiFlyWorldList").contains(player.getLocation().getWorld().getName())) {
+            if (!PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("FlySettings.AntiFlyWorldList").contains(player.getLocation().getWorld().getName())) {
                 if (player.hasPermission("MHDFTools.Command.Fly.Infinite")) {
                     if (flyList.contains(player.getName())) {
                         FlyUtil.removeFly(player.getName());

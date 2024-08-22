@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.home;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -18,7 +18,7 @@ public final class DelHome implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
-            if (!MHDFTools.instance.getConfig().getStringList("HomeSystemSettings.DisableWorldList").contains(((Player) sender).getLocation().getWorld().getName())) {
+            if (!PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("HomeSystemSettings.DisableWorldList").contains(((Player) sender).getLocation().getWorld().getName())) {
                 Player player = (Player) sender;
                 if (args.length == 1) {
                     String homeName = args[0];

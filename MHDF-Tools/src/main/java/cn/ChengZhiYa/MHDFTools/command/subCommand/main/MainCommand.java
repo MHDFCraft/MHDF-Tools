@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -23,7 +24,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.ImportUtil.*;
 public final class MainCommand implements TabExecutor {
     private static final String YAML_TYPE = "YAML";
     private static final String MYSQL_TYPE = "MySQL";
-
+    private final JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 1 && "reload".equals(args[0])) {
@@ -79,7 +80,7 @@ public final class MainCommand implements TabExecutor {
     }
 
     private void handleYAMLConversion(CommandSender sender) {
-        if (!Objects.equals(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getConfig().getString("DataSettings.Type"), YAML_TYPE)) {
+        if (!Objects.equals(cn.ChengZhiYa.MHDFTools.PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), YAML_TYPE)) {
             MySQLToYAML(sender);
         } else {
             sender.sendMessage(i18n("AdminCommands.convert.ConvertInvalid", YAML_TYPE));
@@ -88,7 +89,7 @@ public final class MainCommand implements TabExecutor {
 
     private void handleMySQLConversion(CommandSender sender, String[] args) {
         if (args.length == 6) {
-            if (!Objects.equals(cn.ChengZhiYa.MHDFTools.MHDFTools.instance.getConfig().getString("DataSettings.Type"), MYSQL_TYPE)) {
+            if (!Objects.equals(cn.ChengZhiYa.MHDFTools.PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), MYSQL_TYPE)) {
                 YAMLToMySQL(sender, args[2], args[3], args[4], args[5]);
             } else {
                 sender.sendMessage(i18n("AdminCommands.convert.ConvertInvalid", MYSQL_TYPE));
@@ -106,15 +107,14 @@ public final class MainCommand implements TabExecutor {
     }
 
     private void loadConfigurations() {
-        cn.ChengZhiYa.MHDFTools.MHDFTools instance = cn.ChengZhiYa.MHDFTools.MHDFTools.instance;
-        instance.reloadConfig();
+        plugin.reloadConfig();
 
-        if (instance.getConfig().getBoolean("InvseeSettings.Enable")) {
+        if (plugin.getConfig().getBoolean("InvseeSettings.Enable")) {
             VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
         }
 
-        LangFileData = YamlConfiguration.loadConfiguration(new File(instance.getDataFolder(), "lang.yml"));
-        SoundFileData = YamlConfiguration.loadConfiguration(new File(instance.getDataFolder(), "sound.yml"));
+        LangFileData = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "lang.yml"));
+        SoundFileData = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "sound.yml"));
     }
 
     @Override

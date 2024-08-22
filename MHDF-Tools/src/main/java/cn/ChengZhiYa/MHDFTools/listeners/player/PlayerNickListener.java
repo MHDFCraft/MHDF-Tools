@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.NickUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public final class PlayerNickListener implements Listener {
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent event) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             if (NickUtil.ifNickExists(event.getPlayer().getName())) {
                 Player player = event.getPlayer();
                 String nickName = NickUtil.getNickName(player.getName());

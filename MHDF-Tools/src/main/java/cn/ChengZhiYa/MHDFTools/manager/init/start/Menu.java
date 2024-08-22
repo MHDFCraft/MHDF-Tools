@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.manager.init.start;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.listeners.server.menu.ClickCustomMenu;
 import cn.ChengZhiYa.MHDFTools.listeners.server.menu.MenuArgsCommand;
@@ -14,7 +13,7 @@ public class Menu implements Invitable {
 
     @Override
     public void start() {
-        if (MHDFTools.instance.getConfig().getBoolean("MenuSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("MenuSettings.Enable")) {
             Bukkit.getPluginManager().registerEvents(new OpenMenu(), plugin);
             Bukkit.getPluginManager().registerEvents(new ClickCustomMenu(), plugin);
             Bukkit.getPluginManager().registerEvents(new MenuArgsCommand(), plugin);

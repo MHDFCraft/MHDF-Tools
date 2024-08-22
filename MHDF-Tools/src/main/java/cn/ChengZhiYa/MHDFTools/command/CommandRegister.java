@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.command;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.MainCommand;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.auth.Login;
@@ -55,7 +54,7 @@ public final class CommandRegister implements Invitable {
     @Override
     public void start() {
         canRegister = false;
-        config = MHDFTools.instance.getConfig();
+        config = PluginLoader.INSTANCE.getPlugin().getConfig();
         registerCommand(plugin, new MainCommand(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
         for (String configKey : config.getKeys(false)) {
             boolean isEnabled = config.getBoolean(configKey + ".Enable", true);

@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.listeners.server;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.entity.TpaData;
@@ -47,14 +46,14 @@ public final class ServerChannelListener implements PluginMessageListener {
                 String playerName = in.readUTF();
                 String targetPlayerName = in.readUTF();
 
-                TpaUtil.getTpaHashMap().put(playerName, new TpaData(targetPlayerName, MHDFTools.instance.getConfig().getInt("TpaSettings.OutTime")));
+                TpaUtil.getTpaHashMap().put(playerName, new TpaData(targetPlayerName, PluginLoader.INSTANCE.getPlugin().getConfig().getInt("TpaSettings.OutTime")));
                 Objects.requireNonNull(Bukkit.getPlayer(targetPlayerName)).spigot().sendMessage(TpaUtil.getTpaRequestMessage(playerName));
             }
             if (subchannel.equals("SendTpaHere")) {
                 String playerName = in.readUTF();
                 String targetPlayerName = in.readUTF();
 
-                TpaHereUtil.getTpahereHashMap().put(playerName, new TpaData(targetPlayerName, MHDFTools.instance.getConfig().getInt("TpaHereSettings.OutTime")));
+                TpaHereUtil.getTpahereHashMap().put(playerName, new TpaData(targetPlayerName, PluginLoader.INSTANCE.getPlugin().getConfig().getInt("TpaHereSettings.OutTime")));
                 Objects.requireNonNull(Bukkit.getPlayer(targetPlayerName)).spigot().sendMessage(TpaHereUtil.getTpaHereRequestMessage(playerName));
             }
             if (subchannel.equals("SendMessage")) {
@@ -70,7 +69,7 @@ public final class ServerChannelListener implements PluginMessageListener {
                     public void run() {
                         int i = 0;
                         if (Bukkit.getPlayer(PlayerName) != null && Bukkit.getPlayer(TargetPlayerName) != null) {
-                            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> {
+                            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> {
                                 Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Bukkit.getPlayer(TargetPlayerName));
                                 playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                             });
@@ -83,7 +82,7 @@ public final class ServerChannelListener implements PluginMessageListener {
                         }
                     }
                 };
-                runnable.runTaskTimerAsynchronously(MHDFTools.instance, 0, 10L);
+                runnable.runTaskTimerAsynchronously(PluginLoader.INSTANCE.getPlugin(), 0, 10L);
             }
             if (subchannel.equals("TpPlayerHome")) {
                 String PlayerName = in.readUTF();

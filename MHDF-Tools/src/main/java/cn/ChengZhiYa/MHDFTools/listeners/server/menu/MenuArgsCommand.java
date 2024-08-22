@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.server.menu;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -30,9 +30,9 @@ public final class MenuArgsCommand implements Listener {
             }
 
             if (commandParts[0].equals("player")) {
-                Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.chat("/" + PlaceholderAPI.setPlaceholders(player, commandParts[3])));
+                Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> player.chat("/" + PlaceholderAPI.setPlaceholders(player, commandParts[3])));
             } else {
-                Bukkit.getScheduler().runTask(MHDFTools.instance, () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(player, commandParts[3])));
+                Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(player, commandParts[3])));
             }
 
             if ("true".equals(commandParts[2])) {

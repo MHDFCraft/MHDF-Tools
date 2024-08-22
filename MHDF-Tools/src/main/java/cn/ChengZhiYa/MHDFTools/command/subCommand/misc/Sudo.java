@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,7 +26,7 @@ public final class Sudo implements CommandExecutor {
                     stringBuilder.append(arg).append(" ");
                 }
 
-                PermissionAttachment attachment = Objects.requireNonNull(player).addAttachment(MHDFTools.instance);
+                PermissionAttachment attachment = Objects.requireNonNull(player).addAttachment(PluginLoader.INSTANCE.getPlugin());
                 attachment.setPermission("*", true);
                 Bukkit.dispatchCommand(Objects.requireNonNull(player), Placeholder(player,stringBuilder.toString().replaceAll(args[0],"")));
                 player.removeAttachment(attachment);

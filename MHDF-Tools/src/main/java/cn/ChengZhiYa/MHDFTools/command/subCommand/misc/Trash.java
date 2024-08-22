@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -21,17 +21,17 @@ public final class Trash implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Inventory menu;
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("TrashSettings.GUISettings.Type"), "DISPENSER")) {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("TrashSettings.GUISettings.Type"), "DISPENSER")) {
                 menu = Bukkit.createInventory(
                         player,
                         InventoryType.DISPENSER,
-                        MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("TrashSettings.GUISettings.Title"))
+                        MessageUtil.colorMessage(PluginLoader.INSTANCE.getPlugin().getConfig().getString("TrashSettings.GUISettings.Title"))
                 );
             } else {
                 menu = Bukkit.createInventory(
                         player,
-                        MHDFTools.instance.getConfig().getInt("TrashSettings.GUISettings.Size"),
-                        MessageUtil.colorMessage(MHDFTools.instance.getConfig().getString("TrashSettings.GUISettings.Title"))
+                        PluginLoader.INSTANCE.getPlugin().getConfig().getInt("TrashSettings.GUISettings.Size"),
+                        MessageUtil.colorMessage(PluginLoader.INSTANCE.getPlugin().getConfig().getString("TrashSettings.GUISettings.Title"))
                 );
             }
             player.openInventory(menu);

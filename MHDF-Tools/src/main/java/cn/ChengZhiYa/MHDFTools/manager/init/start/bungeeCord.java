@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.manager.init.start;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.listeners.server.ServerChannelListener;
 import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
@@ -14,7 +13,7 @@ public class bungeeCord implements Invitable {
 
     @Override
     public void start() {
-        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             getServer().getMessenger().registerOutgoingPluginChannel(plugin, "BungeeCord");
             getServer().getMessenger().registerIncomingPluginChannel(plugin, "BungeeCord", new ServerChannelListener());
             getServerName();

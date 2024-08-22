@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.utils.message;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
@@ -12,7 +11,7 @@ import java.util.logging.Logger;
 @UtilityClass
 public class LogUtil {
     public Logger getLogger() {
-        return MHDFTools.instance.getLogger();
+        return PluginLoader.INSTANCE.getPlugin().getLogger();
     }
 
     public void info(final String info) {
@@ -28,7 +27,7 @@ public class LogUtil {
     }
 
     public void debug(String... messages) {
-        if (MHDFTools.instance.getConfig().getBoolean("Debug")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("Debug")) {
             StringBuilder messageBuilder = new StringBuilder("[MHDF-Tools-调试] ");
             for (String message : messages) {
                 messageBuilder.append(message);

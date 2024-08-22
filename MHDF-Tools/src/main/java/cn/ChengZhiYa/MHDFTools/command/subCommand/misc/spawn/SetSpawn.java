@@ -12,7 +12,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
 public final class SetSpawn implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             BungeeCordUtil.setSpawn(new SuperLocation(player.getLocation()));

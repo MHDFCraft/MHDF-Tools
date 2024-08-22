@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.hooks;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.NickUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
@@ -31,12 +30,12 @@ public final class PlaceholderAPI extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String params) {
-        if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
             if (params.equalsIgnoreCase("money")) {
                 return String.format("%.2f", getMoney(player.getName()));
             }
         }
-        if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
             if (params.equalsIgnoreCase("HomeAmount")) {
                 return String.valueOf(getPlayerHomeList(player.getName()).size());
             }

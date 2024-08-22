@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.manager.init.stop;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.listeners.server.ServerChannelListener;
 import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
@@ -13,7 +12,7 @@ public class stopChannel implements Invitable {
 
     @Override
     public void start() {
-        if (MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             getServer().getMessenger().unregisterOutgoingPluginChannel(plugin, "BungeeCord");
             getServer().getMessenger().unregisterIncomingPluginChannel(plugin, "BungeeCord", new ServerChannelListener());
         }

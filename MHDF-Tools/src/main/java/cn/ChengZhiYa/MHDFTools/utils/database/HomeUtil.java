@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.file.FileCreator;
 import lombok.Getter;
@@ -30,11 +30,11 @@ public final class HomeUtil {
     static final Map<Object, Object> HomeServerHashMap = new HashMap<>();
 
     public static File getPlayerFile(String PlayerName) {
-        return new File(MHDFTools.instance.getDataFolder() + "/HomeData", PlayerName + ".yml");
+        return new File(PluginLoader.INSTANCE.getPlugin().getDataFolder() + "/HomeData", PlayerName + ".yml");
     }
 
     public static boolean ifHomeExists(String playerName, String homeName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             try (Connection connection = dataSource.getConnection();
                  PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_home WHERE Home = ? AND Owner = ? LIMIT 1")) {
                 ps.setString(1, homeName);
@@ -52,7 +52,7 @@ public final class HomeUtil {
     }
 
     public static int getPlayerHomeTime(String playerName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             try (Connection connection = dataSource.getConnection();
                  PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) AS TotalHomes FROM mhdftools_home WHERE Owner = ?")) {
                 ps.setString(1, playerName);
@@ -66,7 +66,7 @@ public final class HomeUtil {
             }
             return 0;
         } else {
-            File homeDataFile = new File(MHDFTools.instance.getDataFolder(), "/HomeData/" + playerName + ".yml");
+            File homeDataFile = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "/HomeData/" + playerName + ".yml");
             FileCreator.createFile(homeDataFile);
             YamlConfiguration playerHomeData = YamlConfiguration.loadConfiguration(homeDataFile);
             List<String> homeList = playerHomeData.getStringList(playerName + "_HomeList");
@@ -75,7 +75,7 @@ public final class HomeUtil {
     }
 
     public static List<String> getPlayerHomeList(String playerName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             if (getHomeListHashMap().containsKey(playerName)) {
                 return getHomeListHashMap().get(playerName);
             }
@@ -86,7 +86,7 @@ public final class HomeUtil {
             return homeList;
 
         } else {
-            File homeDataFolder = new File(MHDFTools.instance.getDataFolder(), "HomeData");
+            File homeDataFolder = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "HomeData");
             File playerHomeFile = new File(homeDataFolder, playerName + ".yml");
             FileCreator.createFile(playerHomeFile);
             YamlConfiguration playerHomeData = YamlConfiguration.loadConfiguration(playerHomeFile);
@@ -111,7 +111,7 @@ public final class HomeUtil {
     }
 
     public static int getMaxHome(Player player) {
-        int maxHome = MHDFTools.instance.getConfig().getInt("HomeSystemSettings.MaxHomeTime");
+        int maxHome = PluginLoader.INSTANCE.getPlugin().getConfig().getInt("HomeSystemSettings.MaxHomeTime");
 
         for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
             String perm = permInfo.getPermission();
@@ -132,7 +132,7 @@ public final class HomeUtil {
         String server = getHomeServerHashMap().get(playerName + "|" + homeName) != null
                 ? getHomeServerHashMap().get(playerName + "|" + homeName).toString() : "NONE";
 
-        if (server.equals("NONE") && "MySQL".equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"))) {
+        if (server.equals("NONE") && "MySQL".equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"))) {
             try (Connection connection = dataSource.getConnection();
                  PreparedStatement ps = connection.prepareStatement("SELECT Server FROM mhdftools_home WHERE Home = ? AND Owner = ? LIMIT 1")) {
                 ps.setString(1, homeName);
@@ -153,7 +153,7 @@ public final class HomeUtil {
     }
 
     public static SuperLocation getHomeLocation(String playerName, String homeName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             SuperLocation cachedLocation = HomeUtil.getHomeLocationHashMap().get(playerName + "|" + homeName);
 
             if (cachedLocation != null) { //如果有缓存那就执行
@@ -182,7 +182,7 @@ public final class HomeUtil {
                 throw new RuntimeException(e);
             }
         } else {
-            File homeData = new File(MHDFTools.instance.getDataFolder(), "HomeData");
+            File homeData = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "HomeData");
             File playerHomeFile = new File(homeData, playerName + ".yml");
             FileCreator.createFile(playerHomeFile);
             YamlConfiguration playerHomeData = YamlConfiguration.loadConfiguration(playerHomeFile);
@@ -202,8 +202,8 @@ public final class HomeUtil {
     }
 
     public static void addHome(String playerName, String homeName, SuperLocation homeLocation) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-            Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
+            Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
                 getServerName();
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
@@ -230,7 +230,7 @@ public final class HomeUtil {
                 }
             });
         } else {
-            File homeData = new File(MHDFTools.instance.getDataFolder(), "/HomeData");
+            File homeData = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "/HomeData");
             File playerHomeFile = new File(homeData, playerName + ".yml");
             FileCreator.createFile(playerHomeFile);
             YamlConfiguration playerHomeData = YamlConfiguration.loadConfiguration(playerHomeFile);
@@ -240,10 +240,10 @@ public final class HomeUtil {
     }
 
     public static void addHome(String serverName, String playerName, String homeName, SuperLocation homeLocation) {
-        String dataSettingsType = MHDFTools.instance.getConfig().getString("DataSettings.Type");
+        String dataSettingsType = PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type");
 
         if (Objects.equals(dataSettingsType, "MySQL")) {
-            Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+            Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
                 try (Connection connection = dataSource.getConnection()) {
                     List<String> homeList = getPlayerHomeList(playerName);
                     homeList.add(homeName);
@@ -280,8 +280,8 @@ public final class HomeUtil {
             return;
         }
 
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-            Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
+            Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
                 getServerName();
                 try (Connection connection = dataSource.getConnection()) {
                     String updateQuery = "UPDATE mhdftools_home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?";
@@ -302,7 +302,7 @@ public final class HomeUtil {
                 }
             });
         } else {
-            File homeData = new File(MHDFTools.instance.getDataFolder(), "/HomeData/" + playerName + ".yml");
+            File homeData = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "/HomeData/" + playerName + ".yml");
             FileCreator.createDir(homeData.getParentFile());
             FileCreator.createFile(homeData);
             YamlConfiguration playerHomeData = YamlConfiguration.loadConfiguration(homeData);
@@ -316,8 +316,8 @@ public final class HomeUtil {
             return;
         }
 
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-            Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
+            Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
                 try {
                     //定义
                     String worldName = homeLocation.getWorldName();
@@ -358,8 +358,8 @@ public final class HomeUtil {
 
     public static void removeHome(String playerName, String homeName) {
         if (ifHomeExists(playerName, homeName)) {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-                Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
+                Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
                     List<String> homeList = getPlayerHomeList(playerName);
                     homeList.remove(homeName);
                     getHomeListHashMap().put(playerName, homeList);
@@ -375,7 +375,7 @@ public final class HomeUtil {
                     }
                 });
             } else {
-                File homeData = new File(MHDFTools.instance.getDataFolder() + "/HomeData");
+                File homeData = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder() + "/HomeData");
                 File homeDataFile = new File(homeData, playerName + ".yml");
                 FileCreator.createFile(homeDataFile);
                 YamlConfiguration playerHomeData = YamlConfiguration.loadConfiguration(homeDataFile);

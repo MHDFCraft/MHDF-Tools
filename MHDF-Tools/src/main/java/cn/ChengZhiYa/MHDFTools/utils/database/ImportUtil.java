@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -29,10 +29,10 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.WarpUtil.*;
 
 public final class ImportUtil {
     public static void importHuskHomesData(CommandSender sender) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             String pluginName = "HuskHomes";
 
-            File pluginDataFolder = new File(MHDFTools.instance.getDataFolder().getParent(), pluginName);
+            File pluginDataFolder = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder().getParent(), pluginName);
             if (pluginDataFolder.exists()) {
                 YamlConfiguration pluginConfig = YamlConfiguration.loadConfiguration(new File(pluginDataFolder, "config.yml"));
                 String storageType = pluginConfig.getString("storage.method", "").toLowerCase(Locale.ROOT);
@@ -64,7 +64,7 @@ public final class ImportUtil {
                     dataSource = new HikariDataSource(config);
                 }
 
-                if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
                     sender.sendMessage(i18n("AdminCommands.import.ImportStart", pluginName, "Home"));
                     try (Connection connection = dataSource.getConnection();
                          PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + pluginConfig.getString("database.table_names.HOME_DATA"));
@@ -120,10 +120,10 @@ public final class ImportUtil {
     }
 
     public static void importCMIData(CommandSender sender) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             String pluginName = "CMI";
 
-            File pluginDataFolder = new File(MHDFTools.instance.getDataFolder().getParent(), pluginName);
+            File pluginDataFolder = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder().getParent(), pluginName);
             if (pluginDataFolder.exists()) {
                 YamlConfiguration pluginConfig = YamlConfiguration.loadConfiguration(new File(pluginDataFolder, "Settings/DataBaseInfo.yml"));
                 YamlConfiguration warpData = YamlConfiguration.loadConfiguration(new File(pluginDataFolder, "Saves/Warps.yml"));
@@ -156,7 +156,7 @@ public final class ImportUtil {
                     dataSource = new HikariDataSource(config);
                 }
 
-                if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
                     sender.sendMessage(i18n("AdminCommands.import.ImportStart", pluginName, "Home"));
                     try (Connection connection = dataSource.getConnection();
                          PreparedStatement ps = connection.prepareStatement("SELECT * FROM users");
@@ -192,7 +192,7 @@ public final class ImportUtil {
                 } else {
                     sender.sendMessage(i18n("AdminCommands.import.NotImport", "Home"));
                 }
-                if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
                     sender.sendMessage(i18n("AdminCommands.import.ImportStart", pluginName, "经济"));
                     try (Connection connection = dataSource.getConnection();
                          PreparedStatement ps = connection.prepareStatement("SELECT * FROM users");
@@ -215,7 +215,7 @@ public final class ImportUtil {
                 } else {
                     sender.sendMessage(i18n("AdminCommands.import.NotImport", "经济"));
                 }
-                if (MHDFTools.instance.getConfig().getBoolean("WarpSettings.Enable")) {
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("WarpSettings.Enable")) {
                     sender.sendMessage(i18n("AdminCommands.import.ImportStart", pluginName, "地标"));
                     for (String warpName : warpData.getKeys(false)) {
                         String[] data = Objects.requireNonNull(warpData.getString(warpName + ".Location")).split(";");
@@ -244,14 +244,14 @@ public final class ImportUtil {
     }
 
     public static void importEssentialsData(CommandSender sender) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             String pluginName = "Essentials";
 
-            File pluginDataFolder = new File(MHDFTools.instance.getDataFolder().getParent(), pluginName);
+            File pluginDataFolder = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder().getParent(), pluginName);
             if (pluginDataFolder.exists()) {
                 File pluginUserDataFolder = new File(pluginDataFolder, "userdata");
                 File warpDataFolder = new File(pluginDataFolder, "warps");
-                if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
                     sender.sendMessage(i18n("AdminCommands.import.ImportStart", pluginName, "Home"));
                     try (Stream<Path> pathStream = Files.walk(pluginUserDataFolder.toPath())) {
                         for (Path path : pathStream.filter(Files::isRegularFile).collect(Collectors.toList())) {
@@ -283,13 +283,13 @@ public final class ImportUtil {
                 } else {
                     sender.sendMessage(i18n("AdminCommands.import.NotImport", "Home"));
                 }
-                if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
                     sender.sendMessage(i18n("AdminCommands.import.ImportStart", pluginName, "经济"));
                     try (Stream<Path> pathStream = Files.walk(pluginUserDataFolder.toPath())) {
                         for (Path path : pathStream.filter(Files::isRegularFile).collect(Collectors.toList())) {
                             YamlConfiguration userData = YamlConfiguration.loadConfiguration(path.toFile());
                             String playerName = userData.getString("last-account-name");
-                            double money = MHDFTools.instance.getConfig().getDouble("EconomySettings.InitialMoney");
+                            double money = PluginLoader.INSTANCE.getPlugin().getConfig().getDouble("EconomySettings.InitialMoney");
                             if (userData.getString("money") != null) {
                                 money = Double.parseDouble(Objects.requireNonNull(userData.getString("money")));
                             }
@@ -307,7 +307,7 @@ public final class ImportUtil {
                 } else {
                     sender.sendMessage(i18n("AdminCommands.import.NotImport", "经济"));
                 }
-                if (MHDFTools.instance.getConfig().getBoolean("WarpSettings.Enable")) {
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("WarpSettings.Enable")) {
                     sender.sendMessage(i18n("AdminCommands.import.ImportStart", pluginName, "地标"));
                     try (Stream<Path> pathStream = Files.walk(warpDataFolder.toPath())) {
                         for (Path path : pathStream.filter(Files::isRegularFile).collect(Collectors.toList())) {

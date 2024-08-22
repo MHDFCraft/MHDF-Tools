@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.spawn;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import org.bukkit.command.Command;
@@ -29,15 +29,15 @@ public final class Spawn implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        String worldName = MHDFTools.instance.getConfig().getString(WORLD_CONFIG_KEY);
-        double spawnX = MHDFTools.instance.getConfig().getDouble(X_CONFIG_KEY);
-        double spawnY = MHDFTools.instance.getConfig().getDouble(Y_CONFIG_KEY);
-        double spawnZ = MHDFTools.instance.getConfig().getDouble(Z_CONFIG_KEY);
-        float spawnYaw = (float) MHDFTools.instance.getConfig().getDouble(YAW_CONFIG_KEY);
-        float spawnPitch = (float) MHDFTools.instance.getConfig().getDouble(PITCH_CONFIG_KEY);
+        String worldName = PluginLoader.INSTANCE.getPlugin().getConfig().getString(WORLD_CONFIG_KEY);
+        double spawnX = PluginLoader.INSTANCE.getPlugin().getConfig().getDouble(X_CONFIG_KEY);
+        double spawnY = PluginLoader.INSTANCE.getPlugin().getConfig().getDouble(Y_CONFIG_KEY);
+        double spawnZ = PluginLoader.INSTANCE.getPlugin().getConfig().getDouble(Z_CONFIG_KEY);
+        float spawnYaw = (float) PluginLoader.INSTANCE.getPlugin().getConfig().getDouble(YAW_CONFIG_KEY);
+        float spawnPitch = (float) PluginLoader.INSTANCE.getPlugin().getConfig().getDouble(PITCH_CONFIG_KEY);
         SuperLocation spawnLocation = new SuperLocation(worldName, spawnX, spawnY, spawnZ, spawnYaw, spawnPitch);
 
-        BungeeCordUtil.tpPlayerTo(player.getName(), MHDFTools.instance.getConfig().getString(SERVER_CONFIG_KEY), spawnLocation);
+        BungeeCordUtil.tpPlayerTo(player.getName(), PluginLoader.INSTANCE.getPlugin().getConfig().getString(SERVER_CONFIG_KEY), spawnLocation);
         sender.sendMessage(i18n("Spawn.TeleportDone"));
 
         return true;

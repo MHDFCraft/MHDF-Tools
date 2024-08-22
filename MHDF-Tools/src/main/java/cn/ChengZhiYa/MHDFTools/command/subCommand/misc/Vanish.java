@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.VanishUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -35,7 +35,7 @@ public final class Vanish implements CommandExecutor {
                 for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
                     try {
                         Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
-                        OnlinePlayer.hidePlayer(MHDFTools.instance, player);
+                        OnlinePlayer.hidePlayer(PluginLoader.INSTANCE.getPlugin(), player);
                     } catch (NoSuchMethodException e) {
                         OnlinePlayer.hidePlayer(player);
                     }
@@ -52,7 +52,7 @@ public final class Vanish implements CommandExecutor {
                 for (Player OnlinePlayer : Bukkit.getOnlinePlayers()) {
                     try {
                         Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
-                        OnlinePlayer.showPlayer(MHDFTools.instance, player);
+                        OnlinePlayer.showPlayer(PluginLoader.INSTANCE.getPlugin(), player);
                     } catch (NoSuchMethodException e) {
                         OnlinePlayer.showPlayer(player);
                     }

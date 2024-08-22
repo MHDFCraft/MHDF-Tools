@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player.fastuse;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public final class CraftingTable implements Listener {
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("FastUseCraftingTableSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("FastUseCraftingTableSettings.Enable")) {
             if (event.getAction() == Action.RIGHT_CLICK_AIR) {
                 Player player = event.getPlayer();
                 if (player.hasPermission("MHDFTools.FastUse.CraftingTable")) {

@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.back;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.command.Command;
@@ -16,14 +16,14 @@ public final class Back implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation") != null) {
-                if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation").getWorldName()) || MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("BackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation").getWorldName()) || PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("BackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
                 if (MapUtil.getIntHashMap().get(player.getName() + "_BackDelay") != null || MapUtil.getIntHashMap().get(player.getName() + "_TpBackDelay") != null) {
                     player.sendMessage(SpigotUtil.i18n("Back.RepectSend"));
                     return false;
                 }
-                MapUtil.getIntHashMap().put(player.getName() + "_BackDelay", MHDFTools.instance.getConfig().getInt("BackSettings.Delay"));
+                MapUtil.getIntHashMap().put(player.getName() + "_BackDelay", PluginLoader.INSTANCE.getPlugin().getConfig().getInt("BackSettings.Delay"));
             } else {
                 sender.sendMessage(SpigotUtil.i18n("Back.NotFound"));
             }
