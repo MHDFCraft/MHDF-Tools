@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.back;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,10 +18,10 @@ public final class UnBack implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation") != null) {
-                if (MHDFTools.instance.getConfig().getStringList("BackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation").getWorldName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("BackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation").getWorldName()) || PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
-                if (MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation").getWorldName()) || MHDFTools.instance.getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("TpBackSettings.DisableWorldList").contains(MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation").getWorldName()) || PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("TpBackSettings.DisableWorldList").contains(player.getLocation().getWorld().getName())) {
                     return false;
                 }
                 tpPlayerTo(player.getName(), ServerName, MapUtil.getLocationHashMap().get(player.getName() + "_UnBackLocation"));

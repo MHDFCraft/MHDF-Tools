@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.task.player;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.VanishUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -10,16 +10,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 public final class PlayerVanishTask extends BukkitRunnable {
     @Override
     public void run() {
-        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("VanishSettings.Enable")) {
             for (String vanishPlayer : VanishUtil.getVanishList()) {
                 Player player = Bukkit.getPlayerExact(vanishPlayer);
                 if (player != null) {
                     for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                         try {
                             Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
-                            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> onlinePlayer.hidePlayer(MHDFTools.instance, player));
+                            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> onlinePlayer.hidePlayer(PluginLoader.INSTANCE.getPlugin(), player));
                         } catch (NoSuchMethodException e) {
-                            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> onlinePlayer.hidePlayer(player));
+                            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> onlinePlayer.hidePlayer(player));
                         }
                     }
                 }

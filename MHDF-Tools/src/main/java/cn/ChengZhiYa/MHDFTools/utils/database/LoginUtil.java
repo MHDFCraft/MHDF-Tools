@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -23,7 +23,7 @@ public final class LoginUtil {
         if (isUsingMySQL()) {
             return dataExists(LOGIN_TABLE, "PlayerName", playerName);
         } else {
-            File loginFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
+            File loginFile = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "LoginData.yml");
             YamlConfiguration passwordData = YamlConfiguration.loadConfiguration(loginFile);
             return passwordData.getString(playerName + "_Password") != null;
         }
@@ -48,7 +48,7 @@ public final class LoginUtil {
                 return false;
             }
         } else {
-            File loginFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
+            File loginFile = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "LoginData.yml");
             YamlConfiguration passwordData = YamlConfiguration.loadConfiguration(loginFile);
             String storedPassword = passwordData.getString(playerName + "_Password");
             return password.equals(storedPassword);
@@ -61,7 +61,7 @@ public final class LoginUtil {
         }
 
         if (isUsingMySQL()) {
-            Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+            Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement preparedStatement = connection.prepareStatement(
                              "INSERT INTO " + LOGIN_TABLE + " (PlayerName, Password) VALUES (?, ?)")) {
@@ -73,7 +73,7 @@ public final class LoginUtil {
                 }
             });
         } else {
-            File loginFile = new File(MHDFTools.instance.getDataFolder(), "LoginData.yml");
+            File loginFile = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "LoginData.yml");
             YamlConfiguration passwordData = YamlConfiguration.loadConfiguration(loginFile);
             passwordData.set(playerName + "_Password", password);
             try {
@@ -85,6 +85,6 @@ public final class LoginUtil {
     }
 
     private static boolean isUsingMySQL() {
-        return Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL");
+        return Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL");
     }
 }

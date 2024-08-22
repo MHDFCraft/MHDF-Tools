@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.main.server;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,12 +14,12 @@ public final class List implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        for (String messageTemplate : MHDFTools.instance.getConfig().getStringList("SuperListSettings.Message")) {
+        for (String messageTemplate : PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("SuperListSettings.Message")) {
             String message = messageTemplate.replaceAll("%mem_used%", String.valueOf((runtime.totalMemory() - runtime.freeMemory()) / 1048576L))
                     .replaceAll("%mem_max%", String.valueOf(runtime.maxMemory() / 1048576L))
-                    .replaceAll("%PlayerList%", String.valueOf(getPlayerList(false)))
-                    .replaceAll("%Online%", String.valueOf(getPlayerList(false).size()))
-                    .replaceAll("%Max_Online%", String.valueOf(Bukkit.getMaxPlayers()));
+                    .replaceAll("%playerlist%", String.valueOf(getPlayerList(false)))
+                    .replaceAll("%online%", String.valueOf(getPlayerList(false).size()))
+                    .replaceAll("%max_online%", String.valueOf(Bukkit.getMaxPlayers()));
 
             if (canTPS()) {
                 message = message.replaceAll("%TPS_1%", getTps(1))

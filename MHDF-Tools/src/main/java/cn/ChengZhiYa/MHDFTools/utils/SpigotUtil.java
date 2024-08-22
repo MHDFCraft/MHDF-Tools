@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.utils;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.NickUtil;
 import cn.ChengZhiYa.MHDFTools.utils.database.VanishUtil;
@@ -310,7 +309,7 @@ public final class SpigotUtil {
             String perm = permInfo.getPermission();
             if (perm.startsWith("mhdftools." + messageType)) {
                 String group = perm.substring(("mhdftools." + messageType).length());
-                int weight = MHDFTools.instance.getConfig().getInt(settingType + "." + group + ".Weight");
+                int weight = PluginLoader.INSTANCE.getPlugin().getConfig().getInt(settingType + "." + group + ".Weight");
                 messageList.put(weight, group);
                 weightList.add(weight);
             }
@@ -318,11 +317,11 @@ public final class SpigotUtil {
 
         if (!messageList.isEmpty()) {
             weightList.sort(Collections.reverseOrder());
-            return Placeholder(player, MHDFTools.instance.getConfig().getString(settingType + "." + messageList.get(weightList.get(0)) + "." + messageType))
+            return Placeholder(player, PluginLoader.INSTANCE.getPlugin().getConfig().getString(settingType + "." + messageList.get(weightList.get(0)) + "." + messageType))
                     .replaceAll("%PlayerName%", NickUtil.getNickName(player.getName()));
         }
 
-        return Placeholder(player, MHDFTools.instance.getConfig().getString(settingType + ".Default." + messageType))
+        return Placeholder(player, PluginLoader.INSTANCE.getPlugin().getConfig().getString(settingType + ".Default." + messageType))
                 .replaceAll("%PlayerName%", NickUtil.getNickName(player.getName()));
     }
 
@@ -340,7 +339,7 @@ public final class SpigotUtil {
     public static List<String> getPlayerList(boolean useBungeecordAPI) {
         List<String> onlinePlayerList;
 
-        if (useBungeecordAPI && MHDFTools.instance.getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (useBungeecordAPI && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             onlinePlayerList = new ArrayList<>(Arrays.asList(PlayerList));
         } else {
             onlinePlayerList = Bukkit.getOnlinePlayers().stream()

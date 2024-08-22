@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -23,11 +23,11 @@ public final class EconomyUtil {
     static final Map<Object, BigDecimal> MoneyHashMap = new HashMap<>();
 
     public static File getPlayerFile(String PlayerName) {
-        return new File(MHDFTools.instance.getDataFolder() + "/VaultData", PlayerName + ".yml");
+        return new File(PluginLoader.INSTANCE.getPlugin().getDataFolder() + "/VaultData", PlayerName + ".yml");
     }
 
     public static Boolean ifPlayerFileExists(String PlayerName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             return dataExists("mhdftools_economy", "PlayerName", PlayerName);
         }
         return getPlayerFile(PlayerName).exists();
@@ -35,8 +35,8 @@ public final class EconomyUtil {
 
     public static void initializationPlayerData(String PlayerName, Double money) {
         if (!ifPlayerFileExists(PlayerName)) {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
-                Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
+                Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
                     try {
                         Connection connection = dataSource.getConnection();
                         PreparedStatement ps = connection.prepareStatement("INSERT INTO mhdftools_economy (PlayerName, Money) VALUES (?,?)");
@@ -52,7 +52,7 @@ public final class EconomyUtil {
             } else {
                 File VaultFile = getPlayerFile(PlayerName);
                 YamlConfiguration VaultData = YamlConfiguration.loadConfiguration(VaultFile);
-                VaultData.set("money", MHDFTools.instance.getConfig().getDouble("EconomySettings.InitialMoney"));
+                VaultData.set("money", PluginLoader.INSTANCE.getPlugin().getConfig().getDouble("EconomySettings.InitialMoney"));
                 try {
                     VaultData.save(VaultFile);
                 } catch (IOException ignored) {
@@ -66,7 +66,7 @@ public final class EconomyUtil {
     }
 
     public static double getMoney(String PlayerName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             if (getMoneyHashMap().get(PlayerName) == null) {
                 try {
                     BigDecimal bg = getBigDecimal((Double) getData("mhdftools_economy", "PlayerName", PlayerName, "Money"));
@@ -86,8 +86,8 @@ public final class EconomyUtil {
     }
 
     public static void setMoney(String PlayerName, Double Money) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getBigDecimal(Money));
                     set("mhdftools_economy", "PlayerName", PlayerName, "Money", Money);
@@ -104,8 +104,8 @@ public final class EconomyUtil {
     }
 
     public static void addMoney(String PlayerName, Double Money) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).add(getBigDecimal(Money)));
                     add("mhdftools_economy", "PlayerName", PlayerName, "Money", Money);
@@ -122,8 +122,8 @@ public final class EconomyUtil {
     }
 
     public static void takeMoney(String PlayerName, Double Money) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).subtract(getBigDecimal(Money)));
                     take("mhdftools_economy", "PlayerName", PlayerName, "Money", Money);

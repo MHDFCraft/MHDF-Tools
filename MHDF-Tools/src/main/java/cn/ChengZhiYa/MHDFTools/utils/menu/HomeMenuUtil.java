@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.menu;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import org.bukkit.Bukkit;
@@ -56,7 +56,7 @@ public final class HomeMenuUtil {
     }
 
     public static void openHomeMenu(Player player, int page) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             String title = Placeholder(player, getMenu(homeMenuFile).getString("menu.Title")).replaceAll("\\{Page}", String.valueOf(page));
             Inventory menu = Bukkit.createInventory(player, getMenu(homeMenuFile).getInt("menu.Size"), title);
 
@@ -148,7 +148,7 @@ public final class HomeMenuUtil {
 
                 setMenuItem(menu, homeMenuFile, itemID, type, displayName, lore, customModelData, amount, slotList);
             }
-            Bukkit.getScheduler().runTask(MHDFTools.instance, () -> player.openInventory(menu));
+            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> player.openInventory(menu));
         });
     }
 

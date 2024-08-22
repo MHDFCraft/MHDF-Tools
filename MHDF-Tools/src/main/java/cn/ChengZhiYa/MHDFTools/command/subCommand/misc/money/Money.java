@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.money;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,7 +17,7 @@ public final class Money implements CommandExecutor {
         switch (args.length) {
             case 0:
                 if (sender instanceof Player) {
-                    sender.sendMessage(i18n("Vault.Money", String.valueOf(getMoney(sender.getName())), MHDFTools.instance.getConfig().getString("EconomySettings.MoneyName")));
+                    sender.sendMessage(i18n("Vault.Money", String.valueOf(getMoney(sender.getName())), PluginLoader.INSTANCE.getPlugin().getConfig().getString("EconomySettings.MoneyName")));
                 } else {
                     sender.sendMessage(i18n("Usage.Money"));
                 }
@@ -25,7 +25,7 @@ public final class Money implements CommandExecutor {
             case 1:
                 Player target = Bukkit.getPlayer(args[0]);
                 if (target != null) {
-                    sender.sendMessage(i18n("Vault.GetMoney", target.getName(), String.valueOf(getMoney(target.getName())), MHDFTools.instance.getConfig().getString("EconomySettings.MoneyName")));
+                    sender.sendMessage(i18n("Vault.GetMoney", target.getName(), String.valueOf(getMoney(target.getName())), PluginLoader.INSTANCE.getPlugin().getConfig().getString("EconomySettings.MoneyName")));
                 } else {
                     sender.sendMessage(i18n("PlayerNotOnline"));
                 }

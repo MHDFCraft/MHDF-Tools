@@ -25,12 +25,13 @@
 
 package cn.ChengZhiYa.MHDFTools.utils.libraries.dependencies;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.libraries.classpath.ClassPathAppender;
 import cn.ChengZhiYa.MHDFTools.utils.libraries.dependencies.classloader.IsolatedClassLoader;
 import cn.ChengZhiYa.MHDFTools.utils.libraries.dependencies.relocation.Relocation;
 import cn.ChengZhiYa.MHDFTools.utils.libraries.dependencies.relocation.RelocationHandler;
 import com.google.common.collect.ImmutableSet;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,17 +69,19 @@ public class DependencyManagerImpl implements DependencyManager {
     /**
      * Cached relocation handler instance.
      */
-    private RelocationHandler relocationHandler = null;
+    private final RelocationHandler relocationHandler;
 
-    public DependencyManagerImpl(MHDFTools plugin, ClassPathAppender classPathAppender) {
+    private final JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();;
+
+    public DependencyManagerImpl(ClassPathAppender classPathAppender) {
         this.registry = new DependencyRegistry();
-        this.cacheDirectory = setupCacheDirectory(plugin);
+        this.cacheDirectory = setupCacheDirectory();
         this.classPathAppender = classPathAppender;
         this.relocationHandler = new RelocationHandler(this);
     }
 
-    private static Path setupCacheDirectory(MHDFTools plugin) {
-        File folder = new File(plugin.getDataFolder(), "libs");
+    private static Path setupCacheDirectory() {
+        File folder = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "libs");
         folder.mkdirs();
         return folder.toPath();
     }
@@ -174,9 +177,9 @@ public class DependencyManagerImpl implements DependencyManager {
                     continue;
                 }
                 try {
-                    MHDFTools.instance.getLogger().info("Downloading dependency(" + fileName + ") from " + repo.getUrl() + dependency.getMavenRepoPath());
+                    PluginLoader.INSTANCE.getPlugin().getLogger().info("Downloading dependency(" + fileName + ") from " + repo.getUrl() + dependency.getMavenRepoPath());
                     repo.download(dependency, file);
-                    MHDFTools.instance.getLogger().info("Successfully downloaded " + fileName);
+                    PluginLoader.INSTANCE.getPlugin().getLogger().info("Successfully downloaded " + fileName);
                     return file;
                 } catch (DependencyDownloadException e) {
                     lastError = e;
@@ -186,9 +189,9 @@ public class DependencyManagerImpl implements DependencyManager {
             DependencyRepository repository = DependencyRepository.getByID(forceRepo);
             if (repository != null) {
                 try {
-                    MHDFTools.instance.getLogger().info("Downloading dependency(" + fileName + ") from " + repository.getUrl() + dependency.getMavenRepoPath());
+                    PluginLoader.INSTANCE.getPlugin().getLogger().info("Downloading dependency(" + fileName + ") from " + repository.getUrl() + dependency.getMavenRepoPath());
                     repository.download(dependency, file);
-                    MHDFTools.instance.getLogger().info("Successfully downloaded " + fileName);
+                    PluginLoader.INSTANCE.getPlugin().getLogger().info("Successfully downloaded " + fileName);
                     return file;
                 } catch (DependencyDownloadException e) {
                     lastError = e;
@@ -211,9 +214,9 @@ public class DependencyManagerImpl implements DependencyManager {
             return remappedFile;
         }
 
-        MHDFTools.instance.getLogger().info("Remapping " + dependency.getFileName(null));
+        PluginLoader.INSTANCE.getPlugin().getLogger().info("Remapping " + dependency.getFileName(null));
         relocationHandler.remap(normalFile, remappedFile, rules);
-        MHDFTools.instance.getLogger().info("Successfully remapped " + dependency.getFileName(null));
+        PluginLoader.INSTANCE.getPlugin().getLogger().info("Successfully remapped " + dependency.getFileName(null));
         return remappedFile;
     }
 

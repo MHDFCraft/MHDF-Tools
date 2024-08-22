@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.task.player;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -12,7 +12,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil.loginExists;
 public final class PlayerLoginTask extends BukkitRunnable {
     @Override
     public void run() {
-        if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("LoginSystemSettings.Enable")) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (!ifLogin(player)) {
                     if (loginExists(player.getName())) {

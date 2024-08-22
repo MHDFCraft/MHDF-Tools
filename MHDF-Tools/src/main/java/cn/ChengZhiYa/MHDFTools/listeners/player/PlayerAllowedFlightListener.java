@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,11 +17,11 @@ public final class PlayerAllowedFlightListener implements Listener {
     public void onPlayerChangedWorld(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
         String worldName = player.getLocation().getWorld().getName();
-        if (MHDFTools.instance.getConfig().getStringList("FlySettings.AntiFlyWorldList").contains(worldName)) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("FlySettings.AntiFlyWorldList").contains(worldName)) {
             flyList.remove(player.getName());
             removeFly(player.getName());
             player.setAllowFlight(false);
-        } else if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ChangeWorld")) {
+        } else if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("FlySettings.AutoOpenSettings.ChangeWorld")) {
             handleFlight(player);
         }
     }
@@ -29,7 +29,7 @@ public final class PlayerAllowedFlightListener implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReSpawn") &&
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("FlySettings.AutoOpenSettings.ReSpawn") &&
                 MapUtil.getStringHashMap().containsKey(player.getName() + "_Fly")) {
             handleFlight(player);
         }
@@ -38,7 +38,7 @@ public final class PlayerAllowedFlightListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReJoin") &&
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("FlySettings.AutoOpenSettings.ReJoin") &&
                 flyList.contains(player.getName())) {
             handleFlight(player);
         }
@@ -46,7 +46,7 @@ public final class PlayerAllowedFlightListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        if (!MHDFTools.instance.getConfig().getBoolean("FlySettings.AutoOpenSettings.ReJoin") &&
+        if (!PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("FlySettings.AutoOpenSettings.ReJoin") &&
                 flyList.contains(event.getPlayer().getName())) {
             flyList.remove(event.getPlayer().getName());
             removeFly(event.getPlayer().getName());

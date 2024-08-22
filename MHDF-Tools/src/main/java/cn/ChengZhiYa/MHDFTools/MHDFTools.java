@@ -4,11 +4,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MHDFTools extends JavaPlugin {
 
-    public static MHDFTools instance;
-
     @Override
     public void onLoad() {
-        instance = this;
         PluginLoader.INSTANCE.initialize_load(this);
     }
 
@@ -20,6 +17,5 @@ public final class MHDFTools extends JavaPlugin {
     @Override
     public void onDisable() {
         PluginLoader.INSTANCE.initialize_stop(this);
-        instance = null;
     }
 }

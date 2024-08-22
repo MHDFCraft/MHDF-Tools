@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.task.player;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public final class PlayerTpaHereTask extends BukkitRunnable {
     @Override
     public void run() {
-        if (MHDFTools.instance.getConfig().getBoolean("TpaHereSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("TpaHereSettings.Enable")) {
             for (String playerName : TpaHereUtil.getTpahereHashMap().keySet()) {
                 TpaData tpaData = TpaHereUtil.getTpahereHashMap().get(playerName);
                 String targetPlayerName = tpaData.getTargetPlayerName();

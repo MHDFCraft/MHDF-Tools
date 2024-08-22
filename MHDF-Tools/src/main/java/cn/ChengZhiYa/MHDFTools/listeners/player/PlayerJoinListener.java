@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil;
@@ -59,7 +58,7 @@ public final class PlayerJoinListener implements Listener {
         }
         if (plugin.getConfig().getBoolean("TpaSetting.Enable")) {
             Player player = event.getPlayer();
-            File TpaData = new File(MHDFTools.getPlugin(MHDFTools.class).getDataFolder(), "TpaData.yml");
+            File TpaData = new File(plugin.getDataFolder(), "TpaData.yml");
             YamlConfiguration Tpa_Data = YamlConfiguration.loadConfiguration(TpaData);
             Tpa_Data.set(player.getName() + "_TpaPromptMode", plugin.getConfig().getBoolean("TpaSetting.DefaultMode"));
             try {

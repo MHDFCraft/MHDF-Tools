@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -24,21 +24,21 @@ public final class FlyUtil {
     static final HashMap<String, Integer> FlyTimeHashMap = new HashMap<>();
 
     public static boolean AllowFly(String PlayerName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             if (getFlyTimeHashMap().get(PlayerName) == null) {
                 return DatabaseUtil.dataExists("MHDFTools_Fly", "PlayerName", PlayerName);
             } else {
                 return true;
             }
         } else {
-            File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
+            File File = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "Cache/FlyCache.yml");
             YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);
             return Data.get(PlayerName) != null;
         }
     }
 
     public static int getFlyTime(String PlayerName) {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             if (getFlyTimeHashMap().get(PlayerName) == null) {
                 try (Connection connection = dataSource.getConnection()) {
                     try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Fly WHERE PlayerName = ? LIMIT 1")) {
@@ -58,7 +58,7 @@ public final class FlyUtil {
                 return getFlyTimeHashMap().get(PlayerName);
             }
         } else {
-            File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
+            File File = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "Cache/FlyCache.yml");
             YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);
             return Data.getInt(PlayerName);
         }
@@ -66,12 +66,12 @@ public final class FlyUtil {
     }
 
     public static void takeFlyTime(String PlayerName, int TakeTime) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getFlyTimeHashMap().put(PlayerName, getFlyTimeHashMap().get(PlayerName) - TakeTime);
                 DatabaseUtil.take("MHDFTools_Fly", "PlayerName", PlayerName, "Time", TakeTime);
             } else {
-                File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
+                File File = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "Cache/FlyCache.yml");
                 YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);
                 Data.set(PlayerName, getFlyTime(PlayerName) - TakeTime);
                 try {
@@ -83,8 +83,8 @@ public final class FlyUtil {
     }
 
     public static void addFly(String PlayerName, int Time) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (AllowFly(PlayerName)) {
                     getFlyTimeHashMap().remove(PlayerName);
                     try {
@@ -111,7 +111,7 @@ public final class FlyUtil {
                     e.printStackTrace();
                 }
             } else {
-                File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
+                File File = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "Cache/FlyCache.yml");
                 YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);
                 Data.set(PlayerName, Time);
                 try {
@@ -123,8 +123,8 @@ public final class FlyUtil {
     }
 
     public static void removeFly(String PlayerName) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString("DataSettings.Type"), "MySQL")) {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getFlyTimeHashMap().remove(PlayerName);
                 try {
                     Connection connection = dataSource.getConnection();
@@ -137,7 +137,7 @@ public final class FlyUtil {
                     e.printStackTrace();
                 }
             } else {
-                File File = new File(MHDFTools.instance.getDataFolder(), "Cache/FlyCache.yml");
+                File File = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "Cache/FlyCache.yml");
                 YamlConfiguration Data = YamlConfiguration.loadConfiguration(File);
                 Data.set(PlayerName, null);
                 try {

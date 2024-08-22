@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -23,81 +23,72 @@ public final class VanishUtil {
     private static final String CACHE_FILE_PATH = "Cache/VanishCache.yml";
     public static List<String> vanishList = new ArrayList<>();
 
-    private static YamlConfiguration loadVanishCache() {
-        return loadYamlConfiguration();
-    }
-
     private static YamlConfiguration loadYamlConfiguration() {
-        File file = new File(MHDFTools.instance.getDataFolder(), CACHE_FILE_PATH);
-        return YamlConfiguration.loadConfiguration(file);
+        return YamlConfiguration.loadConfiguration(new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), CACHE_FILE_PATH));
     }
 
-    private static void saveYamlConfiguration(YamlConfiguration config, File file) {
+    private static void saveYamlConfiguration(YamlConfiguration config) {
         try {
-            config.save(file);
+            config.save(new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), CACHE_FILE_PATH));
         } catch (IOException ignored) {
         }
     }
 
     public static List<String> getVanishList() {
-        if (Objects.equals(MHDFTools.instance.getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
+        if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
             vanishList.clear();
-            try (Connection connection = dataSource.getConnection()) {
-                try (PreparedStatement ps = connection.prepareStatement("SELECT PlayerName FROM MHDFTools_Vanish")) {
-                    try (ResultSet rs = ps.executeQuery()) {
-                        while (rs.next()) {
-                            vanishList.add(rs.getString("PlayerName"));
-                        }
-                    }
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement ps = connection.prepareStatement("SELECT PlayerName FROM MHDFTools_Vanish");
+                 ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    vanishList.add(rs.getString("PlayerName"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             return vanishList;
         } else {
-            YamlConfiguration data = loadVanishCache();
+            YamlConfiguration data = loadYamlConfiguration();
             return data.getStringList(YAML_LIST_KEY);
         }
     }
 
     public static void addVanish(String playerName) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
-                try (Connection connection = dataSource.getConnection()) {
-                    try (PreparedStatement ps = connection.prepareStatement("INSERT INTO " + "MHDFTools_Vanish" + " (PlayerName) VALUES (?)")) {
-                        ps.setString(1, playerName);
-                        ps.executeUpdate();
-                    }
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
+                try (Connection connection = dataSource.getConnection();
+                     PreparedStatement ps = connection.prepareStatement("INSERT INTO MHDFTools_Vanish (PlayerName) VALUES (?)")) {
+                    ps.setString(1, playerName);
+                    ps.executeUpdate();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             } else {
-                YamlConfiguration data = loadVanishCache();
-                vanishList.addAll(data.getStringList(DATA_TYPE_CONFIG_KEY));
+                YamlConfiguration data = loadYamlConfiguration();
+                List<String> vanishList = data.getStringList(YAML_LIST_KEY);
                 vanishList.add(playerName);
                 data.set(YAML_LIST_KEY, vanishList);
-                saveYamlConfiguration(data, new File(MHDFTools.instance.getDataFolder(), CACHE_FILE_PATH));
+                saveYamlConfiguration(data);
             }
         });
     }
 
     public static void removeVanish(String playerName) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
-            if (Objects.equals(MHDFTools.instance.getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
-                try (Connection connection = dataSource.getConnection()) {
-                    try (PreparedStatement ps = connection.prepareStatement("DELETE FROM MHDFTools_Vanish WHERE PlayerName = ?")) {
-                        ps.setString(1, playerName);
-                        ps.executeUpdate();
-                    }
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
+                try (Connection connection = dataSource.getConnection();
+                     PreparedStatement ps = connection.prepareStatement("DELETE FROM MHDFTools_Vanish WHERE PlayerName = ?")) {
+                    ps.setString(1, playerName);
+                    ps.executeUpdate();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             } else {
-                YamlConfiguration data = loadVanishCache();
-                vanishList.addAll(data.getStringList(DATA_TYPE_CONFIG_KEY));
+                YamlConfiguration data = loadYamlConfiguration();
+                List<String> vanishList = data.getStringList(YAML_LIST_KEY);
                 vanishList.remove(playerName);
                 data.set(YAML_LIST_KEY, vanishList);
-                saveYamlConfiguration(data, new File(MHDFTools.instance.getDataFolder(), CACHE_FILE_PATH));
+                saveYamlConfiguration(data);
             }
         });
     }

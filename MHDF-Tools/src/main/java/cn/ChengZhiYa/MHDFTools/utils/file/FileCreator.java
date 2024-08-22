@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.file;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.io.IOException;
 public final class FileCreator {
 
     private static File getDataFile(String path) {
-        return new File(MHDFTools.instance.getDataFolder(), path);
+        return new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), path);
     }
 
     public static void createDir(File directory) {

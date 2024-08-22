@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;
@@ -17,31 +17,31 @@ public final class DatabaseUtil {
 
     public static void initializationYamlData() {
         //家系统数据文件夹
-        if (MHDFTools.instance.getConfig().getBoolean("HomeSystemSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
             createDir("HomeData");
         }
         //经济系统数据文件夹
-        if (MHDFTools.instance.getConfig().getBoolean("EconomySettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
             createDir("VaultData");
         }
         //登录系统
-        if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("LoginSystemSettings.Enable")) {
             createFile("LoginData.yml");
         }
         //飞行系统
-        if (MHDFTools.instance.getConfig().getBoolean("FlySettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("FlySettings.Enable")) {
             createFile("Cache/FlyCache.yml");
         }
         //隐身系统
-        if (MHDFTools.instance.getConfig().getBoolean("VanishSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("VanishSettings.Enable")) {
             createFile("Cache/VanishCache.yml");
         }
         //改名系统
-        if (MHDFTools.instance.getConfig().getBoolean("NickSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("NickSettings.Enable")) {
             createFile("NickData.yml");
         }
         //聊天颜色
-        if (MHDFTools.instance.getConfig().getBoolean("ChatColorSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("ChatColorSettings.Enable")) {
             createFile("ChatColorData.yml");
         }
     }
@@ -49,9 +49,9 @@ public final class DatabaseUtil {
     public static void initializationDatabaseData() {
         try {
             HikariConfig config = new HikariConfig();
-            config.setJdbcUrl("jdbc:mysql://" + MHDFTools.instance.getConfig().getString("DataSettings.Host") + "/" + MHDFTools.instance.getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
-            config.setUsername(MHDFTools.instance.getConfig().getString("DataSettings.User"));
-            config.setPassword(MHDFTools.instance.getConfig().getString("DataSettings.Password"));
+            config.setJdbcUrl("jdbc:mysql://" + PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Host") + "/" + PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
+            config.setUsername(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.User"));
+            config.setPassword(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Password"));
             config.addDataSourceProperty("useUnicode", "true");
             config.addDataSourceProperty("characterEncoding", "utf8");
             config.addDataSourceProperty("cachePrepStmts", "true");
@@ -138,7 +138,7 @@ public final class DatabaseUtil {
     }
 
     private static void initializeTable(String configKey, String sqlCreate) throws SQLException {
-        if (MHDFTools.instance.getConfig().getBoolean(configKey + ".Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean(configKey + ".Enable")) {
             try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement(sqlCreate)) {
                 ps.executeUpdate();
             }
@@ -188,7 +188,7 @@ public final class DatabaseUtil {
     }
 
     public static void set(String table, String whereField, String whereValue, String setField, Object setValue) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             if (dataExists(table, whereField, whereValue)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
@@ -210,7 +210,7 @@ public final class DatabaseUtil {
     }
 
     public static void add(String table, String whereField, String whereValue, String addField, Object addValue) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             if (dataExists(table, whereField, whereValue)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
@@ -234,7 +234,7 @@ public final class DatabaseUtil {
     }
 
     public static void take(String table, String whereField, String whereValue, String takeField, Object takeValue) {
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             if (dataExists(table, whereField, whereValue)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(

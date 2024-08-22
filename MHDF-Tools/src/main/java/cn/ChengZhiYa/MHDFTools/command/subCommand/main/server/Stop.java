@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.main.server;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +16,7 @@ public final class Stop implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!Bukkit.getOnlinePlayers().isEmpty()) {
-            String Message = Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SuperStopSettings.DefaultStopMessage"));
+            String Message = Objects.requireNonNull(PluginLoader.INSTANCE.getPlugin().getConfig().getString("SuperStopSettings.DefaultStopMessage"));
 
             if (args.length >= 1) {
                 StringBuilder StopMessage = new StringBuilder();
@@ -27,7 +27,7 @@ public final class Stop implements CommandExecutor {
             }
 
             for (Player player : Bukkit.getOnlinePlayers()) {
-                player.kickPlayer(Placeholder(player, Objects.requireNonNull(MHDFTools.instance.getConfig().getString("SuperStopSettings.StopMessageFormat")).replaceAll("\\{Message}", Message)));
+                player.kickPlayer(Placeholder(player, Objects.requireNonNull(PluginLoader.INSTANCE.getPlugin().getConfig().getString("SuperStopSettings.StopMessageFormat")).replaceAll("\\{Message}", Message)));
             }
         }
 

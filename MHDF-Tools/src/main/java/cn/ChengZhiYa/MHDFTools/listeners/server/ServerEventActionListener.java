@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.server;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -68,9 +68,9 @@ public final class ServerEventActionListener implements Listener {
     }
 
     private void runActions(Player player, String event) {
-        if (MHDFTools.instance.getConfig().getBoolean("EventActionSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EventActionSettings.Enable")) {
             for (String action : getActionList(event)) {
-                for (String actions : MHDFTools.instance.getConfig().getStringList("EventActionSettings.EventList." + action + ".ActionList")) {
+                for (String actions : PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("EventActionSettings.EventList." + action + ".ActionList")) {
                     LogUtil.debug("事件操作", "事件名称: " + action, "操作: " + actions);
                     runAction(player, null, actions.split("\\|"));
                 }
@@ -79,15 +79,15 @@ public final class ServerEventActionListener implements Listener {
     }
 
     private void runActions(Player player, String event, String worldName) {
-        if (MHDFTools.instance.getConfig().getBoolean("EventActionSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EventActionSettings.Enable")) {
             for (String action : getActionList(event)) {
-                if (!MHDFTools.instance.getConfig().getStringList("EventActionSettings.EventList." + action + ".WorldList").isEmpty()) {
-                    if (!MHDFTools.instance.getConfig().getStringList("EventActionSettings.EventList." + action + ".WorldList").contains(worldName)) {
+                if (!PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("EventActionSettings.EventList." + action + ".WorldList").isEmpty()) {
+                    if (!PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("EventActionSettings.EventList." + action + ".WorldList").contains(worldName)) {
                         LogUtil.debug("事件未操作", "事件名称: " + action, "原因: 该世界不执行该操作", "世界名称: " + worldName);
                         continue;
                     }
                 }
-                for (String actions : MHDFTools.instance.getConfig().getStringList("EventActionSettings.EventList." + action + ".ActionList")) {
+                for (String actions : PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("EventActionSettings.EventList." + action + ".ActionList")) {
                     LogUtil.debug("事件操作", "事件名称: " + action, "操作: " + actions);
                     runAction(player, null, actions.split("\\|"));
                 }
@@ -97,8 +97,8 @@ public final class ServerEventActionListener implements Listener {
 
     private List<String> getActionList(String event) {
         List<String> list = new ArrayList<>();
-        for (String action : Objects.requireNonNull(MHDFTools.instance.getConfig().getConfigurationSection("EventActionSettings.EventList")).getKeys(false)) {
-            String type = MHDFTools.instance.getConfig().getString("EventActionSettings.EventList." + action + ".Event");
+        for (String action : Objects.requireNonNull(PluginLoader.INSTANCE.getPlugin().getConfig().getConfigurationSection("EventActionSettings.EventList")).getKeys(false)) {
+            String type = PluginLoader.INSTANCE.getPlugin().getConfig().getString("EventActionSettings.EventList." + action + ".Event");
             LogUtil.debug("事件操作类型", "事件名称: " + action, "事件类型:" + type);
             if (Objects.equals(type, event)) {
                 list.add(action);

@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.main.auth;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -25,7 +25,7 @@ public final class Login implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        Bukkit.getScheduler().runTaskAsynchronously(MHDFTools.instance, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
             if (args.length != 1) {
                 sender.sendMessage(i18n("Usage.Login", label));
                 return;
@@ -37,9 +37,9 @@ public final class Login implements CommandExecutor {
                 return;
             }
 
-            int maxPasswordLength = MHDFTools.instance.getConfig().getInt("LoginSystemSettings.MaxPaswordLength");
-            int minPasswordLength = MHDFTools.instance.getConfig().getInt("LoginSystemSettings.MinPaswordLength");
-            List<String> easyPasswords = MHDFTools.instance.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
+            int maxPasswordLength = PluginLoader.INSTANCE.getPlugin().getConfig().getInt("LoginSystemSettings.MaxPaswordLength");
+            int minPasswordLength = PluginLoader.INSTANCE.getPlugin().getConfig().getInt("LoginSystemSettings.MinPaswordLength");
+            List<String> easyPasswords = PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("LoginSystemSettings.EasyPasswords");
 
             if (password.length() < minPasswordLength) {
                 sender.sendMessage(i18n("Login.LengthShort", String.valueOf(minPasswordLength)));
@@ -60,7 +60,7 @@ public final class Login implements CommandExecutor {
 
             if (checkPassword(player.getName(), sha256(password))) {
                 MapUtil.getStringHashMap().put(player.getName() + "_Login", "t");
-                if (MHDFTools.instance.getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {
+                if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("LoginSystemSettings.AutoLogin")) {
                     String playerIP = Objects.requireNonNull(player.getAddress()).getHostString();
                     MapUtil.getStringHashMap().put(player.getName() + "_LoginIP", playerIP);
                 }

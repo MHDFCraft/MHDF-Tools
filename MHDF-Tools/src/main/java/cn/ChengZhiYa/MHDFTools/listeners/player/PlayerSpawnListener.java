@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
@@ -30,6 +29,6 @@ public final class PlayerSpawnListener implements Listener {
     }
 
     private boolean isEnabled() {
-        return MHDFTools.instance.getConfig().getBoolean("SpawnSettings.Enable") && MHDFTools.instance.getConfig().getBoolean("SpawnSettings.JoinTeleport");
+        return PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("SpawnSettings.Enable") && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("SpawnSettings.JoinTeleport");
     }
 }

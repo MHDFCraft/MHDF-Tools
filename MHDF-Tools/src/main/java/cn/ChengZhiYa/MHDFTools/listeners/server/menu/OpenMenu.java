@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.server.menu;
 
-import cn.ChengZhiYa.MHDFTools.MHDFTools;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +13,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.*;
 public final class OpenMenu implements Listener {
     @EventHandler
     public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
-        if (MHDFTools.instance.getConfig().getBoolean("MenuSettings.Enable")) {
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("MenuSettings.Enable")) {
             String Command = event.getMessage().replaceAll("/", "").split(" ")[0];
             for (String MenuFileName : getCustomMenuList()) {
 
