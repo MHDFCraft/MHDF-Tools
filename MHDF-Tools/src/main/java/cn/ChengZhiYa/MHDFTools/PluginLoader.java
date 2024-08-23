@@ -7,6 +7,7 @@ import cn.ChengZhiYa.MHDFTools.task.AsyncTask;
 import cn.ChengZhiYa.MHDFTools.task.server.ServerScoreboardTask;
 import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.closeDatabase;
@@ -64,6 +65,8 @@ public enum PluginLoader {
     }
 
     public void stop() {
+        Bukkit.getAsyncScheduler().cancelTasks(PluginLoader.INSTANCE.plugin);
+        Bukkit.getGlobalRegionScheduler().cancelTasks(PluginLoader.INSTANCE.plugin);
         printLogo();
         initManager.stop();
         closeDatabase();
