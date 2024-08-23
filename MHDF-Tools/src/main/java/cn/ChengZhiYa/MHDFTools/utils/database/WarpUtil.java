@@ -26,7 +26,7 @@ public final class WarpUtil {
     private static final List<String> warpList = new ArrayList<>();
 
     public static void updateWarpList() {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_warp");
@@ -130,7 +130,7 @@ public final class WarpUtil {
     }
 
     public static void addWarp(String warpName, SuperLocation location) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getServerName();
                 getWarpLocationHashMap().put(warpName, location);
@@ -171,7 +171,7 @@ public final class WarpUtil {
     }
 
     public static void setWarp(String warpName, SuperLocation location) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getServerName();
                 getWarpLocationHashMap().put(warpName, location);
@@ -212,7 +212,7 @@ public final class WarpUtil {
     }
 
     public static void removeWarp(String warpName) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getWarpLocationHashMap().remove(warpName);
                 getWarpServerHashMap().remove(warpName);

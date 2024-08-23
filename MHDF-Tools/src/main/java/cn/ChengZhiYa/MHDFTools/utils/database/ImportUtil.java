@@ -29,7 +29,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.WarpUtil.*;
 
 public final class ImportUtil {
     public static void importHuskHomesData(CommandSender sender) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             String pluginName = "HuskHomes";
 
             File pluginDataFolder = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder().getParent(), pluginName);
@@ -120,7 +120,7 @@ public final class ImportUtil {
     }
 
     public static void importCMIData(CommandSender sender) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             String pluginName = "CMI";
 
             File pluginDataFolder = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder().getParent(), pluginName);
@@ -244,7 +244,7 @@ public final class ImportUtil {
     }
 
     public static void importEssentialsData(CommandSender sender) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             String pluginName = "Essentials";
 
             File pluginDataFolder = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder().getParent(), pluginName);

@@ -188,7 +188,7 @@ public final class DatabaseUtil {
     }
 
     public static void set(String table, String whereField, String whereValue, String setField, Object setValue) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (dataExists(table, whereField, whereValue)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
@@ -210,7 +210,7 @@ public final class DatabaseUtil {
     }
 
     public static void add(String table, String whereField, String whereValue, String addField, Object addValue) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (dataExists(table, whereField, whereValue)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
@@ -234,7 +234,7 @@ public final class DatabaseUtil {
     }
 
     public static void take(String table, String whereField, String whereValue, String takeField, Object takeValue) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (dataExists(table, whereField, whereValue)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(

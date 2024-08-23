@@ -66,7 +66,7 @@ public final class FlyUtil {
     }
 
     public static void takeFlyTime(String PlayerName, int TakeTime) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getFlyTimeHashMap().put(PlayerName, getFlyTimeHashMap().get(PlayerName) - TakeTime);
                 DatabaseUtil.take("MHDFTools_Fly", "PlayerName", PlayerName, "Time", TakeTime);
@@ -83,7 +83,7 @@ public final class FlyUtil {
     }
 
     public static void addFly(String PlayerName, int Time) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (AllowFly(PlayerName)) {
                     getFlyTimeHashMap().remove(PlayerName);
@@ -123,7 +123,7 @@ public final class FlyUtil {
     }
 
     public static void removeFly(String PlayerName) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getFlyTimeHashMap().remove(PlayerName);
                 try {

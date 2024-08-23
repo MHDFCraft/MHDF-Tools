@@ -36,7 +36,7 @@ public final class EconomyUtil {
     public static void initializationPlayerData(String PlayerName, Double money) {
         if (!ifPlayerFileExists(PlayerName)) {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
-                Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+                Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
                     try {
                         Connection connection = dataSource.getConnection();
                         PreparedStatement ps = connection.prepareStatement("INSERT INTO mhdftools_economy (PlayerName, Money) VALUES (?,?)");
@@ -86,7 +86,7 @@ public final class EconomyUtil {
     }
 
     public static void setMoney(String PlayerName, Double Money) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getBigDecimal(Money));
@@ -104,7 +104,7 @@ public final class EconomyUtil {
     }
 
     public static void addMoney(String PlayerName, Double Money) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).add(getBigDecimal(Money)));
@@ -122,7 +122,7 @@ public final class EconomyUtil {
     }
 
     public static void takeMoney(String PlayerName, Double Money) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).subtract(getBigDecimal(Money)));

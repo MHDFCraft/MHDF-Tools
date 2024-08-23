@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.getServerName;
 import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.initializationPlayerData;
@@ -26,17 +27,17 @@ public final class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         if (plugin.getConfig().getBoolean("FlySettings.Enable")) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
+            Bukkit.getAsyncScheduler().runDelayed(plugin, task -> {
                 FlyUtil.getFlyTimeHashMap().remove(event.getPlayer().getName());
                 FlyUtil.getFlyTime(event.getPlayer().getName());
-            }, 20);
+            }, 1, TimeUnit.SECONDS);
         }
         if (plugin.getConfig().getBoolean("BungeecordSettings.Enable")) {
             getServerName();
         }
         if (plugin.getConfig().getBoolean("BungeecordSettings.Enable")) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, BungeeCordUtil::getPlayerList, 20);
-            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, BungeeCordUtil::getServerName, 20);
+            Bukkit.getAsyncScheduler().runDelayed(plugin, task -> BungeeCordUtil.getPlayerList(), 1, TimeUnit.SECONDS);
+            Bukkit.getAsyncScheduler().runDelayed(plugin, task -> BungeeCordUtil.getServerName(), 1, TimeUnit.SECONDS);
         }
         if (plugin.getConfig().getBoolean("EconomySettings.Enable")) {
             initializationPlayerData(event.getPlayer().getName(), plugin.getConfig().getDouble("EconomySettings.InitialMoney"));

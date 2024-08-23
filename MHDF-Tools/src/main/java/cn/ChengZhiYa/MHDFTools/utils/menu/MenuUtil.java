@@ -378,7 +378,7 @@ public final class MenuUtil {
     }
 
     public static void openMenu(Player player, String menuFileName) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             String title = Placeholder(player, getMenu(menuFileName).getString("menu.Title"));
             Inventory menu = Bukkit.createInventory(player, getMenu(menuFileName).getInt("menu.Size"), title);
 

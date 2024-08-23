@@ -48,7 +48,7 @@ public final class Register implements CommandExecutor {
         }
 
         String password = args[0];
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> handleRegistration(player, password));
+        Bukkit.getAsyncScheduler().runNow(plugin, task -> handleRegistration(player, password));
 
         return true;
     }

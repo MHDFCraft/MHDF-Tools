@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public final class PlayerNickListener implements Listener {
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent event) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (NickUtil.ifNickExists(event.getPlayer().getName())) {
                 Player player = event.getPlayer();
                 String nickName = NickUtil.getNickName(player.getName());

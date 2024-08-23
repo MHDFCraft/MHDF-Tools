@@ -54,7 +54,7 @@ public final class VanishUtil {
     }
 
     public static void addVanish(String playerName) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement("INSERT INTO MHDFTools_Vanish (PlayerName) VALUES (?)")) {
@@ -74,7 +74,7 @@ public final class VanishUtil {
     }
 
     public static void removeVanish(String playerName) {
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString(DATA_TYPE_CONFIG_KEY), MYSQL_DATA_TYPE)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement("DELETE FROM MHDFTools_Vanish WHERE PlayerName = ?")) {

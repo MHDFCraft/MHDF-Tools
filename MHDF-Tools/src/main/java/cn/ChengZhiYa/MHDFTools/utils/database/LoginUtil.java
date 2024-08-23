@@ -61,7 +61,7 @@ public final class LoginUtil {
         }
 
         if (isUsingMySQL()) {
-            Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement preparedStatement = connection.prepareStatement(
                              "INSERT INTO " + LOGIN_TABLE + " (PlayerName, Password) VALUES (?, ?)")) {

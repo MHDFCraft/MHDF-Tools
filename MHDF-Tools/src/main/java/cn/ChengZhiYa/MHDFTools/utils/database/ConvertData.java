@@ -39,7 +39,7 @@ public final class ConvertData {
             PluginLoader.INSTANCE.getPlugin().saveConfig();
             PluginLoader.INSTANCE.getPlugin().reloadConfig();
         }
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             initializationYamlData();
 
             try {
@@ -130,7 +130,7 @@ public final class ConvertData {
             PluginLoader.INSTANCE.getPlugin().saveConfig();
             PluginLoader.INSTANCE.getPlugin().reloadConfig();
         }
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             try {
                 HikariConfig config = new HikariConfig();
                 config.setJdbcUrl("jdbc:mysql://" + PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Host") + "/" + PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());

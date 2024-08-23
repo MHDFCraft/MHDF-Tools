@@ -25,7 +25,7 @@ public final class Login implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
             if (args.length != 1) {
                 sender.sendMessage(i18n("Usage.Login", label));
                 return;

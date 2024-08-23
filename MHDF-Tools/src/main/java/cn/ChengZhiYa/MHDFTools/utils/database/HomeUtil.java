@@ -203,7 +203,7 @@ public final class HomeUtil {
 
     public static void addHome(String playerName, String homeName, SuperLocation homeLocation) {
         if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
-            Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
                 getServerName();
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
@@ -281,7 +281,7 @@ public final class HomeUtil {
         }
 
         if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
-            Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
                 getServerName();
                 try (Connection connection = dataSource.getConnection()) {
                     String updateQuery = "UPDATE mhdftools_home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?";
@@ -317,7 +317,7 @@ public final class HomeUtil {
         }
 
         if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
-            Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
                 try {
                     //定义
                     String worldName = homeLocation.getWorldName();
@@ -359,7 +359,7 @@ public final class HomeUtil {
     public static void removeHome(String playerName, String homeName) {
         if (ifHomeExists(playerName, homeName)) {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
-                Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+                Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
                     List<String> homeList = getPlayerHomeList(playerName);
                     homeList.remove(homeName);
                     getHomeListHashMap().put(playerName, homeList);

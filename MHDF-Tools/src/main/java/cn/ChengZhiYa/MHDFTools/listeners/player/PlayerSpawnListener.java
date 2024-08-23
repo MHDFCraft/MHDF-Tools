@@ -23,9 +23,9 @@ public final class PlayerSpawnListener implements Listener {
         Player player = event.getPlayer();
         SuperLocation spawnLocation = SpawnUtil.getSpawnLocation();
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+        Bukkit.getRegionScheduler().runDelayed(plugin, player.getLocation(), task -> {
             BungeeCordUtil.tpPlayerTo(player.getName(), SpawnUtil.getServerName(), spawnLocation);
-        }, 5);
+        }, 5L);
     }
 
     private boolean isEnabled() {
