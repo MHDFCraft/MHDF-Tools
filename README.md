@@ -25,7 +25,7 @@ _✨轻量 便携 快捷 即装即用 可无前置运行✨_
     <img src="https://img.shields.io/badge/JDK-17+-brightgreen?style=flat-square" alt="jdk-version">
 </p>
 
-## 前置插件
+## 前置插件 (可选)
 
 _PlaceholderAPI, Vault_
 
