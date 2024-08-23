@@ -5,11 +5,14 @@ import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaUtil;
-import org.bukkit.scheduler.BukkitRunnable;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 
-public final class PlayerTpaTask extends BukkitRunnable {
+import java.util.function.Consumer;
+
+public final class PlayerTpaTask implements Consumer<ScheduledTask> {
+
     @Override
-    public void run() {
+    public void accept(ScheduledTask task) {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("TpaSettings.Enable")) {
             for (String playerName : TpaUtil.getTpaHashMap().keySet()) {
                 TpaData tpaData = TpaUtil.getTpaHashMap().get(playerName);

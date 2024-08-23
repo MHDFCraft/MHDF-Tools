@@ -243,7 +243,7 @@ public final class HomeUtil {
         String dataSettingsType = PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type");
 
         if (Objects.equals(dataSettingsType, "MySQL")) {
-            Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+            Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
                 try (Connection connection = dataSource.getConnection()) {
                     List<String> homeList = getPlayerHomeList(playerName);
                     homeList.add(homeName);

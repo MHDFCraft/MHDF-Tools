@@ -121,7 +121,7 @@ public final class BungeeCordUtil {
 
             Objects.requireNonNull(player).sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> {
+            Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), Bukkit.getPlayer(targetPlayerName).getLocation(), task -> {
                 Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(Objects.requireNonNull(Bukkit.getPlayer(targetPlayerName)));
                 playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), sound("TeleportSound"));
             });
@@ -143,7 +143,7 @@ public final class BungeeCordUtil {
 
             player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> {
+            Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), getHomeLocation(playerName, homeName).getLocation(), task -> {
                 Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(Objects.requireNonNull(getHomeLocation(playerName, homeName)).getLocation());
                 playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), sound("TeleportSound"));
             });
@@ -168,7 +168,7 @@ public final class BungeeCordUtil {
             out.writeDouble(location.getPitch());
             player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> {
+            Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), location.getLocation(), task -> {
                 Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(location.getLocation());
                 SpigotUtil.playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), SpigotUtil.sound("TeleportSound"));
             });

@@ -36,12 +36,16 @@ public final class GameMode implements TabExecutor {
                     case "生存":
                     case "0":
                     case "survival":
+                        boolean flying = player.isFlying();
                         setGameMode(player, 0, RunSender);
+                        player.setFlying(flying);
                         break;
                     case "冒险":
                     case "2":
                     case "adventure":
+                        boolean fly = player.isFlying();
                         setGameMode(player, 2, RunSender);
+                        player.setFlying(fly);
                         break;
                     case "创造":
                     case "1":

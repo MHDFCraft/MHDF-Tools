@@ -2,30 +2,29 @@ package cn.ChengZhiYa.MHDFTools.task.server;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
 
-public final class ServerScoreboardTask extends BukkitRunnable {
+public final class ServerScoreboardTask implements Consumer<ScheduledTask> {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     @Override
-    public void run() {
+    public void accept(ScheduledTask task) {
         if (!plugin.getConfig().getBoolean("ScoreboardSettings.Enable")) {
             return;
         }
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            updateScoreboard(player);
-        }
+        Bukkit.getOnlinePlayers().forEach(this::updateScoreboard);
     }
 
     private void updateScoreboard(Player player) {

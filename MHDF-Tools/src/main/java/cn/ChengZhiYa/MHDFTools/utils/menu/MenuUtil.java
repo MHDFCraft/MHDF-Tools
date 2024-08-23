@@ -284,7 +284,7 @@ public final class MenuUtil {
             case "[player]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> player.chat("/" + Placeholder(player, action[1])));
+                    Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), player.getLocation(),  task -> player.chat("/" + Placeholder(player, action[1])));
                 } else {
                     Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
                 }
@@ -399,7 +399,7 @@ public final class MenuUtil {
 
                 setMenuItem(menu, menuFileName, itemID, type, displayName, lore, customModelData, amount, slotList);
             }
-            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> player.openInventory(menu));
+            Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), player.getLocation(), t -> player.openInventory(menu));
         });
     }
 }

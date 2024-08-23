@@ -5,11 +5,14 @@ import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaHereUtil;
-import org.bukkit.scheduler.BukkitRunnable;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 
-public final class PlayerTpaHereTask extends BukkitRunnable {
+import java.util.function.Consumer;
+
+public final class PlayerTpaHereTask implements Consumer<ScheduledTask> {
+
     @Override
-    public void run() {
+    public void accept(ScheduledTask task) {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("TpaHereSettings.Enable")) {
             for (String playerName : TpaHereUtil.getTpahereHashMap().keySet()) {
                 TpaData tpaData = TpaHereUtil.getTpahereHashMap().get(playerName);

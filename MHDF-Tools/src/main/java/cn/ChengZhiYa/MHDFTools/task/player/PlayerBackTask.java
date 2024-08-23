@@ -4,18 +4,20 @@ import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.ServerName;
 
-public final class PlayerBackTask extends BukkitRunnable {
+public final class PlayerBackTask implements Consumer<ScheduledTask> {
+
     @Override
-    public void run() {
+    public void accept(ScheduledTask task) {
         Set<Object> keySet = MapUtil.getIntHashMap().keySet();
         for (Object Key : keySet) {
             if (!Key.toString().contains("_BackDelay")) continue;

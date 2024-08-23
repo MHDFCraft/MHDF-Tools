@@ -2,14 +2,17 @@ package cn.ChengZhiYa.MHDFTools.task.player;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.VanishUtil;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
-public final class PlayerVanishTask extends BukkitRunnable {
+import java.util.function.Consumer;
+
+public final class PlayerVanishTask implements Consumer<ScheduledTask> {
+
     @Override
-    public void run() {
+    public void accept(ScheduledTask task) {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("VanishSettings.Enable")) {
             for (String vanishPlayer : VanishUtil.getVanishList()) {
                 Player player = Bukkit.getPlayerExact(vanishPlayer);
@@ -17,9 +20,9 @@ public final class PlayerVanishTask extends BukkitRunnable {
                     for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                         try {
                             Player.class.getDeclaredMethod("hidePlayer", Plugin.class, Player.class);
-                            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> onlinePlayer.hidePlayer(PluginLoader.INSTANCE.getPlugin(), player));
+                            Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), onlinePlayer.getLocation(), t -> onlinePlayer.hidePlayer(PluginLoader.INSTANCE.getPlugin(), player));
                         } catch (NoSuchMethodException e) {
-                            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> onlinePlayer.hidePlayer(player));
+                            Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), onlinePlayer.getLocation(), t -> onlinePlayer.hidePlayer(player));
                         }
                     }
                 }

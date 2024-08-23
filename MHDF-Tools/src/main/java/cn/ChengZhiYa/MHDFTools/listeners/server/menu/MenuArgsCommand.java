@@ -30,7 +30,7 @@ public final class MenuArgsCommand implements Listener {
             }
 
             if (commandParts[0].equals("player")) {
-                Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> player.chat("/" + PlaceholderAPI.setPlaceholders(player, commandParts[3])));
+                Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), player.getLocation(), task -> player.chat("/" + PlaceholderAPI.setPlaceholders(player, commandParts[3])));
             } else {
                 Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(player, commandParts[3])));
             }
