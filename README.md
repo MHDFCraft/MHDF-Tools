@@ -25,7 +25,7 @@ _✨轻量 便携 快捷 即装即用 可无前置运行✨_
     <img src="https://img.shields.io/badge/JDK-17+-brightgreen?style=flat-square" alt="jdk-version">
 </p>
 
-## 前置插件
+## 前置插件 (可选)
 
 _PlaceholderAPI, Vault_
 
@@ -38,12 +38,6 @@ _PlaceholderAPI, Vault_
         <img src="https://repobeats.axiom.co/api/embed/e58f3e1358766291db33ba451d3e90be99811f4f.svg" alt="pulse">
     </a>
 </div>
-
-## 预计的实现
-
-(1). 不再对密码明文处理
-(2). 使用数据包方式获取tps,丢弃Paper依赖
-(3). 继续优化性能
 
 ## 贡献者
 
