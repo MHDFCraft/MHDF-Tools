@@ -8,7 +8,7 @@ import static cn.ChengZhiYa.MHDFTools.hooks.Vault.unHookVault;
 public class stopVault implements Invitable {
     @Override
     public void start() {
-        if (PluginLoader.hasVault) {
+        if (PluginLoader.INSTANCE.isHasVault()) {
             unHookVault();
         }
     }

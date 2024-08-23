@@ -268,7 +268,7 @@ public final class MenuUtil {
             case "[console_args]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    MapUtil.getStringHashMap().put(sender.getName() + "_ArgsRunCommand", "console|" + menuFileName + "|" + action[1] + "|" + action[2]);
+                    MapUtil.getStringHashMap().put(sender.getName() + "_ArgsRunCommand", "consoleMessage|" + menuFileName + "|" + action[1] + "|" + action[2]);
                     player.closeInventory();
                 }
                 break;
@@ -284,13 +284,13 @@ public final class MenuUtil {
             case "[player]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), player.getLocation(),  task -> player.chat("/" + Placeholder(player, action[1])));
+                    Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), player.getLocation(), task -> player.chat("/" + Placeholder(player, action[1])));
                 } else {
                     Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
                 }
                 break;
             }
-            case "[console]": {
+            case "[consoleMessage]": {
                 Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
                 break;
             }
@@ -317,9 +317,9 @@ public final class MenuUtil {
             case "[broadcast]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    Bukkit.broadcast(Placeholder(player, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"),"MHDFTools.Broadcast");
+                    Bukkit.broadcast(Placeholder(player, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"), "MHDFTools.Broadcast");
                 } else {
-                    Bukkit.broadcast(Placeholder(null, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"),"MHDFTools.Broadcast");
+                    Bukkit.broadcast(Placeholder(null, action[1]).replaceAll(action[0] + "\\|", "").replaceAll("\\|", "\n"), "MHDFTools.Broadcast");
                 }
                 break;
             }

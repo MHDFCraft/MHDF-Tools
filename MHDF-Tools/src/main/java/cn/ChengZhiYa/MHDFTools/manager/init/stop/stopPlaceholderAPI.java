@@ -7,7 +7,7 @@ import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
 public class stopPlaceholderAPI implements Invitable {
     @Override
     public void start() {
-        if (PluginLoader.hasPlaceholderAPI) {
+        if (PluginLoader.INSTANCE.isHasPlaceholderAPI()) {
             new PlaceholderAPI().unregister();
         }
     }

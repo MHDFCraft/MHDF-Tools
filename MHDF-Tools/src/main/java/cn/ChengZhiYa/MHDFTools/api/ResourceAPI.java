@@ -8,42 +8,55 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public final class ResourceAPI {
+
     public static InputStream getResource(String filename) {
-        try {
-            URL URL2 = ResourceAPI.class.getClassLoader().getResource(filename);
-            if (URL2 == null) {
-                return null;
-            }
-            URLConnection Connection = URL2.openConnection();
-            Connection.setUseCaches(false);
-            return Connection.getInputStream();
-        } catch (IOException ex) {
+        if (filename == null || filename.isEmpty()) {
+            throw new IllegalArgumentException("Filename cannot be null or empty");
+        }
+
+        URL url = ResourceAPI.class.getClassLoader().getResource(filename);
+        if (url == null) {
             return null;
+        }
+
+        try {
+            URLConnection connection = url.openConnection();
+            connection.setUseCaches(false);
+            return connection.getInputStream();
+        } catch (IOException ex) {
+            throw new RuntimeException("Failed to open input stream for resource: " + filename, ex);
         }
     }
 
-    public static void saveResource(String FilePath, String OutFileName, String ResourcePath, boolean Replace) {
-        if (ResourcePath.isEmpty()) {
+    public static void saveResource(String filePath, String outFileName, String resourcePath, boolean replace) {
+        if (filePath == null || filePath.isEmpty()) {
+            throw new IllegalArgumentException("FilePath cannot be null or empty");
+        }
+        if (outFileName == null || outFileName.isEmpty()) {
+            throw new IllegalArgumentException("OutFileName cannot be null or empty");
+        }
+        if (resourcePath == null || resourcePath.isEmpty()) {
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
         }
-        InputStream in = getResource(ResourcePath = ResourcePath.replace('\\', '/'));
-        if (in == null) {
-            throw new IllegalArgumentException("The embedded resource '" + ResourcePath + "' cannot be found in " + ResourcePath);
-        }
-        File OutFile = new File(FilePath, OutFileName);
-        try {
-            if (!OutFile.exists() || Replace) {
-                int Len;
-                FileOutputStream out = new FileOutputStream(OutFile);
-                byte[] buf = new byte[1024];
-                while ((Len = in.read(buf)) > 0) {
-                    out.write(buf, 0, Len);
+
+        resourcePath = resourcePath.replace('\\', '/');
+        try (InputStream in = getResource(resourcePath)) {
+            if (in == null) {
+                throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found");
+            }
+
+            File outFile = new File(filePath, outFileName);
+            if (!outFile.exists() || replace) {
+                try (FileOutputStream out = new FileOutputStream(outFile)) {
+                    byte[] buf = new byte[1024];
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
                 }
-                out.close();
-                in.close();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to save resource to file", e);
         }
     }
 }

@@ -7,7 +7,7 @@ import java.util.*;
 
 public final class ServerTimeActionUtil {
     @Getter
-    static Map<String,Integer> timeActionHashMap = new HashMap<>();
+    static Map<String, Integer> timeActionHashMap = new HashMap<>();
 
     public static List<String> getTimeActionList() {
         return new ArrayList<>(Objects.requireNonNull(PluginLoader.INSTANCE.getPlugin().getConfig().getConfigurationSection("TimeActionSettings.ActionList")).getKeys(false));

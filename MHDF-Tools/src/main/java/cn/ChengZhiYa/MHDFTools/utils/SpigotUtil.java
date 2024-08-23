@@ -4,7 +4,7 @@ import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.NickUtil;
 import cn.ChengZhiYa.MHDFTools.utils.database.VanishUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
-import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
+import cn.ChengZhiYa.MHDFTools.utils.message.ColorLogs;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -72,22 +72,22 @@ public final class SpigotUtil {
                 String newVersionString = data.getString("data");
 
                 if (!newVersionString.equals(PluginLoader.INSTANCE.getVersion())) {
-                    LogUtil.color("&f[MHDF-Tools] &c当前插件版本不是最新版!");
-                    LogUtil.color("&f[MHDF-Tools] &c下载链接: &7https://github.com/Love-MHDF/MHDF-Tools/releases/");
+                    ColorLogs.colorMessage("&f[MHDF-Tools] &c当前插件版本不是最新版!");
+                    ColorLogs.colorMessage("&f[MHDF-Tools] &c下载链接: &7https://github.com/Love-MHDF/MHDF-Tools/releases/");
                     MapUtil.getBooleanHashMap().put("IsLast", true);
                 } else {
-                    LogUtil.color("&f[MHDF-Tools] &a当前插件版本是最新版!");
+                    ColorLogs.colorMessage("&f[MHDF-Tools] &a当前插件版本是最新版!");
                 }
                 MapUtil.getBooleanHashMap().put("CheckVersionError", false);
             } catch (IOException e) {
-                LogUtil.color("&f[MHDF-Tools] &c获取检测更新时出错!请检查网络连接!");
+                ColorLogs.colorMessage("&f[MHDF-Tools] &c获取检测更新时出错!请检查网络连接!");
                 MapUtil.getBooleanHashMap().put("IsLast", false);
                 MapUtil.getBooleanHashMap().put("CheckVersionError", true);
             } finally {
                 conn.disconnect();
             }
         } catch (IOException e) {
-            LogUtil.color("&f[MHDF-Tools] &c获取检测更新时出错!请检查网络连接!");
+            ColorLogs.colorMessage("&f[MHDF-Tools] &c获取检测更新时出错!请检查网络连接!");
             MapUtil.getBooleanHashMap().put("IsLast", false);
             MapUtil.getBooleanHashMap().put("CheckVersionError", true);
         }
@@ -126,7 +126,7 @@ public final class SpigotUtil {
     }
 
     public static String Placeholder(OfflinePlayer Player, String Message) {
-        if (PluginLoader.hasPlaceholderAPI) {
+        if (PluginLoader.INSTANCE.isHasPlaceholderAPI()) {
             Message = PlaceholderAPI.setPlaceholders(Player, Message);
         }
         return MessageUtil.colorMessage(Message);

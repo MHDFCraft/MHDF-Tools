@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.task.server;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
-import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
+import cn.ChengZhiYa.MHDFTools.utils.message.ColorLogs;
 import cn.ChengZhiYa.MHDFTools.utils.task.ServerTimeActionUtil;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
@@ -47,7 +47,7 @@ public final class ServerTimeActionTask implements Consumer<ScheduledTask> {
 
     private void runActions(String action) {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("TimeActionSettings.Enable")) {
-            LogUtil.debug("定时操作", "操作名称: " + action);
+            ColorLogs.debug("定时操作", "操作名称: " + action);
             runAction(Bukkit.getConsoleSender(), null, action.split("\\|"));
         }
     }

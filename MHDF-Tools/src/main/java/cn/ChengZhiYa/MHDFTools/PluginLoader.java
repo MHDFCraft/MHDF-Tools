@@ -62,8 +62,8 @@ public enum PluginLoader {
         config.loadConfig();
         initManager.start();
         asyncTask.start();
-        ColorLogs.console("&f[MHDF-Tools] &a插件加载完成!");
-        ColorLogs.console("&f[MHDF-Tools] &a欢迎使用梦东系列插件 交流群号:129139830");
+        ColorLogs.consoleMessage("&f[MHDF-Tools] &a插件加载完成!");
+        ColorLogs.consoleMessage("&f[MHDF-Tools] &a欢迎使用梦东系列插件 交流群号:129139830");
     }
 
     public void stop() {
@@ -72,18 +72,18 @@ public enum PluginLoader {
         Bukkit.getGlobalRegionScheduler().cancelTasks(PluginLoader.INSTANCE.plugin);
         initManager.stop();
         closeDatabase();
-        ColorLogs.console("&f[MHDF-Tools] &9插件已卸载! 感谢您再次支持!");
-        ColorLogs.console("&f[MHDF-Tools] &9梦东系列插件 交流群号:129139830");
+        ColorLogs.consoleMessage("&f[MHDF-Tools] &9插件已卸载! 感谢您再次支持!");
+        ColorLogs.consoleMessage("&f[MHDF-Tools] &9梦东系列插件 交流群号:129139830");
     }
 
     private void printLogo() {
-        ColorLogs.console("&f[MHDF-Tools] &d" + "  __  __ _    _ _____  ______ _______          _");
-        ColorLogs.console("&f[MHDF-Tools] &d" + " |  \\/  | |  | |  __ \\|  ____|__   __|        | |");
-        ColorLogs.console("&f[MHDF-Tools] &d" + " | \\  / | |__| | |  | | |__     | | ___   ___ | |___");
-        ColorLogs.console("&f[MHDF-Tools] &d" + " | |\\/| |  __  | |  | |  __|    | |/ _ \\ / _ \\| / __|");
-        ColorLogs.console("&f[MHDF-Tools] &d" + " | |  | | |  | | |__| | |       | | (_) | (_) | \\__ \\");
-        ColorLogs.console("&f[MHDF-Tools] &d" + " |_|  |_|_|  |_|_____/|_|       |_|\\___/ \\___/|_|___/");
-        ColorLogs.console("&f[MHDF-Tools] &d");
+        ColorLogs.consoleMessage("&f[MHDF-Tools] &d" + "  __  __ _    _ _____  ______ _______          _");
+        ColorLogs.consoleMessage("&f[MHDF-Tools] &d" + " |  \\/  | |  | |  __ \\|  ____|__   __|        | |");
+        ColorLogs.consoleMessage("&f[MHDF-Tools] &d" + " | \\  / | |__| | |  | | |__     | | ___   ___ | |___");
+        ColorLogs.consoleMessage("&f[MHDF-Tools] &d" + " | |\\/| |  __  | |  | |  __|    | |/ _ \\ / _ \\| / __|");
+        ColorLogs.consoleMessage("&f[MHDF-Tools] &d" + " | |  | | |  | | |__| | |       | | (_) | (_) | \\__ \\");
+        ColorLogs.consoleMessage("&f[MHDF-Tools] &d" + " |_|  |_|_|  |_|_____/|_|       |_|\\___/ \\___/|_|___/");
+        ColorLogs.consoleMessage("&f[MHDF-Tools] &d");
     }
 
     public String getVersion() {

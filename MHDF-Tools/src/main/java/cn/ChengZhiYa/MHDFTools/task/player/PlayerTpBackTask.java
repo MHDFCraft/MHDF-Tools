@@ -7,7 +7,6 @@ import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 import java.util.Set;

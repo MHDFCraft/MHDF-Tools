@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.listeners.server;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
-import cn.ChengZhiYa.MHDFTools.utils.message.LogUtil;
+import cn.ChengZhiYa.MHDFTools.utils.message.ColorLogs;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -71,7 +71,7 @@ public final class ServerEventActionListener implements Listener {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EventActionSettings.Enable")) {
             for (String action : getActionList(event)) {
                 for (String actions : PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("EventActionSettings.EventList." + action + ".ActionList")) {
-                    LogUtil.debug("事件操作", "事件名称: " + action, "操作: " + actions);
+                    ColorLogs.debug("事件操作", "事件名称: " + action, "操作: " + actions);
                     runAction(player, null, actions.split("\\|"));
                 }
             }
@@ -83,12 +83,12 @@ public final class ServerEventActionListener implements Listener {
             for (String action : getActionList(event)) {
                 if (!PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("EventActionSettings.EventList." + action + ".WorldList").isEmpty()) {
                     if (!PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("EventActionSettings.EventList." + action + ".WorldList").contains(worldName)) {
-                        LogUtil.debug("事件未操作", "事件名称: " + action, "原因: 该世界不执行该操作", "世界名称: " + worldName);
+                        ColorLogs.debug("事件未操作", "事件名称: " + action, "原因: 该世界不执行该操作", "世界名称: " + worldName);
                         continue;
                     }
                 }
                 for (String actions : PluginLoader.INSTANCE.getPlugin().getConfig().getStringList("EventActionSettings.EventList." + action + ".ActionList")) {
-                    LogUtil.debug("事件操作", "事件名称: " + action, "操作: " + actions);
+                    ColorLogs.debug("事件操作", "事件名称: " + action, "操作: " + actions);
                     runAction(player, null, actions.split("\\|"));
                 }
             }
@@ -99,12 +99,12 @@ public final class ServerEventActionListener implements Listener {
         List<String> list = new ArrayList<>();
         for (String action : Objects.requireNonNull(PluginLoader.INSTANCE.getPlugin().getConfig().getConfigurationSection("EventActionSettings.EventList")).getKeys(false)) {
             String type = PluginLoader.INSTANCE.getPlugin().getConfig().getString("EventActionSettings.EventList." + action + ".Event");
-            LogUtil.debug("事件操作类型", "事件名称: " + action, "事件类型:" + type);
+            ColorLogs.debug("事件操作类型", "事件名称: " + action, "事件类型:" + type);
             if (Objects.equals(type, event)) {
                 list.add(action);
             }
         }
-        LogUtil.debug("对应事件类型操作列表", "事件类型: " + event, "操作列表:" + list);
+        ColorLogs.debug("对应事件类型操作列表", "事件类型: " + event, "操作列表:" + list);
         return list;
     }
 }

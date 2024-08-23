@@ -102,3 +102,7 @@ permissions:
     default: true
   MHDFTools.Broadcast:
     default: true
+  MHDFTools.Command.Freeze:
+    default: true
+  MHDFTools.Command.UnFreeze:
+    default: true

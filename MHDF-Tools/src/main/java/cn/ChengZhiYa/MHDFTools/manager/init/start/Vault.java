@@ -9,7 +9,7 @@ public class Vault implements Invitable {
     @Override
     public void start() {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")
-                && PluginLoader.hasVault) {
+                && PluginLoader.INSTANCE.isHasVault()) {
             hookVault();
         }
     }

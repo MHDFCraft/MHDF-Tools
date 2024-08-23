@@ -5,6 +5,7 @@ import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
 import cn.ChengZhiYa.MHDFTools.manager.init.load.Dependencies;
 import cn.ChengZhiYa.MHDFTools.manager.init.start.*;
 import cn.ChengZhiYa.MHDFTools.manager.init.stop.stopChannel;
+import cn.ChengZhiYa.MHDFTools.manager.init.stop.stopFreeze;
 import cn.ChengZhiYa.MHDFTools.manager.init.stop.stopPlaceholderAPI;
 import cn.ChengZhiYa.MHDFTools.manager.init.stop.stopVault;
 import com.google.common.collect.ClassToInstanceMap;
@@ -21,7 +22,8 @@ public class InitManager {
                 .build();
 
         initializersOnStart = new ImmutableClassToInstanceMap.Builder<Invitable>()
-                .put(PluginCheck.class, new PluginCheck())
+                //Base
+                .put(PluginChecker.class, new PluginChecker())
 
                 //CommandRegister
                 .put(CommandRegister.class, new CommandRegister())
@@ -55,6 +57,9 @@ public class InitManager {
                 //Plugin Init
                 .put(stopPlaceholderAPI.class, new stopPlaceholderAPI())
                 .put(stopVault.class, new stopVault())
+
+                //Map Clear
+                .put(stopFreeze.class, new stopFreeze())
                 .build();
     }
 
