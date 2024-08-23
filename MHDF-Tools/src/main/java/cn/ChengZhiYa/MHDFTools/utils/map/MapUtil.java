@@ -14,7 +14,6 @@ public class MapUtil {
     static HashMap<Object, Integer> intHashMap = new HashMap<>();
     static HashMap<Object, SuperLocation> locationHashMap = new HashMap<>();
     static HashMap<Object, Objective> objectiveHashMap = new HashMap<>();
-    static HashMap<Object, Scoreboard> scoreboardHashMap = new HashMap<>();
     static HashMap<Object, String> stringHashMap = new HashMap<>();
 
     public static Map<Object, Boolean> getBooleanHashMap() {
@@ -31,10 +30,6 @@ public class MapUtil {
 
     public static Map<Object, Objective> getObjectiveHashMap() {
         return objectiveHashMap;
-    }
-
-    public static Map<Object, Scoreboard> getScoreboardHashMap() {
-        return scoreboardHashMap;
     }
 
     public static Map<Object, String> getStringHashMap() {

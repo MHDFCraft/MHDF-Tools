@@ -2,7 +2,6 @@ package cn.ChengZhiYa.MHDFTools.task;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.task.player.*;
-import cn.ChengZhiYa.MHDFTools.task.server.ServerScoreboardTask;
 import cn.ChengZhiYa.MHDFTools.task.server.ServerTimeActionTask;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
@@ -18,7 +17,6 @@ public final class AsyncTask {
 
     public void start() {
         config = PluginLoader.INSTANCE.getPlugin().getConfig();
-        asyncTask(new ServerScoreboardTask(), "ScoreboardSettings.Enable");
         asyncTask(new ServerTimeActionTask(), "TimeActionSettings.Enable");
         asyncTask(new PlayerLoginTask(), "LoginSystemSettings.Enable");
         asyncTask(new PlayerFlightTask(), "FlySettings.Enable");

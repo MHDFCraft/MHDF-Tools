@@ -4,7 +4,6 @@ import cn.ChengZhiYa.MHDFTools.config.MHDFConfig;
 import cn.ChengZhiYa.MHDFTools.manager.InitManager;
 import cn.ChengZhiYa.MHDFTools.manager.ServerManager;
 import cn.ChengZhiYa.MHDFTools.task.AsyncTask;
-import cn.ChengZhiYa.MHDFTools.task.server.ServerScoreboardTask;
 import cn.ChengZhiYa.MHDFTools.utils.message.ColorLogs;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +25,6 @@ public enum PluginLoader {
     private InitManager initManager;
     private ServerManager serverManager;
     private AsyncTask asyncTask;
-    private ServerScoreboardTask serverScoreboardTask;
 
     public void initialize_load(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -50,7 +48,6 @@ public enum PluginLoader {
         asyncTask = new AsyncTask();
         config = new MHDFConfig();
         initManager = new InitManager();
-        serverScoreboardTask = new ServerScoreboardTask();
     }
 
     public void load() {

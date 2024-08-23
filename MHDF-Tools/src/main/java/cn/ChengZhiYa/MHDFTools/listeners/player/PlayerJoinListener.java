@@ -67,10 +67,6 @@ public final class PlayerJoinListener implements Listener {
             } catch (IOException ignored) {
             }
         }
-        if (plugin.getConfig().getBoolean("ScoreboardSettings.Enable")) {
-            Player player = event.getPlayer();
-            MapUtil.getScoreboardHashMap().put(player.getName() + "_Scoreboard", Bukkit.getScoreboardManager().getNewScoreboard());
-        }
         if (plugin.getConfig().getBoolean("WhiteList.Enable")) {
             if (!plugin.getConfig().getStringList("WhiteList.List").contains(event.getPlayer().getName()) || event.getPlayer().hasPermission(Objects.requireNonNull(plugin.getConfig().getString("WhiteList.Permission")))) {
                 event.getPlayer().kickPlayer(MessageUtil.colorMessage(plugin.getConfig().getString("WhiteList.KickMessage")));

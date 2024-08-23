@@ -251,18 +251,6 @@ MOTDSettings:
   Line1: "&bMHDFTools"
   Line2: "&6HelloWorld!"
 
-#计分板系统设置
-ScoreboardSettings:
-  #开关
-  Enable: true
-  #标题
-  Title: "&b梦回东方-工具"
-  #内容
-  Lines:
-    - "&e&l欢迎%player_name%"
-    - "&e&lqwq"
-    - "&e&lawa"
-
 #命令映射
 CommandLinkSettings:
   #开关
