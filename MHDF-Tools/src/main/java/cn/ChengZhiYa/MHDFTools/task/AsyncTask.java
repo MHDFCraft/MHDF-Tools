@@ -7,10 +7,10 @@ import cn.ChengZhiYa.MHDFTools.task.server.ServerTimeActionTask;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public final class AsyncTask {
     FileConfiguration config;
@@ -31,7 +31,6 @@ public final class AsyncTask {
 
     private void asyncTask(Consumer<ScheduledTask> task, String configKey) {
         if (config.getBoolean(configKey)) {
-            //((BukkitRunnable) task).runTaskTimerAsynchronously(plugin, 0L, 20L);
             Bukkit.getAsyncScheduler().runAtFixedRate(plugin, task, 0, 1, TimeUnit.SECONDS);
         }
     }

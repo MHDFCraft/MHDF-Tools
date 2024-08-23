@@ -3,6 +3,7 @@ OnlyPlayer: "&e[MHDFTools] &6这个命令只能玩家使用!"
 PlayerNotOnline: "&e[MHDFTools] &6这个玩家不存在或不在线"
 FastSetDone: "&e[MHDFTools] &a完成!"
 HatNoItem: "&e[MHDFTools] &6你需要拿着一个物品才能使用这个命令!"
+dontSender: "&e[MHDFTools] &6这个操作不能对自己使用!"
 AdminCommands:
   Center: " &7| "
   version:
@@ -71,6 +72,7 @@ Usage:
   Home: "&e[MHDFTools] &c用法错误,用法:/%1 <家名称>"
   Warp: "&e[MHDFTools] &c用法错误,用法:/%1 <地标名称> [玩家ID]"
   Freeze: "&e[MHDFTools] &c用法错误,用法:/freeze <玩家ID>"
+  unFreeze: "&e[MHDFTools] &c用法错误,用法:/unfreeze <玩家ID>"
   GameMode: "&e[MHDFTools] &c用法错误,用法:/%1 <游戏模式> [玩家ID]"
   Invsee: "&e[MHDFTools] &c用法错误,用法:/invsee <玩家ID>"
   Ip: "&e[MHDFTools] &c用法错误,用法:/ip <玩家ID>"
@@ -163,6 +165,7 @@ Login:
   PasswordRight: "&e[MHDFTools] &a登录成功!"
   PasswordError: "&e[MHDFTools] &c密码错误!"
   AutoLogin: "&e[MHDFTools] &e欢迎回来! 已自动登录!"
+  Logging: "&e[MHDFTools] &c%1 还在登录中!"
 Tpa:
   AcceptMessage: "&a同意"
   DefuseMessage: "&c不同意"
@@ -226,3 +229,10 @@ Warp:
   SetDone: "&e[MHDFTools] &a设置地标成功!"
   TeleportDone: "&e[MHDFTools] &a你来到了%1地标!"
   RemoveDone: "&e[MHDFTools] &c删除地标成功!"
+Freeze:
+  FreezeDone: "&e[MHDFTools] &a您成功了冻结了 &f%1!" #%2为发送者
+  UnFreezeDone: "&e[MHDFTools] &a您成功了解冻了 &f%1!" #%2为发送者
+  AlreadyFreeze: "&e[MHDFTools] &c该玩家早已经被 &f%1 &c冻结了!"
+  PlayerGotFroze: "&c您已经被 &4%1 &c冻结 请好好配合,不要退出服务器!"
+  EventCanceledMessage: "&c您的行为已经被撤销，不要退出服务器，好好配合管理!" #%1为玩家id
+  TargetBypass: "&e[MHDFTools] &c%1 有绕过的权限,您不能对其进行冻结!"

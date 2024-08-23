@@ -78,10 +78,6 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>placeholderapi</id>
-            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
-        </repository>
-        <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
@@ -121,7 +117,7 @@
             <artifactId>placeholderapi</artifactId>
             <version>2.11.7</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/PlaceholderAPI-2.11.7-DEV-Folia.jar</systemPath>
+            <systemPath>${project.basedir}/libs/[P]PlaceholderAPI.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>

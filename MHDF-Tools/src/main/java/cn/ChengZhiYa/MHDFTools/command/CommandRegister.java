@@ -18,6 +18,8 @@ import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.*;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.back.Back;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.back.TpBack;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.back.UnBack;
+import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.freeze.Freeze;
+import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.freeze.UnFreeze;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.home.DelHome;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.home.Home;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.home.SetHome;
@@ -55,7 +57,7 @@ public final class CommandRegister implements Invitable {
     public void start() {
         canRegister = false;
         config = PluginLoader.INSTANCE.getPlugin().getConfig();
-        registerCommand(plugin, new MainCommand(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
+        registerFreezeCommands();
         for (String configKey : config.getKeys(false)) {
             boolean isEnabled = config.getBoolean(configKey + ".Enable", true);
             switch (configKey) {
@@ -93,6 +95,11 @@ public final class CommandRegister implements Invitable {
                     if (isEnabled) {
                         canRegister = true;
                         registerBackCommands();
+                    }
+                    break;
+                case "FreezeSettings":
+                    if (isEnabled) {
+                        registerFreezeCommands();
                     }
                     break;
                 case "TpBackSettings":
@@ -147,7 +154,7 @@ public final class CommandRegister implements Invitable {
                     }
                     break;
                 case "EconomySettings":
-                    if (isEnabled && PluginLoader.hasVault) {
+                    if (isEnabled && PluginLoader.INSTANCE.isHasVault()) {
                         registerEconomy();
                     }
                     break;
@@ -220,6 +227,10 @@ public final class CommandRegister implements Invitable {
 
     public void registerFeedCommands() {
         registerCommand(plugin, new Feed(), "回复饱食度", "MHDFTools.Command.Feed", "feed");
+    }
+    public void registerFreezeCommands() {
+        registerCommand(plugin, new Freeze(), "冻结玩家", "MHDFTools.Command.Freeze", "freeze");
+        registerCommand(plugin, new UnFreeze(), "解除冻结", "MHDFTools.Command.UnFreeze", "unfreeze");
     }
 
     public void registerHealCommands() {

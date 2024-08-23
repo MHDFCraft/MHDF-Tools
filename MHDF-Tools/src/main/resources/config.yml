@@ -289,7 +289,7 @@ CommandLinkSettings:
       #============================================
       #操作列表
       #[player]|<命令> #玩家执行命令
-      #[console]|<命令> #后台执行命令
+      #[consoleMessage]|<命令> #后台执行命令
       #[playsound]|<音频>|<音量|<音效> #播放音频
       #[playsound_pack]|<音频>|<音量|<音效> #播放资源包音频
       #[message]|<消息第一行>|<消息第二行> #发送消息
@@ -333,7 +333,7 @@ EventActionSettings:
       #============================================
       #操作列表
       #[player]|<命令> #玩家执行命令
-      #[console]|<命令> #后台执行命令
+      #[consoleMessage]|<命令> #后台执行命令
       #[playsound]|<音频>|<音量|<音效> #播放音频
       #[playsound_pack]|<音频>|<音量|<音效> #播放资源包音频
       #[message]|<消息第一行>|<消息第二行> #发送消息
@@ -364,7 +364,7 @@ TimeActionSettings:
       #============================================
       #操作列表
       #[player]|<命令> #玩家执行命令
-      #[console]|<命令> #后台执行命令
+      #[consoleMessage]|<命令> #后台执行命令
       #[playsound]|<音频>|<音量|<音效> #播放音频
       #[playsound_pack]|<音频>|<音量|<音效> #播放资源包音频
       #[message]|<消息第一行>|<消息第二行> #发送消息
@@ -388,7 +388,7 @@ TimeActionSettings:
       #============================================
       #操作列表
       #[player]|<命令> #玩家执行命令
-      #[console]|<命令> #后台执行命令
+      #[consoleMessage]|<命令> #后台执行命令
       #[playsound]|<音频>|<音量|<音效> #播放音频
       #[playsound_pack]|<音频>|<音量|<音效> #播放资源包音频
       #[message]|<消息第一行>|<消息第二行> #发送消息
@@ -558,3 +558,16 @@ SudoSettings:
 SaySettings:
   #开关
   Enable: true
+
+#冻结玩家设置
+FreezeSettings:
+  #开关
+  Enable: true
+  #是否在玩家退出游戏后进行惩罚
+  PunishEnable: true
+  #当玩家拥有这个权限后，那么它将不会被冻结
+  Bypass: "MHDFTools.Bypass.Freeze"
+  #处罚的命令
+  #%player_name% 玩家id
+  #%player_ip% 玩家ip
+  PunishCommand: "litebans:banip %player_ip% &eMHDFTools &7| &eUnfair Advantage &7[&c拒绝查端 ID= %player_name% &7] --sender=MHDFTools"
