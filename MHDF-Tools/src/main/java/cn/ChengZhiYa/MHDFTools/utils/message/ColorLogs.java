@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import java.util.logging.Logger;
 
 @UtilityClass
-public class LogUtil {
+public class ColorLogs {
     public Logger getLogger() {
         return PluginLoader.INSTANCE.getPlugin().getLogger();
     }
