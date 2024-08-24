@@ -2,6 +2,7 @@ package cn.ChengZhiYa.MHDFTools.listeners.player;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.NickUtil;
+import me.clip.placeholderapi.libs.universalScheduler.foliaScheduler.FoliaScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,7 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public final class PlayerNickListener implements Listener {
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent event) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+       new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (NickUtil.ifNickExists(event.getPlayer().getName())) {
                 Player player = event.getPlayer();
                 String nickName = NickUtil.getNickName(player.getName());
