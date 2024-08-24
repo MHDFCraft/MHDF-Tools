@@ -5,9 +5,12 @@ import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaHereUtil;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaUtil;
+import cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil;
+import cn.ChengZhiYa.MHDFTools.utils.message.ColorLogs;
 import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -151,11 +154,16 @@ public final class BungeeCordUtil {
     }
 
     public static void tpPlayerTo(String playerName, String serverName, SuperLocation location) {
+        if (playerName == null || location == null) {
+            return;
+        }
+
         if (!ServerName.equals(serverName) && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
-            Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
+            Player player = Bukkit.getPlayer(playerName);
             if (player == null) {
                 return;
             }
+
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("tpPlayerTo");
             out.writeUTF(playerName);
@@ -166,15 +174,26 @@ public final class BungeeCordUtil {
             out.writeDouble(location.getZ());
             out.writeDouble(location.getYaw());
             out.writeDouble(location.getPitch());
+
             player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), location.getLocation(), task -> {
-                Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(location.getLocation());
-                SpigotUtil.playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), SpigotUtil.sound("TeleportSound"));
-            });
-        }
-    }
+                Player player = Bukkit.getPlayer(playerName);
+                if (player == null) {
+                    throw new IllegalStateException("Player " + playerName + " is not online");
+                }
 
+                try {
+                    if (PluginLoader.INSTANCE.getServerManager().is1_20orAbove()) {
+                        PaperLib.teleportAsync(player, location.getLocation());
+                    } else {
+                        player.teleport(location.getLocation());
+                    }
+                    SpigotUtil.playSound(player, SpigotUtil.sound("TeleportSound"));
+                } catch (Exception e) {
+                    ColorLogs.debug("Failed to teleport to " + playerName);
+                }
+            }
+        }
     public static void cancelTpa(String playerName) {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
