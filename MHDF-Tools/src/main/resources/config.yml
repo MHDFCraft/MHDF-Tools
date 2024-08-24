@@ -556,6 +556,9 @@ FreezeSettings:
   #当玩家拥有这个权限后，那么它将不会被冻结
   Bypass: "MHDFTools.Bypass.Freeze"
   #处罚的命令
-  #%player_name% 玩家id
-  #%player_ip% 玩家ip
-  PunishCommand: "litebans:banip %player_ip% &eMHDFTools &7| &eUnfair Advantage &7[&c拒绝查端 ID= %player_name% &7] --sender=MHDFTools"
+  #{player} 玩家id
+  #{ip} 玩家ip
+  # LiteBans:
+  # PunishCommand: "litebans:banip {player} &eMHDFTools &7| &eUnfair Advantage &7[&c拒绝查端 ID= {player} &7] --sender=MHDFTools"
+  # Vanilla:
+  PunishCommand: "ban {player} 您在没有配合管理员的情况下退出游戏!"
