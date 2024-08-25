@@ -183,7 +183,7 @@ public final class DatabaseUtil {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "";
+            return null;
         }
     }
 
