@@ -31,7 +31,7 @@ public final class Warp implements TabExecutor {
             if (ifWarpExists(warpName)) {
                 SuperLocation warpLocation = getWarp(warpName);
                 BungeeCordUtil.tpPlayerTo(playerName, serverName, warpLocation);
-                BungeeCordUtil.sendMessage(playerName,i18n("Warp.TeleportDone", warpName));
+                BungeeCordUtil.sendMessage(playerName, i18n("Warp.TeleportDone", warpName));
             } else {
                 sender.sendMessage(i18n("Warp.NotFound", warpName));
             }

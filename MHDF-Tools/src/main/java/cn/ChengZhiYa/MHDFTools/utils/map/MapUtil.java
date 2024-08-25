@@ -3,7 +3,6 @@ package cn.ChengZhiYa.MHDFTools.utils.map;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import lombok.experimental.UtilityClass;
 import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.HashMap;
 import java.util.Map;

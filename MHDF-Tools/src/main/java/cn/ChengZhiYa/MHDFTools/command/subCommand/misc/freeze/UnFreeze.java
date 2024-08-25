@@ -1,6 +1,5 @@
 package cn.ChengZhiYa.MHDFTools.command.subCommand.misc.freeze;
 
-import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

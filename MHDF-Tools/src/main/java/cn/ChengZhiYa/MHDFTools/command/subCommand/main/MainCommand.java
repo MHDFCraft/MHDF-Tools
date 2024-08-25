@@ -25,6 +25,7 @@ public final class MainCommand implements TabExecutor {
     private static final String YAML_TYPE = "YAML";
     private static final String MYSQL_TYPE = "MySQL";
     private final JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 1 && "reload".equals(args[0])) {

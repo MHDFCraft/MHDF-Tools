@@ -71,7 +71,7 @@ public class DependencyManagerImpl implements DependencyManager {
      */
     private final RelocationHandler relocationHandler;
 
-    private final JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();;
+    private final JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     public DependencyManagerImpl(ClassPathAppender classPathAppender) {
         this.registry = new DependencyRegistry();

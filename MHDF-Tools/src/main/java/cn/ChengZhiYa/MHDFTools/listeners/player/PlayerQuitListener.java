@@ -2,8 +2,7 @@ package cn.ChengZhiYa.MHDFTools.listeners.player;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.freeze.Freeze;
-import cn.ChengZhiYa.MHDFTools.hooks.PlaceholderAPI;
-import me.clip.placeholderapi.libs.universalScheduler.foliaScheduler.FoliaScheduler;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +24,7 @@ public class PlayerQuitListener implements Listener {
                     .replace("%player_name%", player.getDisplayName())
                     .replace("%player_ip%", getPlayerHost(playerIp));
 
-              new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(() ->
+            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(() ->
                     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), punishCommand)
             );
 

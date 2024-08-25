@@ -1,7 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
-import cn.ChengZhiYa.MHDFTools.command.subCommand.main.MainCommand;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.auth.Login;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.auth.Register;
 import cn.ChengZhiYa.MHDFTools.command.subCommand.main.flight.Fly;
@@ -228,6 +227,7 @@ public final class CommandRegister implements Invitable {
     public void registerFeedCommands() {
         registerCommand(plugin, new Feed(), "回复饱食度", "MHDFTools.Command.Feed", "feed");
     }
+
     public void registerFreezeCommands() {
         registerCommand(plugin, new Freeze(), "冻结玩家", "MHDFTools.Command.Freeze", "freeze");
         registerCommand(plugin, new UnFreeze(), "解除冻结", "MHDFTools.Command.UnFreeze", "unfreeze");

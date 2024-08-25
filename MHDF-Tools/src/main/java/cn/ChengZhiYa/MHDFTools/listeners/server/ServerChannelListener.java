@@ -6,13 +6,11 @@ import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaHereUtil;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
-import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayInputStream;
@@ -20,7 +18,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.PlayerList;
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.ServerName;

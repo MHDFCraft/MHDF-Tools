@@ -16,6 +16,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 
 public class Freeze implements CommandExecutor {
     public static final List<UUID> freezeUUID = new ArrayList<>();
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("MHDFTools.Command.Freeze")) {

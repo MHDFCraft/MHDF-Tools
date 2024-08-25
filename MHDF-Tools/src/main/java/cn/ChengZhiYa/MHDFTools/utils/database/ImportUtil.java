@@ -228,13 +228,13 @@ public final class ImportUtil {
                                 Float.parseFloat(data[5])
                         );
                         if (ifWarpExists(warpName)) {
-                            setWarp(warpName,location);
-                        }else {
-                            addWarp(warpName,location);
+                            setWarp(warpName, location);
+                        } else {
+                            addWarp(warpName, location);
                         }
                     }
                     sender.sendMessage(i18n("AdminCommands.import.ImportDone", pluginName, "地标"));
-                }else {
+                } else {
                     sender.sendMessage(i18n("AdminCommands.import.NotImport", "地标"));
                 }
             } else {
@@ -323,9 +323,9 @@ public final class ImportUtil {
                                     (float) warpData.getDouble("pitch")
                             );
                             if (ifWarpExists(warpName)) {
-                                setWarp(warpName,location);
-                            }else {
-                                addWarp(warpName,location);
+                                setWarp(warpName, location);
+                            } else {
+                                addWarp(warpName, location);
                             }
                         }
                     } catch (IOException e) {
@@ -333,7 +333,7 @@ public final class ImportUtil {
                         throw new RuntimeException(e);
                     }
                     sender.sendMessage(i18n("AdminCommands.import.ImportDone", pluginName, "地标"));
-                }else {
+                } else {
                     sender.sendMessage(i18n("AdminCommands.import.NotImport", "地标"));
                 }
             } else {

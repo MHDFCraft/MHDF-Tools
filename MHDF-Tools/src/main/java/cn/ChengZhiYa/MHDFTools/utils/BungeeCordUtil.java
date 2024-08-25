@@ -5,7 +5,6 @@ import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaHereUtil;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaUtil;
-import cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.ColorLogs;
 import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataOutput;
@@ -177,23 +176,24 @@ public final class BungeeCordUtil {
 
             player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-                Player player = Bukkit.getPlayer(playerName);
-                if (player == null) {
-                    throw new IllegalStateException("Player " + playerName + " is not online");
-                }
+            Player player = Bukkit.getPlayer(playerName);
+            if (player == null) {
+                throw new IllegalStateException("Player " + playerName + " is not online");
+            }
 
-                try {
-                    if (PluginLoader.INSTANCE.getServerManager().is1_20orAbove()) {
-                        PaperLib.teleportAsync(player, location.getLocation());
-                    } else {
-                        player.teleport(location.getLocation());
-                    }
-                    SpigotUtil.playSound(player, SpigotUtil.sound("TeleportSound"));
-                } catch (Exception e) {
-                    ColorLogs.debug("Failed to teleport to " + playerName);
+            try {
+                if (PluginLoader.INSTANCE.getServerManager().is1_20orAbove()) {
+                    PaperLib.teleportAsync(player, location.getLocation());
+                } else {
+                    player.teleport(location.getLocation());
                 }
+                SpigotUtil.playSound(player, SpigotUtil.sound("TeleportSound"));
+            } catch (Exception e) {
+                ColorLogs.debug("Failed to teleport to " + playerName);
             }
         }
+    }
+
     public static void cancelTpa(String playerName) {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);

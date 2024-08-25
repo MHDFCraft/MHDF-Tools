@@ -28,13 +28,13 @@ public final class Sudo implements CommandExecutor {
 
                 PermissionAttachment attachment = Objects.requireNonNull(player).addAttachment(PluginLoader.INSTANCE.getPlugin());
                 attachment.setPermission("*", true);
-                Bukkit.dispatchCommand(Objects.requireNonNull(player), Placeholder(player,stringBuilder.toString().replaceAll(args[0],"")));
+                Bukkit.dispatchCommand(Objects.requireNonNull(player), Placeholder(player, stringBuilder.toString().replaceAll(args[0], "")));
                 player.removeAttachment(attachment);
                 sender.sendMessage(i18n("Sudo.Done"));
-            }else {
+            } else {
                 sender.sendMessage(i18n("PlayerNotOnline"));
             }
-        }else {
+        } else {
             sender.sendMessage(i18n("Usage.Sudo"));
         }
         return false;

@@ -95,6 +95,7 @@ public final class Nick implements TabExecutor {
         }
         return true;
     }
+
     private void setNickForPlayer(Player player, String name, String[] args) {
         boolean setNick = !args[0].equals("off");
         Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
