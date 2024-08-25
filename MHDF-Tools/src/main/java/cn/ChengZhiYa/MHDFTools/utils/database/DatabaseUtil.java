@@ -175,7 +175,7 @@ public final class DatabaseUtil {
              PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + whereField + " = ? LIMIT 1")) {
             ps.setString(1, whereValue);
             try (ResultSet rs = ps.executeQuery()) {
-                Object data = "";
+                Object data = null;
                 if (rs.next()) {
                     data = rs.getObject(getField);
                 }
