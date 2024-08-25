@@ -21,8 +21,8 @@ public class PlayerQuitListener implements Listener {
         if (Freeze.freezeUUID.contains(player.getUniqueId())
                 && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("FreezeSettings.PunishEnable", true)) {
             String punishCommand = Objects.requireNonNull(PluginLoader.INSTANCE.getPlugin().getConfig().getString("FreezeSettings.PunishCommand"))
-                    .replace("%player_name%", player.getDisplayName())
-                    .replace("%player_ip%", getPlayerHost(playerIp));
+                    .replace("{player}", player.getDisplayName())
+                    .replace("{ip}", getPlayerHost(playerIp));
 
             new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(() ->
                     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), punishCommand)

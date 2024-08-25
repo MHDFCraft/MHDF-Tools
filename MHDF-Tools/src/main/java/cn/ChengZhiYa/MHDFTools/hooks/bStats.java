@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.hooks;
 
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -26,7 +27,7 @@ import java.util.zip.GZIPOutputStream;
 @SuppressWarnings("ALL")
 public final class bStats {
 
-    private final Plugin plugin;
+    private final Plugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     private final MetricsBase metricsBase;
 
@@ -37,9 +38,7 @@ public final class bStats {
      * @param serviceId The id of the service. It can be found at <a
      *                  href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
      */
-    public bStats(JavaPlugin plugin, int serviceId) {
-        this.plugin = plugin;
-        // Get the config file
+    public bStats(int serviceId) {
         File bStatsFolder = new File(plugin.getDataFolder().getParentFile(), "bStats");
         File configFile = new File(bStatsFolder, "config.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
@@ -49,10 +48,8 @@ public final class bStats {
             config.addDefault("logFailedRequests", false);
             config.addDefault("logSentData", false);
             config.addDefault("logResponseStatusText", false);
-            // Inform the server owners about bStats
-            config
-                    .options()
-                    .header(
+            config.options()
+                  .header(
                             "bStats (https://bStats.org) collects some basic information for plugin authors, like how\n"
                                     + "many people use their plugin and their total player count. It's recommended to keep bStats\n"
                                     + "enabled, but if you're not comfortable with this, you can turn this setting off. There is no\n"
@@ -64,7 +61,6 @@ public final class bStats {
             } catch (IOException ignored) {
             }
         }
-        // Load the data
         boolean enabled = config.getBoolean("enabled", true);
         String serverUUID = config.getString("serverUuid");
         boolean logErrors = config.getBoolean("logFailedRequests", false);
@@ -87,18 +83,10 @@ public final class bStats {
                         logResponseStatusText);
     }
 
-    /**
-     * Shuts down the underlying scheduler service.
-     */
     public void shutdown() {
         metricsBase.shutdown();
     }
 
-    /**
-     * Adds a custom chart.
-     *
-     * @param chart The chart to add.
-     */
     public void addCustomChart(CustomChart chart) {
         metricsBase.addCustomChart(chart);
     }
@@ -121,24 +109,17 @@ public final class bStats {
 
     private int getPlayerAmount() {
         try {
-            // Around MC 1.8 the return type was changed from an array to a collection,
-            // This fixes java.lang.NoSuchMethodError:
-            // org.bukkit.Bukkit.getOnlinePlayers()Ljava/utils/Collection;
             Method onlinePlayersMethod = Class.forName("org.bukkit.Server").getMethod("getOnlinePlayers");
             return onlinePlayersMethod.getReturnType().equals(Collection.class)
                     ? ((Collection<?>) onlinePlayersMethod.invoke(Bukkit.getServer())).size()
                     : ((Player[]) onlinePlayersMethod.invoke(Bukkit.getServer())).length;
         } catch (Exception e) {
-            // Just use the new method if the reflection failed
             return Bukkit.getOnlinePlayers().size();
         }
     }
 
     public static class MetricsBase {
 
-        /**
-         * The version of the Metrics class.
-         */
         public static final String METRICS_VERSION = "3.0.1";
 
         private static final String REPORT_URL = "https://bStats.org/api/v2/data/%s";

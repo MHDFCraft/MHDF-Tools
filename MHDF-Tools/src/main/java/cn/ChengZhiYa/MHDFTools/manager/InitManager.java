@@ -29,7 +29,7 @@ public class InitManager {
                 .put(CommandRegister.class, new CommandRegister())
 
                 //BStats
-                .put(bStats.class, new bStats())
+                .put(BStats.class, new BStats())
 
                 //BukkitEvent
                 .put(BukkitEvent.class, new BukkitEvent())

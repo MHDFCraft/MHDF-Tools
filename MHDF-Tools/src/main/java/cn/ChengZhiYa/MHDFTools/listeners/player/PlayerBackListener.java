@@ -24,11 +24,11 @@ public final class PlayerBackListener implements Listener {
     public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         if (MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation") != null) {
-            SuperLocation DiedLocation = MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation");
-            int X = DiedLocation.getBlockX();
-            int Y = DiedLocation.getBlockY();
-            int Z = DiedLocation.getBlockZ();
-            player.sendMessage(SpigotUtil.i18n("Back.ReSpawn", String.valueOf(X), String.valueOf(Y), String.valueOf(Z)));
+            SuperLocation diedLocation = MapUtil.getLocationHashMap().get(player.getName() + "_DeathLocation");
+            int x = diedLocation.getBlockX();
+            int y = diedLocation.getBlockY();
+            int z = diedLocation.getBlockZ();
+            player.sendMessage(SpigotUtil.i18n("Back.ReSpawn", String.valueOf(x), String.valueOf(y), String.valueOf(z)));
         }
     }
 
