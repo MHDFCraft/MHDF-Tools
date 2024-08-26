@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.listeners.server;
 
-import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.freeze.Freeze;
+import cn.ChengZhiYa.MHDFTools.command.subcommand.misc.freeze.Freeze;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

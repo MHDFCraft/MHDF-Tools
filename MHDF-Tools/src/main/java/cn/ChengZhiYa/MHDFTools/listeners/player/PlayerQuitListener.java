@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.listeners.player;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
-import cn.ChengZhiYa.MHDFTools.command.subCommand.misc.freeze.Freeze;
+import cn.ChengZhiYa.MHDFTools.command.subcommand.misc.freeze.Freeze;
 import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
