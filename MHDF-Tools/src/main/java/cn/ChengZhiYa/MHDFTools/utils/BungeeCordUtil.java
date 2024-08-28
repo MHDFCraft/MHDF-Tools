@@ -6,6 +6,7 @@ import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaHereUtil;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.ColorLogs;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -123,7 +124,7 @@ public final class BungeeCordUtil {
 
             Objects.requireNonNull(player).sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), Bukkit.getPlayer(targetPlayerName).getLocation(), task -> {
+            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(Objects.requireNonNull(Bukkit.getPlayer(targetPlayerName)).getLocation(), () -> {
                 Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(Objects.requireNonNull(Bukkit.getPlayer(targetPlayerName)));
                 playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), sound("TeleportSound"));
             });
@@ -145,7 +146,7 @@ public final class BungeeCordUtil {
 
             player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), getHomeLocation(playerName, homeName).getLocation(), task -> {
+            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(getHomeLocation(playerName, homeName).getLocation(), () -> {
                 Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(Objects.requireNonNull(getHomeLocation(playerName, homeName)).getLocation());
                 playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), sound("TeleportSound"));
             });

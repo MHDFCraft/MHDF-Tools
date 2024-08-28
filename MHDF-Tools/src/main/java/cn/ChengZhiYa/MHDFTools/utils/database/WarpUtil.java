@@ -3,7 +3,6 @@ package cn.ChengZhiYa.MHDFTools.utils.database;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -26,7 +25,7 @@ public final class WarpUtil {
     private static final List<String> warpList = new ArrayList<>();
 
     public static void updateWarpList() {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_warp");
@@ -130,7 +129,7 @@ public final class WarpUtil {
     }
 
     public static void addWarp(String warpName, SuperLocation location) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getServerName();
                 getWarpLocationHashMap().put(warpName, location);
@@ -171,7 +170,7 @@ public final class WarpUtil {
     }
 
     public static void setWarp(String warpName, SuperLocation location) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getServerName();
                 getWarpLocationHashMap().put(warpName, location);
@@ -212,7 +211,7 @@ public final class WarpUtil {
     }
 
     public static void removeWarp(String warpName) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 getWarpLocationHashMap().remove(warpName);
                 getWarpServerHashMap().remove(warpName);

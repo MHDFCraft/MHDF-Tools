@@ -5,9 +5,9 @@ import cn.ChengZhiYa.MHDFTools.manager.InitManager;
 import cn.ChengZhiYa.MHDFTools.manager.ServerManager;
 import cn.ChengZhiYa.MHDFTools.task.AsyncTask;
 import cn.ChengZhiYa.MHDFTools.utils.message.ColorLogs;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.closeDatabase;
@@ -65,8 +65,7 @@ public enum PluginLoader {
 
     public void stop() {
         printLogo();
-        Bukkit.getAsyncScheduler().cancelTasks(PluginLoader.INSTANCE.plugin);
-        Bukkit.getGlobalRegionScheduler().cancelTasks(PluginLoader.INSTANCE.plugin);
+        new FoliaScheduler(plugin).cancelTasks();
         initManager.stop();
         closeDatabase();
         ColorLogs.consoleMessage("&f[MHDF-Tools] &9插件已卸载! 感谢您再次支持!");

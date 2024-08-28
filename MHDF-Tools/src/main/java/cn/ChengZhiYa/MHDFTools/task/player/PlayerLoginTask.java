@@ -1,20 +1,18 @@
 package cn.ChengZhiYa.MHDFTools.task.player;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
-import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
+import com.github.Anon8281.universalScheduler.UniversalRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
-import java.util.function.Consumer;
 
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 import static cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil.loginExists;
 
-public final class PlayerLoginTask implements Consumer<ScheduledTask> {
+public final class PlayerLoginTask extends UniversalRunnable {
 
     @Override
-    public void accept(ScheduledTask task) {
+    public void run() {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("LoginSystemSettings.Enable")) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (!ifLogin(player)) {

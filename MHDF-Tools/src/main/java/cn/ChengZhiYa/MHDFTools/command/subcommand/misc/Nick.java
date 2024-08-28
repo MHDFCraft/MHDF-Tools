@@ -4,6 +4,7 @@ import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.database.NickUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.ColorLogs;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -98,7 +99,7 @@ public final class Nick implements TabExecutor {
 
     private void setNickForPlayer(Player player, String name, String[] args) {
         boolean setNick = !args[0].equals("off");
-        Bukkit.getScheduler().runTaskAsynchronously(PluginLoader.INSTANCE.getPlugin(), () -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             player.setDisplayName(name);
             player.setCustomName(name);
             player.setPlayerListName(name);

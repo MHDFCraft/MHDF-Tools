@@ -2,7 +2,6 @@ package cn.ChengZhiYa.MHDFTools.command.subcommand.main.auth;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +24,7 @@ public final class Login implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (args.length != 1) {
                 sender.sendMessage(i18n("Usage.Login", label));
                 return;

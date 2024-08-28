@@ -2,6 +2,7 @@ package cn.ChengZhiYa.MHDFTools.listeners.server.menu;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -30,9 +31,9 @@ public final class MenuArgsCommand implements Listener {
             }
 
             if (commandParts[0].equals("player")) {
-                Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), player.getLocation(), task -> player.chat("/" + PlaceholderAPI.setPlaceholders(player, commandParts[3])));
+                new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(player.getLocation(), () -> player.chat("/" + PlaceholderAPI.setPlaceholders(player, commandParts[3])));
             } else {
-                Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(player, commandParts[3])));
+                new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(() -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PlaceholderAPI.setPlaceholders(player, commandParts[3])));
             }
 
             if ("true".equals(commandParts[2])) {

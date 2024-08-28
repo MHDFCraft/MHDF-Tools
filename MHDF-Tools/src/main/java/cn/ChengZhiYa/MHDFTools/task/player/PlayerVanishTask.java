@@ -2,16 +2,15 @@ package cn.ChengZhiYa.MHDFTools.task.player;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.VanishUtil;
+import com.github.Anon8281.universalScheduler.UniversalRunnable;
 import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
-import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Method;
-import java.util.function.Consumer;
 
-public final class PlayerVanishTask implements Consumer<ScheduledTask> {
+public final class PlayerVanishTask extends UniversalRunnable {
 
     private static final Method HIDE_PLAYER_METHOD;
 
@@ -26,7 +25,7 @@ public final class PlayerVanishTask implements Consumer<ScheduledTask> {
     }
 
     @Override
-    public void accept(ScheduledTask task) {
+    public void run() {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("VanishSettings.Enable")) {
             for (String vanishPlayerName : VanishUtil.getVanishList()) {
                 Player vanishPlayer = Bukkit.getPlayerExact(vanishPlayerName);
@@ -53,7 +52,7 @@ public final class PlayerVanishTask implements Consumer<ScheduledTask> {
                 e.printStackTrace();
             }
         } else {
-            Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> onlinePlayer.hidePlayer(vanishPlayer));
+            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(() -> onlinePlayer.hidePlayer(vanishPlayer));
         }
     }
 }

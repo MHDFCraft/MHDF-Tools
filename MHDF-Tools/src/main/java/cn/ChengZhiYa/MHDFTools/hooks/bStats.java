@@ -1,11 +1,11 @@
 package cn.ChengZhiYa.MHDFTools.hooks;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
@@ -49,7 +49,7 @@ public final class bStats {
             config.addDefault("logSentData", false);
             config.addDefault("logResponseStatusText", false);
             config.options()
-                  .header(
+                    .header(
                             "bStats (https://bStats.org) collects some basic information for plugin authors, like how\n"
                                     + "many people use their plugin and their total player count. It's recommended to keep bStats\n"
                                     + "enabled, but if you're not comfortable with this, you can turn this setting off. There is no\n"
@@ -66,21 +66,20 @@ public final class bStats {
         boolean logErrors = config.getBoolean("logFailedRequests", false);
         boolean logSentData = config.getBoolean("logSentData", false);
         boolean logResponseStatusText = config.getBoolean("logResponseStatusText", false);
-        metricsBase =
-                new MetricsBase(
-                        "bukkit",
-                        serverUUID,
-                        serviceId,
-                        enabled,
-                        this::appendPlatformData,
-                        this::appendServiceData,
-                        submitDataTask -> Bukkit.getScheduler().runTask(plugin, submitDataTask),
-                        plugin::isEnabled,
-                        (message, error) -> this.plugin.getLogger().log(Level.WARNING, message, error),
-                        (message) -> this.plugin.getLogger().log(Level.INFO, message),
-                        logErrors,
-                        logSentData,
-                        logResponseStatusText);
+        metricsBase = new MetricsBase(
+                "bukkit",
+                serverUUID,
+                serviceId,
+                enabled,
+                this::appendPlatformData,
+                this::appendServiceData,
+                submitDataTask -> new FoliaScheduler(plugin).runTask(submitDataTask),
+                plugin::isEnabled,
+                (message, error) -> this.plugin.getLogger().log(Level.WARNING, message, error),
+                (message) -> this.plugin.getLogger().log(Level.INFO, message),
+                logErrors,
+                logSentData,
+                logResponseStatusText);
     }
 
     public void shutdown() {
@@ -125,7 +124,7 @@ public final class bStats {
         private static final String REPORT_URL = "https://bStats.org/api/v2/data/%s";
 
         private final ScheduledExecutorService scheduler =
-                Executors.newScheduledThreadPool(1, task -> new Thread(task, "bStats-Metrics"));
+                Executors.newScheduledThreadPool(1, () -> new Thread(task, "bStats-Metrics"));
 
         private final String platform;
 

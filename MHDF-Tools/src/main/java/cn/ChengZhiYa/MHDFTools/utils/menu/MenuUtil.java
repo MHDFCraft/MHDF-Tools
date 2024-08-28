@@ -3,6 +3,7 @@ package cn.ChengZhiYa.MHDFTools.utils.menu;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import net.md_5.bungee.api.ChatMessageType;
@@ -284,14 +285,14 @@ public final class MenuUtil {
             case "[player]": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), player.getLocation(), task -> player.chat("/" + Placeholder(player, action[1])));
+                    new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(player.getLocation(), () -> player.chat("/" + Placeholder(player, action[1])));
                 } else {
-                    Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
+                    new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(() -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
                 }
                 break;
             }
             case "[consoleMessage]": {
-                Bukkit.getScheduler().runTask(PluginLoader.INSTANCE.getPlugin(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
+                new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(() -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
                 break;
             }
             case "[playsound]": {
@@ -378,7 +379,7 @@ public final class MenuUtil {
     }
 
     public static void openMenu(Player player, String menuFileName) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             String title = Placeholder(player, getMenu(menuFileName).getString("menu.Title"));
             Inventory menu = Bukkit.createInventory(player, getMenu(menuFileName).getInt("menu.Size"), title);
 
@@ -399,7 +400,7 @@ public final class MenuUtil {
 
                 setMenuItem(menu, menuFileName, itemID, type, displayName, lore, customModelData, amount, slotList);
             }
-            Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), player.getLocation(), t -> player.openInventory(menu));
+            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(player.getLocation(), () -> player.openInventory(menu));
         });
     }
 }

@@ -1,18 +1,16 @@
 package cn.ChengZhiYa.MHDFTools.task.player;
 
-import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
+import com.github.Anon8281.universalScheduler.UniversalRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
-import java.util.function.Consumer;
 
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil.*;
 
-public final class PlayerFlightTask implements Consumer<ScheduledTask> {
+public final class PlayerFlightTask extends UniversalRunnable {
 
     @Override
-    public void accept(ScheduledTask task) {
+    public void run() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             String playerName = player.getName();
 

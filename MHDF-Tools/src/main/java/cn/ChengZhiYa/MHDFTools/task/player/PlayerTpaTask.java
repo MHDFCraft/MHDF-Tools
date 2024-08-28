@@ -5,14 +5,12 @@ import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaUtil;
-import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
+import com.github.Anon8281.universalScheduler.UniversalRunnable;
 
-import java.util.function.Consumer;
-
-public final class PlayerTpaTask implements Consumer<ScheduledTask> {
+public final class PlayerTpaTask extends UniversalRunnable {
 
     @Override
-    public void accept(ScheduledTask task) {
+    public void run() {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("TpaSettings.Enable")) {
             for (String playerName : TpaUtil.getTpaHashMap().keySet()) {
                 TpaData tpaData = TpaUtil.getTpaHashMap().get(playerName);

@@ -3,7 +3,7 @@ package cn.ChengZhiYa.MHDFTools.command.subcommand.main.auth;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.database.LoginUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
-import org.bukkit.Bukkit;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -48,7 +48,7 @@ public final class Register implements CommandExecutor {
         }
 
         String password = args[0];
-        Bukkit.getAsyncScheduler().runNow(plugin, task -> handleRegistration(player, password));
+        new FoliaScheduler(plugin).runTaskAsynchronously(() -> handleRegistration(player, password));
 
         return true;
     }

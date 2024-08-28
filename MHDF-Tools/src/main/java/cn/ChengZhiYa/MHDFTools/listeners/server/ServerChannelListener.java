@@ -6,6 +6,7 @@ import cn.ChengZhiYa.MHDFTools.entity.TpaData;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaHereUtil;
 import cn.ChengZhiYa.MHDFTools.utils.command.TpaUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -17,7 +18,6 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.PlayerList;
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.ServerName;
@@ -64,26 +64,22 @@ public final class ServerChannelListener implements PluginMessageListener {
             if (subchannel.equals("TpPlayer")) {
                 String PlayerName = in.readUTF();
                 String TargetPlayerName = in.readUTF();
-                Bukkit.getAsyncScheduler().runAtFixedRate(PluginLoader.INSTANCE.getPlugin(), task -> {
-                    int i = 0;
-                    if (Bukkit.getPlayer(PlayerName) != null && Bukkit.getPlayer(TargetPlayerName) != null) {
-                        Bukkit.getRegionScheduler().run(PluginLoader.INSTANCE.getPlugin(), Bukkit.getPlayer(TargetPlayerName).getLocation(), t -> {
-                            Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Bukkit.getPlayer(TargetPlayerName));
-                            playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
-                        });
-                        task.cancel();
-                    } else {
-                        i++;
-                        if (i > 10) {
-                            task.cancel();
+                new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
+                    boolean status = teleportPlayer(PlayerName, TargetPlayerName);
+                    if (!status) {
+                        try {
+                            Thread.sleep(500);
+                            teleportPlayer(PlayerName, TargetPlayerName);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
                         }
                     }
-                }, 0, 500, TimeUnit.MILLISECONDS);
+                });
             }
             if (subchannel.equals("TpPlayerHome")) {
                 String PlayerName = in.readUTF();
                 String HomeName = in.readUTF();
-                Bukkit.getRegionScheduler().runDelayed(plugin, Bukkit.getPlayer(PlayerName).getLocation(), task -> {
+                new FoliaScheduler(plugin).runTaskLater(Bukkit.getPlayer(PlayerName).getLocation(), () -> {
                     Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(getHomeLocation(PlayerName, HomeName).getLocation());
                     playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                 }, 20);
@@ -91,7 +87,7 @@ public final class ServerChannelListener implements PluginMessageListener {
             if (subchannel.equals("tpPlayerTo")) {
                 String PlayerName = in.readUTF();
                 Location Location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble(), (float) in.readDouble(), (float) in.readDouble());
-                Bukkit.getRegionScheduler().runDelayed(plugin, Bukkit.getPlayer(PlayerName).getLocation(), task -> {
+                new FoliaScheduler(plugin).runTaskLater(Bukkit.getPlayer(PlayerName).getLocation(), () -> {
                     Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location);
                     playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                 }, 20);
@@ -125,6 +121,18 @@ public final class ServerChannelListener implements PluginMessageListener {
                 plugin.reloadConfig();
             }
         } catch (IOException ignored) {
+        }
+    }
+
+    private boolean teleportPlayer(String playerName, String targetPlayerName) {
+        if (Bukkit.getPlayer(playerName) != null && Bukkit.getPlayer(targetPlayerName) != null) {
+            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(Bukkit.getPlayer(targetPlayerName).getLocation(), () -> {
+                Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(Bukkit.getPlayer(targetPlayerName));
+                playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), sound("TeleportSound"));
+            });
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -2,6 +2,7 @@ package cn.ChengZhiYa.MHDFTools.utils.database;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;
@@ -29,7 +30,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.WarpUtil.*;
 
 public final class ImportUtil {
     public static void importHuskHomesData(CommandSender sender) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             String pluginName = "HuskHomes";
 
             File pluginDataFolder = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder().getParent(), pluginName);
@@ -120,7 +121,7 @@ public final class ImportUtil {
     }
 
     public static void importCMIData(CommandSender sender) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             String pluginName = "CMI";
 
             File pluginDataFolder = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder().getParent(), pluginName);
@@ -244,7 +245,7 @@ public final class ImportUtil {
     }
 
     public static void importEssentialsData(CommandSender sender) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             String pluginName = "Essentials";
 
             File pluginDataFolder = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder().getParent(), pluginName);

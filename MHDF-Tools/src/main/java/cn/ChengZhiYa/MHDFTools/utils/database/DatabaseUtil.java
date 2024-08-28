@@ -3,7 +3,6 @@ package cn.ChengZhiYa.MHDFTools.utils.database;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.bukkit.Bukkit;
 
 import java.sql.*;
 import java.util.TimeZone;
@@ -188,7 +187,7 @@ public final class DatabaseUtil {
     }
 
     public static void set(String table, String whereField, String whereValue, String setField, Object setValue) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (dataExists(table, whereField, whereValue)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
@@ -210,7 +209,7 @@ public final class DatabaseUtil {
     }
 
     public static void add(String table, String whereField, String whereValue, String addField, Object addValue) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (dataExists(table, whereField, whereValue)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
@@ -234,7 +233,7 @@ public final class DatabaseUtil {
     }
 
     public static void take(String table, String whereField, String whereValue, String takeField, Object takeValue) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (dataExists(table, whereField, whereValue)) {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(

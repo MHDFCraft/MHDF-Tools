@@ -1,7 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -38,7 +37,7 @@ public final class NickUtil {
     }
 
     public static void setNickName(String playerName, String nickName) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             String dataType = PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type");
             if (Objects.equals(dataType, "MySQL")) {
                 try (Connection connection = dataSource.getConnection()) {
@@ -67,7 +66,7 @@ public final class NickUtil {
     }
 
     public static void removeNickName(String playerName) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             String dataType = PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type");
             if (Objects.equals(dataType, "MySQL")) {
                 if (ifNickExists(playerName)) {

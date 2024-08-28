@@ -3,21 +3,19 @@ package cn.ChengZhiYa.MHDFTools.task.server;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.utils.message.ColorLogs;
 import cn.ChengZhiYa.MHDFTools.utils.task.ServerTimeActionUtil;
-import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
+import com.github.Anon8281.universalScheduler.UniversalRunnable;
 import org.bukkit.Bukkit;
 
 import java.time.LocalTime;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.runAction;
 import static cn.ChengZhiYa.MHDFTools.utils.task.ServerTimeActionUtil.getDelayTime;
 import static cn.ChengZhiYa.MHDFTools.utils.task.ServerTimeActionUtil.getTimeActionList;
 
-public final class ServerTimeActionTask implements Consumer<ScheduledTask> {
-
+public final class ServerTimeActionTask extends UniversalRunnable {
     @Override
-    public void accept(ScheduledTask task) {
+    public void run() {
         for (String action : getTimeActionList()) {
             switch (Objects.requireNonNull(PluginLoader.INSTANCE.getPlugin().getConfig().getString("TimeActionSettings.ActionList." + action + ".Type"))) {
                 case "定时操作": {

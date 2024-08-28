@@ -4,7 +4,7 @@ import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.command.SpawnUtil;
-import org.bukkit.Bukkit;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +23,7 @@ public final class PlayerReSpawnListener implements Listener {
         Player player = event.getPlayer();
         SuperLocation spawnLocation = SpawnUtil.getSpawnLocation();
 
-        Bukkit.getRegionScheduler().runDelayed(plugin, player.getLocation(), task -> {
+        new FoliaScheduler(plugin).runTaskLater(player.getLocation(), () -> {
             BungeeCordUtil.tpPlayerTo(player.getName(), SpawnUtil.getServerName(), spawnLocation);
         }, 5L);
     }

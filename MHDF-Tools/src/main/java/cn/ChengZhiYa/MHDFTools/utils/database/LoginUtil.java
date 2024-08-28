@@ -1,7 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -61,7 +60,7 @@ public final class LoginUtil {
         }
 
         if (isUsingMySQL()) {
-            Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement preparedStatement = connection.prepareStatement(
                              "INSERT INTO " + LOGIN_TABLE + " (PlayerName, Password) VALUES (?, ?)")) {

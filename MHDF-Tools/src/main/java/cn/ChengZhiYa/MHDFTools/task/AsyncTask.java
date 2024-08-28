@@ -3,15 +3,9 @@ package cn.ChengZhiYa.MHDFTools.task;
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.task.player.*;
 import cn.ChengZhiYa.MHDFTools.task.server.ServerTimeActionTask;
-import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
-import io.papermc.paper.threadedregions.scheduler.AsyncScheduler;
-import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
-import org.bukkit.Bukkit;
+import com.github.Anon8281.universalScheduler.UniversalRunnable;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 public final class AsyncTask {
     FileConfiguration config;
@@ -29,9 +23,9 @@ public final class AsyncTask {
         asyncTask(new PlayerTpaHereTask(), "TpaHereSettings.Enable");
     }
 
-    private void asyncTask(Consumer<ScheduledTask> task, String configKey) {
+    private void asyncTask(UniversalRunnable task, String configKey) {
         if (config.getBoolean(configKey)) {
-            Bukkit.getAsyncScheduler().runAtFixedRate(plugin, task, 0, 1, TimeUnit.SECONDS);
+            task.runTaskTimerAsynchronously(plugin, 0L, 1L);
         }
     }
 }

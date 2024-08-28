@@ -54,5 +54,4 @@ public class ServerManager {
     public boolean is1_20orAbove() {
         return version.startsWith("1.20") || version.startsWith("1.21");
     }
-
 }

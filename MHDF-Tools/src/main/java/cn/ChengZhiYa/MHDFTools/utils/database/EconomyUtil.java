@@ -2,7 +2,6 @@ package cn.ChengZhiYa.MHDFTools.utils.database;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -36,7 +35,7 @@ public final class EconomyUtil {
     public static void initializationPlayerData(String PlayerName, Double money) {
         if (!ifPlayerFileExists(PlayerName)) {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
-                Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+                new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
                     try {
                         Connection connection = dataSource.getConnection();
                         PreparedStatement ps = connection.prepareStatement("INSERT INTO mhdftools_economy (PlayerName, Money) VALUES (?,?)");
@@ -86,7 +85,7 @@ public final class EconomyUtil {
     }
 
     public static void setMoney(String PlayerName, Double Money) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getBigDecimal(Money));
@@ -104,7 +103,7 @@ public final class EconomyUtil {
     }
 
     public static void addMoney(String PlayerName, Double Money) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).add(getBigDecimal(Money)));
@@ -122,7 +121,7 @@ public final class EconomyUtil {
     }
 
     public static void takeMoney(String PlayerName, Double Money) {
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).subtract(getBigDecimal(Money)));

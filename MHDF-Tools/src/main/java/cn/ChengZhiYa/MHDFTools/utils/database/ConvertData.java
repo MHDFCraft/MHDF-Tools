@@ -4,7 +4,6 @@ import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -39,7 +38,7 @@ public final class ConvertData {
             PluginLoader.INSTANCE.getPlugin().saveConfig();
             PluginLoader.INSTANCE.getPlugin().reloadConfig();
         }
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             initializationYamlData();
 
             try {
@@ -130,7 +129,7 @@ public final class ConvertData {
             PluginLoader.INSTANCE.getPlugin().saveConfig();
             PluginLoader.INSTANCE.getPlugin().reloadConfig();
         }
-        Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+        new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
             try {
                 HikariConfig config = new HikariConfig();
                 config.setJdbcUrl("jdbc:mysql://" + PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Host") + "/" + PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());

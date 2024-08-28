@@ -4,7 +4,6 @@ import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.file.FileCreator;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
@@ -203,7 +202,7 @@ public final class HomeUtil {
 
     public static void addHome(String playerName, String homeName, SuperLocation homeLocation) {
         if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
-            Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
                 getServerName();
                 try (Connection connection = dataSource.getConnection();
                      PreparedStatement ps = connection.prepareStatement(
@@ -243,7 +242,7 @@ public final class HomeUtil {
         String dataSettingsType = PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type");
 
         if (Objects.equals(dataSettingsType, "MySQL")) {
-            Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
                 try (Connection connection = dataSource.getConnection()) {
                     List<String> homeList = getPlayerHomeList(playerName);
                     homeList.add(homeName);
@@ -281,7 +280,7 @@ public final class HomeUtil {
         }
 
         if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
-            Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
                 getServerName();
                 try (Connection connection = dataSource.getConnection()) {
                     String updateQuery = "UPDATE mhdftools_home SET Server = ?, World = ?, X = ?, Y = ?, Z = ?, Yaw = ?, Pitch = ? WHERE Home = ? AND Owner = ?";
@@ -317,7 +316,7 @@ public final class HomeUtil {
         }
 
         if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
-            Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
                 try {
                     //定义
                     String worldName = homeLocation.getWorldName();
@@ -359,7 +358,7 @@ public final class HomeUtil {
     public static void removeHome(String playerName, String homeName) {
         if (ifHomeExists(playerName, homeName)) {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
-                Bukkit.getAsyncScheduler().runNow(PluginLoader.INSTANCE.getPlugin(), task -> {
+                new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
                     List<String> homeList = getPlayerHomeList(playerName);
                     homeList.remove(homeName);
                     getHomeListHashMap().put(playerName, homeList);

@@ -4,18 +4,17 @@ import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
-import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
+import com.github.Anon8281.universalScheduler.UniversalRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Consumer;
 
-public final class PlayerTpBackTask implements Consumer<ScheduledTask> {
+public final class PlayerTpBackTask extends UniversalRunnable {
 
     @Override
-    public void accept(ScheduledTask task) {
+    public void run() {
         Set<Object> keySet = MapUtil.getIntHashMap().keySet();
         for (Object Key : keySet) {
             if (!Key.toString().contains("_TpBackDelay")) continue;

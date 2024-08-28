@@ -5,7 +5,7 @@ import cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.utils.database.FlyUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
-import org.bukkit.Bukkit;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +16,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.getServerName;
 import static cn.ChengZhiYa.MHDFTools.utils.database.EconomyUtil.initializationPlayerData;
@@ -27,17 +26,17 @@ public final class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         if (plugin.getConfig().getBoolean("FlySettings.Enable")) {
-            Bukkit.getAsyncScheduler().runDelayed(plugin, task -> {
+            new FoliaScheduler(plugin).runTaskLater(() -> {
                 FlyUtil.getFlyTimeHashMap().remove(event.getPlayer().getName());
                 FlyUtil.getFlyTime(event.getPlayer().getName());
-            }, 1, TimeUnit.SECONDS);
+            }, 1);
         }
         if (plugin.getConfig().getBoolean("BungeecordSettings.Enable")) {
             getServerName();
         }
         if (plugin.getConfig().getBoolean("BungeecordSettings.Enable")) {
-            Bukkit.getAsyncScheduler().runDelayed(plugin, task -> BungeeCordUtil.getPlayerList(), 1, TimeUnit.SECONDS);
-            Bukkit.getAsyncScheduler().runDelayed(plugin, task -> BungeeCordUtil.getServerName(), 1, TimeUnit.SECONDS);
+            new FoliaScheduler(plugin).runTaskLater(BungeeCordUtil::getPlayerList, 1);
+            new FoliaScheduler(plugin).runTaskLater(BungeeCordUtil::getServerName, 1);
         }
         if (plugin.getConfig().getBoolean("EconomySettings.Enable")) {
             initializationPlayerData(event.getPlayer().getName(), plugin.getConfig().getDouble("EconomySettings.InitialMoney"));
