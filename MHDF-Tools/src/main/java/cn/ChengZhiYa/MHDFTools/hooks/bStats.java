@@ -123,8 +123,7 @@ public final class bStats {
 
         private static final String REPORT_URL = "https://bStats.org/api/v2/data/%s";
 
-        private final ScheduledExecutorService scheduler =
-                Executors.newScheduledThreadPool(1, () -> new Thread(task, "bStats-Metrics"));
+        private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1, task -> new Thread(task, "bStats-Metrics"));
 
         private final String platform;
 

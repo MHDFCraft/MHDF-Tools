@@ -3,13 +3,14 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.ChengZhiYa</groupId>
+        <artifactId>MHDF-ToolsPlugins</artifactId>
+        <version>${env.project.version}</version>
+    </parent>
 
-    <groupId>MHDF-Tools</groupId>
     <artifactId>MHDF-Tools</artifactId>
-    <version>2.1.0</version>
     <packaging>jar</packaging>
-
-    <name>MHDF-Tools</name>
 
     <description>qwq</description>
     <properties>

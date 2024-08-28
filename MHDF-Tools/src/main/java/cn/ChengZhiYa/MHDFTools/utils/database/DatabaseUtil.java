@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.utils.database;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
+import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 

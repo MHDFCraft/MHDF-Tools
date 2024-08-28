@@ -4,10 +4,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.chengzhiya</groupId>
+    <groupId>cn.ChengZhiYa</groupId>
     <artifactId>MHDF-ToolsPlugins</artifactId>
-    <version>1.0.0</version>
+    <version>${env.project.version}</version>
     <packaging>pom</packaging>
+
+    <properties>
+        <env.project.version>2.1.0</env.project.version>
+    </properties>
 
     <name>MHDF-ToolsPlugins</name>
 
