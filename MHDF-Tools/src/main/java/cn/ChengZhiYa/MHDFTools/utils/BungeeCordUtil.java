@@ -14,6 +14,7 @@ import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import javax.crypto.spec.PSource;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -165,7 +166,7 @@ public final class BungeeCordUtil {
             }
 
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("tpPlayerTo");
+            out.writeUTF("TpPlayerTo");
             out.writeUTF(playerName);
             out.writeUTF(serverName);
             out.writeUTF(location.getWorldName());

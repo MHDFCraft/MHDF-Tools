@@ -84,7 +84,7 @@ public final class ServerChannelListener implements PluginMessageListener {
                     playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
                 }, 20);
             }
-            if (subchannel.equals("tpPlayerTo")) {
+            if (subchannel.equals("TpPlayerTo")) {
                 String PlayerName = in.readUTF();
                 Location Location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble(), (float) in.readDouble(), (float) in.readDouble());
                 new FoliaScheduler(plugin).runTaskLater(Bukkit.getPlayer(PlayerName).getLocation(), () -> {
