@@ -49,7 +49,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.runAction;
 
 public final class CommandRegister implements Invitable {
     FileConfiguration config;
-    JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+    final JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
     boolean canRegister;
 
     @Override
