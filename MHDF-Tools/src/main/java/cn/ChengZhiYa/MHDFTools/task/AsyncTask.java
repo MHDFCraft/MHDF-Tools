@@ -25,7 +25,7 @@ public final class AsyncTask {
 
     private void asyncTask(UniversalRunnable task, String configKey) {
         if (config.getBoolean(configKey)) {
-            task.runTaskTimerAsynchronously(plugin, 0L, 1L);
+            task.runTaskTimerAsynchronously(plugin, 0L, 20L);
         }
     }
 }
