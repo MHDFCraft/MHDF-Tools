@@ -168,35 +168,23 @@ public final class SpigotUtil {
     }
 
     public static GameMode getGamemode(int GameModeID) {
-        if (GameModeID == 0) {
-            return GameMode.SURVIVAL;
-        }
-        if (GameModeID == 1) {
-            return GameMode.CREATIVE;
-        }
-        if (GameModeID == 2) {
-            return GameMode.ADVENTURE;
-        }
-        if (GameModeID == 3) {
-            return GameMode.SPECTATOR;
-        }
-        return null;
+        return switch (GameModeID) {
+            case 0 -> GameMode.SURVIVAL;
+            case 1 -> GameMode.CREATIVE;
+            case 2 -> GameMode.ADVENTURE;
+            case 3 -> GameMode.SPECTATOR;
+            default -> null;
+        };
     }
 
     public static String getGamemodeString(int GameModeID) {
-        if (GameModeID == 0) {
-            return i18n("GameMode.Survival");
-        }
-        if (GameModeID == 1) {
-            return i18n("GameMode.Creative");
-        }
-        if (GameModeID == 2) {
-            return i18n("GameMode.Adventure");
-        }
-        if (GameModeID == 3) {
-            return i18n("GameMode.Spectator");
-        }
-        return null;
+        return switch (GameModeID) {
+            case 0 -> i18n("GameMode.Survival");
+            case 1 -> i18n("GameMode.Creative");
+            case 2 -> i18n("GameMode.Adventure");
+            case 3 -> i18n("GameMode.Spectator");
+            default -> null;
+        };
     }
 
     public static void registerCommand(Plugin plugin, CommandExecutor commandExecutor, String description, String permission, String commandString) {
@@ -249,7 +237,7 @@ public final class SpigotUtil {
         if (TPS15 > 20.0D) TPS15 = 20.0D; //这里做限制 - 20
 
         switch (Time) {
-            case 1:
+            case 1 -> {
                 if (TPS1 > 18.0D) {
                     return "&a" + TPS1;
                 } else if (TPS1 > 16.0D) {
@@ -257,7 +245,8 @@ public final class SpigotUtil {
                 } else {
                     return "&c" + TPS1;
                 }
-            case 5:
+            }
+            case 5 -> {
                 if (TPS5 > 18.0D) {
                     return "&a" + TPS5;
                 } else if (TPS5 > 16.0D) {
@@ -265,7 +254,8 @@ public final class SpigotUtil {
                 } else {
                     return "&c" + TPS5;
                 }
-            case 15:
+            }
+            case 15 -> {
                 if (TPS15 > 18.0D) {
                     return "&a" + TPS15;
                 } else if (TPS15 > 16.0D) {
@@ -273,8 +263,10 @@ public final class SpigotUtil {
                 } else {
                     return "&c" + TPS15;
                 }
-            default:
+            }
+            default -> {
                 return "获取失败";
+            }
         }
     }
 

@@ -12,7 +12,8 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PlayerReSpawnListener implements Listener {
-    JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
+    final JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
@@ -23,9 +24,7 @@ public final class PlayerReSpawnListener implements Listener {
         Player player = event.getPlayer();
         SuperLocation spawnLocation = SpawnUtil.getSpawnLocation();
 
-        new FoliaScheduler(plugin).runTaskLater(player.getLocation(), () -> {
-            BungeeCordUtil.tpPlayerTo(player.getName(), SpawnUtil.getServerName(), spawnLocation);
-        }, 5L);
+        new FoliaScheduler(plugin).runTaskLater(player.getLocation(), () -> BungeeCordUtil.tpPlayerTo(player.getName(), SpawnUtil.getServerName(), spawnLocation), 5L);
     }
 
     private boolean isEnabled() {
