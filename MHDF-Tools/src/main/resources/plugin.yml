@@ -3,7 +3,7 @@ version: '${project.version}'
 main: cn.ChengZhiYa.MHDFTools.MHDFTools
 api-version: '1.17'
 folia-supported: true
-authoendrs: [ ChengZhiYa, Dg32z_ ]
+authoendrs: [ ChengZhiYa, Dg32z_, SharkGod ]
 softdepend: [ Vault, PlaceholderAPI ]
 permissions:
   MHDFTools.Command.Back:
