@@ -24,21 +24,12 @@ public class PluginChecker implements Invitable {
     }
 
     private void checkPlaceholderAPI() {
-        boolean hasPlaceholderAPI = isPlaceholderAPIAvailable();
+        boolean hasPlaceholderAPI = Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
         if (hasPlaceholderAPI) {
             ColorLogs.consoleMessage("&f[MHDF-Tools] &a找到了PlaceholderAPI，启用PAPI变量解析系统。");
         } else {
             ColorLogs.consoleMessage("&f[MHDF-Tools] &c找不到PlaceholderAPI, 已关闭PAPI变量解析系统!");
         }
         PluginLoader.INSTANCE.setHasPlaceholderAPI(hasPlaceholderAPI);
-    }
-
-    private boolean isPlaceholderAPIAvailable() {
-        try {
-            Class.forName("me.clip.placeholderapi.PlaceholderAPI");
-            return true;
-        } catch (ClassNotFoundException ignore) {
-            return false;
-        }
     }
 }
