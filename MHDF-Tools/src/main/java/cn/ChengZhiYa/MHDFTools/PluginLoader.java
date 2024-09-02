@@ -46,7 +46,7 @@ public enum PluginLoader {
         //Instance
         serverManager = new ServerManager();
         asyncTask = new AsyncTask();
-        config = new MHDFConfig();
+        config = MHDFConfig.getInstance();
         initManager = new InitManager();
     }
 

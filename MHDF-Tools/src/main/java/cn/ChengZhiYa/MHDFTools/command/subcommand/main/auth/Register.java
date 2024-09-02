@@ -26,11 +26,11 @@ public final class Register implements CommandExecutor {
     boolean autoLogin;
 
     public Register() {
-        this.plugin = PluginLoader.INSTANCE.getPlugin();
-        this.maxPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MaxPaswordLength");
-        this.minPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MinPaswordLength");
-        this.easyPasswords = plugin.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
-        this.autoLogin = plugin.getConfig().getBoolean("LoginSystemSettings.AutoLogin");
+        plugin = PluginLoader.INSTANCE.getPlugin();
+        maxPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MaxPaswordLength");
+        minPasswordLength = plugin.getConfig().getInt("LoginSystemSettings.MinPaswordLength");
+        easyPasswords = plugin.getConfig().getStringList("LoginSystemSettings.EasyPasswords");
+        autoLogin = plugin.getConfig().getBoolean("LoginSystemSettings.AutoLogin");
     }
 
     @Override

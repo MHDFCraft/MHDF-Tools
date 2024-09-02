@@ -12,46 +12,77 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.SoundFileData;
 import static cn.ChengZhiYa.MHDFTools.utils.file.FileCreator.createDir;
 
 public class MHDFConfig {
-    final File getDataFolder = PluginLoader.INSTANCE.getPlugin().getDataFolder();
 
-    public void loadConfig() {
-        createFile();
+    private final File dataFolder = PluginLoader.INSTANCE.getPlugin().getDataFolder();
+    private final File[] filesToSave = {
+            new File("config.yml"),
+            new File("lang.yml"),
+            new File("sound.yml"),
+            new File("Menus/CustomMenu.yml"),
+            new File("Menus/HomeMenu.yml"),
+            new File("Cache/VanishCache.yml")
+    };
+
+    private static MHDFConfig instance;
+
+    public static MHDFConfig getInstance() {
+        return instance == null ? (instance = new MHDFConfig()) : instance;
     }
 
-    public void createFile() {
-        createDir(getDataFolder);
-        saveResource(getDataFolder.getPath(), "config.yml", "config.yml", false);
-        PluginLoader.INSTANCE.getPlugin().reloadConfig(); //配置
+    public void loadConfig() {
+        createDir(dataFolder);
+        saveResources();
+        loadConfigurations();
+        handleSpecialFiles();
+    }
 
-        File Lang_File = new File(getDataFolder, "lang.yml");
-        saveResource(getDataFolder.getPath(), "lang.yml", "lang.yml", false);
-        LangFileData = YamlConfiguration.loadConfiguration(Lang_File); //语言
+    private void saveResources() {
+        for (File file : filesToSave) {
+            saveResource(dataFolder.getPath(), file.getPath(), file.getPath(), false);
+        }
+    }
 
-        File Sound_File = new File(getDataFolder, "sound.yml");
-        saveResource(getDataFolder.getPath(), "sound.yml", "sound.yml", false);
-        SoundFileData = YamlConfiguration.loadConfiguration(Sound_File); //音效系统
+    private void loadConfigurations() {
+        PluginLoader.INSTANCE.getPlugin().reloadConfig();
 
-        createDir(new File(getDataFolder, "Cache")); //缓存
+        File langFile = new File(dataFolder, "lang.yml");
+        LangFileData = YamlConfiguration.loadConfiguration(langFile);
 
-        //家系统菜单与菜单系统
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")
-                || PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("MenuSettings.Enable")) {
-            if (!new File(getDataFolder, "Menus").exists()) {
-                createDir(new File(getDataFolder, "Menus"));
-                if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("MenuSettings.Enable")) {
-                    saveResource(PluginLoader.INSTANCE.getPlugin().getDataFolder().getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", false);
-                }
-            }
-            //家系统
-            if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
-                saveResource(PluginLoader.INSTANCE.getPlugin().getDataFolder().getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", false);
+        File soundFile = new File(dataFolder, "sound.yml");
+        SoundFileData = YamlConfiguration.loadConfiguration(soundFile);
+    }
+
+    private void handleSpecialFiles() {
+        if (isHomeSystemOrMenuEnabled()) {
+            handleMenuFiles();
+        }
+
+        if (isVanishSettingsEnabled()) {
+            FileCreator.createFile(new File(dataFolder, "Cache/VanishCache.yml"));
+        }
+    }
+
+    private boolean isHomeSystemOrMenuEnabled() {
+        return PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")
+                || PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("MenuSettings.Enable");
+    }
+
+    private void handleMenuFiles() {
+        File menusDir = new File(dataFolder, "Menus");
+        if (!menusDir.exists()) {
+            createDir(menusDir);
+            if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("MenuSettings.Enable")) {
+                saveResource(dataFolder.getPath(), "Menus/CustomMenu.yml", "Menus/CustomMenu.yml", false);
             }
         }
 
-        //隐身系统
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("VanishSettings.Enable")
-                && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("VanishSettings.SaveVanishData")) {
-            FileCreator.createFile("Cache/VanishCache.yml");
+        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
+            saveResource(dataFolder.getPath(), "Menus/HomeMenu.yml", "Menus/HomeMenu.yml", false);
         }
+    }
+
+    private boolean isVanishSettingsEnabled() {
+        return PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("VanishSettings.Enable")
+                && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("VanishSettings.SaveVanishData");
     }
 }

@@ -4,8 +4,10 @@ import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.sql.*;
+import java.util.List;
 import java.util.TimeZone;
 
 import static cn.ChengZhiYa.MHDFTools.utils.file.FileCreator.createDir;
@@ -16,33 +18,59 @@ public final class DatabaseUtil {
     public static HikariDataSource dataSource;
 
     public static void initializationYamlData() {
-        //家系统数据文件夹
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
-            createDir("HomeData");
-        }
-        //经济系统数据文件夹
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
-            createDir("VaultData");
-        }
-        //登录系统
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("LoginSystemSettings.Enable")) {
-            createFile("LoginData.yml");
-        }
-        //飞行系统
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("FlySettings.Enable")) {
-            createFile("Cache/FlyCache.yml");
-        }
-        //隐身系统
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("VanishSettings.Enable")) {
-            createFile("Cache/VanishCache.yml");
-        }
-        //改名系统
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("NickSettings.Enable")) {
-            createFile("NickData.yml");
-        }
-        //聊天颜色
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("ChatColorSettings.Enable")) {
-            createFile("ChatColorData.yml");
+        FileConfiguration config = PluginLoader.INSTANCE.getPlugin().getConfig();
+
+        for (String key : List.of(
+                "HomeSystemSettings.Enable",
+                "EconomySettings.Enable",
+                "LoginSystemSettings.Enable",
+                "FlySettings.Enable",
+                "VanishSettings.Enable",
+                "NickSettings.Enable",
+                "ChatColorSettings.Enable"
+        )) {
+            boolean enabled = config.getBoolean(key);
+
+            switch (key) {
+                case "HomeSystemSettings.Enable" -> {
+                    if (enabled) {
+                        createDir("HomeData");
+                    }
+                }
+                case "EconomySettings.Enable" -> {
+                    if (enabled) {
+                        createDir("VaultData");
+                    }
+                }
+                case "LoginSystemSettings.Enable" -> {
+                    if (enabled) {
+                        createFile("LoginData.yml");
+                    }
+                }
+                case "FlySettings.Enable" -> {
+                    if (enabled) {
+                        createFile("Cache/FlyCache.yml");
+                    }
+                }
+                case "VanishSettings.Enable" -> {
+                    if (enabled) {
+                        createFile("Cache/VanishCache.yml");
+                    }
+                }
+                case "NickSettings.Enable" -> {
+                    if (enabled) {
+                        createFile("NickData.yml");
+                    }
+                }
+                case "ChatColorSettings.Enable" -> {
+                    if (enabled) {
+                        createFile("ChatColorData.yml");
+                    }
+                }
+                default -> { //没有配置 Unknown
+                    //不做处理D:
+                }
+            }
         }
     }
 

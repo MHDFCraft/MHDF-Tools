@@ -15,6 +15,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 
 public class Freeze implements CommandExecutor {
+
     public static final List<UUID> freezeUUID = new ArrayList<>();
 
     @Override

@@ -23,9 +23,7 @@ public final class PlayerSpawnListener implements Listener {
         Player player = event.getPlayer();
         SuperLocation spawnLocation = SpawnUtil.getSpawnLocation();
 
-        new FoliaScheduler(plugin).runTaskLater(player.getLocation(), () -> {
-            BungeeCordUtil.tpPlayerTo(player.getName(), SpawnUtil.getServerName(), spawnLocation);
-        }, 5L);
+        new FoliaScheduler(plugin).runTaskLater(player.getLocation(), () -> BungeeCordUtil.tpPlayerTo(player.getName(), SpawnUtil.getServerName(), spawnLocation), 5L);
     }
 
     private boolean isEnabled() {
