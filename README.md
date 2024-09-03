@@ -21,7 +21,7 @@ _✨轻量 便携 快捷 即装即用 可无前置运行✨_
     <a href="https://qm.qq.com/cgi-bin/qm/qr?k=T047YB6lHNMMcMuVlK_hGBcT5HNESxMA&jump_from=webapi&authKey=0/IFGIO6xLjjHB2YKF7laLxkKWbtWbDhb1lt//m7GgbElJSWdRZ8RjbWzSsufkO6">
         <img src="https://img.shields.io/badge/QQ群-129139830-brightgreen?style=flat-square" alt="qq-group">
     </a>
-    <img src="https://img.shields.io/badge/最佳支持版本-1.20.1-brightgreen?style=flat-square" alt="minecraft-version">
+    <img src="https://img.shields.io/badge/最佳支持版本-1.20.4-brightgreen?style=flat-square" alt="minecraft-version">
     <img src="https://img.shields.io/badge/JDK-17+-brightgreen?style=flat-square" alt="jdk-version">
 </p>
 
