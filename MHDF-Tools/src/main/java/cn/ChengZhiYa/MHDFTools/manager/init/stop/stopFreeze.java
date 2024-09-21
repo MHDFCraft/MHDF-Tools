@@ -6,7 +6,7 @@ import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
 public class stopFreeze implements Invitable {
 
     @Override
-    public void start() {
+    public void init() {
         Freeze.freezeUUID.clear();
     }
 }

@@ -7,7 +7,7 @@ import static cn.ChengZhiYa.MHDFTools.hooks.Vault.hookVault;
 
 public class Vault implements Invitable {
     @Override
-    public void start() {
+    public void init() {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")
                 && PluginLoader.INSTANCE.isHasVault()) {
             hookVault();

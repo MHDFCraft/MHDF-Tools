@@ -53,7 +53,7 @@ public final class CommandRegister implements Invitable {
     boolean canRegister;
 
     @Override
-    public void start() {
+    public void init() {
         canRegister = false;
         config = PluginLoader.INSTANCE.getPlugin().getConfig();
         registerFreezeCommands();

@@ -7,7 +7,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.checkUpdate;
 
 public class UpdateCheck implements Invitable {
     @Override
-    public void start() {
+    public void init() {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("CheckVersion")) {
             checkUpdate();
         }

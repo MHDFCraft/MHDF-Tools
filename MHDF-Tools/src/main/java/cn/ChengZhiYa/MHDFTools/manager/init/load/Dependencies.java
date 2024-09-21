@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Dependencies implements Invitable {
     @Override
-    public void start() {
+    public void init() {
         DependencyManager dependencyManager = new DependencyManagerImpl(new ReflectionClassPathAppender(PluginLoader.INSTANCE.getPlugin().getClass().getClassLoader()));
         java.util.List<Dependency> dependencies = new ArrayList<>();
         dependencies.add(Dependency.FAST_JSON);

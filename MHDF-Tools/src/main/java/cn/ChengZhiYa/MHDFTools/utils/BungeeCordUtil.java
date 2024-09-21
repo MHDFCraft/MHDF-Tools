@@ -12,9 +12,9 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import javax.crypto.spec.PSource;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -25,8 +25,15 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeServer;
 
 
 public final class BungeeCordUtil {
+
+    static FileConfiguration config;
     public static String[] PlayerList;
-    public static String ServerName = "无";
+    public static String ServerName;
+
+    public BungeeCordUtil() {
+        config = PluginLoader.INSTANCE.getPlugin().getConfig();
+        ServerName = "无";
+    }
 
     public static void getPlayerList() {
         final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
@@ -42,7 +49,7 @@ public final class BungeeCordUtil {
     }
 
     public static void getServerName() {
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (config.getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -53,7 +60,7 @@ public final class BungeeCordUtil {
 
             player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            ServerName = PluginLoader.INSTANCE.getPlugin().getConfig().getString("BungeecordSettings.HomeDefaultServer");
+            ServerName = config.getString("BungeecordSettings.HomeDefaultServer");
         }
     }
 
@@ -61,7 +68,7 @@ public final class BungeeCordUtil {
         if (Bukkit.getPlayer(playerName) != null) {
             Player player = Bukkit.getPlayer(playerName);
 
-            if (Bukkit.getPlayer(targetPlayerName) == null && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+            if (Bukkit.getPlayer(targetPlayerName) == null && config.getBoolean("BungeecordSettings.Enable")) {
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("SendTpa");
                 out.writeUTF(playerName);
@@ -71,7 +78,7 @@ public final class BungeeCordUtil {
             } else {
                 Objects.requireNonNull(Bukkit.getPlayer(targetPlayerName)).spigot().sendMessage(TpaUtil.getTpaRequestMessage(playerName));
             }
-            TpaUtil.getTpaHashMap().put(playerName, new TpaData(targetPlayerName, PluginLoader.INSTANCE.getPlugin().getConfig().getInt("TpaSettings.OutTime")));
+            TpaUtil.getTpaHashMap().put(playerName, new TpaData(targetPlayerName, config.getInt("TpaSettings.OutTime")));
         }
     }
 
@@ -79,7 +86,7 @@ public final class BungeeCordUtil {
         if (Bukkit.getPlayer(playerName) != null) {
             Player player = Bukkit.getPlayer(playerName);
 
-            if (Bukkit.getPlayer(targetPlayerName) == null && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+            if (Bukkit.getPlayer(targetPlayerName) == null && config.getBoolean("BungeecordSettings.Enable")) {
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("SendTpaHere");
                 out.writeUTF(playerName);
@@ -89,12 +96,12 @@ public final class BungeeCordUtil {
             } else {
                 Objects.requireNonNull(Bukkit.getPlayer(targetPlayerName)).spigot().sendMessage(TpaHereUtil.getTpaHereRequestMessage(playerName));
             }
-            TpaHereUtil.getTpahereHashMap().put(playerName, new TpaData(targetPlayerName, PluginLoader.INSTANCE.getPlugin().getConfig().getInt("TpaHereSettings.OutTime")));
+            TpaHereUtil.getTpahereHashMap().put(playerName, new TpaData(targetPlayerName, config.getInt("TpaHereSettings.OutTime")));
         }
     }
 
     public static void sendMessage(String playerName, String Message) {
-        if (Bukkit.getPlayer(playerName) == null && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (Bukkit.getPlayer(playerName) == null && config.getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -112,7 +119,7 @@ public final class BungeeCordUtil {
     }
 
     public static void tpPlayer(String playerName, String targetPlayerName) {
-        if ((Bukkit.getPlayer(playerName) == null || Bukkit.getPlayer(targetPlayerName) == null) && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if ((Bukkit.getPlayer(playerName) == null || Bukkit.getPlayer(targetPlayerName) == null) && config.getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -133,7 +140,7 @@ public final class BungeeCordUtil {
     }
 
     public static void tpPlayerHome(String playerName, String homeName) {
-        if (!getHomeServer(playerName, homeName).equals(ServerName) && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (!getHomeServer(playerName, homeName).equals(ServerName) && config.getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -159,7 +166,7 @@ public final class BungeeCordUtil {
             return;
         }
 
-        if (!ServerName.equals(serverName) && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (!ServerName.equals(serverName) && config.getBoolean("BungeecordSettings.Enable")) {
             Player player = Bukkit.getPlayer(playerName);
             if (player == null) {
                 return;
@@ -197,7 +204,7 @@ public final class BungeeCordUtil {
     }
 
     public static void cancelTpa(String playerName) {
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (config.getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -215,7 +222,7 @@ public final class BungeeCordUtil {
     }
 
     public static void cancelTpaHere(String playerName) {
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (config.getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -233,7 +240,7 @@ public final class BungeeCordUtil {
     }
 
     public static void setSpawn(SuperLocation location) {
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (config.getBoolean("BungeecordSettings.Enable")) {
             final Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 return;
@@ -251,20 +258,20 @@ public final class BungeeCordUtil {
 
             player.sendPluginMessage(PluginLoader.INSTANCE.getPlugin(), "BungeeCord", out.toByteArray());
         } else {
-            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.Server", ServerName);
-            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.World", location.getWorldName());
-            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.X", location.getX());
-            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.Y", location.getY());
-            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.Z", location.getZ());
-            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.Yaw", location.getYaw());
-            PluginLoader.INSTANCE.getPlugin().getConfig().set("SpawnSettings.Pitch", location.getPitch());
+            config.set("SpawnSettings.Server", ServerName);
+            config.set("SpawnSettings.World", location.getWorldName());
+            config.set("SpawnSettings.X", location.getX());
+            config.set("SpawnSettings.Y", location.getY());
+            config.set("SpawnSettings.Z", location.getZ());
+            config.set("SpawnSettings.Yaw", location.getYaw());
+            config.set("SpawnSettings.Pitch", location.getPitch());
             PluginLoader.INSTANCE.getPlugin().saveConfig();
             PluginLoader.INSTANCE.getPlugin().reloadConfig();
         }
     }
 
     public static boolean ifPlayerOnline(String playerName) {
-        if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+        if (config.getBoolean("BungeecordSettings.Enable")) {
             getPlayerList();
             return Arrays.asList(PlayerList).contains(playerName);
         } else {

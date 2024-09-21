@@ -6,14 +6,16 @@ import cn.ChengZhiYa.MHDFTools.utils.database.VanishUtil;
 import cn.ChengZhiYa.MHDFTools.utils.map.MapUtil;
 import cn.ChengZhiYa.MHDFTools.utils.message.ColorLogs;
 import cn.ChengZhiYa.MHDFTools.utils.message.MessageUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import io.papermc.lib.PaperLib;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -68,8 +70,8 @@ public final class SpigotUtil {
 
             try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
                 String response = in.readLine();
-                JSONObject data = JSON.parseObject(response);
-                String newVersionString = data.getString("data");
+                JsonObject data = JsonParser.parseString(response).getAsJsonObject();
+                String newVersionString = data.get("data").getAsString();
 
                 if (!newVersionString.equals(PluginLoader.INSTANCE.getVersion())) {
                     ColorLogs.colorMessage("&f[MHDF-Tools] &c当前插件版本不是最新版!");
@@ -104,10 +106,11 @@ public final class SpigotUtil {
             URLConnection conn = url.openConnection();
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
-                JSONObject json = JSONObject.parseObject(reader.readLine());
-                JSONArray dataArray = json.getJSONArray("data");
-                JSONObject dataJson = dataArray.getJSONObject(0);
-                return dataJson.getString("location");
+                //     JSONObject json = JSONObject.parseObject(reader.readLine());
+                JsonObject json = JsonParser.parseString(reader.readLine()).getAsJsonObject();
+                JsonArray dataArray = json.getAsJsonArray("data");
+                JsonObject dataJson = dataArray.get(0).getAsJsonObject();
+                return dataJson.get("location").getAsString();
             } catch (IOException e) {
                 return "Failed to get data";
             }
@@ -352,6 +355,14 @@ public final class SpigotUtil {
     public static void playSound(Player player, String soundString) {
         String[] sound = soundString.split("\\|");
         player.playSound(player, org.bukkit.Sound.valueOf(sound[0]), Float.parseFloat(sound[1]), Float.parseFloat(sound[2]));
+    }
+
+    public static void diffTeleport(Player player, Location location) {
+        if (PluginLoader.INSTANCE.getServerManager().is1_20orAbove()) {
+            PaperLib.teleportAsync(player, location);
+        } else {
+            player.teleport(location);
+        }
     }
 
     public static String getTimeString(int time) {

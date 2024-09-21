@@ -65,19 +65,19 @@ public class InitManager {
 
     public void load() {
         for (Invitable invitable : initializersOnLoad.values()) {
-            invitable.start();
+            invitable.init();
         }
     }
 
     public void start() {
         for (Invitable invitable : initializersOnStart.values()) {
-            invitable.start();
+            invitable.init();
         }
     }
 
     public void stop() {
         for (Invitable invitable : initializersOnStop.values()) {
-            invitable.start();
+            invitable.init();
         }
     }
 }

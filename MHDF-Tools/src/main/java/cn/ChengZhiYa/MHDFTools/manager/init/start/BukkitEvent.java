@@ -20,7 +20,7 @@ public class BukkitEvent implements Invitable {
     }
 
     @Override
-    public void start() {
+    public void init() {
         //Player Start
         registerEvent(new PlayerJoinListener(), null);
         registerEvent(new PlayerSpawnListener(), null);

@@ -10,7 +10,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.DatabaseUtil.initialization
 
 public class Database implements Invitable {
     @Override
-    public void start() {
+    public void init() {
         if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             initializationDatabaseData();
         } else {

@@ -15,7 +15,7 @@ public final class PlaceholderAPI extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getAuthor() {
-        return "ChengZhiYa";
+        return "ChengZhiYa, Dg32z_, SharkGod";
     }
 
     @Override

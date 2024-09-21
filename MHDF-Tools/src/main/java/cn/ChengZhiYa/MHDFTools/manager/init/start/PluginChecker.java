@@ -8,7 +8,7 @@ import org.bukkit.Bukkit;
 public class PluginChecker implements Invitable {
 
     @Override
-    public void start() {
+    public void init() {
         checkVault();
         checkPlaceholderAPI();
     }

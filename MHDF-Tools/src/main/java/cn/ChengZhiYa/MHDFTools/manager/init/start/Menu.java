@@ -12,7 +12,7 @@ public class Menu implements Invitable {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     @Override
-    public void start() {
+    public void init() {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("MenuSettings.Enable")) {
             Bukkit.getPluginManager().registerEvents(new OpenMenu(), plugin);
             Bukkit.getPluginManager().registerEvents(new ClickCustomMenu(), plugin);

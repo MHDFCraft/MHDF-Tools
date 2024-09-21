@@ -6,7 +6,7 @@ import cn.ChengZhiYa.MHDFTools.manager.init.Invitable;
 
 public class BStats implements Invitable {
     @Override
-    public void start() {
+    public void init() {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("bStats")) {
             new bStats(17154);
         }

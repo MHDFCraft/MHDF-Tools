@@ -1,5 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subcommand.misc;
 
+import cn.ChengZhiYa.MHDFTools.utils.SpigotUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +19,7 @@ public final class Bed implements CommandExecutor {
 
         Player player = (Player) sender;
         if (player.getBedSpawnLocation() != null) {
-            player.teleport(player.getBedSpawnLocation());
+            SpigotUtil.diffTeleport(player, player.getBedSpawnLocation());
             player.sendMessage(i18n("Bed.TeleportDone"));
         } else {
             player.sendMessage(i18n("Bed.NotFound"));

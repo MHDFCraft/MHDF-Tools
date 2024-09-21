@@ -8,10 +8,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import static org.bukkit.Bukkit.getServer;
 
 public class stopChannel implements Invitable {
-    JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+
+    final JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     @Override
-    public void start() {
+    public void init() {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             getServer().getMessenger().unregisterOutgoingPluginChannel(plugin, "BungeeCord");
             getServer().getMessenger().unregisterIncomingPluginChannel(plugin, "BungeeCord", new ServerChannelListener());

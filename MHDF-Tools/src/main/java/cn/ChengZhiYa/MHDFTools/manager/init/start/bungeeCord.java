@@ -12,7 +12,7 @@ public class bungeeCord implements Invitable {
     JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
 
     @Override
-    public void start() {
+    public void init() {
         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             getServer().getMessenger().registerOutgoingPluginChannel(plugin, "BungeeCord");
             getServer().getMessenger().registerIncomingPluginChannel(plugin, "BungeeCord", new ServerChannelListener());
