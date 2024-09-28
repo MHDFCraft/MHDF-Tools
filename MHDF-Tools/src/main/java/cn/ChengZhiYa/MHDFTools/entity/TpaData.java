@@ -4,9 +4,8 @@ import lombok.Data;
 
 @Data
 public final class TpaData {
-
     String targetPlayerName;
-     Integer tpaOutTime;
+    Integer tpaOutTime;
 
     public TpaData(String targetPlayerName, Integer tpaOutTime) {
         this.targetPlayerName = targetPlayerName;

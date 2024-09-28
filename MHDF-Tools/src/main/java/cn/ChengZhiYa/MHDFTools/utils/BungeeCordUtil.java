@@ -26,9 +26,9 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeServer;
 
 public final class BungeeCordUtil {
 
-    static FileConfiguration config;
     public static String[] PlayerList;
     public static String ServerName;
+    static FileConfiguration config;
 
     public BungeeCordUtil() {
         config = PluginLoader.INSTANCE.getPlugin().getConfig();

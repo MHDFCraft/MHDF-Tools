@@ -57,19 +57,19 @@ public final class ServerChannelListener implements PluginMessageListener {
                 Objects.requireNonNull(Bukkit.getPlayer(targetPlayerName)).spigot().sendMessage(TpaHereUtil.getTpaHereRequestMessage(playerName));
             }
             if (subchannel.equals("SendMessage")) {
-                String PlayerName = in.readUTF();
-                String Message = in.readUTF();
-                Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).sendMessage(Message);
+                String playerName = in.readUTF();
+                String text = in.readUTF();
+                Objects.requireNonNull(Bukkit.getPlayer(playerName)).sendMessage(text);
             }
             if (subchannel.equals("TpPlayer")) {
-                String PlayerName = in.readUTF();
-                String TargetPlayerName = in.readUTF();
+                String playerName = in.readUTF();
+                String targetPlayerName = in.readUTF();
                 new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
-                    boolean status = teleportPlayer(PlayerName, TargetPlayerName);
+                    boolean status = teleportPlayer(playerName, targetPlayerName);
                     if (!status) {
                         try {
                             Thread.sleep(500);
-                            teleportPlayer(PlayerName, TargetPlayerName);
+                            teleportPlayer(playerName, targetPlayerName);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -77,19 +77,20 @@ public final class ServerChannelListener implements PluginMessageListener {
                 });
             }
             if (subchannel.equals("TpPlayerHome")) {
-                String PlayerName = in.readUTF();
-                String HomeName = in.readUTF();
-                new FoliaScheduler(plugin).runTaskLater(Bukkit.getPlayer(PlayerName).getLocation(), () -> {
-                    Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(getHomeLocation(PlayerName, HomeName).getLocation());
-                    playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                String playerName = in.readUTF();
+                String homeName = in.readUTF();
+                Location location = getHomeLocation(playerName, homeName).getLocation();
+                new FoliaScheduler(plugin).runTaskLater(location, () -> {
+                    Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(location);
+                    playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), sound("TeleportSound"));
                 }, 20);
             }
             if (subchannel.equals("TpPlayerTo")) {
-                String PlayerName = in.readUTF();
-                Location Location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble(), (float) in.readDouble(), (float) in.readDouble());
-                new FoliaScheduler(plugin).runTaskLater(Bukkit.getPlayer(PlayerName).getLocation(), () -> {
-                    Objects.requireNonNull(Bukkit.getPlayer(PlayerName)).teleport(Location);
-                    playSound(Objects.requireNonNull(Bukkit.getPlayer(PlayerName)), sound("TeleportSound"));
+                String playerName = in.readUTF();
+                Location location = new Location(Bukkit.getWorld(in.readUTF()), in.readDouble(), in.readDouble(), in.readDouble(), (float) in.readDouble(), (float) in.readDouble());
+                new FoliaScheduler(plugin).runTaskLater(location, () -> {
+                    Objects.requireNonNull(Bukkit.getPlayer(playerName)).teleport(location);
+                    playSound(Objects.requireNonNull(Bukkit.getPlayer(playerName)), sound("TeleportSound"));
                 }, 20);
             }
             if (subchannel.equals("CancelTpa")) {
@@ -101,10 +102,10 @@ public final class ServerChannelListener implements PluginMessageListener {
                 TpaHereUtil.getTpahereHashMap().remove(playerName);
             }
             if (subchannel.equals("SaveLocation")) {
-                String Key = in.readUTF();
-                String Server = in.readUTF();
-                MapUtil.getLocationHashMap().put(Key, new SuperLocation(in.readUTF(), in.readDouble(), in.readDouble(), in.readDouble()));
-                MapUtil.getStringHashMap().put(Key + "_Server", Server);
+                String key = in.readUTF();
+                String server = in.readUTF();
+                MapUtil.getLocationHashMap().put(key, new SuperLocation(in.readUTF(), in.readDouble(), in.readDouble(), in.readDouble()));
+                MapUtil.getStringHashMap().put(key + "_Server", server);
             }
             if (subchannel.equals("ServerName")) {
                 ServerName = in.readUTF();

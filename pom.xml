@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <env.project.version>2.1.0</env.project.version>
+        <env.project.version>2.1.1</env.project.version>
     </properties>
 
     <name>MHDF-ToolsPlugins</name>

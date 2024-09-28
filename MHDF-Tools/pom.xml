@@ -152,7 +152,7 @@
             <artifactId>placeholderapi</artifactId>
             <version>2.11.7</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/[P]PlaceholderAPI.jar</systemPath>
+            <systemPath>${project.basedir}/libs/PlaceholderAPI.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>io.papermc</groupId>

@@ -8,50 +8,50 @@ import org.bukkit.util.NumberConversions;
 @Data
 public final class SuperLocation {
     String worldName;
-    Double X;
-    Double Y;
-    Double Z;
-    Float Yaw;
-    Float Pitch;
+    Double x;
+    Double y;
+    Double z;
+    Float yaw;
+    Float pitch;
 
-    public SuperLocation(String worldName, Double X, Double Y, Double Z) {
+    public SuperLocation(String worldName, Double x, Double y, Double z) {
         this.worldName = worldName;
-        this.X = X;
-        this.Y = Y;
-        this.Z = Z;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
-    public SuperLocation(String worldName, Double X, Double Y, Double Z, Float Yaw, Float Pitch) {
+    public SuperLocation(String worldName, Double x, Double y, Double z, Float yaw, Float pitch) {
         this.worldName = worldName;
-        this.X = X;
-        this.Y = Y;
-        this.Z = Z;
-        this.Yaw = Yaw;
-        this.Pitch = Pitch;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.yaw = yaw;
+        this.pitch = pitch;
     }
 
     public SuperLocation(Location location) {
         this.worldName = location.getWorld().getName();
-        this.X = location.getX();
-        this.Y = location.getY();
-        this.Z = location.getZ();
-        this.Yaw = location.getYaw();
-        this.Pitch = location.getPitch();
+        this.x = location.getX();
+        this.y = location.getY();
+        this.z = location.getZ();
+        this.yaw = location.getYaw();
+        this.pitch = location.getPitch();
     }
 
     public int getBlockX() {
-        return NumberConversions.floor(this.X);
+        return NumberConversions.floor(this.x);
     }
 
     public int getBlockY() {
-        return NumberConversions.floor(this.Y);
+        return NumberConversions.floor(this.y);
     }
 
     public int getBlockZ() {
-        return NumberConversions.floor(this.Z);
+        return NumberConversions.floor(this.z);
     }
 
     public Location getLocation() {
-        return new Location(Bukkit.getWorld(this.worldName), this.X, this.Y, this.Z, this.Yaw, this.Pitch);
+        return new Location(Bukkit.getWorld(this.worldName), this.x, this.y, this.z, this.yaw, this.pitch);
     }
 }

@@ -13,7 +13,7 @@ import org.bukkit.event.player.*;
 
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
 
-public class ServerFreezeListener implements Listener {
+public final class ServerFreezeListener implements Listener {
 
     @EventHandler
     public void onPlayerMoveEvent(PlayerMoveEvent event) {

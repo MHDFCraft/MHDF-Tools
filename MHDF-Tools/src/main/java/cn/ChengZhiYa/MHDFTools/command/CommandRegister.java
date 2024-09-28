@@ -48,8 +48,8 @@ import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.*;
 import static cn.ChengZhiYa.MHDFTools.utils.menu.MenuUtil.runAction;
 
 public final class CommandRegister implements Invitable {
-    FileConfiguration config;
     final JavaPlugin plugin = PluginLoader.INSTANCE.getPlugin();
+    FileConfiguration config;
     boolean canRegister;
 
     @Override

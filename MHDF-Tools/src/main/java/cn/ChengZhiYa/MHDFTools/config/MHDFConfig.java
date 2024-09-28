@@ -13,6 +13,7 @@ import static cn.ChengZhiYa.MHDFTools.utils.file.FileCreator.createDir;
 
 public class MHDFConfig {
 
+    private static MHDFConfig instance;
     private final File dataFolder = PluginLoader.INSTANCE.getPlugin().getDataFolder();
     private final File[] filesToSave = {
             new File("config.yml"),
@@ -22,8 +23,6 @@ public class MHDFConfig {
             new File("Menus/HomeMenu.yml"),
             new File("Cache/VanishCache.yml")
     };
-
-    private static MHDFConfig instance;
 
     public static MHDFConfig getInstance() {
         return instance == null ? (instance = new MHDFConfig()) : instance;
