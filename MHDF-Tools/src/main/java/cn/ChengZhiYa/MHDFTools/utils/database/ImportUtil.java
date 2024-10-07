@@ -5,7 +5,6 @@ import cn.ChengZhiYa.MHDFTools.entity.SuperLocation;
 import com.github.Anon8281.universalScheduler.foliaScheduler.FoliaScheduler;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -20,7 +19,6 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,18 +47,19 @@ public final class ImportUtil {
                     config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
                     switch (storageType) {
-                        case "mysql":
+                        case "mysql" -> {
                             config.setJdbcUrl("jdbc:mysql://" + pluginConfig.getString("database.credentials.host") + ":" + pluginConfig.getInt("database.credentials.port") + "/" + pluginConfig.getString("database.credentials.database") + "?autoReconnect=true&serverTimezone=" + TimeZone.getDefault().getID());
                             config.setUsername(pluginConfig.getString("database.credentials.username"));
                             config.setPassword(pluginConfig.getString("database.credentials.password"));
-                            break;
-                        case "sqlite":
+                        }
+                        case "sqlite" -> {
                             config.setJdbcUrl("jdbc:sqlite:" + pluginDataFolder + "/HuskHomesData.db");
                             config.setDriverClassName("org.sqlite.JDBC");
-                            break;
-                        default:
+                        }
+                        default -> {
                             sender.sendMessage(i18n("AdminCommands.import.NotFoundDataType"));
                             return;
+                        }
                     }
                     dataSource = new HikariDataSource(config);
                 }
@@ -71,7 +70,6 @@ public final class ImportUtil {
                          PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + pluginConfig.getString("database.table_names.HOME_DATA"));
                          ResultSet rs = ps.executeQuery()) {
                         while (rs.next()) {
-                            String ownerName = Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("owner_uuid"))).getName();
                             int positionId = rs.getInt("saved_position_id");
                             try (Connection connection2 = dataSource.getConnection();
                                  PreparedStatement ps2 = connection2.prepareStatement("SELECT * FROM " + pluginConfig.getString("database.table_names.SAVED_POSITION_DATA") + " WHERE id = ?")) {

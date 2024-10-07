@@ -72,7 +72,7 @@ public final class GameMode implements TabExecutor {
     private void setGameMode(Player player, int gameMode, String runSender) {
         player.setGameMode(Objects.requireNonNull(getGamemode(gameMode)));
         player.sendMessage(i18n("GameMode.Done", getGamemodeString(gameMode)));
-        opperSenderMessage(i18n("GameMode.OtherOpDone", runSender, player.getName(), getGamemodeString(gameMode)), player.getName());
+        adminSendMessage(i18n("GameMode.OtherOpDone", runSender, player.getName(), getGamemodeString(gameMode)), player.getName());
     }
 
     @Override

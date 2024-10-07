@@ -38,15 +38,17 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.PlayerList;
 
 public final class SpigotUtil {
+
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static final List<String> CommandLinkList = new ArrayList<>();
-    public static volatile BossBar VanishBossBar;
+    private static volatile BossBar vanishBossBar;
     public static YamlConfiguration LangFileData;
     public static YamlConfiguration SoundFileData;
 
@@ -82,31 +84,31 @@ public final class SpigotUtil {
                 }
                 MapUtil.getBooleanHashMap().put("CheckVersionError", false);
             } catch (IOException e) {
-                ColorLogs.colorMessage("&f[MHDF-Tools] &c获取检测更新时出错!请检查网络连接!");
-                MapUtil.getBooleanHashMap().put("IsLast", false);
-                MapUtil.getBooleanHashMap().put("CheckVersionError", true);
+                logUpdateError();
             } finally {
                 conn.disconnect();
             }
         } catch (IOException e) {
-            ColorLogs.colorMessage("&f[MHDF-Tools] &c获取检测更新时出错!请检查网络连接!");
-            MapUtil.getBooleanHashMap().put("IsLast", false);
-            MapUtil.getBooleanHashMap().put("CheckVersionError", true);
+            logUpdateError();
         }
     }
 
-    public static String getIpLocation(String ip) {
-        try {
-            if (ip.startsWith("127.")) {
-                return "local";
-            }
+    private static void logUpdateError() {
+        ColorLogs.colorMessage("&f[MHDF-Tools] &c获取检测更新时出错!请检查网络连接!");
+        MapUtil.getBooleanHashMap().put("IsLast", false);
+        MapUtil.getBooleanHashMap().put("CheckVersionError", true);
+    }
 
-            URL url = new URL("https://opendata.baidu.com/api.php?query=" + ip +
-                    "&co=&resource_id=6006&t=1433920989928&ie=utf8&oe=utf-8&format=json");
+    public static String getIpLocation(String ip) {
+        if (ip.startsWith("127.")) {
+            return "local";
+        }
+
+        try {
+            URL url = new URL("https://opendata.baidu.com/api.php?query=" + ip + "&co=&resource_id=6006&t=1433920989928&ie=utf8&oe=utf-8&format=json");
             URLConnection conn = url.openConnection();
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
-                //     JSONObject json = JSONObject.parseObject(reader.readLine());
                 JsonObject json = JsonParser.parseString(reader.readLine()).getAsJsonObject();
                 JsonArray dataArray = json.getAsJsonArray("data");
                 JsonObject dataJson = dataArray.get(0).getAsJsonObject();
@@ -120,19 +122,14 @@ public final class SpigotUtil {
     }
 
     public static boolean canTPS() {
-        try {
-            Bukkit.class.getMethod("getTPS");
-            return true;
-        } catch (NoSuchMethodException e) {
-            return false;
-        }
+        return PluginLoader.INSTANCE.getServerManager().is1_20orAbove();
     }
 
-    public static String Placeholder(OfflinePlayer Player, String Message) {
+    public static String Placeholder(OfflinePlayer player, String message) {
         if (PluginLoader.INSTANCE.isHasPlaceholderAPI()) {
-            Message = PlaceholderAPI.setPlaceholders(Player, Message);
+            message = PlaceholderAPI.setPlaceholders(player, message);
         }
-        return MessageUtil.colorMessage(Message);
+        return MessageUtil.colorMessage(message);
     }
 
     public static String sha256(String message) {
@@ -160,18 +157,14 @@ public final class SpigotUtil {
         return MapUtil.getStringHashMap().get(player.getName() + "_Login") != null;
     }
 
-    public static void opperSenderMessage(String Message, String PlayerName) {
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player.isOp()) {
-                if (!player.getName().equals(PlayerName)) {
-                    player.sendMessage(MessageUtil.colorMessage(Message));
-                }
-            }
-        }
+    public static void adminSendMessage(String message, String playerName) {
+        Bukkit.getOnlinePlayers().stream()
+                .filter(player -> player.isOp() && !player.getName().equals(playerName))
+                .forEach(player -> player.sendMessage(MessageUtil.colorMessage(message)));
     }
 
-    public static GameMode getGamemode(int GameModeID) {
-        return switch (GameModeID) {
+    public static GameMode getGamemode(int gameModeID) {
+        return switch (gameModeID) {
             case 0 -> GameMode.SURVIVAL;
             case 1 -> GameMode.CREATIVE;
             case 2 -> GameMode.ADVENTURE;
@@ -180,8 +173,8 @@ public final class SpigotUtil {
         };
     }
 
-    public static String getGamemodeString(int GameModeID) {
-        return switch (GameModeID) {
+    public static String getGamemodeString(int gameModeID) {
+        return switch (gameModeID) {
             case 0 -> i18n("GameMode.Survival");
             case 1 -> i18n("GameMode.Creative");
             case 2 -> i18n("GameMode.Adventure");
@@ -192,85 +185,55 @@ public final class SpigotUtil {
 
     public static void registerCommand(Plugin plugin, CommandExecutor commandExecutor, String description, String permission, String commandString) {
         PluginCommand command = getCommand(commandString, plugin);
-        command.setDescription(description);
+        if (command != null) {
+            command.setDescription(description);
 
-        if (permission != null) {
-            command.setPermission(permission);
-            command.setPermissionMessage(i18n("NoPermission"));
-        }
-        getCommandMap().register(plugin.getDescription().getName(), command);
-        command.setExecutor(commandExecutor);
-        if (commandExecutor instanceof TabExecutor) {
-            command.setTabCompleter((TabCompleter) commandExecutor);
+            if (permission != null) {
+                command.setPermission(permission);
+                command.setPermissionMessage(i18n("NoPermission"));
+            }
+            Objects.requireNonNull(getCommandMap()).register(plugin.getDescription().getName(), command);
+            command.setExecutor(commandExecutor);
+            if (commandExecutor instanceof TabExecutor) {
+                command.setTabCompleter((TabCompleter) commandExecutor);
+            }
         }
     }
 
     private static PluginCommand getCommand(String name, Plugin plugin) {
-        PluginCommand command = null;
         try {
             Constructor<PluginCommand> c = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
             c.setAccessible(true);
-            command = c.newInstance(name, plugin);
+            return c.newInstance(name, plugin);
         } catch (Exception ignored) {
+            return null;
         }
-        return command;
     }
 
     private static CommandMap getCommandMap() {
-        CommandMap commandMap = null;
         try {
             if (Bukkit.getPluginManager() instanceof SimplePluginManager) {
                 Field f = SimplePluginManager.class.getDeclaredField("commandMap");
                 f.setAccessible(true);
-                commandMap = (CommandMap) f.get(Bukkit.getPluginManager());
+                return (CommandMap) f.get(Bukkit.getPluginManager());
             }
         } catch (Exception ignored) {
         }
-        return commandMap;
+        return null;
     }
 
-    public static String getTps(int Time) {
+    public static String getTps(int time) {
         double[] tpsList = getTpsList();
-        double TPS1 = BigDecimal.valueOf(tpsList[0]).setScale(1, RoundingMode.HALF_UP).doubleValue();
-        double TPS5 = BigDecimal.valueOf(tpsList[1]).setScale(1, RoundingMode.HALF_UP).doubleValue();
-        double TPS15 = BigDecimal.valueOf(tpsList[2]).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        double tpsValue = BigDecimal.valueOf(tpsList[switch (time) {
+            case 1 -> 0;
+            case 5 -> 1;
+            case 15 -> 2;
+            default -> throw new IllegalArgumentException("未知数: " + time);
+        }]).setScale(1, RoundingMode.HALF_UP).doubleValue();
 
-        if (TPS1 > 20.0D) TPS1 = 20.0D;
-        if (TPS5 > 20.0D) TPS5 = 20.0D;
-        if (TPS15 > 20.0D) TPS15 = 20.0D; //这里做限制 - 20
-
-        switch (Time) {
-            case 1 -> {
-                if (TPS1 > 18.0D) {
-                    return "&a" + TPS1;
-                } else if (TPS1 > 16.0D) {
-                    return "&6" + TPS1;
-                } else {
-                    return "&c" + TPS1;
-                }
-            }
-            case 5 -> {
-                if (TPS5 > 18.0D) {
-                    return "&a" + TPS5;
-                } else if (TPS5 > 16.0D) {
-                    return "&6" + TPS5;
-                } else {
-                    return "&c" + TPS5;
-                }
-            }
-            case 15 -> {
-                if (TPS15 > 18.0D) {
-                    return "&a" + TPS15;
-                } else if (TPS15 > 16.0D) {
-                    return "&6" + TPS15;
-                } else {
-                    return "&c" + TPS15;
-                }
-            }
-            default -> {
-                return "获取失败";
-            }
-        }
+        return tpsValue > 18.0D ? "&a" + tpsValue :
+                tpsValue > 16.0D ? "&6" + tpsValue :
+                        "&c" + tpsValue;
     }
 
     public static double[] getTpsList() {
@@ -282,11 +245,13 @@ public final class SpigotUtil {
     }
 
     public static String i18n(String langKey, String... values) {
-        String message = Objects.requireNonNull(LangFileData.getString(langKey));
-        for (int i = 0; i < values.length; i++) {
-            message = message.replaceAll("%" + (i + 1), values[i]);
+        String message = LangFileData.getString(langKey);
+        if (message != null) {
+            for (int i = 0; i < values.length; i++) {
+                message = message.replace("%" + (i + 1), values[i]);
+            }
         }
-        return MessageUtil.colorMessage(message);
+        return MessageUtil.colorMessage(Objects.requireNonNullElse(message, ""));
     }
 
     public static String getJoinMessage(Player player) {
@@ -298,53 +263,49 @@ public final class SpigotUtil {
     }
 
     public static String getCustomMessage(Player player, String settingType, String messageType) {
-        Map<Integer, String> messageList = new HashMap<>();
+        Map<Integer, String> messageList = new ConcurrentHashMap<>();
         List<Integer> weightList = new ArrayList<>();
 
-        for (PermissionAttachmentInfo permInfo : player.getEffectivePermissions()) {
-            String perm = permInfo.getPermission();
-            if (perm.startsWith("mhdftools." + messageType)) {
-                String group = perm.substring(("mhdftools." + messageType).length());
-                int weight = PluginLoader.INSTANCE.getPlugin().getConfig().getInt(settingType + "." + group + ".Weight");
-                messageList.put(weight, group);
-                weightList.add(weight);
-            }
-        }
+        player.getEffectivePermissions().stream()
+                .map(PermissionAttachmentInfo::getPermission)
+                .filter(perm -> perm.startsWith("mhdftools." + messageType))
+                .forEach(perm -> {
+                    String group = perm.substring(("mhdftools." + messageType).length());
+                    int weight = PluginLoader.INSTANCE.getPlugin().getConfig().getInt(settingType + "." + group + ".Weight");
+                    messageList.put(weight, group);
+                    weightList.add(weight);
+                });
 
         if (!messageList.isEmpty()) {
             weightList.sort(Collections.reverseOrder());
             return Placeholder(player, PluginLoader.INSTANCE.getPlugin().getConfig().getString(settingType + "." + messageList.get(weightList.get(0)) + "." + messageType))
-                    .replaceAll("%PlayerName%", NickUtil.getNickName(player.getName()));
+                    .replace("%PlayerName%", NickUtil.getNickName(player.getName()));
         }
 
         return Placeholder(player, PluginLoader.INSTANCE.getPlugin().getConfig().getString(settingType + ".Default." + messageType))
-                .replaceAll("%PlayerName%", NickUtil.getNickName(player.getName()));
+                .replace("%PlayerName%", NickUtil.getNickName(player.getName()));
     }
 
     public static BossBar getVanishBossBar() {
-        if (VanishBossBar == null) {
+        if (vanishBossBar == null) {
             synchronized (SpigotUtil.class) {
-                if (VanishBossBar == null) {
-                    VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
+                if (vanishBossBar == null) {
+                    vanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
                 }
             }
         }
-        return VanishBossBar;
+        return vanishBossBar;
     }
 
-    public static List<String> getPlayerList(boolean useBungeecordAPI) {
-        List<String> onlinePlayerList;
-
-        if (useBungeecordAPI && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
-            onlinePlayerList = new ArrayList<>(Arrays.asList(PlayerList));
+    public static List<String> getPlayerList(boolean isBungeeCord) {
+        if (isBungeeCord && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
+            return new ArrayList<>(Arrays.asList(PlayerList));
         } else {
-            onlinePlayerList = Bukkit.getOnlinePlayers().stream()
+            return Bukkit.getOnlinePlayers().stream() //麻烦不要老是套if,可以用stream优化可读性
                     .map(Player::getName)
                     .filter(name -> !VanishUtil.getVanishList().contains(name))
                     .collect(Collectors.toList());
         }
-
-        return onlinePlayerList;
     }
 
     public static void sendTitle(Player player, String titleString) {
