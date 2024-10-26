@@ -5,18 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.ChengZhiYa</groupId>
-    <artifactId>MHDF-ToolsPlugins</artifactId>
+    <artifactId>MHDF-Tools</artifactId>
     <version>${env.project.version}</version>
     <packaging>pom</packaging>
 
     <properties>
-        <env.project.version>2.1.1</env.project.version>
+        <env.project.version>3.0.0</env.project.version>
     </properties>
 
-    <name>MHDF-ToolsPlugins</name>
+    <name>MHDF-Tools</name>
 
     <modules>
-        <module>MHDF-Tools</module>
-        <module>MHDF-Tools-BungeecordHook</module>
+
     </modules>
 </project>

@@ -1,3 +1,0 @@
-name: MHDF-Tools-BungeecordHook
-version: '${project.version}'
-main: cn.ChengZhiYa.MHDFToolsBungeeCordHook.Main
