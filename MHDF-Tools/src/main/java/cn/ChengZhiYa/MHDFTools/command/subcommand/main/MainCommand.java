@@ -1,8 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command.subcommand.main;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
-import net.kyori.adventure.bossbar.BossBar;
-import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -109,10 +107,6 @@ public final class MainCommand implements TabExecutor {
 
     private void loadConfigurations() {
         plugin.reloadConfig();
-
-        if (plugin.getConfig().getBoolean("InvseeSettings.Enable")) {
-            VanishBossBar = BossBar.bossBar(Component.text(i18n("Vanish.Bossbar")), 1f, BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
-        }
 
         LangFileData = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "lang.yml"));
         SoundFileData = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "sound.yml"));

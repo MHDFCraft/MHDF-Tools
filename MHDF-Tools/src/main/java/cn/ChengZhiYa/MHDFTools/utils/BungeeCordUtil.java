@@ -26,9 +26,9 @@ import static cn.ChengZhiYa.MHDFTools.utils.database.HomeUtil.getHomeServer;
 
 public final class BungeeCordUtil {
 
+    private static final FileConfiguration config = PluginLoader.INSTANCE.getPlugin().getConfig();
     public static String[] PlayerList;
     public static String ServerName = "无";
-    private static final FileConfiguration config = PluginLoader.INSTANCE.getPlugin().getConfig();
 
     private static Optional<Player> getFirstPlayer() {
         return Optional.ofNullable(Iterables.getFirst(Bukkit.getOnlinePlayers(), null));

@@ -18,7 +18,7 @@ public final class NickUtil {
     public static Boolean ifNickExists(String playerName) {
         String dataType = PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type");
         if (Objects.equals(dataType, "MySQL")) {
-            return dataExists("mhdftools_nick", "PlayerName", playerName);
+            return dataExists("MHDFTools_Nick", "PlayerName", playerName);
         } else {
             File file = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "NickData.yml");
             return YamlConfiguration.loadConfiguration(file).getString(playerName) != null;
@@ -28,7 +28,7 @@ public final class NickUtil {
     public static String getNickName(String playerName) {
         String dataType = PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type");
         if (Objects.equals(dataType, "MySQL")) {
-            Object nickName = getData("mhdftools_nick", "PlayerName", playerName, "NickName");
+            Object nickName = getData("MHDFTools_Nick", "PlayerName", playerName, "NickName");
             return nickName != null ? nickName.toString() : playerName;
         } else {
             File file = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "NickData.yml");
@@ -43,8 +43,8 @@ public final class NickUtil {
             if (Objects.equals(dataType, "MySQL")) {
                 try (Connection connection = dataSource.getConnection()) {
                     String query = ifNickExists(playerName)
-                            ? "UPDATE mhdftools_nick SET NickName = ? WHERE PlayerName = ?"
-                            : "INSERT INTO mhdftools_nick (PlayerName, NickName) VALUES (?, ?)";
+                            ? "UPDATE MHDFTools_Nick SET NickName = ? WHERE PlayerName = ?"
+                            : "INSERT INTO MHDFTools_Nick (PlayerName, NickName) VALUES (?, ?)";
                     try (PreparedStatement ps = connection.prepareStatement(query)) {
                         ps.setString(1, nickName);
                         ps.setString(2, playerName);
@@ -72,7 +72,7 @@ public final class NickUtil {
             if (Objects.equals(dataType, "MySQL")) {
                 if (ifNickExists(playerName)) {
                     try (Connection connection = dataSource.getConnection()) {
-                        try (PreparedStatement ps = connection.prepareStatement("DELETE FROM mhdftools_nick WHERE PlayerName = ?")) {
+                        try (PreparedStatement ps = connection.prepareStatement("DELETE FROM MHDFTools_Nick WHERE PlayerName = ?")) {
                             ps.setString(1, playerName);
                             ps.executeUpdate();
                         }

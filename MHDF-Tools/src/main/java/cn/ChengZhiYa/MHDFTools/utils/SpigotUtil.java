@@ -48,9 +48,9 @@ public final class SpigotUtil {
     public static final Class<?> pluginClassLoader;
     public static final Field pluginClassLoaderPlugin;
     public static final List<String> CommandLinkList = new ArrayList<>();
-    private static volatile BossBar vanishBossBar;
     public static YamlConfiguration LangFileData;
     public static YamlConfiguration SoundFileData;
+    private static volatile BossBar vanishBossBar;
 
     static {
         try {

@@ -28,7 +28,7 @@ public final class EconomyUtil {
 
     public static Boolean ifPlayerFileExists(String PlayerName) {
         if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
-            return dataExists("mhdftools_economy", "PlayerName", PlayerName);
+            return dataExists("MHDFTools_Economy", "PlayerName", PlayerName);
         }
         return getPlayerFile(PlayerName).exists();
     }
@@ -39,7 +39,7 @@ public final class EconomyUtil {
                 new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTaskAsynchronously(() -> {
                     try {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("INSERT INTO mhdftools_economy (PlayerName, Money) VALUES (?,?)");
+                        PreparedStatement ps = connection.prepareStatement("INSERT INTO MHDFTools_Economy (PlayerName, Money) VALUES (?,?)");
                         ps.setString(1, PlayerName);
                         ps.setDouble(2, money);
                         ps.executeUpdate();
@@ -69,7 +69,7 @@ public final class EconomyUtil {
         if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
             if (getMoneyHashMap().get(PlayerName) == null) {
                 try {
-                    BigDecimal bg = getBigDecimal((Double) getData("mhdftools_economy", "PlayerName", PlayerName, "Money"));
+                    BigDecimal bg = getBigDecimal((Double) getData("MHDFTools_Economy", "PlayerName", PlayerName, "Money"));
                     getMoneyHashMap().put(PlayerName, bg);
                     return bg.doubleValue();
                 } catch (Exception e) {
@@ -90,7 +90,7 @@ public final class EconomyUtil {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getBigDecimal(Money));
-                    set("mhdftools_economy", "PlayerName", PlayerName, "Money", Money);
+                    set("MHDFTools_Economy", "PlayerName", PlayerName, "Money", Money);
                 }
             } else {
                 YamlConfiguration Data = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
@@ -108,7 +108,7 @@ public final class EconomyUtil {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).add(getBigDecimal(Money)));
-                    add("mhdftools_economy", "PlayerName", PlayerName, "Money", Money);
+                    add("MHDFTools_Economy", "PlayerName", PlayerName, "Money", Money);
                 }
             } else {
                 YamlConfiguration Data = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));
@@ -126,7 +126,7 @@ public final class EconomyUtil {
             if (Objects.equals(PluginLoader.INSTANCE.getPlugin().getConfig().getString("DataSettings.Type"), "MySQL")) {
                 if (ifPlayerFileExists(PlayerName)) {
                     getMoneyHashMap().put(PlayerName, getMoneyHashMap().get(PlayerName).subtract(getBigDecimal(Money)));
-                    take("mhdftools_economy", "PlayerName", PlayerName, "Money", Money);
+                    take("MHDFTools_Economy", "PlayerName", PlayerName, "Money", Money);
                 }
             } else {
                 YamlConfiguration Data = YamlConfiguration.loadConfiguration(getPlayerFile(PlayerName));

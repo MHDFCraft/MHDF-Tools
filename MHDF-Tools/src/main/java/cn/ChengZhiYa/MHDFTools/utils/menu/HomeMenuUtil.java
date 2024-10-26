@@ -41,7 +41,7 @@ public final class HomeMenuUtil {
         List<String> playerHomeList = new ArrayList<>();
         try {
             Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_home WHERE Owner = ? LIMIT " + size + " OFFSET ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Home WHERE Owner = ? LIMIT " + size + " OFFSET ?");
             ps.setString(1, playerName);
             ps.setInt(2, offset);
             ResultSet rs = ps.executeQuery();

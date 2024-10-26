@@ -18,10 +18,7 @@ public class MHDFConfig {
     private final File[] filesToSave = {
             new File("config.yml"),
             new File("lang.yml"),
-            new File("sound.yml"),
-            new File("Menus/CustomMenu.yml"),
-            new File("Menus/HomeMenu.yml"),
-            new File("Cache/VanishCache.yml")
+            new File("sound.yml")
     };
 
     public static MHDFConfig getInstance() {

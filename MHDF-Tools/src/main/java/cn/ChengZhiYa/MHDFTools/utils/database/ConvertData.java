@@ -67,7 +67,7 @@ public final class ConvertData {
                     if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
                         if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
                             Connection connection = dataSource.getConnection();
-                            PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_economy");
+                            PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Economy");
                             ResultSet rs = ps.executeQuery();
                             while (rs.next()) {
                                 File DataFile = EconomyUtil.getPlayerFile(rs.getString("PlayerName"));
@@ -90,7 +90,7 @@ public final class ConvertData {
                 {
                     if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("SELECT * FROM mhdftools_home");
+                        PreparedStatement ps = connection.prepareStatement("SELECT * FROM MHDFTools_Home");
                         ResultSet rs = ps.executeQuery();
                         while (rs.next()) {
                             String HomeName = rs.getString("Home");
@@ -147,7 +147,7 @@ public final class ConvertData {
                 {
                     if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("EconomySettings.Enable")) {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools_economy` (" +
+                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Economy` (" +
                                 "`PlayerName` VARCHAR(50) NOT NULL DEFAULT ''," +
                                 "`Money` DECIMAL(20,4) NOT NULL DEFAULT 0," +
                                 "PRIMARY KEY (`PlayerName`)) " +
@@ -160,7 +160,7 @@ public final class ConvertData {
                 {
                     if (PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("HomeSystemSettings.Enable")) {
                         Connection connection = dataSource.getConnection();
-                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhdftools_home` (" +
+                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `MHDFTools_Home` (" +
                                 "`ID` BIGINT NOT NULL AUTO_INCREMENT," +
                                 "`Home` VARCHAR(100) NOT NULL DEFAULT ''," +
                                 "`Owner` VARCHAR(50) NOT NULL DEFAULT ''," +
@@ -223,7 +223,7 @@ public final class ConvertData {
                             YamlConfiguration Data = YamlConfiguration.loadConfiguration(EconomyUtil.getPlayerFile(PlayerName));
                             if (!ifPlayerFileExists(PlayerName)) {
                                 Connection connection = dataSource.getConnection();
-                                PreparedStatement ps = connection.prepareStatement("INSERT INTO mhdftools_economy (PlayerName, Money) VALUES (?,?)");
+                                PreparedStatement ps = connection.prepareStatement("INSERT INTO MHDFTools_Economy (PlayerName, Money) VALUES (?,?)");
                                 ps.setString(1, PlayerName);
                                 ps.setDouble(2, Data.getDouble("money"));
                                 ps.executeUpdate();
