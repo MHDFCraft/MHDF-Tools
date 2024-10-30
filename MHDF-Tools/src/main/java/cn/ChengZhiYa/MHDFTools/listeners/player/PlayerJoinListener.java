@@ -47,10 +47,10 @@ public final class PlayerJoinListener implements Listener {
                 if (player.hasPermission("MHDFTools.Op")) {
                     if (!MapUtil.getBooleanHashMap().get("CheckVersionError")) {
                         if (!MapUtil.getBooleanHashMap().get("IsLast")) {
-                            player.sendMessage(MessageUtil.colorMessage("&cCheng-Tools不是最新版! 下载链接:https://github.com/ChengZhiNB/Cheng-Tools-Reloaded/releases/"));
+                            player.sendMessage(MessageUtil.colorMessage("&cMHDF-Tools是最新版! 下载链接:https://github.com/MHDFCraft/MHDF-Tools/releases/"));
                         }
                     } else {
-                        player.sendMessage(MessageUtil.colorMessage("&cCheng-Tools无法检查更新!"));
+                        player.sendMessage(MessageUtil.colorMessage("&cMHDF-Tools无法检查更新!"));
                     }
                 }
             } catch (Exception ignored) {
