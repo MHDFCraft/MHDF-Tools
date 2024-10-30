@@ -7,7 +7,6 @@ import cn.ChengZhiYa.MHDFTools.command.subcommand.main.flight.Fly;
 import cn.ChengZhiYa.MHDFTools.command.subcommand.main.flight.FlyTime;
 import cn.ChengZhiYa.MHDFTools.command.subcommand.main.gamemode.GameMode;
 import cn.ChengZhiYa.MHDFTools.command.subcommand.main.server.List;
-import cn.ChengZhiYa.MHDFTools.command.subcommand.main.server.Stop;
 import cn.ChengZhiYa.MHDFTools.command.subcommand.main.teleport.Tpa;
 import cn.ChengZhiYa.MHDFTools.command.subcommand.main.teleport.TpaHere;
 import cn.ChengZhiYa.MHDFTools.command.subcommand.main.warp.DelWarp;
@@ -60,163 +59,158 @@ public final class CommandRegister implements Invitable {
         for (String configKey : config.getKeys(false)) {
             boolean isEnabled = config.getBoolean(configKey + ".Enable", true);
             switch (configKey) {
-                case "HomeSystemSettings":
+                case "HomeSystemSettings" -> {
                     if (isEnabled) {
                         registerHomeCommands();
                     }
-                    break;
-                case "SuperListSettings":
+                }
+                case "SuperListSettings" -> {
                     if (isEnabled) {
                         registerSuperListCommands();
                     }
-                    break;
-                case "LoginSystemSettings":
+                }
+                case "LoginSystemSettings" -> {
                     if (isEnabled) {
                         registerLoginCommands();
                     }
-                    break;
-                case "SpawnSettings":
+                }
+                case "SpawnSettings" -> {
                     if (isEnabled) {
                         registerSpawnCommands();
                     }
-                    break;
-                case "SuperStopSettings":
-                    if (isEnabled) {
-                        registerStopCommand();
-                    }
-                    break;
-                case "FlySettings":
+                }
+                case "FlySettings" -> {
                     if (isEnabled) {
                         registerFlyCommands();
                     }
-                    break;
-                case "BackSettings":
+                }
+                case "BackSettings" -> {
                     if (isEnabled) {
                         canRegister = true;
                         registerBackCommands();
                     }
-                    break;
-                case "FreezeSettings":
+                }
+                case "FreezeSettings" -> {
                     if (isEnabled) {
                         registerFreezeCommands();
                     }
-                    break;
-                case "TpBackSettings":
+                }
+                case "TpBackSettings" -> {
                     if (isEnabled) {
                         canRegister = true;
                         registerTpBackCommands();
                     }
-                    break;
-                case "VanishSettings":
+                }
+                case "VanishSettings" -> {
                     if (isEnabled) {
                         registerVanishCommands();
                     }
-                    break;
-                case "IpSettings":
+                }
+                case "IpSettings" -> {
                     if (isEnabled) {
                         registerIPCommand();
                     }
-                    break;
-                case "EasyGamemodeSettings":
+                }
+                case "EasyGamemodeSettings" -> {
                     if (isEnabled) {
                         registerGamemodeCommands();
                     }
-                    break;
-                case "TpaSettings":
+                }
+                case "TpaSettings" -> {
                     if (isEnabled) {
                         registerTpaCommand();
                     }
-                    break;
-                case "InvseeSettings":
+                }
+                case "InvseeSettings" -> {
                     if (isEnabled) {
                         registerInvseeCommand();
                     }
-                    break;
-                case "HatSettings":
+                }
+                case "HatSettings" -> {
                     if (isEnabled) {
                         registerHatCommand();
                     }
-                    break;
-                case "TpaHereSettings":
+                }
+                case "TpaHereSettings" -> {
                     if (isEnabled) {
                         registerTpaHereCommand();
                     }
-                    break;
-                case "FastSunCommandSettings":
+                }
+                case "FastSunCommandSettings" -> {
                     if (isEnabled) {
                         registerFastSunCommands();
                     }
-                    break;
-                case "FastSetTimeCommandSettings":
+                }
+                case "FastSetTimeCommandSettings" -> {
                     if (isEnabled) {
                         registerFastTimeCommands();
                     }
-                    break;
-                case "EconomySettings":
+                }
+                case "EconomySettings" -> {
                     if (isEnabled && PluginLoader.INSTANCE.isHasVault()) {
                         registerEconomy();
                     }
-                    break;
-                case "CommandLinkSettings":
+                }
+                case "CommandLinkSettings" -> {
                     if (isEnabled) {
                         registerLinkCommands();
                     }
-                    break;
-                case "TrashSettings":
+                }
+                case "TrashSettings" -> {
                     if (isEnabled) {
                         registerTrashCommands();
                     }
-                    break;
-                case "RotateSettings":
+                }
+                case "RotateSettings" -> {
                     if (isEnabled) {
                         registerRotateCommands();
                     }
-                    break;
-                case "BedSettings":
+                }
+                case "BedSettings" -> {
                     if (isEnabled) {
                         registerBedCommands();
                     }
-                    break;
-                case "NickSettings":
+                }
+                case "NickSettings" -> {
                     if (isEnabled) {
                         registerNickCommands();
                     }
-                    break;
-                case "WarpSettings":
+                }
+                case "WarpSettings" -> {
                     if (isEnabled) {
                         registerWarpCommands();
                     }
-                    break;
-                case "FeedSettings":
+                }
+                case "FeedSettings" -> {
                     if (isEnabled) {
                         registerFeedCommands();
                     }
-                    break;
-                case "HealSettings":
+                }
+                case "HealSettings" -> {
                     if (isEnabled) {
                         registerHealCommands();
                     }
-                    break;
-                case "RepairSettings":
+                }
+                case "RepairSettings" -> {
                     if (isEnabled) {
                         registerRepairCommands();
                     }
-                    break;
-                case "SuicideSettings":
+                }
+                case "SuicideSettings" -> {
                     if (isEnabled) {
                         registerSuicideCommands();
                     }
-                    break;
-                case "SudoSettings":
+                }
+                case "SudoSettings" -> {
                     if (isEnabled) {
                         registerSudoCommands();
                     }
-                    break;
-                case "SaySettings":
+                }
+                case "SaySettings" -> {
                     if (isEnabled) {
                         registerSayCommands();
                     }
-                    break;
+                }
             }
         }
         if (canRegister) {
@@ -308,9 +302,6 @@ public final class CommandRegister implements Invitable {
 
     }
 
-    private void registerStopCommand() {
-        registerCommand(plugin, new Stop(), "关闭服务器", "MHDFTools.Command.Stop", "stop");
-    }
 
     private void registerFlyCommands() {
         registerCommand(plugin, new Fly(), "飞行系统", "MHDFTools.Command.Fly", "fly");

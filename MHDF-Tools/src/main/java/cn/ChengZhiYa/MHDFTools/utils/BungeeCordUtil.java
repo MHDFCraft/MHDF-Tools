@@ -101,11 +101,13 @@ public final class BungeeCordUtil {
             getFirstPlayer().ifPresent(player -> sendPluginMessage(player, "TpPlayerHome", playerName, homeServer, homeName));
         } else {
             SuperLocation homeLocation = getHomeLocation(playerName, homeName);
-            new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(homeLocation.getLocation(), () -> {
-                Player player = Objects.requireNonNull(Bukkit.getPlayer(playerName));
-                player.teleport(homeLocation.getLocation());
-                playSound(player, sound("TeleportSound"));
-            });
+            if (homeLocation != null) {
+                new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(homeLocation.getLocation(), () -> {
+                    Player player = Objects.requireNonNull(Bukkit.getPlayer(playerName));
+                    player.teleport(homeLocation.getLocation());
+                    playSound(player, sound("TeleportSound"));
+                });
+            }
         }
     }
 
