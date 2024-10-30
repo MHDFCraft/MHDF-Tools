@@ -24,7 +24,7 @@ public final class Tpa implements TabExecutor {
             if (args.length >= 1) {
                 Player player = (Player) sender;
                 switch (args[0]) {
-                    case "accept": {
+                    case "accept" -> {
                         if (args.length == 2) {
                             TpaData tpaData = TpaUtil.getTpaHashMap().get(args[1]);
                             if (tpaData != null && tpaData.getTargetPlayerName().equals(player.getName())) {
@@ -49,9 +49,8 @@ public final class Tpa implements TabExecutor {
                             }
                             return false;
                         }
-                        break;
                     }
-                    case "defuse": {
+                    case "defuse" -> {
                         if (args.length == 2) {
                             TpaData tpaData = TpaUtil.getTpaHashMap().get(args[1]);
                             if (tpaData != null && tpaData.getTargetPlayerName().equals(player.getName())) {
@@ -75,9 +74,8 @@ public final class Tpa implements TabExecutor {
                             }
                             return false;
                         }
-                        break;
                     }
-                    default: {
+                    default -> {
                         if (BungeeCordUtil.ifPlayerOnline(args[0])) {
                             if (!args[0].equals(sender.getName())) {
                                 if (TpaUtil.getTpaHashMap().get(player.getName()) != null && TpaUtil.getTpaHashMap().get(player.getName()).getTpaOutTime() > 0) {

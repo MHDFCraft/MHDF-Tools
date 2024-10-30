@@ -39,7 +39,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 import static cn.ChengZhiYa.MHDFTools.utils.BungeeCordUtil.PlayerList;
 
@@ -158,9 +157,11 @@ public final class SpigotUtil {
     }
 
     public static void adminSendMessage(String message, String playerName) {
-        Bukkit.getOnlinePlayers().stream()
-                .filter(player -> player.isOp() && !player.getName().equals(playerName))
-                .forEach(player -> player.sendMessage(MessageUtil.colorMessage(message)));
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (player.isOp() && !player.getName().equals(playerName)) {
+                player.sendMessage(MessageUtil.colorMessage(message));
+            }
+        }
     }
 
     public static GameMode getGamemode(int gameModeID) {
@@ -301,10 +302,15 @@ public final class SpigotUtil {
         if (isBungeeCord && PluginLoader.INSTANCE.getPlugin().getConfig().getBoolean("BungeecordSettings.Enable")) {
             return new ArrayList<>(Arrays.asList(PlayerList));
         } else {
-            return Bukkit.getOnlinePlayers().stream() //麻烦不要老是套if,可以用stream优化可读性
-                    .map(Player::getName)
-                    .filter(name -> !VanishUtil.getVanishList().contains(name))
-                    .collect(Collectors.toList());
+            //麻烦不要老是套if,可以用stream优化可读性
+            List<String> list = new ArrayList<>();
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                String name = player.getName();
+                if (!VanishUtil.getVanishList().contains(name)) {
+                    list.add(name);
+                }
+            }
+            return list;
         }
     }
 

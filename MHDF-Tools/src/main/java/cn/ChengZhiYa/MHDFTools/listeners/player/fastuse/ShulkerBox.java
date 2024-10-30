@@ -61,12 +61,18 @@ public final class ShulkerBox implements Listener {
 
     private void updateShulker(Player player, Inventory inventory) {
         ItemStack item = player.getInventory().getItemInMainHand();
-        ItemMeta meta = item.getItemMeta();
-        org.bukkit.block.ShulkerBox box = (org.bukkit.block.ShulkerBox) ((BlockStateMeta) meta).getBlockState();
-        box.getInventory().setContents(inventory.getContents());
-        BlockStateMeta blockStateMeta = (BlockStateMeta) item.getItemMeta();
-        blockStateMeta.setBlockState(box);
-        item.setItemMeta(blockStateMeta);
-        player.getInventory().setItemInMainHand(item);
+
+        if (item.getItemMeta() instanceof BlockStateMeta) {
+            BlockStateMeta blockStateMeta = (BlockStateMeta) item.getItemMeta();
+            org.bukkit.block.ShulkerBox box = (org.bukkit.block.ShulkerBox) blockStateMeta.getBlockState();
+
+            box.getInventory().setContents(inventory.getContents());
+
+            blockStateMeta.setBlockState(box);
+            item.setItemMeta(blockStateMeta);
+            player.getInventory().setItemInMainHand(item);
+        } else {
+            player.sendMessage("Invalid");
+        }
     }
 }
