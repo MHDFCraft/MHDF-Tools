@@ -1,6 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.command;
 
 import cn.ChengZhiYa.MHDFTools.PluginLoader;
+import cn.ChengZhiYa.MHDFTools.command.subcommand.main.MainCommand;
 import cn.ChengZhiYa.MHDFTools.command.subcommand.main.auth.Login;
 import cn.ChengZhiYa.MHDFTools.command.subcommand.main.auth.Register;
 import cn.ChengZhiYa.MHDFTools.command.subcommand.main.flight.Fly;
@@ -55,7 +56,7 @@ public final class CommandRegister implements Invitable {
     public void init() {
         canRegister = false;
         config = PluginLoader.INSTANCE.getPlugin().getConfig();
-        registerFreezeCommands();
+        registerCommand(plugin, new MainCommand(), "插件主命令", "MHDFTools.Command.MHDFTools", "mhdftools");
         for (String configKey : config.getKeys(false)) {
             boolean isEnabled = config.getBoolean(configKey + ".Enable", true);
             switch (configKey) {
