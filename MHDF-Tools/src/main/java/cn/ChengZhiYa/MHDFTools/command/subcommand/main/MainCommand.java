@@ -43,33 +43,19 @@ public final class MainCommand implements TabExecutor {
 
         if (args.length >= 2 && "convert".equals(args[0])) {
             switch (args[1]) {
-                case "YAML":
-                    handleYAMLConversion(sender);
-                    break;
-                case "MySQL":
-                    handleMySQLConversion(sender, args);
-                    break;
-                default:
-                    sender.sendMessage(i18n("AdminCommands.convert.NotFoundType"));
-                    break;
+                case "YAML" -> handleYAMLConversion(sender);
+                case "MySQL" -> handleMySQLConversion(sender, args);
+                default -> sender.sendMessage(i18n("AdminCommands.convert.NotFoundType"));
             }
             return true;
         }
 
         if (args.length == 2 && "import".equals(args[0])) {
             switch (args[1]) {
-                case "HuskHomes":
-                    importHuskHomesData(sender);
-                    break;
-                case "CMI":
-                    importCMIData(sender);
-                    break;
-                case "Essentials":
-                    importEssentialsData(sender);
-                    break;
-                default:
-                    sender.sendMessage(i18n("AdminCommands.import.NotFoundPlugin"));
-                    break;
+                case "HuskHomes" -> importHuskHomesData(sender);
+                case "CMI" -> importCMIData(sender);
+                case "Essentials" -> importEssentialsData(sender);
+                default -> sender.sendMessage(i18n("AdminCommands.import.NotFoundPlugin"));
             }
             return true;
         }
