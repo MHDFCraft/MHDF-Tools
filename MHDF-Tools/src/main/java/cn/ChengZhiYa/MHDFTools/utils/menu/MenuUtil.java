@@ -291,8 +291,13 @@ public final class MenuUtil {
                 }
                 break;
             }
-            case "[consoleMessage]": {
-                new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(() -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
+            case "[console]": {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(() -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(player, action[1])));
+                } else {
+                    new FoliaScheduler(PluginLoader.INSTANCE.getPlugin()).runTask(() -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Placeholder(null, action[1])));
+                }
                 break;
             }
             case "[playsound]": {
