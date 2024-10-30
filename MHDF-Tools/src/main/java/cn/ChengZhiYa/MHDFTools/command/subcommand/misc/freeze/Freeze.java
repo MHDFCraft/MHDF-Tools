@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.i18n;
-import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.ifLogin;
 
 public class Freeze implements CommandExecutor {
 
@@ -37,10 +36,10 @@ public class Freeze implements CommandExecutor {
             return true;
         }
 
-        if (!ifLogin(target)) {
-            sender.sendMessage(i18n("Login.Logging", target.getName()));
-            return true;
-        }
+//        if (!ifLogin(target)) {
+//            sender.sendMessage(i18n("Login.Logging", target.getName()));
+//            return true;
+//        }
 
         if (target.equals(senderPlayer)) {
             sender.sendMessage(i18n("dontSender"));
