@@ -89,7 +89,9 @@ public class DependencyManagerImpl implements DependencyManager {
             }
 
             try {
+                LogUtil.log("正在加载依赖 " + dependency.getFileName(null));
                 loadDependency(dependency);
+                LogUtil.log("依赖 " + dependency.getFileName(null) + " 加载完成!");
             } catch (Throwable e) {
                 throw new RuntimeException("无法下载依赖 " + dependency, e);
             } finally {
@@ -147,10 +149,7 @@ public class DependencyManagerImpl implements DependencyManager {
         if (Files.exists(remappedFile)) {
             return remappedFile;
         }
-
-        LogUtil.log("正在加载依赖 " + dependency.getFileName(null));
         relocationHandler.remap(normalFile, remappedFile, rules);
-        LogUtil.log("依赖 " + dependency.getFileName(null) + " 加载完成!");
         return remappedFile;
     }
 

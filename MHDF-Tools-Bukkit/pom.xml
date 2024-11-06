@@ -10,12 +10,14 @@
     </parent>
 
     <artifactId>MHDF-Tools-Bukkit</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
+        <finalName>[梦之工具]${project.artifactId}-${project.version}</finalName>
         <defaultGoal>clean package</defaultGoal>
         <plugins>
             <plugin>
@@ -50,7 +52,13 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>[梦之工具]${project.artifactId}-${project.version}</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
     <dependencies>
