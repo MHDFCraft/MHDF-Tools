@@ -1,9 +1,9 @@
 package cn.ChengZhiYa.MHDFTools.util.download.libraries;
 
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
 import cn.ChengZhiYa.MHDFTools.util.download.exception.FilesUtil;
-import cn.ChengZhiYa.MHDFTools.Main;
-import cn.ChengZhiYa.MHDFTools.util.download.libraries.classpath.ClassPathAppender;
 import cn.ChengZhiYa.MHDFTools.util.download.libraries.classloader.DependencyClassLoader;
+import cn.ChengZhiYa.MHDFTools.util.download.libraries.classpath.ClassPathAppender;
 import cn.ChengZhiYa.MHDFTools.util.download.libraries.relocation.Relocation;
 import cn.ChengZhiYa.MHDFTools.util.download.libraries.relocation.RelocationHandler;
 import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
@@ -36,7 +36,7 @@ public class DependencyManagerImpl implements DependencyManager {
     }
 
     private static Path setupCacheDirectory() {
-        File file = new File(Main.instance.getDataFolder(), "libs");
+        File file = new File(PluginLoader.INSTANCE.getPlugin().getDataFolder(), "libs");
         try {
             createFolder(file);
         } catch (FilesUtil e) {
