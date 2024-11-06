@@ -9,7 +9,12 @@ import java.util.List;
 
 public final class MHDFTools extends AbstractCommand {
     public MHDFTools() {
-        super("梦之工具主命令", "mhdftools.command.mhdftools", false);
+        super(
+                "梦之工具主命令",
+                "mhdftools.command.mhdftools",
+                false,
+                "mhdftools", "mt"
+        );
     }
 
     @Override
