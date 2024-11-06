@@ -5,18 +5,33 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.ChengZhiYa</groupId>
-    <artifactId>MHDF-ToolsPlugins</artifactId>
+    <artifactId>MHDF-Tools</artifactId>
     <version>${env.project.version}</version>
     <packaging>pom</packaging>
 
     <properties>
-        <env.project.version>2.1.1</env.project.version>
+        <env.java.version>17</env.java.version>
+        <env.project.version>3.0.0</env.project.version>
     </properties>
 
-    <name>MHDF-ToolsPlugins</name>
+    <name>MHDF-Tools</name>
 
     <modules>
-        <module>MHDF-Tools</module>
-        <module>MHDF-Tools-BungeecordHook</module>
+        <module>MHDF-Tools-Bukkit</module>
     </modules>
+
+    <repositories>
+        <repository>
+            <id>alimaven</id>
+            <url>https://central.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
+    </repositories>
 </project>
