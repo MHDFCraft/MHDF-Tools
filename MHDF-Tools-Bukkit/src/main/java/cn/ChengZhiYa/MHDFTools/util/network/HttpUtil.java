@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.util.network;
 
-import cn.ChengZhiYa.MHDFTools.exception.DownloadException;
+import cn.ChengZhiYa.MHDFTools.util.download.exception.DownloadUtil;
 import com.google.common.io.ByteStreams;
 
 import java.io.IOException;
@@ -20,25 +20,25 @@ public final class HttpUtil {
         return connection;
     }
 
-    public static void downloadFile(URLConnection connection, Path savePath) throws DownloadException {
+    public static void downloadFile(URLConnection connection, Path savePath) throws DownloadUtil {
         try {
             Files.write(savePath, downloadFile(connection));
         } catch (IOException e) {
-            throw new DownloadException(e);
+            throw new DownloadUtil(e);
         }
     }
 
-    private static byte[] downloadFile(URLConnection connection) throws DownloadException {
+    private static byte[] downloadFile(URLConnection connection) throws DownloadUtil {
         try {
             try (InputStream in = connection.getInputStream()) {
                 byte[] bytes = ByteStreams.toByteArray(in);
                 if (bytes.length == 0) {
-                    throw new DownloadException("无可下载文件");
+                    throw new DownloadUtil("无可下载文件");
                 }
                 return bytes;
             }
         } catch (Exception e) {
-            throw new DownloadException(e);
+            throw new DownloadUtil(e);
         }
     }
 }

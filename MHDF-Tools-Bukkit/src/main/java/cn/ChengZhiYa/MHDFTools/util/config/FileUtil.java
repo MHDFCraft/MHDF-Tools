@@ -1,8 +1,8 @@
 package cn.ChengZhiYa.MHDFTools.util.config;
 
-import cn.ChengZhiYa.MHDFTools.exception.FileException;
-import cn.ChengZhiYa.MHDFTools.exception.ResourceException;
-import cn.ChengZhiYa.MHDFTools.main;
+import cn.ChengZhiYa.MHDFTools.PluginLoader;
+import cn.ChengZhiYa.MHDFTools.util.download.exception.FilesUtil;
+import cn.ChengZhiYa.MHDFTools.util.download.exception.ResourceUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -13,31 +13,31 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public final class FileUtil {
-    private static final File pluginDataFolder = main.instance.getDataFolder();
+    private static final File pluginDataFolder = PluginLoader.INSTANCE.getPlugin().getDataFolder();
 
-    public static void createFolder(File file) throws FileException {
+    public static void createFolder(File file) throws FilesUtil {
         if (file.exists()) {
             return;
         }
         if (!file.mkdirs()) {
-            throw new FileException("无法创建文件夹");
+            throw new FilesUtil("无法创建文件夹");
         }
     }
 
-    public static void createFile(File file) throws FileException {
+    public static void createFile(File file) throws FilesUtil {
         if (file.exists()) {
             return;
         }
         try {
             if (!file.createNewFile()) {
-                throw new FileException("无法创建文件夹");
+                throw new FilesUtil("无法创建文件夹");
             }
         } catch (IOException e) {
-            throw new FileException(e);
+            throw new FilesUtil(e);
         }
     }
 
-    public static void saveResource(@NotNull String filePath, @NotNull String resourcePath, boolean replace) throws ResourceException, FileException {
+    public static void saveResource(@NotNull String filePath, @NotNull String resourcePath, boolean replace) throws ResourceUtil, FilesUtil {
         if (!pluginDataFolder.exists()) {
             createFolder(pluginDataFolder);
         }
@@ -49,7 +49,7 @@ public final class FileUtil {
 
         URL url = FileUtil.class.getClassLoader().getResource(resourcePath);
         if (url == null) {
-            throw new ResourceException("找不到资源: " + resourcePath);
+            throw new ResourceUtil("找不到资源: " + resourcePath);
         }
 
         URLConnection connection;
@@ -63,7 +63,7 @@ public final class FileUtil {
         try (InputStream in = url.openStream()) {
             try (FileOutputStream out = new FileOutputStream(file)) {
                 if (in == null) {
-                    throw new ResourceException("读取资源 " + resourcePath + " 的时候发生了错误");
+                    throw new ResourceUtil("读取资源 " + resourcePath + " 的时候发生了错误");
                 }
 
                 byte[] buf = new byte[1024];
@@ -73,7 +73,7 @@ public final class FileUtil {
                 }
             }
         } catch (IOException e) {
-            throw new ResourceException("无法保存资源", e);
+            throw new ResourceUtil("无法保存资源", e);
         }
     }
 }
