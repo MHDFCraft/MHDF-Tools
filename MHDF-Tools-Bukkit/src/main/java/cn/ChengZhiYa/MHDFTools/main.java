@@ -40,11 +40,12 @@ public final class main extends JavaPlugin {
         instance = this;
 
         initDependency();
+        initConfig();
     }
 
     @Override
     public void onEnable() {
-        saveDe
+
     }
 
     @Override
