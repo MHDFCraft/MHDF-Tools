@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public final class MHDFTools extends Command {
-    public MHDFTools(String description, String permission, boolean onlyPlayer) {
+    public MHDFTools() {
         super(description, "MHDFTools.", false);
     }
 
