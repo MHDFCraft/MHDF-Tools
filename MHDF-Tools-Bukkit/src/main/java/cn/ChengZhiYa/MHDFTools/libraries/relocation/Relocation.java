@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.libraries.dependencies.relocation;
+package cn.ChengZhiYa.MHDFTools.libraries.relocation;
 
 import java.util.Objects;
 

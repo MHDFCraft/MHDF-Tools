@@ -1,11 +1,11 @@
-package cn.ChengZhiYa.MHDFTools.libraries.dependencies;
+package cn.ChengZhiYa.MHDFTools.libraries;
 
 import cn.ChengZhiYa.MHDFTools.exception.FileException;
 import cn.ChengZhiYa.MHDFTools.Main;
 import cn.ChengZhiYa.MHDFTools.libraries.classpath.ClassPathAppender;
-import cn.ChengZhiYa.MHDFTools.libraries.dependencies.classloader.DependencyClassLoader;
-import cn.ChengZhiYa.MHDFTools.libraries.dependencies.relocation.Relocation;
-import cn.ChengZhiYa.MHDFTools.libraries.dependencies.relocation.RelocationHandler;
+import cn.ChengZhiYa.MHDFTools.libraries.classloader.DependencyClassLoader;
+import cn.ChengZhiYa.MHDFTools.libraries.relocation.Relocation;
+import cn.ChengZhiYa.MHDFTools.libraries.relocation.RelocationHandler;
 import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
 import com.google.common.collect.ImmutableSet;
 

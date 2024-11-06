@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package cn.ChengZhiYa.MHDFTools.libraries.dependencies;
+package cn.ChengZhiYa.MHDFTools.libraries;
 
 import cn.ChengZhiYa.MHDFTools.exception.DownloadException;
 import lombok.Getter;

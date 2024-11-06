@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.libraries.dependencies.classloader;
+package cn.ChengZhiYa.MHDFTools.libraries.classloader;
 
 import java.net.URL;
 import java.net.URLClassLoader;
