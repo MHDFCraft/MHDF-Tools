@@ -3,6 +3,8 @@ package cn.ChengZhiYa.MHDFTools.manager;
 import cn.ChengZhiYa.MHDFTools.manager.init.Starter;
 import cn.ChengZhiYa.MHDFTools.manager.init.load.DependencyInit;
 import cn.ChengZhiYa.MHDFTools.manager.init.load.PacketEventInit;
+import cn.ChengZhiYa.MHDFTools.manager.init.start.CommandInit;
+import cn.ChengZhiYa.MHDFTools.manager.init.start.ConfigInit;
 import cn.ChengZhiYa.MHDFTools.manager.init.start.PluginHooks;
 import cn.ChengZhiYa.MHDFTools.manager.init.stop.PacketEventUnload;
 import com.google.common.collect.ClassToInstanceMap;
@@ -24,6 +26,12 @@ public class InitManager {
                 .build();
 
         initializersOnStart = new ImmutableClassToInstanceMap.Builder<Starter>()
+                //Config Init
+                .put(ConfigInit.class, new ConfigInit())
+
+                //Command Init
+                .put(CommandInit.class, new CommandInit())
+
                 //Plugin Hook
                 .put(PluginHooks.class, new PluginHooks())
 
