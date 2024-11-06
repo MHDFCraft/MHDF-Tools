@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class MHDFTools extends Command {
     public MHDFTools(String description, String permission, boolean onlyPlayer) {
-        super(description, permission, onlyPlayer);
+        super(description, "MHDFTools.", false);
     }
 
     @Override
