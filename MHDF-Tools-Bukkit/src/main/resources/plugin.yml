@@ -3,5 +3,16 @@ version: '${project.version}'
 main: cn.ChengZhiYa.MHDFTools.Main
 api-version: '1.20'
 folia-supported: true
-authoendrs: [ ChengZhiYa ]
+authoendrs: [ ChengZhiYa, Dg32z_ ]
 softdepend: [ Vault, PlaceholderAPI ]
+permissions:
+  mhdftool.commands.*:
+    default: op
+    children:
+      mhdftool.commands.version: true
+      mhdftool.commands.reload: true
+  mhdftool.commands.version:
+    default: op
+  mhdftool.commands.reload:
+    default: op
+
