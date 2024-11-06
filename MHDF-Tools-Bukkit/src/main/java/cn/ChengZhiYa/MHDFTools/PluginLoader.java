@@ -11,6 +11,8 @@ public enum PluginLoader {
     INSTANCE;
     @Setter
     private boolean hasPlaceholderAPI;
+    @Setter
+    private boolean hasVault;
 
     private JavaPlugin plugin;
     @Setter

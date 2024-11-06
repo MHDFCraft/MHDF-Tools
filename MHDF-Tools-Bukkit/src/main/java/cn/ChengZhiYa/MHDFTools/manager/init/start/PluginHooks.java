@@ -16,6 +16,7 @@ public class PluginHooks implements Starter {
         //PlaceholderAPI
         PluginLoader.INSTANCE.setHasPlaceholderAPI(pluginManager.getPlugin("PlaceholderAPI") != null);
 
-        //你自己写别的
+        //Vault
+        PluginLoader.INSTANCE.setHasVault(pluginManager.getPlugin("Vault") != null);
     }
 }
