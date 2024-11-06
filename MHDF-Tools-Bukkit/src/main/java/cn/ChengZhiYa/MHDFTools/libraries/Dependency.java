@@ -1,6 +1,6 @@
-package cn.ChengZhiYa.MHDFTools.util.libraries.dependencies;
+package cn.ChengZhiYa.MHDFTools.libraries;
 
-import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.relocation.Relocation;
+import cn.ChengZhiYa.MHDFTools.libraries.relocation.Relocation;
 import com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;

@@ -1,8 +1,8 @@
-package cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.relocation;
+package cn.ChengZhiYa.MHDFTools.libraries.relocation;
 
-import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.Dependency;
-import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManager;
-import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.classloader.DependencyClassLoader;
+import cn.ChengZhiYa.MHDFTools.libraries.Dependency;
+import cn.ChengZhiYa.MHDFTools.libraries.DependencyManager;
+import cn.ChengZhiYa.MHDFTools.libraries.classloader.DependencyClassLoader;
 
 import java.io.File;
 import java.io.IOException;

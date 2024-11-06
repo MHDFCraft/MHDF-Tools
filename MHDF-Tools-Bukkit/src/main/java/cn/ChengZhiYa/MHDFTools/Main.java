@@ -3,10 +3,10 @@ package cn.ChengZhiYa.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.exception.FileException;
 import cn.ChengZhiYa.MHDFTools.exception.ResourceException;
 import cn.ChengZhiYa.MHDFTools.util.config.ConfigUtil;
-import cn.ChengZhiYa.MHDFTools.util.libraries.classpath.ReflectionClassPathAppender;
-import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.Dependency;
-import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManager;
-import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManagerImpl;
+import cn.ChengZhiYa.MHDFTools.libraries.classpath.ReflectionClassPathAppender;
+import cn.ChengZhiYa.MHDFTools.libraries.Dependency;
+import cn.ChengZhiYa.MHDFTools.libraries.DependencyManager;
+import cn.ChengZhiYa.MHDFTools.libraries.DependencyManagerImpl;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
