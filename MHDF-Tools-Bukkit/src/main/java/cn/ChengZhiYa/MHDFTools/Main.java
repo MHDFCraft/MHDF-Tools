@@ -1,21 +1,25 @@
 package cn.ChengZhiYa.MHDFTools;
 
+import cn.ChengZhiYa.MHDFTools.manager.VersionManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
+    public static Main instance;
+    public static VersionManager versionManager;
 
     @Override
     public void onLoad() {
-        PluginLoader.INSTANCE.initialize_load(this);
+        instance = this;
+        versionManager = new VersionManager();
     }
 
     @Override
     public void onEnable() {
-        PluginLoader.INSTANCE.initialize_start(this);
+
     }
 
     @Override
     public void onDisable() {
-        PluginLoader.INSTANCE.initialize_stop(this);
+        instance = null;
     }
 }
