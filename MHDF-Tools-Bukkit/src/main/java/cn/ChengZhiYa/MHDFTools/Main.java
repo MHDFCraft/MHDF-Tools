@@ -3,21 +3,21 @@ package cn.ChengZhiYa.MHDFTools;
 import cn.ChengZhiYa.MHDFTools.exception.FileException;
 import cn.ChengZhiYa.MHDFTools.exception.ResourceException;
 import cn.ChengZhiYa.MHDFTools.util.config.ConfigUtil;
-import cn.ChengZhiYa.MHDFTools.util.libraries.classpath.ReflectionClassPathAppender;
-import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.Dependency;
-import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManager;
-import cn.ChengZhiYa.MHDFTools.util.libraries.dependencies.DependencyManagerImpl;
+import cn.ChengZhiYa.MHDFTools.libraries.classpath.ReflectionClassPathAppender;
+import cn.ChengZhiYa.MHDFTools.libraries.dependencies.Dependency;
+import cn.ChengZhiYa.MHDFTools.libraries.dependencies.DependencyManager;
+import cn.ChengZhiYa.MHDFTools.libraries.dependencies.DependencyManagerImpl;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public final class main extends JavaPlugin {
-    public static main instance;
+public final class Main extends JavaPlugin {
+    public static Main instance;
 
     private static void initDependency() {
         DependencyManager dependencyManager = new DependencyManagerImpl(
-                new ReflectionClassPathAppender(main.instance.getClass().getClassLoader())
+                new ReflectionClassPathAppender(Main.instance.getClass().getClassLoader())
         );
 
         Set<Dependency> dependencyList = new HashSet<>();

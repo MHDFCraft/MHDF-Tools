@@ -2,7 +2,7 @@ package cn.ChengZhiYa.MHDFTools.util.config;
 
 import cn.ChengZhiYa.MHDFTools.exception.FileException;
 import cn.ChengZhiYa.MHDFTools.exception.ResourceException;
-import cn.ChengZhiYa.MHDFTools.main;
+import cn.ChengZhiYa.MHDFTools.Main;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -13,7 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public final class FileUtil {
-    private static final File pluginDataFolder = main.instance.getDataFolder();
+    private static final File pluginDataFolder = Main.instance.getDataFolder();
 
     public static void createFolder(File file) throws FileException {
         if (file.exists()) {

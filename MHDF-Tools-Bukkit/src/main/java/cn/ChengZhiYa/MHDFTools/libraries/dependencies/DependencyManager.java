@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.util.libraries.dependencies;
+package cn.ChengZhiYa.MHDFTools.libraries.dependencies;
 
 import java.util.Collection;
 import java.util.Set;
