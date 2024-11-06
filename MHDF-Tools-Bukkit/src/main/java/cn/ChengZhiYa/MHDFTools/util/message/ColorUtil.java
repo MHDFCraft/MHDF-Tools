@@ -2,6 +2,7 @@ package cn.ChengZhiYa.MHDFTools.util.message;
 
 import cn.ChengZhiYa.MHDFTools.Main;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
+import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import net.md_5.bungee.api.ChatColor;
 
 import java.util.regex.Matcher;
@@ -41,7 +42,7 @@ public final class ColorUtil {
      */
     public static String color(String message) {
         message = message.replace("{prefix}", LangUtil.i18n("prefix"));
-        if (Main.versionManager.is1_16orAbove()) {
+        if (Main.getServerManager().getVersion().isNewerThanOrEquals(ServerVersion.V_1_16)) {
             message = rgb(message);
         }
         return legacy(message);

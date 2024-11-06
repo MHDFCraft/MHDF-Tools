@@ -1,16 +1,20 @@
 package cn.ChengZhiYa.MHDFTools;
 
-import cn.ChengZhiYa.MHDFTools.manager.VersionManager;
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.manager.server.ServerManager;
+import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
+
     public static Main instance;
-    public static VersionManager versionManager;
+    @Getter
+    public static ServerManager serverManager;
 
     @Override
     public void onLoad() {
         instance = this;
-        versionManager = new VersionManager();
+        serverManager = PacketEvents.getAPI().getServerManager();
     }
 
     @Override

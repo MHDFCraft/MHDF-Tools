@@ -11,7 +11,7 @@ public final class MHDFTools extends AbstractCommand {
     public MHDFTools() {
         super(
                 "梦之工具主命令",
-                "mhdftools.command.mhdftools",
+                "mhdftools.commands.mhdftools",
                 false,
                 "mhdftools", "mt"
         );
