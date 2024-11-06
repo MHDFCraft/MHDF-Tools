@@ -11,13 +11,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 import static cn.ChengZhiYa.MHDFTools.utils.SpigotUtil.Placeholder;
-
 public final class Stop implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!Bukkit.getOnlinePlayers().isEmpty()) {
             String Message = Objects.requireNonNull(PluginLoader.INSTANCE.getPlugin().getConfig().getString("SuperStopSettings.DefaultStopMessage"));
-
             if (args.length >= 1) {
                 StringBuilder StopMessage = new StringBuilder();
                 for (String arg : args) {
@@ -30,7 +28,6 @@ public final class Stop implements CommandExecutor {
                 player.kickPlayer(Placeholder(player, Objects.requireNonNull(PluginLoader.INSTANCE.getPlugin().getConfig().getString("SuperStopSettings.StopMessageFormat")).replaceAll("\\{Message}", Message)));
             }
         }
-
         Bukkit.shutdown();
         return false;
     }
