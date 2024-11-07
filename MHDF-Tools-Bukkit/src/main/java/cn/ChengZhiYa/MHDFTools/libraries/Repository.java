@@ -26,14 +26,12 @@
 package cn.ChengZhiYa.MHDFTools.libraries;
 
 import cn.ChengZhiYa.MHDFTools.exception.DownloadException;
+import cn.ChengZhiYa.MHDFTools.util.network.HttpUtil;
 import lombok.Getter;
 
 import java.io.IOException;
 import java.net.URLConnection;
 import java.nio.file.Path;
-
-import static cn.ChengZhiYa.MHDFTools.util.network.HttpUtil.downloadFile;
-import static cn.ChengZhiYa.MHDFTools.util.network.HttpUtil.openConnection;
 
 @Getter
 public enum Repository {
@@ -60,8 +58,8 @@ public enum Repository {
 
     public void download(Dependency dependency, Path file) {
         try {
-            URLConnection connection = openConnection(this.url + dependency.getMavenRepoPath());
-            downloadFile(connection, file);
+            URLConnection connection = HttpUtil.openConnection(this.url + dependency.getMavenRepoPath());
+            HttpUtil.downloadFile(connection, file);
         } catch (DownloadException e) {
             throw new RuntimeException("下载发生错误: ", e);
         } catch (IOException e) {

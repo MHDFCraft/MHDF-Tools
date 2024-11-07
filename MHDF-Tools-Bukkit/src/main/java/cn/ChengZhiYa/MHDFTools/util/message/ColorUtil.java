@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.util.message;
 
-import cn.ChengZhiYa.MHDFTools.Main;
+import cn.ChengZhiYa.MHDFTools.manager.hook.PluginHookManager;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import net.md_5.bungee.api.ChatColor;
@@ -41,8 +41,9 @@ public final class ColorUtil {
      * @param message 文本
      */
     public static String color(String message) {
-        message = message.replace("{prefix}", LangUtil.i18n("prefix"));
-        if (Main.getServerManager().getVersion().isNewerThanOrEquals(ServerVersion.V_1_16)) {
+        message = message.replace("{prefix}", LangUtil.getString("prefix"));
+        if (PluginHookManager.getPacketEventsHook().getServerManager().getVersion()
+                .isNewerThanOrEquals(ServerVersion.V_1_16_5)) {
             message = rgb(message);
         }
         return legacy(message);

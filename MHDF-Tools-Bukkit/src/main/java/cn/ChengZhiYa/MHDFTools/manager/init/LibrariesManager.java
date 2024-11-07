@@ -7,20 +7,21 @@ import cn.ChengZhiYa.MHDFTools.libraries.DependencyManagerImpl;
 import cn.ChengZhiYa.MHDFTools.libraries.classpath.ReflectionClassPathAppender;
 import cn.ChengZhiYa.MHDFTools.manager.Initer;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 
-public final class DependencyInit implements Initer {
+public final class LibrariesManager implements Initer {
     @Override
     public void init() {
         DependencyManager dependencyManager = new DependencyManagerImpl(
-                new ReflectionClassPathAppender(Main.instance.getClass().getClassLoader())
+                new ReflectionClassPathAppender(Main.class.getClassLoader())
         );
 
-        Set<Dependency> dependencyList = new HashSet<>();
-        dependencyList.add(Dependency.FAST_JSON);
-        dependencyList.add(Dependency.PacketEvent);
-
-        dependencyManager.loadDependencies(dependencyList);
+        dependencyManager.loadDependencies(
+                Arrays.stream(Dependency.values())
+                        .filter(dependency -> dependency != Dependency.ASM &&
+                                dependency != Dependency.ASM_COMMONS &&
+                                dependency != Dependency.JAR_RELOCATOR)
+                        .toList()
+        );
     }
 }

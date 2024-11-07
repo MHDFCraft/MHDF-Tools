@@ -6,13 +6,7 @@ folia-supported: true
 authoendrs: [ ChengZhiYa, Dg32z_ ]
 softdepend: [ Vault, PlaceholderAPI ]
 permissions:
-  mhdftool.commands.*:
+  mhdftools.commands.mhdftools.version:
     default: op
-    children:
-      mhdftool.commands.version: true
-      mhdftool.commands.reload: true
-  mhdftool.commands.version:
+  mhdftools.commands.mhdftools.reload:
     default: op
-  mhdftool.commands.reload:
-    default: op
-

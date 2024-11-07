@@ -21,8 +21,8 @@ public final class HttpUtil {
     public static URLConnection openConnection(String urlString) throws IOException {
         URL url = new URL(urlString);
         URLConnection connection = url.openConnection();
-        connection.setConnectTimeout((int) TimeUnit.SECONDS.toMillis(5));
-        connection.setReadTimeout((int) TimeUnit.SECONDS.toMillis(5));
+        connection.setConnectTimeout((int) TimeUnit.SECONDS.toMillis(20));
+        connection.setReadTimeout((int) TimeUnit.SECONDS.toMillis(20));
         return connection;
     }
 

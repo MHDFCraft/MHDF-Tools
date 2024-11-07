@@ -13,22 +13,19 @@ public enum Dependency {
             "org.ow2.asm",
             "asm",
             "9.7",
-            Repository.MAVEN_CENTRAL_MIRROR,
-            "asm"
+            Repository.MAVEN_CENTRAL_MIRROR
     ),
     ASM_COMMONS(
             "org.ow2.asm",
             "asm-commons",
             "9.7",
-            Repository.MAVEN_CENTRAL_MIRROR,
-            "asm-commons"
+            Repository.MAVEN_CENTRAL_MIRROR
     ),
     JAR_RELOCATOR(
             "me.lucko",
             "jar-relocator",
             "1.7",
-            Repository.MAVEN_CENTRAL_MIRROR,
-            "jar-relocator"
+            Repository.MAVEN_CENTRAL_MIRROR
     ),
 
 
@@ -36,16 +33,39 @@ public enum Dependency {
             "com.alibaba",
             "fastjson",
             "1.2.83",
-            Repository.MAVEN_CENTRAL_MIRROR,
-            "fsatjson"
+            Repository.MAVEN_CENTRAL_MIRROR
     ),
 
-    PacketEvent(
+    REFLECTIONS(
+            "org.reflections",
+            "reflections",
+            "0.10.2",
+            Repository.MAVEN_CENTRAL_MIRROR
+    ),
+    JAVASSITST(
+            "org.javassist",
+            "javassist",
+            "3.28.0-GA",
+            Repository.MAVEN_CENTRAL_MIRROR
+    ),
+
+    PACKETEVENTS_API(
+            "com.github.retrooper",
+            "packetevents-api",
+            "2.6.0",
+            Repository.CODE_MC
+    ),
+    PACKETEVENTS_NETTY_COMMON(
+            "com.github.retrooper",
+            "packetevents-netty-common",
+            "2.6.0",
+            Repository.CODE_MC
+    ),
+    PACKETEVENTS_SPIGOT(
             "com.github.retrooper",
             "packetevents-spigot",
             "2.6.0",
-            Repository.MAVEN_CENTRAL_MIRROR,
-            "packetevent-spigot"
+            Repository.CODE_MC
     );
 
 
@@ -58,11 +78,11 @@ public enum Dependency {
     @Getter
     private final String mavenRepoPath;
 
-    Dependency(@NotNull String groupId, @NotNull String artifactId, @NotNull String version, @NotNull Repository repository, @NotNull String artifact) {
-        this(groupId, artifactId, version, repository, artifact, new Relocation[0]);
+    Dependency(@NotNull String groupId, @NotNull String artifactId, @NotNull String version, @NotNull Repository repository) {
+        this(groupId, artifactId, version, repository, new Relocation[0]);
     }
 
-    Dependency(@NotNull String groupId, @NotNull String artifactId, @NotNull String version, @NotNull Repository repository, @NotNull String artifact, Relocation... relocations) {
+    Dependency(@NotNull String groupId, @NotNull String artifactId, @NotNull String version, @NotNull Repository repository, Relocation... relocations) {
         this.mavenRepoPath = String.format("%s/%s/%s/%s-%s.jar",
                 rewriteEscaping(groupId).replace(".", "/"),
                 rewriteEscaping(artifactId),
@@ -73,7 +93,7 @@ public enum Dependency {
         this.version = version;
         this.relocations = ImmutableList.copyOf(relocations);
         this.repository = repository;
-        this.artifact = artifact;
+        this.artifact = artifactId;
     }
 
     private static String rewriteEscaping(String s) {

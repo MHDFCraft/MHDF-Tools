@@ -1,9 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.util.message;
 
-import cn.ChengZhiYa.MHDFTools.Main;
+import cn.ChengZhiYa.MHDFTools.util.config.ConfigUtil;
 import org.bukkit.Bukkit;
-
-import static cn.ChengZhiYa.MHDFTools.util.message.ColorUtil.color;
 
 public final class LogUtil {
     private static final String CONSOLE_PREFIX = "[MHDF-Tools] ";
@@ -15,7 +13,7 @@ public final class LogUtil {
      * @param message 内容
      */
     public static void log(String message) {
-        Bukkit.getConsoleSender().sendMessage(color(CONSOLE_PREFIX + message));
+        Bukkit.getConsoleSender().sendMessage(ColorUtil.color(CONSOLE_PREFIX + message));
     }
 
     /**
@@ -24,7 +22,7 @@ public final class LogUtil {
      * @param messages 内容
      */
     public static void debug(String... messages) {
-        if (Main.instance.getConfig().getBoolean("debug")) {
+        if (ConfigUtil.getConfig().getBoolean("debug")) {
             StringBuilder stringBuilder = new StringBuilder();
             for (String message : messages) {
                 stringBuilder.append(message);
@@ -32,7 +30,7 @@ public final class LogUtil {
                     stringBuilder.append(" | ");
                 }
             }
-            log(stringBuilder.toString());
+            log(DEBUG_PREFIX + stringBuilder);
         }
     }
 }

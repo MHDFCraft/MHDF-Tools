@@ -1,13 +1,15 @@
 package cn.ChengZhiYa.MHDFTools.libraries;
 
+import cn.ChengZhiYa.MHDFTools.Main;
 import cn.ChengZhiYa.MHDFTools.exception.FileException;
 import cn.ChengZhiYa.MHDFTools.libraries.classloader.DependencyClassLoader;
 import cn.ChengZhiYa.MHDFTools.libraries.classpath.ClassPathAppender;
 import cn.ChengZhiYa.MHDFTools.libraries.relocation.Relocation;
 import cn.ChengZhiYa.MHDFTools.libraries.relocation.RelocationHandler;
 import cn.ChengZhiYa.MHDFTools.util.config.ConfigUtil;
-import cn.ChengZhiYa.MHDFTools.util.message.LogUtil;
+import cn.ChengZhiYa.MHDFTools.util.config.FileUtil;
 import com.google.common.collect.ImmutableSet;
+import com.google.gson.JsonElement;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,18 +20,14 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
-import static cn.ChengZhiYa.MHDFTools.util.config.FileUtil.createFolder;
-
 public class DependencyManagerImpl implements DependencyManager {
     private final Path dependenciesFolder;
-    private final DependencyRegistry registry;
     private final ClassPathAppender classPathAppender;
     private final EnumMap<Dependency, Path> loaded = new EnumMap<>(Dependency.class);
     private final Map<ImmutableSet<Dependency>, DependencyClassLoader> loaders = new HashMap<>();
     private final RelocationHandler relocationHandler;
 
     public DependencyManagerImpl(ClassPathAppender classPathAppender) {
-        this.registry = new DependencyRegistry();
         this.dependenciesFolder = setupDependenciesFolder();
         this.classPathAppender = classPathAppender;
         this.relocationHandler = new RelocationHandler(this);
@@ -38,7 +36,7 @@ public class DependencyManagerImpl implements DependencyManager {
     private static Path setupDependenciesFolder() {
         File file = new File(ConfigUtil.getDataFolder(), "libs");
         try {
-            createFolder(file);
+            FileUtil.createFolder(file);
         } catch (FileException e) {
             throw new RuntimeException(e);
         }
@@ -89,9 +87,9 @@ public class DependencyManagerImpl implements DependencyManager {
             }
 
             try {
-                LogUtil.log("正在加载依赖 " + dependency.getFileName(null));
+                Main.instance.getLogger().info("正在加载依赖 " + dependency.getFileName(null));
                 loadDependency(dependency);
-                LogUtil.log("依赖 " + dependency.getFileName(null) + " 加载完成!");
+                Main.instance.getLogger().info("依赖 " + dependency.getFileName(null) + " 加载完成!");
             } catch (Throwable e) {
                 throw new RuntimeException("无法下载依赖 " + dependency, e);
             } finally {
@@ -115,7 +113,11 @@ public class DependencyManagerImpl implements DependencyManager {
 
         this.loaded.put(dependency, file);
 
-        if (this.classPathAppender != null && this.registry.shouldAutoLoad(dependency)) {
+        if (this.classPathAppender != null &&
+                dependency != Dependency.ASM &&
+                dependency != Dependency.ASM_COMMONS &&
+                dependency != Dependency.JAR_RELOCATOR
+        ) {
             this.classPathAppender.addJarToClasspath(file);
         }
     }
@@ -130,9 +132,9 @@ public class DependencyManagerImpl implements DependencyManager {
         String fileName = dependency.getFileName(null);
         Repository repository = dependency.getRepository();
 
-        LogUtil.log("正在下载依赖 " + fileName + "(" + repository.getUrl() + dependency.getMavenRepoPath() + ")");
+        Main.instance.getLogger().info("正在下载依赖 " + fileName + "(" + repository.getUrl() + dependency.getMavenRepoPath() + ")");
         repository.download(dependency, file);
-        LogUtil.log("依赖 " + fileName + " 下载完成!");
+        Main.instance.getLogger().info("依赖 " + fileName + " 下载完成!");
         return file;
     }
 
@@ -143,7 +145,7 @@ public class DependencyManagerImpl implements DependencyManager {
         }
 
         Path remappedFile = this.dependenciesFolder.resolve(
-                dependency.getFileName(DependencyRegistry.isGsonRelocated() ? "remapped-legacy" : "remapped")
+                dependency.getFileName(isGsonRelocated() ? "remapped-legacy" : "remapped")
         );
 
         if (Files.exists(remappedFile)) {
@@ -162,5 +164,10 @@ public class DependencyManagerImpl implements DependencyManager {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private boolean isGsonRelocated() {
+        return JsonElement.class.getName().startsWith("cn.ChengZhiYa");
     }
 }

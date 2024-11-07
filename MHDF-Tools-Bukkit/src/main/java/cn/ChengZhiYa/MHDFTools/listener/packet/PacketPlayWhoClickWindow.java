@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.listeners.packet;
+package cn.ChengZhiYa.MHDFTools.listener.packet;
 
 import com.github.retrooper.packetevents.event.PacketListenerAbstract;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
@@ -10,7 +10,7 @@ import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientCl
  * Patched paper1.16+ window click
  * Stupid PaperMC team make crash server by invalid window click
  */
-public class PacketPlayWhoClickWindow extends PacketListenerAbstract {
+public final class PacketPlayWhoClickWindow extends PacketListenerAbstract {
 
     public PacketPlayWhoClickWindow() {
         super(PacketListenerPriority.LOW);

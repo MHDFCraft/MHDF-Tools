@@ -1,2 +1,27 @@
 prefix: "&e[梦之工具]&r "
 onlyPlayer: "{prefix} &c这个命令只能玩家执行!"
+noPermission: "{prefix} &c你没有权限怎么做"
+
+commands:
+  mhdftools:
+    subCommands:
+      help:
+        usage: "/{command} help"
+        description: "命令帮助"
+        commandFormat: "&e{usage} &7| &b{description}"
+        message: |-
+          &e-------------=&6梦之工具&6=&e-------------
+          {helpList}
+          &e-------------=&6梦之工具&6=&e-------------
+      about:
+        usage: "/{command} about"
+        description: "插件信息"
+        message: |-
+          &e-------------=&6梦之工具&6=&e-------------
+          &f插件版本: &6{version}
+          &f服务器版本: &6{serverVersion}
+          &e-------------=&6梦之工具&6=&e-------------
+      reload:
+        usage: "/{command} reload"
+        description: "重载插件"
+        message: "{prefix} &6插件重载完成!"

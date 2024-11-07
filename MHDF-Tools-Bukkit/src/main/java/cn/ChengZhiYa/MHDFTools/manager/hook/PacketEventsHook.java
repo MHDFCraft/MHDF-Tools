@@ -3,10 +3,15 @@ package cn.ChengZhiYa.MHDFTools.manager.hook;
 import cn.ChengZhiYa.MHDFTools.Main;
 import cn.ChengZhiYa.MHDFTools.manager.Hooker;
 import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.manager.server.ServerManager;
 import com.github.retrooper.packetevents.util.TimeStampMode;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
+import lombok.Getter;
 
-public final class PacketEventLoad implements Hooker {
+@Getter
+public final class PacketEventsHook implements Hooker {
+    private ServerManager serverManager;
+
     @Override
     public void hook() {
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(Main.instance));
@@ -19,6 +24,9 @@ public final class PacketEventLoad implements Hooker {
                 .debug(false)
                 .timeStampMode(TimeStampMode.NANO);
         PacketEvents.getAPI().load();
+
+        PacketEvents.getAPI().init();
+        this.serverManager = PacketEvents.getAPI().getServerManager();
     }
 
     @Override

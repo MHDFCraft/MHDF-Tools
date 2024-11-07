@@ -1,29 +1,46 @@
 package cn.ChengZhiYa.MHDFTools;
 
-import com.github.retrooper.packetevents.PacketEvents;
-import com.github.retrooper.packetevents.manager.server.ServerManager;
+import cn.ChengZhiYa.MHDFTools.manager.hook.PluginHookManager;
+import cn.ChengZhiYa.MHDFTools.manager.init.CommandManager;
+import cn.ChengZhiYa.MHDFTools.manager.init.ConfigManager;
+import cn.ChengZhiYa.MHDFTools.manager.init.LibrariesManager;
+import cn.ChengZhiYa.MHDFTools.manager.init.ListenerManager;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
-
+    @Getter
+    private static final CommandManager commandManager = new CommandManager();
+    @Getter
+    private static final ListenerManager listenerManager = new ListenerManager();
     public static Main instance;
     @Getter
-    public static ServerManager serverManager;
+    private static PluginHookManager pluginHookManager;
+    private final ConfigManager configManager = new ConfigManager();
+    private final LibrariesManager librariesManager = new LibrariesManager();
 
     @Override
     public void onLoad() {
         instance = this;
-        serverManager = PacketEvents.getAPI().getServerManager();
+
+        configManager.init();
+        librariesManager.init();
+
+        pluginHookManager = new PluginHookManager();
     }
 
     @Override
     public void onEnable() {
+        pluginHookManager.hook();
 
+        commandManager.init();
+        listenerManager.init();
     }
 
     @Override
     public void onDisable() {
+        pluginHookManager.unhook();
+
         instance = null;
     }
 }

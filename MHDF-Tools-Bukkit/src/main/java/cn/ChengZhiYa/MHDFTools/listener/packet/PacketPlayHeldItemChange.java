@@ -1,4 +1,4 @@
-package cn.ChengZhiYa.MHDFTools.listeners.packet;
+package cn.ChengZhiYa.MHDFTools.listener.packet;
 
 import com.github.retrooper.packetevents.event.PacketListenerAbstract;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
  * patched paper1.20.3 slot crash
  * The Paper core of the foolish PaperMC team crashes when players send slot packets less than 0
  */
-public class PacketPlayHeldItemChange extends PacketListenerAbstract {
+public final class PacketPlayHeldItemChange extends PacketListenerAbstract {
 
     public PacketPlayHeldItemChange() {
         super(PacketListenerPriority.LOW);

@@ -1,7 +1,10 @@
 package cn.ChengZhiYa.MHDFTools.libraries.relocation;
 
+import lombok.Getter;
+
 import java.util.Objects;
 
+@Getter
 public final class Relocation {
     private final String pattern;
     private final String relocatedPattern;
@@ -16,14 +19,6 @@ public final class Relocation {
                 pattern.replace("{}", "."),
                 "cn.ChengZhiYa.MHDFTools.utils.libraries." + id
         );
-    }
-
-    public String getPattern() {
-        return this.pattern;
-    }
-
-    public String getRelocatedPattern() {
-        return this.relocatedPattern;
     }
 
     @Override

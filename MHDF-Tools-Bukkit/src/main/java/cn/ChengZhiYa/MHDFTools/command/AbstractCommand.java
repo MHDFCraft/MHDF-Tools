@@ -1,6 +1,8 @@
 package cn.ChengZhiYa.MHDFTools.command;
 
 import cn.ChengZhiYa.MHDFTools.manager.Command;
+import cn.ChengZhiYa.MHDFTools.util.config.ConfigUtil;
+import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -11,16 +13,20 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.ChengZhiYa.MHDFTools.util.config.LangUtil.i18n;
-
 @Getter
 public abstract class AbstractCommand implements TabExecutor, Command {
+    private final boolean enable;
     private final String description;
     private final String permission;
     private final boolean onlyPlayer;
     private final String[] commands;
 
-    public AbstractCommand(@NotNull String description, String permission, boolean onlyPlayer, String... commands) {
+    public AbstractCommand(String enableKey, @NotNull String description, String permission, boolean onlyPlayer, String... commands) {
+        if (enableKey != null && !enableKey.isEmpty()) {
+            this.enable = ConfigUtil.getConfig().getBoolean(enableKey);
+        } else {
+            this.enable = true;
+        }
         this.description = description;
         this.permission = permission;
         this.onlyPlayer = onlyPlayer;
@@ -32,11 +38,10 @@ public abstract class AbstractCommand implements TabExecutor, Command {
         if (onlyPlayer) {
             if (sender instanceof Player player) {
                 execute(player, label, args);
-                return false;
             } else {
-                sender.sendMessage(i18n("onlyPlayer"));
-                return false;
+                sender.sendMessage(LangUtil.i18n("onlyPlayer"));
             }
+            return false;
         }
         execute(sender, label, args);
         return false;
