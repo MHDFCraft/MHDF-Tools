@@ -1,9 +1,13 @@
 package cn.ChengZhiYa.MHDFTools.util.message;
 
-import cn.ChengZhiYa.MHDFTools.manager.hook.PluginHookManager;
+import cn.ChengZhiYa.MHDFTools.manager.hook.PlaceholderAPIHook;
+import cn.ChengZhiYa.MHDFTools.manager.init.PluginHookManager;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,5 +51,17 @@ public final class ColorUtil {
             message = rgb(message);
         }
         return legacy(message);
+    }
+
+    /**
+     * 彩色符号+变量处理
+     *
+     * @param message 文本
+     */
+    public static String colorWithPlaceholder(OfflinePlayer player, String message) {
+        if (PluginHookManager.getPlaceholderAPIHook().isHasPlaceholderAPI()) {
+            PlaceholderAPI.setPlaceholders(player, message);
+        }
+        return color(message);
     }
 }

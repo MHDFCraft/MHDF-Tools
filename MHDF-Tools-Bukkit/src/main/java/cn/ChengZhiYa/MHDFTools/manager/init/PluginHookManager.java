@@ -1,12 +1,16 @@
-package cn.ChengZhiYa.MHDFTools.manager.hook;
+package cn.ChengZhiYa.MHDFTools.manager.init;
 
-import cn.ChengZhiYa.MHDFTools.manager.Hooker;
+import cn.ChengZhiYa.MHDFTools.manager.hook.PacketEventsHook;
+import cn.ChengZhiYa.MHDFTools.manager.hook.PlaceholderAPIHook;
+import cn.ChengZhiYa.MHDFTools.manager.interfaces.Hooker;
 import lombok.Getter;
 
 @Getter
 public final class PluginHookManager implements Hooker {
     @Getter
     private static final PacketEventsHook packetEventsHook = new PacketEventsHook();
+    @Getter
+    private static final PlaceholderAPIHook placeholderAPIHook = new PlaceholderAPIHook();
 
     /**
      * 初始化所有对接的API
@@ -14,6 +18,7 @@ public final class PluginHookManager implements Hooker {
     @Override
     public void hook() {
         packetEventsHook.hook();
+        placeholderAPIHook.hook();
     }
 
     /**
@@ -22,5 +27,6 @@ public final class PluginHookManager implements Hooker {
     @Override
     public void unhook() {
         packetEventsHook.unhook();
+        placeholderAPIHook.unhook();
     }
 }

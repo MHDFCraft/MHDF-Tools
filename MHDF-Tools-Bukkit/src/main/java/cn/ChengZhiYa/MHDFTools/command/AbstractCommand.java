@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.command;
 
-import cn.ChengZhiYa.MHDFTools.manager.Command;
+import cn.ChengZhiYa.MHDFTools.manager.interfaces.Command;
 import cn.ChengZhiYa.MHDFTools.util.config.ConfigUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
 import lombok.Getter;

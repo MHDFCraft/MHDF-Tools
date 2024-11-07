@@ -1,7 +1,7 @@
 package cn.ChengZhiYa.MHDFTools.manager.hook;
 
 import cn.ChengZhiYa.MHDFTools.Main;
-import cn.ChengZhiYa.MHDFTools.manager.Hooker;
+import cn.ChengZhiYa.MHDFTools.manager.interfaces.Hooker;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.manager.server.ServerManager;
 import com.github.retrooper.packetevents.util.TimeStampMode;
@@ -10,6 +10,7 @@ import lombok.Getter;
 
 @Getter
 public final class PacketEventsHook implements Hooker {
+
     private ServerManager serverManager;
 
     /**
@@ -29,7 +30,7 @@ public final class PacketEventsHook implements Hooker {
         PacketEvents.getAPI().load();
 
         PacketEvents.getAPI().init();
-        this.serverManager = PacketEvents.getAPI().getServerManager();
+        serverManager = PacketEvents.getAPI().getServerManager();
     }
 
     /**

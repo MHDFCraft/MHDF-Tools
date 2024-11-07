@@ -2,7 +2,7 @@ package cn.ChengZhiYa.MHDFTools.manager.init;
 
 import cn.ChengZhiYa.MHDFTools.Main;
 import cn.ChengZhiYa.MHDFTools.command.AbstractCommand;
-import cn.ChengZhiYa.MHDFTools.manager.Initer;
+import cn.ChengZhiYa.MHDFTools.manager.interfaces.Initer;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;

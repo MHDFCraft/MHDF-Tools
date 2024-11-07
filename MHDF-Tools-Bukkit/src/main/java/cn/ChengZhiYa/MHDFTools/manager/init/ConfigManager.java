@@ -2,7 +2,7 @@ package cn.ChengZhiYa.MHDFTools.manager.init;
 
 import cn.ChengZhiYa.MHDFTools.exception.FileException;
 import cn.ChengZhiYa.MHDFTools.exception.ResourceException;
-import cn.ChengZhiYa.MHDFTools.manager.Initer;
+import cn.ChengZhiYa.MHDFTools.manager.interfaces.Initer;
 import cn.ChengZhiYa.MHDFTools.util.config.ConfigUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.FileUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;

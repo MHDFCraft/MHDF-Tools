@@ -2,7 +2,7 @@ package cn.ChengZhiYa.MHDFTools.manager.init;
 
 import cn.ChengZhiYa.MHDFTools.Main;
 import cn.ChengZhiYa.MHDFTools.listener.AbstractListener;
-import cn.ChengZhiYa.MHDFTools.manager.Initer;
+import cn.ChengZhiYa.MHDFTools.manager.interfaces.Initer;
 import org.bukkit.Bukkit;
 import org.reflections.Reflections;
 

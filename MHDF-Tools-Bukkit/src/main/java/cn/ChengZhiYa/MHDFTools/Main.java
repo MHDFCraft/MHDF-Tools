@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools;
 
-import cn.ChengZhiYa.MHDFTools.manager.hook.PluginHookManager;
+import cn.ChengZhiYa.MHDFTools.manager.init.PluginHookManager;
 import cn.ChengZhiYa.MHDFTools.manager.init.CommandManager;
 import cn.ChengZhiYa.MHDFTools.manager.init.ConfigManager;
 import cn.ChengZhiYa.MHDFTools.manager.init.LibrariesManager;

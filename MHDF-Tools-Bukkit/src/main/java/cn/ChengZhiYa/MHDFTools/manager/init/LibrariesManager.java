@@ -5,7 +5,7 @@ import cn.ChengZhiYa.MHDFTools.libraries.Dependency;
 import cn.ChengZhiYa.MHDFTools.libraries.DependencyManager;
 import cn.ChengZhiYa.MHDFTools.libraries.DependencyManagerImpl;
 import cn.ChengZhiYa.MHDFTools.libraries.classpath.ReflectionClassPathAppender;
-import cn.ChengZhiYa.MHDFTools.manager.Initer;
+import cn.ChengZhiYa.MHDFTools.manager.interfaces.Initer;
 
 import java.util.Arrays;
 
