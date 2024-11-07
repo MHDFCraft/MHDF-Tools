@@ -60,6 +60,7 @@ public final class Crash extends AbstractCommand {
             sender.sendMessage(
                     LangUtil.i18n("usageError")
                             .replace("{usage}", LangUtil.i18n("commands.crash.usage"))
+                            .replace("{command}", label)
             );
         }
     }
