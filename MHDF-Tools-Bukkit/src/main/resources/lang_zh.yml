@@ -28,7 +28,7 @@ commands:
         description: "重载插件"
         message: "{prefix} &6插件重载完成!"
   crash:
-    usage: "/{command} [崩溃类型]"
+    usage: "/{command} <玩家> [崩溃类型]"
     description: "崩溃玩家客户端"
     typeNotExists: "{prefix} &c目标崩端类型不存在!"
     sendDone: "{prefix} &6崩端操作(类型: {type}),已开始!"

@@ -48,7 +48,9 @@ public final class Crash extends AbstractCommand {
             }
 
             if (type != null && crashPlayerClient(player, type)) {
-                sender.sendMessage(LangUtil.i18n("commands.crash.sendDone"));
+                sender.sendMessage(LangUtil.i18n("commands.crash.sendDone")
+                        .replace("{type}", LangUtil.i18n("commands.crash.types." + type))
+                );
             } else {
                 sender.sendMessage(LangUtil.i18n("commands.crash.typeNotExists"));
             }
@@ -112,7 +114,7 @@ public final class Crash extends AbstractCommand {
             PluginHookManager.getPacketEventsHook().sendPacket(player,
                     new WrapperPlayServerWindowConfirmation(
                             Float.MAX_EXPONENT,
-                            Short.MAX_VALUE,
+                            (short) Float.MAX_EXPONENT,
                             false
                     )
             );
