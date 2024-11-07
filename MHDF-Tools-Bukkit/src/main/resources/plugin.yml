@@ -10,3 +10,5 @@ permissions:
     default: op
   mhdftools.commands.mhdftools.reload:
     default: op
+  mhdftools.commands.crash:
+    default: op
