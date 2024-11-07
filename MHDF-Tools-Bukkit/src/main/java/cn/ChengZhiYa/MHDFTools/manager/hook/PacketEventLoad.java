@@ -6,7 +6,7 @@ import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.util.TimeStampMode;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 
-public final class PacketEventHook implements Hooker {
+public final class PacketEventLoad implements Hooker {
     @Override
     public void hook() {
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(Main.instance));
