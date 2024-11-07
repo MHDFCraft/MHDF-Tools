@@ -60,6 +60,11 @@ public final class MHDFTools extends AbstractCommand {
         return null;
     }
 
+    /**
+     * 获取所有命令帮助
+     *
+     * @return 命令帮助文本
+     */
     private String getHelpList() {
         StringBuilder stringBuilder = new StringBuilder();
 

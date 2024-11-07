@@ -8,6 +8,9 @@ import cn.ChengZhiYa.MHDFTools.util.config.FileUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
 
 public final class ConfigManager implements Initer {
+    /**
+     * 初始化默认配置文件
+     */
     @Override
     public void init() {
         try {

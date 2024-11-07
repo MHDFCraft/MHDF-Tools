@@ -9,6 +9,9 @@ import org.reflections.Reflections;
 import java.lang.reflect.Modifier;
 
 public final class ListenerManager implements Initer {
+    /**
+     * 注册所有启用的监听器
+     */
     @Override
     public void init() {
         try {

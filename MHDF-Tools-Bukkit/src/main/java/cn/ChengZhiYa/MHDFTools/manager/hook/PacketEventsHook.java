@@ -12,6 +12,9 @@ import lombok.Getter;
 public final class PacketEventsHook implements Hooker {
     private ServerManager serverManager;
 
+    /**
+     * 初始化PacketEvents的API
+     */
     @Override
     public void hook() {
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(Main.instance));
@@ -29,6 +32,9 @@ public final class PacketEventsHook implements Hooker {
         this.serverManager = PacketEvents.getAPI().getServerManager();
     }
 
+    /**
+     * 卸载PacketEvents的API
+     */
     @Override
     public void unhook() {
         PacketEvents.getAPI().terminate();

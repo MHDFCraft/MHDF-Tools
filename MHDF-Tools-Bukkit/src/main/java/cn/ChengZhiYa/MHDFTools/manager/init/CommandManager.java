@@ -13,7 +13,9 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 public final class CommandManager implements Initer {
-
+    /**
+     * 注册所有启用的命令
+     */
     @Override
     public void init() {
         try {

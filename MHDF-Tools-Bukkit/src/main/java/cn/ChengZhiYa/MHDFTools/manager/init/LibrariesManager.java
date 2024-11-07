@@ -10,6 +10,9 @@ import cn.ChengZhiYa.MHDFTools.manager.Initer;
 import java.util.Arrays;
 
 public final class LibrariesManager implements Initer {
+    /**
+     * 下载并加载所有所需依赖
+     */
     @Override
     public void init() {
         DependencyManager dependencyManager = new DependencyManagerImpl(
