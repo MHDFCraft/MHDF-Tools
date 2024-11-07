@@ -35,7 +35,7 @@ import java.nio.file.Path;
 
 @Getter
 public enum Repository {
-    MAVEN_CENTRAL_MIRROR("aliyun", "https://maven.aliyun.com/repository/public/"),
+    MAVEN_CENTRAL_MIRROR("aliyun", "https://repo.huaweicloud.com/repository/maven/"),
     CODE_MC("codemc", "https://repo.codemc.io/repository/maven-public/"),
     JITPACK("jitpack", "https://jitpack.io/");
 
