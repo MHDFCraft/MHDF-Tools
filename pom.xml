@@ -22,8 +22,8 @@
 
     <repositories>
         <repository>
-            <id>alimaven</id>
-            <url>https://maven.aliyun.com/repository/public</url>
+            <id>huawei-maven</id>
+            <url>https://repo.huaweicloud.com/repository/maven</url>
         </repository>
         <repository>
             <id>papermc</id>
@@ -35,11 +35,11 @@
         </repository>
         <repository>
             <id>codemc-releases</id>
-            <url>https://repo.codemc.io/repository/maven-releases/</url>
+            <url>https://repo.codemc.io/repository/maven-releases</url>
         </repository>
         <repository>
             <id>codemc-snapshots</id>
-            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
+            <url>https://repo.codemc.io/repository/maven-snapshots</url>
         </repository>
     </repositories>
 </project>
