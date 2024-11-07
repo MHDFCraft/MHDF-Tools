@@ -1,19 +1,19 @@
 package cn.ChengZhiYa.MHDFTools.manager.hook;
 
-import cn.ChengZhiYa.MHDFTools.Main;
 import cn.ChengZhiYa.MHDFTools.manager.interfaces.Hooker;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 
 @Getter
 @Setter
-public class PlaceholderAPIHook implements Hooker {
+public final class PlaceholderAPIHook implements Hooker {
 
     private boolean hasPlaceholderAPI;
 
     @Override
     public void hook() {
-        setHasPlaceholderAPI(Main.instance.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null);
+        setHasPlaceholderAPI(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null);
     }
 
     @Override

@@ -1,12 +1,10 @@
 package cn.ChengZhiYa.MHDFTools.util.message;
 
-import cn.ChengZhiYa.MHDFTools.manager.hook.PlaceholderAPIHook;
 import cn.ChengZhiYa.MHDFTools.manager.init.PluginHookManager;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.util.regex.Matcher;

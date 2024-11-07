@@ -1,10 +1,6 @@
 package cn.ChengZhiYa.MHDFTools;
 
-import cn.ChengZhiYa.MHDFTools.manager.init.PluginHookManager;
-import cn.ChengZhiYa.MHDFTools.manager.init.CommandManager;
-import cn.ChengZhiYa.MHDFTools.manager.init.ConfigManager;
-import cn.ChengZhiYa.MHDFTools.manager.init.LibrariesManager;
-import cn.ChengZhiYa.MHDFTools.manager.init.ListenerManager;
+import cn.ChengZhiYa.MHDFTools.manager.init.*;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 

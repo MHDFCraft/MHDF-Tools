@@ -66,6 +66,13 @@ public enum Dependency {
             "packetevents-spigot",
             "2.6.0",
             Repository.CODE_MC
+    ),
+
+    ITEM_NBT_API(
+            "de.tr7zw",
+            "item-nbt-api",
+            "2.14.0",
+            Repository.CODE_MC
     );
 
 
