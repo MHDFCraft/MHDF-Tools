@@ -6,7 +6,6 @@ import org.bukkit.event.Listener;
 
 @Getter
 public abstract class AbstractListener implements Listener {
-
     private final boolean enable;
 
     public AbstractListener(String enableKey) {

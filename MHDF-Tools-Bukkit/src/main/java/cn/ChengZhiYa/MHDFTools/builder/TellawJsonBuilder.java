@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
-@SuppressWarnings({"unused","deprecation"})
+@SuppressWarnings({"unused", "deprecation"})
 public final class TellawJsonBuilder {
     public final BaseComponent components = new TextComponent();
 

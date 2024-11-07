@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public final class MHDFTools extends AbstractCommand {
-
     public MHDFTools() {
         super(
                 null,

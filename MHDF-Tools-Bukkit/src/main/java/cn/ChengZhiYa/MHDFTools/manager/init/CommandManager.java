@@ -2,7 +2,7 @@ package cn.ChengZhiYa.MHDFTools.manager.init;
 
 import cn.ChengZhiYa.MHDFTools.Main;
 import cn.ChengZhiYa.MHDFTools.command.AbstractCommand;
-import cn.ChengZhiYa.MHDFTools.manager.interfaces.Initer;
+import cn.ChengZhiYa.MHDFTools.manager.interfaces.Init;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
@@ -13,7 +13,7 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 @SuppressWarnings("deprecation")
-public final class CommandManager implements Initer {
+public final class CommandManager implements Init {
     /**
      * 注册所有启用的命令
      */

@@ -2,11 +2,11 @@ package cn.ChengZhiYa.MHDFTools.manager.init;
 
 import cn.ChengZhiYa.MHDFTools.manager.hook.PacketEventsHook;
 import cn.ChengZhiYa.MHDFTools.manager.hook.PlaceholderAPIHook;
-import cn.ChengZhiYa.MHDFTools.manager.interfaces.Hooker;
+import cn.ChengZhiYa.MHDFTools.manager.interfaces.Hook;
 import lombok.Getter;
 
 @Getter
-public final class PluginHookManager implements Hooker {
+public final class PluginHookManager implements Hook {
     @Getter
     private static final PacketEventsHook packetEventsHook = new PacketEventsHook();
     @Getter

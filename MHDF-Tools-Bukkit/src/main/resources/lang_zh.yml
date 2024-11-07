@@ -1,6 +1,8 @@
 prefix: "&e[梦之工具]&r "
 onlyPlayer: "{prefix} &c这个命令只能玩家执行!"
 noPermission: "{prefix} &c你没有权限怎么做"
+usageError: "{prefix} &c用法错误,正确用法: {usage}"
+playerOffline: "{prefix} &c你指定的玩家并没有在线!"
 
 commands:
   mhdftools:
@@ -25,3 +27,12 @@ commands:
         usage: "/{command} reload"
         description: "重载插件"
         message: "{prefix} &6插件重载完成!"
+  crash:
+    usage: "/{command} [崩溃类型]"
+    description: "崩溃玩家客户端"
+    typeNotExists: "{prefix} &c目标崩端类型不存在!"
+    sendDone: "{prefix} &6崩端操作(类型: {type}),已开始!"
+    types:
+      explosion: "爆炸溢出"
+      changeHoldItem: "手持物品溢出"
+      serverWindowConfirmation: "延迟包溢出"

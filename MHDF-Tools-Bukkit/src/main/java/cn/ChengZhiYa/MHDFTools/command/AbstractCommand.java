@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Getter
 public abstract class AbstractCommand implements TabExecutor, Command {
@@ -49,7 +50,9 @@ public abstract class AbstractCommand implements TabExecutor, Command {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        return tabCompleter(sender, label, args);
+        return tabCompleter(sender, label, args).stream()
+                .filter(s -> s.toLowerCase(Locale.ROOT).startsWith(args[args.length - 1].toLowerCase(Locale.ROOT)))
+                .toList();
     }
 
     @Override

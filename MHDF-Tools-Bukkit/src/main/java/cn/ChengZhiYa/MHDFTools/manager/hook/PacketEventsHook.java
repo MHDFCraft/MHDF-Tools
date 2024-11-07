@@ -1,17 +1,18 @@
 package cn.ChengZhiYa.MHDFTools.manager.hook;
 
 import cn.ChengZhiYa.MHDFTools.Main;
-import cn.ChengZhiYa.MHDFTools.manager.interfaces.Hooker;
+import cn.ChengZhiYa.MHDFTools.manager.AbstractHook;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.manager.server.ServerManager;
 import com.github.retrooper.packetevents.util.TimeStampMode;
+import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import lombok.Getter;
+import org.bukkit.entity.Player;
 
 @Getter
 @SuppressWarnings({"UnstableApiUsage", "deprecation"})
-public final class PacketEventsHook implements Hooker {
-
+public final class PacketEventsHook extends AbstractHook {
     private ServerManager serverManager;
 
     /**
@@ -32,6 +33,7 @@ public final class PacketEventsHook implements Hooker {
 
         PacketEvents.getAPI().init();
         serverManager = PacketEvents.getAPI().getServerManager();
+        super.enable = true;
     }
 
     /**
@@ -40,5 +42,18 @@ public final class PacketEventsHook implements Hooker {
     @Override
     public void unhook() {
         PacketEvents.getAPI().terminate();
+        super.enable = false;
+    }
+
+    /**
+     * 给指定玩家发送指定数据包
+     *
+     * @param player 接收数据包的玩家
+     * @param packet 发送的数据包
+     */
+    public void sendPacket(Player player, PacketWrapper<?> packet) {
+        if (enable) {
+            PacketEvents.getAPI().getPlayerManager().sendPacket(player, packet);
+        }
     }
 }

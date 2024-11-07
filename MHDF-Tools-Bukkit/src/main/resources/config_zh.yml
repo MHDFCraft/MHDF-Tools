@@ -1,2 +1,13 @@
-#调试模式
+# 调试模式
 debug: false
+
+# 崩溃玩家客户端设置
+crashSettings:
+  # 开关
+  enable: true
+  # 默认崩溃模式
+  # (explosion changeHoldItem serverWindowConfirmation)
+  defaultType: "serverWindowConfirmation"
+  # 命令
+  commands:
+    - "crash"

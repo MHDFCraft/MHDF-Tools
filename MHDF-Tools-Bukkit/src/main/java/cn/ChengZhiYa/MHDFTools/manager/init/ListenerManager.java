@@ -2,13 +2,13 @@ package cn.ChengZhiYa.MHDFTools.manager.init;
 
 import cn.ChengZhiYa.MHDFTools.Main;
 import cn.ChengZhiYa.MHDFTools.listener.AbstractListener;
-import cn.ChengZhiYa.MHDFTools.manager.interfaces.Initer;
+import cn.ChengZhiYa.MHDFTools.manager.interfaces.Init;
 import org.bukkit.Bukkit;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Modifier;
 
-public final class ListenerManager implements Initer {
+public final class ListenerManager implements Init {
     /**
      * 注册所有启用的监听器
      */

@@ -1,22 +1,21 @@
 package cn.ChengZhiYa.MHDFTools.manager.hook;
 
-import cn.ChengZhiYa.MHDFTools.manager.interfaces.Hooker;
+import cn.ChengZhiYa.MHDFTools.manager.AbstractHook;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 
 @Getter
 @Setter
-public final class PlaceholderAPIHook implements Hooker {
-
-    private boolean hasPlaceholderAPI;
-
+public final class PlaceholderAPIHook extends AbstractHook {
     /**
      * 初始化PlaceholderAPI的API
      */
     @Override
     public void hook() {
-        setHasPlaceholderAPI(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null);
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            super.enable = true;
+        }
     }
 
     /**
@@ -24,6 +23,6 @@ public final class PlaceholderAPIHook implements Hooker {
      */
     @Override
     public void unhook() {
-        setHasPlaceholderAPI(false);
+        super.enable = false;
     }
 }

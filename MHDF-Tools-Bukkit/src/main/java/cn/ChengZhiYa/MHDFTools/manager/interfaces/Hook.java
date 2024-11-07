@@ -1,6 +1,6 @@
 package cn.ChengZhiYa.MHDFTools.manager.interfaces;
 
-public interface Hooker {
+public interface Hook {
     void hook();
 
     void unhook();
