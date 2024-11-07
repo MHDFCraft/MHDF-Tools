@@ -44,7 +44,7 @@ public enum Dependency {
             "com.github.retrooper",
             "packetevents-spigot",
             "2.6.0",
-            Repository.MAVEN_CENTRAL_MIRROR,
+            Repository.CODE_MC,
             "packetevent-spigot"
     );
 
