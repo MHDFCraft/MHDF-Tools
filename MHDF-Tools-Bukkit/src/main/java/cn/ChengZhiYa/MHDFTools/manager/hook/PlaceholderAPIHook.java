@@ -11,15 +11,19 @@ public final class PlaceholderAPIHook implements Hooker {
 
     private boolean hasPlaceholderAPI;
 
+    /**
+     * 初始化PlaceholderAPI的API
+     */
     @Override
     public void hook() {
         setHasPlaceholderAPI(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null);
     }
 
+    /**
+     * 卸载PlaceholderAPI的API
+     */
     @Override
     public void unhook() {
-        if (isHasPlaceholderAPI()) {
-            setHasPlaceholderAPI(false);
-        }
+        setHasPlaceholderAPI(false);
     }
 }

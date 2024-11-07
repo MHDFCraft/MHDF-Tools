@@ -9,6 +9,7 @@ import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder
 import lombok.Getter;
 
 @Getter
+@SuppressWarnings({"UnstableApiUsage", "deprecation"})
 public final class PacketEventsHook implements Hooker {
 
     private ServerManager serverManager;

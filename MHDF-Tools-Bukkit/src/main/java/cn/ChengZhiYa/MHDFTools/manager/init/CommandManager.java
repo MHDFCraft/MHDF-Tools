@@ -12,6 +12,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
+@SuppressWarnings("deprecation")
 public final class CommandManager implements Initer {
     /**
      * 注册所有启用的命令
@@ -39,6 +40,7 @@ public final class CommandManager implements Initer {
      *
      * @param abstractCommand 命令实例
      */
+    @SuppressWarnings("deprecation")
     private void registerCommand(AbstractCommand abstractCommand) throws Exception {
         Constructor<PluginCommand> commandConstructor = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
         commandConstructor.setAccessible(true);

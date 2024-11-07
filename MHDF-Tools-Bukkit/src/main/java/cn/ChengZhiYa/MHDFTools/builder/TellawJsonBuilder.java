@@ -12,8 +12,9 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
+@SuppressWarnings({"unused","deprecation"})
 public final class TellawJsonBuilder {
-    public BaseComponent components = new TextComponent();
+    public final BaseComponent components = new TextComponent();
 
     public String toString() {
         return components.toString();
