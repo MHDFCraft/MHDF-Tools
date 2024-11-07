@@ -70,7 +70,7 @@ public final class Crash extends AbstractCommand {
             return Bukkit.getOnlinePlayers().stream().map(Player::getName).toList();
         }
         if (args.length == 2) {
-            return Arrays.asList("explosion", "changeHoldItem", "serverWindowConfirmation");
+            return Arrays.asList("explosion", "changeHoldItem");
         }
         return new ArrayList<>();
     }
