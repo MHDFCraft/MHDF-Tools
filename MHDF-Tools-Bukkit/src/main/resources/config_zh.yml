@@ -6,8 +6,8 @@ crashSettings:
   # 开关
   enable: true
   # 默认崩溃模式
-  # (explosion changeHoldItem serverWindowConfirmation)
-  defaultType: "serverWindowConfirmation"
+  # (explosion changeHoldItem)
+  defaultType: "explosion"
   # 命令
   commands:
     - "crash"
