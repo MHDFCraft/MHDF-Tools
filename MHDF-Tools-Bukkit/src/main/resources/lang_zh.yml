@@ -36,3 +36,14 @@ commands:
       explosion: "爆炸溢出"
       changeHoldItem: "手持物品溢出"
       serverWindowConfirmation: "延迟包溢出"
+  list:
+    usage: "/{command}"
+    description: "查看在线列表"
+    message: |-
+      &e-------------=&6梦之工具&6=&e-------------
+      &fTPS: &6{tps}
+      &f内存占用: &6{memory}MB/{maxMemory}MB
+      &f玩家人数: &6{playerCount}/{maxPlayerCount}
+      &f玩家列表: 
+      &6{playerList}
+      &e-------------=&6梦之工具&6=&e-------------

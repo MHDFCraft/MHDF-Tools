@@ -2,6 +2,7 @@ package cn.ChengZhiYa.MHDFTools.command.feature;
 
 import cn.ChengZhiYa.MHDFTools.command.AbstractCommand;
 import cn.ChengZhiYa.MHDFTools.manager.init.PluginHookManager;
+import cn.ChengZhiYa.MHDFTools.util.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.ConfigUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
 import com.github.retrooper.packetevents.util.Vector3d;
@@ -70,7 +71,7 @@ public final class Crash extends AbstractCommand {
     @Override
     public List<String> tabCompleter(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
-            return Bukkit.getOnlinePlayers().stream().map(Player::getName).toList();
+            return BungeeCordUtil.getPlayerList();
         }
         if (args.length == 2) {
             return Arrays.asList("explosion", "changeHoldItem", "serverWindowConfirmation");

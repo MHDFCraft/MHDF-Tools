@@ -11,3 +11,11 @@ crashSettings:
   # 命令
   commands:
     - "crash"
+
+# 查看在线列表
+listSettings:
+  # 开关
+  enable: true
+  # 命令
+  commands:
+    - "list"
