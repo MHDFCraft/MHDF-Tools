@@ -4,12 +4,13 @@ import cn.ChengZhiYa.MHDFTools.command.AbstractCommand;
 import cn.ChengZhiYa.MHDFTools.util.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.ConfigUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
-import com.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.util.SpigotReflectionUtil;
 import io.github.retrooper.packetevents.util.folia.FoliaScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.concurrent.TimeUnit;
 
 import static cn.ChengZhiYa.MHDFTools.util.config.LangUtil.i18n;
 
@@ -18,6 +19,7 @@ public final class List extends AbstractCommand {
 
     private final Runtime runtime = Runtime.getRuntime();
     private double tps;
+    private long lastUpdate;
 
     public List() {
         super(
@@ -55,18 +57,29 @@ public final class List extends AbstractCommand {
     }
 
     /**
+     * 不实时更新TPS
+     */
+    private void updateTPS() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastUpdate >= TimeUnit.SECONDS.toSeconds(ConfigUtil.getConfig().getInt("getTps.updateTime"))) {
+            double[] tps = Bukkit.getServer().getTPS();
+            if (tps != null && tps.length > 0) {
+                this.tps = tps[0];
+            }
+            lastUpdate = currentTime;
+        }
+    }
+
+    /**
      * 获取服务器当前TPS
      *
      * @return TPS数值
      */
     private double getTps() {
         if (FoliaScheduler.isFolia()) {
-            tps = Bukkit.getTPS()[0];
-            if (tps >= 20) {
-                tps = 20.0;
-            } else {
-                tps = SpigotReflectionUtil.getTPS();
-            }
+            updateTPS();
+        } else {
+            tps = SpigotReflectionUtil.getTPS();
         }
         return Double.parseDouble(String.format("%.2f", tps));
     }
