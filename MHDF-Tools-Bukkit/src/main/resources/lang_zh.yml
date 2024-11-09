@@ -31,12 +31,16 @@ commands:
     usage: "/{command} <玩家> [崩溃类型]"
     description: "崩溃玩家客户端"
     typeNotExists: "{prefix} &c目标崩端类型不存在!"
-    sendDone: "{prefix} &6崩端操作(类型: {type}),已开始!"
+    done: "{prefix} &6崩端操作(类型: {type}),已开始!"
     types:
       explosion: "爆炸溢出"
       changeHoldItem: "手持物品溢出"
       posAndLook: "异常区域"
       invalidParticle: "异常粒子"
+  knockback:
+    usage: "/{command} <玩家>"
+    description: "击退玩家"
+    done: "{prefix} &6已经成功击退 "
   list:
     usage: "/{command}"
     description: "查看在线列表"

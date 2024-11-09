@@ -12,6 +12,19 @@ crashSettings:
   commands:
     - "crash"
 
+knockBackSettings:
+  #开关
+  enable: true
+  #击退的设置
+  vector:
+    x: 0.75
+    y: 0.5
+    z: 0.75
+  # 命令
+  commands:
+    - "kb"
+    - "knockback"
+
 # 查看在线列表
 listSettings:
   # 开关
