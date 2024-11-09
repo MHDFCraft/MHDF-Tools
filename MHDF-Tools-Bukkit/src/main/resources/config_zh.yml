@@ -1,7 +1,27 @@
 # 调试模式
 debug: false
 
-# 崩溃玩家客户端设置
+# 数据库设置
+databaseSettings:
+  # 数据库类型
+  # (mysql h2)
+  type: "h2"
+  # MySQL数据库设置
+  mysql:
+    # 数据库地址
+    host: "127.0.0.1:3306"
+    # 数据库
+    database: "mhdf_tools"
+    # 用户
+    user: "root"
+    # 密码
+    password: "root"
+  # H2数据库设置
+  h2:
+    # 数据库文件
+    file: "database.db"
+
+# 崩溃玩家客户端
 crashSettings:
   # 开关
   enable: true
@@ -19,3 +39,31 @@ listSettings:
   # 命令
   commands:
     - "list"
+
+# 飞行
+flySettings:
+  # 开关
+  enable: true
+  # 自动开启
+  autoEnable:
+    # 加入服务器
+    joinServer: true
+    # 切换世界
+    changeWorld: true
+    # 重生
+    respawn: true
+  # 自动关闭
+  autoDisable:
+    # 掉血
+    takeHealth: false
+    # 世界列表
+    worldList:
+      - "awa"
+  # 飞行强制关闭坠落倒计时
+  fallTime: 5
+  # 命令
+  commands:
+    - "fly"
+  # 限时飞行命令
+  flyTimeCommands:
+    - "flytime"

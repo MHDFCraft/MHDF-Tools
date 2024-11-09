@@ -5,7 +5,12 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class BungeeCordUtil {
+public final class BungeeCordUtil {
+    /**
+     * 获取在线玩家列表
+     *
+     * @return 在线玩家列表
+     */
     public static List<String> getPlayerList() {
         return Bukkit.getOnlinePlayers().stream()
                 .map(Player::getName)

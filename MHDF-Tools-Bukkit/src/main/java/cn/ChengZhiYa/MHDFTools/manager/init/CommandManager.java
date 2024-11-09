@@ -40,7 +40,6 @@ public final class CommandManager implements Init {
      *
      * @param abstractCommand 命令实例
      */
-    @SuppressWarnings("deprecation")
     private void registerCommand(AbstractCommand abstractCommand) throws Exception {
         Constructor<PluginCommand> commandConstructor = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
         commandConstructor.setAccessible(true);

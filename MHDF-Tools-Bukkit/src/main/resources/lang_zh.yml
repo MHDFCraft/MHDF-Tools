@@ -1,8 +1,10 @@
-prefix: "&e[梦之工具]&r "
+prefix: "&e[梦之工具]&r"
 onlyPlayer: "{prefix} &c这个命令只能玩家执行!"
 noPermission: "{prefix} &c你没有权限怎么做"
 usageError: "{prefix} &c用法错误,正确用法: {usage}"
 playerOffline: "{prefix} &c你指定的玩家并没有在线!"
+enable: "&a开启"
+disable: "&c关闭"
 
 commands:
   mhdftools:
@@ -31,7 +33,7 @@ commands:
     usage: "/{command} <玩家> [崩溃类型]"
     description: "崩溃玩家客户端"
     typeNotExists: "{prefix} &c目标崩端类型不存在!"
-    sendDone: "{prefix} &6崩端操作(类型: {type}),已开始!"
+    done: "{prefix} &6崩端操作(类型: {type}),已开始!"
     types:
       explosion: "爆炸溢出"
       changeHoldItem: "手持物品溢出"
@@ -47,3 +49,34 @@ commands:
       &f玩家列表: 
       &6{playerList}
       &e-------------=&6梦之工具&6=&e-------------
+  fly:
+    usage: "/{command} [玩家]"
+    description: "飞行"
+    message: "{prefix} &6{player}的飞行模式已{change}"
+    fallMessage:
+      3: "{prefix} &6飞行时长还有&b3秒|&f即将关闭飞行!|10|70|20"
+      2: "{prefix} &6飞行时长还有&b2秒|&f即将关闭飞行!|10|70|20"
+      1: "{prefix} &6飞行时长还有&b1秒|&f即将关闭飞行!|10|70|20"
+      0: "{prefix} &6飞行已关闭|&f迫降中!|10|70|20"
+  flytime:
+    subCommands:
+      help:
+        usage: "/{command} help"
+        description: "命令帮助"
+        commandFormat: "&e{usage} &7| &b{description}"
+        message: |-
+          &e-------------=&6梦之工具&6=&e-------------
+          {helpList}
+          &e-------------=&6梦之工具&6=&e-------------
+      set:
+        usage: "/{command} set <玩家> <时间>"
+        description: "设置玩家的飞行时间"
+        message: "{prefix} &6{player}的飞行时间已修改为{time}秒"
+      add:
+        usage: "/{command} add <玩家> <时间>"
+        description: "增加玩家的飞行时间"
+        message: "{prefix} &6{player}的飞行时间已增加为{add}秒,现在他可以飞行{time}秒"
+      take:
+        usage: "/{command} take <玩家> <时间>"
+        description: "减少玩家的飞行时间"
+        message: "{prefix} &6{player}的飞行时间已减少为{take}秒,现在他可以飞行{time}秒"

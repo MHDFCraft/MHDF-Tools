@@ -1,0 +1,5 @@
+flyFall:
+  3: "minecraft:entity.experience_orb.pickup|25|0.7"
+  2: "minecraft:entity.experience_orb.pickup|25|0.8"
+  1: "minecraft:entity.experience_orb.pickup|25|0.9"
+  0: "minecraft:entity.generic.explode|25|2.0"

@@ -5,7 +5,6 @@ import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,7 +46,7 @@ public final class MHDFTools extends AbstractCommand {
         {
             sender.sendMessage(
                     LangUtil.i18n("commands.mhdftools.subCommands.help.message")
-                            .replace("{helpList}", getHelpList())
+                            .replace("{helpList}", LangUtil.getHelpList("mhdftools"))
                             .replace("{command}", label)
             );
         }
@@ -59,31 +58,5 @@ public final class MHDFTools extends AbstractCommand {
             return Arrays.asList("help", "about", "reload");
         }
         return null;
-    }
-
-    /**
-     * 获取所有命令帮助
-     *
-     * @return 命令帮助文本
-     */
-    private String getHelpList() {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        List<String> keys = new ArrayList<>(LangUtil.getKeys("commands.mhdftools.subCommands"));
-        for (String key : keys) {
-            stringBuilder.append(
-                    LangUtil.i18n("commands.mhdftools.subCommands.help.commandFormat")
-                            .replace("{usage}",
-                                    LangUtil.i18n("commands.mhdftools.subCommands." + key + ".usage")
-                            )
-                            .replace("{description}",
-                                    LangUtil.i18n("commands.mhdftools.subCommands." + key + ".description")
-                            )
-            );
-            if (!key.equals(keys.get(keys.size() - 1))) {
-                stringBuilder.append("\n");
-            }
-        }
-        return stringBuilder.toString();
     }
 }

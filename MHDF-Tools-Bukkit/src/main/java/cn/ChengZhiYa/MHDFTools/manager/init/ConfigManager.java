@@ -6,6 +6,7 @@ import cn.ChengZhiYa.MHDFTools.manager.interfaces.Init;
 import cn.ChengZhiYa.MHDFTools.util.config.ConfigUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.FileUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
+import cn.ChengZhiYa.MHDFTools.util.config.SoundUtil;
 
 public final class ConfigManager implements Init {
     /**
@@ -17,6 +18,7 @@ public final class ConfigManager implements Init {
             FileUtil.createFolder(ConfigUtil.getDataFolder());
             ConfigUtil.saveDefaultConfig();
             LangUtil.saveDefaultLang();
+            SoundUtil.saveDefaultSound();
         } catch (ResourceException | FileException e) {
             throw new RuntimeException(e);
         }

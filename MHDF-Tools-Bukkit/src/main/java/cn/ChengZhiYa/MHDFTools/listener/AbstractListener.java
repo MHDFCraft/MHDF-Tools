@@ -9,6 +9,10 @@ public abstract class AbstractListener implements Listener {
     private final boolean enable;
 
     public AbstractListener(String enableKey) {
-        this.enable = ConfigUtil.getConfig().getBoolean(enableKey);
+        if (enableKey != null && !enableKey.isEmpty()) {
+            this.enable = ConfigUtil.getConfig().getBoolean(enableKey);
+        } else {
+            this.enable = true;
+        }
     }
 }
