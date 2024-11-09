@@ -35,7 +35,8 @@ commands:
     types:
       explosion: "爆炸溢出"
       changeHoldItem: "手持物品溢出"
-      serverWindowConfirmation: "延迟包溢出"
+      posAndLook: "异常区域"
+      invalidParticle: "异常粒子"
   list:
     usage: "/{command}"
     description: "查看在线列表"
