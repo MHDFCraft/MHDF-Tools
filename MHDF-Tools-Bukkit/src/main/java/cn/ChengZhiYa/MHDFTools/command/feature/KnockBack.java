@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public final class KnockBack extends AbstractCommand {
-
     public KnockBack() {
         super(
                 "knockBackSettings.enable",
@@ -28,18 +28,18 @@ public final class KnockBack extends AbstractCommand {
             return;
         }
 
-        final Player player = Bukkit.getPlayer(args[1]);
+        Player player = Bukkit.getPlayer(args[1]);
 
         if (player == null) {
             sender.sendMessage(LangUtil.i18n("playerOffline"));
             return;
         }
 
-        final double x = ConfigUtil.getConfig().getDouble("vector.x");
-        final double y = ConfigUtil.getConfig().getDouble("vector.y");
-        final double z = ConfigUtil.getConfig().getDouble("vector.z");
+        double x = ConfigUtil.getConfig().getDouble("vector.x");
+        double y = ConfigUtil.getConfig().getDouble("vector.y");
+        double z = ConfigUtil.getConfig().getDouble("vector.z");
 
-        final Vector vector = new Vector(x, y, z);
+        Vector vector = new Vector(x, y, z);
         player.setVelocity(vector);
         sender.sendMessage(LangUtil.i18n("commands.knockback.sendDone").replace("{player}", player.getName()));
     }

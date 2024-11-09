@@ -15,7 +15,6 @@ import static cn.ChengZhiYa.MHDFTools.util.config.LangUtil.i18n;
 
 @SuppressWarnings("unused")
 public final class List extends AbstractCommand {
-
     private final Runtime runtime = Runtime.getRuntime();
     private double tps;
 

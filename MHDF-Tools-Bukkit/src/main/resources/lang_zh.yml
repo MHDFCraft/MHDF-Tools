@@ -38,6 +38,11 @@ commands:
       explosion: "爆炸溢出"
       changeHoldItem: "手持物品溢出"
       serverWindowConfirmation: "延迟包溢出"
+      invalidParticle: "异常粒子"
+  knockback:
+    usage: "/{command} <玩家>"
+    description: "击退玩家"
+    done: "{prefix} &6已经成功击退 "
   list:
     usage: "/{command}"
     description: "查看在线列表"
