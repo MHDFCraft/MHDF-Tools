@@ -134,12 +134,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.Anon8281</groupId>
-            <artifactId>UniversalScheduler</artifactId>
-            <version>0.1.6</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-api</artifactId>
             <version>4.17.0</version>
