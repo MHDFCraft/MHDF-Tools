@@ -127,7 +127,7 @@ public final class FlyUtil {
      *
      * @param player 玩家实例
      */
-    public static boolean ifGamemodeAllowFlight(Player player) {
+    public static boolean isAllowedFlyingGameMode(Player player) {
         return player.getGameMode() == GameMode.CREATIVE ||
                 player.getGameMode() == GameMode.SPECTATOR;
     }
