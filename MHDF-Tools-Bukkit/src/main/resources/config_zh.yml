@@ -32,6 +32,7 @@ crashSettings:
   commands:
     - "crash"
 
+# 击退玩家
 knockBackSettings:
   #开关
   enable: true
@@ -80,3 +81,15 @@ flySettings:
   # 限时飞行命令
   flyTimeCommands:
     - "flytime"
+
+# 更好的关服
+stopSettings:
+  # 开关
+  enable: true
+  # 关闭服务器的时候保存存档
+  autoSave: true
+  # 默认倒计时(-1关闭)
+  defaultCountdown: 5
+  # 命令
+  commands:
+    - "stop"

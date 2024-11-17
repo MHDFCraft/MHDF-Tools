@@ -129,7 +129,7 @@ public final class Crash extends AbstractCommand {
     private float generateInvalidLook() {
         float baseValue = Float.MAX_VALUE;
         double randomFactor = Math.random();
-        return baseValue * (float)(randomFactor * (Math.sqrt(randomFactor) * 564.0 % 1.0 * 0.75 - Math.pow(randomFactor, 2.0) % 1.0 * 0.5) + 0.5);
+        return baseValue * (float) (randomFactor * (Math.sqrt(randomFactor) * 564.0 % 1.0 * 0.75 - Math.pow(randomFactor, 2.0) % 1.0 * 0.5) + 0.5);
     }
 
     private Vector3f generateInvalidLookVector() {
@@ -140,12 +140,12 @@ public final class Crash extends AbstractCommand {
     private byte generateFlags() {
         int maxValue = 127;
         double randomFactor = Math.random();
-        return (byte)(maxValue * (randomFactor * (Math.sqrt(randomFactor) * 564.0 % 1.0 * 0.75 - Math.pow(randomFactor, 2.0) % 1.0 * 0.5) + 0.5));
+        return (byte) (maxValue * (randomFactor * (Math.sqrt(randomFactor) * 564.0 % 1.0 * 0.75 - Math.pow(randomFactor, 2.0) % 1.0 * 0.5) + 0.5));
     }
 
     private int generateTeleportID() {
         int maxValue = Integer.MAX_VALUE;
         double randomFactor = Math.random();
-        return (int)(maxValue * (randomFactor * (Math.sqrt(randomFactor) * 564.0 % 1.0 * 0.75 - Math.pow(randomFactor, 2.0) % 1.0 * 0.5) + 0.5));
+        return (int) (maxValue * (randomFactor * (Math.sqrt(randomFactor) * 564.0 % 1.0 * 0.75 - Math.pow(randomFactor, 2.0) % 1.0 * 0.5) + 0.5));
     }
 }

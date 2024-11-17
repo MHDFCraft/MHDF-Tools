@@ -4,7 +4,6 @@ import cn.ChengZhiYa.MHDFTools.command.AbstractCommand;
 import cn.ChengZhiYa.MHDFTools.util.BungeeCordUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.ConfigUtil;
 import cn.ChengZhiYa.MHDFTools.util.config.LangUtil;
-import com.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.util.SpigotReflectionUtil;
 import io.github.retrooper.packetevents.util.folia.FoliaScheduler;
 import org.bukkit.Bukkit;

@@ -85,3 +85,11 @@ commands:
         usage: "/{command} take <玩家> <时间>"
         description: "减少玩家的飞行时间"
         message: "{prefix} &6{player}的飞行时间已减少为{take}秒,现在他可以飞行{time}秒"
+  stop:
+    usage: "/{command} <倒计时> [消息]"
+    description: "更好的关服"
+    defaultMessage: "&b服务器已关闭!"
+    countdownMessage: "{prefix} &6服务器还有&b{countdown}&6秒关闭,请做好准备!"
+    kickMessage: |-
+      &e-------------=&6梦之工具&6=&e-------------
+      {message}
