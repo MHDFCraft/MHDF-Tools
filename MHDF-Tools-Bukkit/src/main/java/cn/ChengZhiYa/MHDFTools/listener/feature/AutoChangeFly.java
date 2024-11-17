@@ -102,7 +102,7 @@ public final class AutoChangeFly extends AbstractListener {
         }
 
         // 不处理游戏模式可以飞行的玩家
-        if (FlyUtil.ifGamemodeAllowFlight(player)) {
+        if (FlyUtil.isAllowedFlyingGameMode(player)) {
             return false;
         }
 

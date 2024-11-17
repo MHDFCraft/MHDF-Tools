@@ -184,12 +184,6 @@ public enum Dependency {
             "adventure-platform-bukkit",
             "4.3.4",
             Repository.MAVEN_CENTRAL_MIRROR
-    ),
-    UNIVERSAL_SCHEDULER(
-            "com.github.Anon8281",
-            "UniversalScheduler",
-            "0.1.6",
-            Repository.JITPACK
     );
 
 

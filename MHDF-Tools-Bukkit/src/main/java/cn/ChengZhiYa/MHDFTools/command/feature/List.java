@@ -15,7 +15,6 @@ import static cn.ChengZhiYa.MHDFTools.util.config.LangUtil.i18n;
 @SuppressWarnings("unused")
 public final class List extends AbstractCommand {
     private final Runtime runtime = Runtime.getRuntime();
-    private double tps;
 
     public List() {
         super(
@@ -58,15 +57,13 @@ public final class List extends AbstractCommand {
      * @return TPS数值
      */
     private double getTps() {
+        double tps;
         if (FoliaScheduler.isFolia()) {
-            tps = Bukkit.getTPS()[0];
-            if (tps >= 20) {
-                tps = 20.0;
-            } else {
-                tps = SpigotReflectionUtil.getTPS();
-            }
+            tps = 0.0;
+        } else {
+            tps = SpigotReflectionUtil.getTPS();
         }
-        return Double.parseDouble(String.format("%.2f", tps));
+       return Double.parseDouble(String.format("%.2f", tps));
     }
 
     /**

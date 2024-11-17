@@ -78,10 +78,6 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public</url>
         </repository>
-        <repository>
-            <id>jitpack</id>
-            <url>https://jitpack.io</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -134,12 +130,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.Anon8281</groupId>
-            <artifactId>UniversalScheduler</artifactId>
-            <version>0.1.6</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-api</artifactId>
             <version>4.17.0</version>
@@ -151,8 +141,6 @@
             <version>4.3.4</version>
             <scope>provided</scope>
         </dependency>
-
-
         <dependency>
             <groupId>com.github.retrooper</groupId>
             <artifactId>packetevents-spigot</artifactId>
