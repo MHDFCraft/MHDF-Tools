@@ -30,33 +30,43 @@ public final class GameMode implements TabExecutor {
                 player = (Player) sender;
             }
 
-            if (player != null)
+            if (player != null) {
+                boolean wasFlying = player.isFlying();
+                boolean allowFlying = player.getAllowFlight();
 
                 switch (args[0].toLowerCase()) {
                     case "生存", "0", "survival" -> {
-                        boolean flying = player.isFlying();
                         setGameMode(player, 0, RunSender);
-                        player.setFlying(flying);
+                        player.setFlying(allowFlying && wasFlying);
                     }
                     case "冒险", "2", "adventure" -> {
-                        boolean fly = player.isFlying();
                         setGameMode(player, 2, RunSender);
-                        player.setFlying(fly);
+                        player.setFlying(allowFlying && wasFlying);
                     }
-                    case "创造", "1", "creative" -> setGameMode(player, 1, RunSender);
-                    case "旁观", "3", "spectator" -> setGameMode(player, 3, RunSender);
+                    case "创造", "1", "creative" -> {
+                        setGameMode(player, 1, RunSender);
+                        player.setAllowFlight(true);
+                        if (wasFlying) player.setFlying(true);
+                    }
+                    case "旁观", "3", "spectator" -> {
+                        setGameMode(player, 3, RunSender);
+                        player.setAllowFlight(true);
+                        if (wasFlying) player.setFlying(true);
+                    }
                     default -> {
                         sender.sendMessage(i18n("Usage.GameMode"), label);
                         return false;
                     }
                 }
 
-            return true;
+                return true;
+            }
         }
 
         sender.sendMessage(i18n("Usage.GameMode"), label);
         return false;
     }
+
 
     private void setGameMode(Player player, int gameMode, String runSender) {
         player.setGameMode(Objects.requireNonNull(getGamemode(gameMode)));
