@@ -10,40 +10,6 @@ _✨一款轻量化便携性的Bukkit基础插件✨_
 
 _✨轻量 便携 快捷 即装即用 可无前置运行✨_
 
-<font color="red"><i>喜欢何祖濠小朋友的开源工具么？</i></font>
-
-<p>
-  <img src="lezi/lezi1.jpg" alt="为什么不开源是不是想圈钱？" width="150">
-  <img src="lezi/lezi2.jpg" alt="为什么不开源是不是想圈钱？" width="150">
-</p>
-
-<p style="font-size:18px; font-style:italic; color:#ff4500; font-weight:bold;">
-    何祖濠特征：
-</p>
-
-<ul style="list-style-type: none; padding: 0;">
-    <li style="font-size:16px; color:#555;">白眼狼</li>
-    <li style="font-size:16px; color:#555;">背刺神</li>
-    <li style="font-size:16px; color:#555;">背后议论</li>
-    <li style="font-size:16px; color:#555;">抄袭</li>
-    <li style="font-size:16px; color:#555;">deepsleep忠实用户</li>
-    <li style="font-size:16px; color:#555;">天才神童</li>
-    <li style="font-size:16px; color:#555;">跨性别者</li>
-    <li style="font-size:16px; color:#555;">22条染色体</li>
-</ul>
-
-<div style="border: 2px solid #aaa; padding: 10px; background-color: #f9f9f9; width: 80%; font-family: 'Arial', sans-serif;">
-    <p style="color: black;">橙汁这人有多乐子呢,据神秘人反馈，神秘修复代码，刚发给他就会拿来开源,也是无敌了</p>
-    <p style="color: black;">!!!千万不要把你的东西发给何祖濠不然明天会成为 MHDF-XXXXXX</p>
-    <p style="color: black;">很喜欢橙汁的一句话: </p>
-    <img src="lezi/lezi3.png" alt="小图片" width="100">
-<p style="color: black;">由于此人太过于脑残,故对他进行打击。</p>
-    <p style="color: red;">写此言论，并不是针对开源开发者，本言论仅针对何祖濠一人</p>
-    <p style="color: red;">闭源 != 圈钱</p>
-    <p style="color: red;">白眼狼可耻</p>
-<p style="color: red; font-weight: bold;">珍惜你的代码，珍惜你的服务器。</p>
-</div>
-
 </div>
 
 <p align="center">
